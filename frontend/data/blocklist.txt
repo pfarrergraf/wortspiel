@@ -1,0 +1,30 @@
+# Words that must not appear in v2 packs (word or taboo words), one per line.
+# Matching is on whole normalised words. Reviewers (R1–R3) may extend this list.
+Alkohol
+Bier
+Schnaps
+Wodka
+Vodka
+Joint
+Kiffen
+Cannabis
+Kokain
+Heroin
+Drogen
+Porno
+Sex
+Nackt
+Zigarette
+Vape
+Casino
+Wetten
+Sportwetten
+Waffe
+Pistole
+Gewehr
+Hure
+Schlampe
+Spast
+Behindert
+Schwuchtel
+Talahon

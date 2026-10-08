@@ -1,6 +1,7 @@
 import { readFile, writeFile, mkdir, readdir } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 import path from "node:path";
+import { readPacks, validatePack, readBlocklist, normalize } from "./cards-lib.mjs";
 
 const root = path.resolve(
   path.dirname(fileURLToPath(import.meta.url)),
@@ -24,13 +25,6 @@ const visual = {
 };
 const cards = new Map();
 const categories = [];
-const normalize = (word) =>
-  word
-    .normalize("NFKC")
-    .toLocaleLowerCase("de")
-    .replace(/ß/g, "ss")
-    .replace(/[^\p{L}\p{N}]+/gu, " ")
-    .trim();
 function add(word, taboo, category, source) {
   word = word.trim();
   const id = `de:${normalize(word)}`;
@@ -204,6 +198,58 @@ for (const entries of Object.values(easyCards))
       throw new Error(`Duplicate easy card: ${word}`);
     reviewed.add(id);
     cards.get(id).difficulty = "easy";
+  }
+// v2 card packs (docs/plan-v2.md). A word that already exists only gains the
+// pack category; its id, taboo words and difficulty stay unchanged.
+const packs = await readPacks(path.join(root, "frontend/data/packs"));
+const blocklist = await readBlocklist(path.join(root, "frontend/data/blocklist.txt"));
+const packErrors = [];
+for (const { file, pack } of packs) {
+  const known = new Set(categories.map((c) => c.id));
+  packErrors.push(...validatePack(file, pack, known, blocklist));
+  if (!known.has(pack.category?.id)) {
+    const { id, name, emoji, color } = pack.category;
+    categories.push({ id, name, emoji, color });
+  }
+  for (const card of pack.cards) {
+    const id = `de:${normalize(card.word)}`;
+    const existing = cards.get(id);
+    if (existing) {
+      if (!existing.categories.includes(pack.category.id))
+        existing.categories.push(pack.category.id);
+      continue;
+    }
+    cards.set(id, {
+      id,
+      word: card.word.trim(),
+      taboo: card.taboo.map((t) => t.trim()),
+      categories: [pack.category.id],
+      source: "original",
+      difficulty: card.difficulty,
+      ageMin: card.ageMin,
+      ...(card.emoji ? { emoji: card.emoji } : {}),
+      ...(card.topical ? { topical: true } : {}),
+      ...(card.retired ? { retired: true } : {}),
+    });
+  }
+}
+if (packErrors.length)
+  throw new Error(`Ungültige Kartenpakete:\n${packErrors.join("\n")}`);
+// Optional reviewed age tags for existing cards: { "8": "Hund | Katze", ... }.
+let ageTags = {};
+try {
+  ageTags = JSON.parse(
+    await readFile(path.join(root, "frontend/data/age-tags.json"), "utf8"),
+  );
+} catch (error) {
+  if (error.code !== "ENOENT") throw error;
+}
+for (const [age, words] of Object.entries(ageTags))
+  for (const word of words.split(" | ")) {
+    const card = cards.get(`de:${normalize(word)}`);
+    if (!card || card.ageMin !== undefined)
+      throw new Error(`Invalid or duplicate age tag: ${word}`);
+    card.ageMin = Number(age);
   }
 await mkdir(path.join(root, "frontend/src/data"), { recursive: true });
 const output = {
