@@ -1,3 +1,4 @@
+/* v1 narrow-window tweaks (also used by small notebook windows). */
 @media (max-width: 1000px) {
   .hero {
     gap: 12px;
@@ -33,5 +34,304 @@
   }
   .site-footer > div > span {
     display: none;
+  }
+}
+
+/*
+ * Tablets (plan-v2 C4): iPad mini to iPad Pro, Android tablets, Surface.
+ * Viewport based only (criterion 6). Phones in landscape (height <= 500 px)
+ * belong to phone-landscape.css and are excluded below.
+ *
+ * The play screen uses named grid areas. .play-main becomes
+ * display: contents so its children (top bar, time track, card, actions,
+ * undo row, speech status) can be placed next to the round sidebar.
+ */
+
+/* Shared tablet rules ---------------------------------------------------- */
+@media (min-width: 744px) and (max-width: 1368px) and (min-height: 501px) {
+  /* Setup: keep two columns, keep the start button in reach while the
+     category list scrolls. */
+  .setup-grid {
+    gap: var(--space-4);
+  }
+  .settings-panel {
+    position: sticky;
+    top: calc(var(--safe-top) + var(--space-4));
+  }
+  .category-grid {
+    grid-template-columns: repeat(auto-fill, minmax(8.5rem, 1fr));
+  }
+}
+
+/* Play screen, shared by both orientations. Only touches the screen while
+   a turn is running (.play-layout exists only then). */
+@media (orientation: portrait) and (min-width: 744px) and (max-width: 1368px),
+  (orientation: landscape) and (min-width: 744px) and (max-width: 1368px) and (min-height: 501px) and (any-pointer: coarse),
+  (orientation: landscape) and (min-width: 744px) and (max-width: 1368px) and (min-height: 501px) and (max-height: 900px) {
+  #app:has(.play-layout) .site-header {
+    padding-block: var(--space-3);
+  }
+  main:has(.play-layout) .game-heading {
+    margin: 0 0 var(--space-2);
+  }
+  main:has(.play-layout) .score-strip {
+    margin-bottom: var(--space-4);
+    gap: var(--space-3);
+  }
+  main:has(.play-layout) .team-score {
+    padding: var(--space-2) var(--space-4);
+  }
+  .play-layout {
+    display: grid;
+    gap: var(--space-3) var(--space-5);
+    justify-content: stretch;
+  }
+  .play-main {
+    display: contents;
+  }
+  .play-top {
+    grid-area: top;
+    padding-bottom: 0;
+  }
+  .time-track {
+    grid-area: track;
+    margin-bottom: 0;
+    align-self: center;
+  }
+  .play-layout .game-card {
+    grid-area: card;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 0;
+  }
+  /* Category stays on top, word and taboo list centre in the free space. */
+  .play-layout .game-card h1 {
+    margin-top: auto;
+  }
+  .play-layout .card-detail {
+    margin-bottom: auto;
+  }
+  .play-actions {
+    grid-area: actions;
+    margin-top: 0;
+  }
+  .game-action {
+    min-height: max(var(--action-min-h), 5.5rem);
+  }
+  .game-action strong {
+    font-size: var(--fs-lg);
+  }
+  .game-action > span {
+    font-size: var(--fs-sm);
+  }
+  .play-bottom {
+    grid-area: bottom;
+    margin-top: 0;
+    font-size: var(--fs-sm);
+  }
+  .speech-feedback {
+    grid-area: speech;
+    margin-top: 0;
+  }
+  .speech-feedback:empty {
+    display: none;
+  }
+  .round-sidebar {
+    grid-area: side;
+    margin-top: 0;
+  }
+  .timer strong {
+    font-size: var(--fs-2xl);
+    line-height: 1.1;
+  }
+  .play-top .eyebrow {
+    font-size: var(--fs-sm);
+  }
+  .play-top > div:first-child > span:last-child {
+    font-size: var(--fs-sm);
+  }
+  .card-category {
+    font-size: var(--fs-sm);
+  }
+  .card-category > span:last-child {
+    font-size: var(--fs-xs);
+  }
+  .forbidden-label {
+    font-size: var(--fs-xs);
+  }
+  .card-detail {
+    font-size: var(--fs-xs);
+  }
+  /* Compact round sidebar: one line with points, counts, sound, mic and
+     "Runde beenden". */
+  .round-sidebar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-2) var(--space-4);
+    text-align: left;
+    padding: var(--space-3) var(--space-4);
+  }
+  .round-sidebar > .eyebrow,
+  .round-sidebar > span:nth-of-type(2) {
+    display: none;
+  }
+  .round-points {
+    font-size: var(--fs-2xl);
+    letter-spacing: -1px;
+    line-height: 1;
+    margin: 0;
+  }
+  .round-counts {
+    flex: 1;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: var(--space-1) var(--space-3);
+    padding: 0;
+    margin: 0;
+    border: 0;
+    font-size: var(--fs-sm);
+  }
+  .round-counts b {
+    font-size: var(--fs-md);
+    margin-right: var(--space-1);
+  }
+  .round-toolbar {
+    margin: 0;
+    gap: var(--space-2);
+  }
+  .round-sidebar > .text-button {
+    margin: 0;
+    min-height: var(--tap-min);
+    font-size: var(--fs-sm);
+  }
+}
+
+/* Portrait: big card in the middle, scoring buttons as a bottom bar. ---- */
+@media (orientation: portrait) and (min-width: 744px) and (max-width: 1368px) {
+  .play-layout {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      "top"
+      "track"
+      "side"
+      "card"
+      "actions"
+      "bottom"
+      "speech";
+    max-width: var(--card-max-w);
+    margin-inline: auto;
+  }
+  .play-layout .game-card {
+    /* Large card that grows with the screen height, but leaves room for
+       header, scores, buttons and the undo row. */
+    min-height: clamp(20rem, calc(var(--vh-small) - 37rem), 40rem);
+  }
+  .game-card h1 {
+    font-size: clamp(2.25rem, 5vw, 3.25rem);
+  }
+  .forbidden-words {
+    font-size: var(--fs-xl);
+  }
+  .play-actions {
+    gap: var(--space-3);
+  }
+  .game-action {
+    min-height: max(var(--action-min-h), 6rem);
+  }
+}
+
+/* Landscape: card left, timer and scoring column right (thumb reach). --
+   Touch tablets of any height, and short non-touch windows that would
+   otherwise scroll. Fine-pointer desktops (e.g. 1360x960) keep the
+   default layout. */
+@media (orientation: landscape) and (min-width: 744px) and (max-width: 1368px) and (min-height: 501px) and (any-pointer: coarse),
+  (orientation: landscape) and (min-width: 744px) and (max-width: 1368px) and (min-height: 501px) and (max-height: 900px) {
+  .play-layout {
+    grid-template-columns: minmax(0, 1fr) clamp(15rem, 26vw, 21rem);
+    grid-template-rows: auto auto auto 1fr auto auto;
+    grid-template-areas:
+      "card top"
+      "card track"
+      "card actions"
+      "card side"
+      "bottom side"
+      "speech speech";
+    align-items: start;
+  }
+  .play-layout .game-card {
+    align-self: stretch;
+    padding: var(--space-4) var(--space-5);
+  }
+  .play-top {
+    gap: var(--space-3);
+  }
+  .play-top .timer {
+    flex-shrink: 0;
+  }
+  .play-actions {
+    grid-template-columns: 1fr;
+    gap: var(--space-3);
+  }
+  /* Icon left, label and points right: lower buttons, still big targets. */
+  .game-action {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-rows: auto auto;
+    column-gap: var(--space-3);
+    row-gap: 2px;
+    align-content: center;
+    justify-items: start;
+    text-align: left;
+    padding: var(--space-3) var(--space-4);
+    min-height: clamp(var(--action-min-h), 11vh, 6.5rem);
+  }
+  .game-action .icon {
+    grid-row: 1 / span 2;
+    width: 1.75rem;
+    height: 1.75rem;
+  }
+  .round-sidebar {
+    align-self: stretch;
+    align-content: center;
+  }
+  .round-counts {
+    flex-basis: 100%;
+    order: 1;
+  }
+  .round-toolbar {
+    order: 2;
+  }
+  .round-sidebar > .text-button {
+    order: 3;
+  }
+  .play-layout .game-card h1 {
+    margin-block: auto var(--space-4);
+    padding-top: var(--space-4);
+  }
+  .forbidden-words {
+    margin: var(--space-4) 0;
+    gap: var(--space-2);
+    font-size: var(--fs-lg);
+  }
+}
+
+/* Very short landscape windows: two taboo columns keep six words on
+   screen. */
+@media (orientation: landscape) and (min-width: 744px) and (max-width: 1368px) and (min-height: 501px) and (max-height: 680px) {
+  .play-layout .forbidden-words {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: var(--space-5);
+  }
+  .play-layout .game-card h1 {
+    margin-bottom: var(--space-3);
+    padding-top: var(--space-2);
+  }
+  .play-layout .forbidden-words {
+    width: min(100%, 32rem);
+    margin: var(--space-3) auto;
   }
 }
