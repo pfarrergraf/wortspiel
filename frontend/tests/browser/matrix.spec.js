@@ -40,7 +40,6 @@ async function hiddenPlayControls(page) {
 const KNOWN_LAYOUT_GAPS = {
   "phone-small": "C2",
   "iphone-se": "C2",
-  "iphone-landscape": "C3",
   "ipad-landscape": "C4",
 };
 

@@ -1,1 +1,286 @@
-/* Reserved for the v2 task that owns this file (see docs/plan-v2.md). */
+/*
+ * Smartphone landscape (plan-v2 C3), e.g. 667×375 iPhone SE, 852×393
+ * iPhone 15, 915×412 Pixel 7.
+ *
+ * Imported after phone.css and tablet.css, so equal-specificity rules here win.
+ * The height limit keeps tablets and notebooks out; small desktop windows that
+ * are wider than tall get the same compact layout, which suits them too.
+ *
+ * During a turn the page chrome is hidden and the play screen becomes two
+ * columns: timer and card on the left, the three scoring buttons stacked on
+ * the right in thumb reach, followed by undo and a compact round toolbar.
+ * Everything fits into one screen, also with six taboo words.
+ * Other screens keep their normal flow and may scroll vertically.
+ */
+@media (orientation: landscape) and (max-height: 500px) {
+  :root {
+    --page-gutter: 16px;
+    --pl-side-w: clamp(208px, 31vw, 290px);
+    --pl-gap: 8px;
+  }
+
+  /* Side padding clears the notch / Dynamic Island. phone.css sets a fixed
+     padding-inline below 760 px, so restate the safe-area aware version. */
+  main {
+    padding-inline: max(var(--page-gutter), var(--safe-left)) max(var(--page-gutter), var(--safe-right));
+  }
+  .site-header {
+    padding: 10px max(var(--page-gutter), var(--safe-right)) 10px max(var(--page-gutter), var(--safe-left));
+  }
+  .site-footer {
+    padding-inline: max(var(--page-gutter), var(--safe-left)) max(var(--page-gutter), var(--safe-right));
+  }
+
+  /* Handover and summary: shorter vertical rhythm so the main button is
+     reachable with little scrolling. */
+  .handover {
+    padding: 14px 16px 18px;
+  }
+  .handover-symbol {
+    width: 64px;
+    height: 64px;
+    margin: 12px auto 10px;
+    border-radius: 18px;
+    font-size: 38px;
+  }
+  .handover h1 {
+    font-size: 28px;
+    margin: 6px 0 10px;
+  }
+  .handover-sub {
+    margin-bottom: 14px;
+  }
+  .ready-facts {
+    flex-wrap: wrap;
+    gap: 8px 20px;
+    margin-bottom: 16px;
+  }
+  .handover .button {
+    min-width: min(240px, 100%);
+  }
+
+  /* ---------------------------------------------------------------------
+     Play screen: hide chrome only while a turn is on screen.
+     --------------------------------------------------------------------- */
+  body:has(.play-layout) .site-header,
+  body:has(.play-layout) .site-footer,
+  main:has(.play-layout) > .game-heading,
+  main:has(.play-layout) > .score-strip {
+    display: none;
+  }
+  main:has(.play-layout) {
+    min-height: 0;
+    padding-top: max(8px, var(--safe-top));
+    padding-bottom: 8px;
+    max-width: none;
+  }
+
+  .play-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) var(--pl-side-w);
+    grid-template-rows: auto auto minmax(0, 1fr) auto auto;
+    column-gap: 14px;
+    row-gap: 0;
+    justify-content: stretch;
+    /* One screen: viewport minus main padding and body safe-bottom. */
+    height: calc(var(--vh-small) - max(8px, var(--safe-top)) - 8px - var(--safe-bottom));
+    min-height: 260px;
+  }
+  .play-main {
+    display: contents;
+  }
+
+  /* Left column: team, timer and pause, progress bar, card. */
+  .play-top {
+    grid-column: 1;
+    grid-row: 1;
+    gap: 10px;
+    padding-bottom: 6px;
+    min-width: 0;
+  }
+  .play-top > div:first-child {
+    min-width: 0;
+  }
+  .play-top > div:first-child > span:last-child {
+    margin-top: 2px;
+  }
+  .timer {
+    min-width: 0;
+    padding: 4px 10px;
+    gap: 6px;
+  }
+  .timer strong {
+    font-size: 24px;
+  }
+  .play-top > .icon-button {
+    min-width: var(--tap-min);
+    min-height: var(--tap-min);
+    padding: 8px;
+  }
+  .time-track {
+    grid-column: 1;
+    grid-row: 2;
+    margin-bottom: 8px;
+  }
+
+  .game-card {
+    grid-column: 1;
+    grid-row: 3 / 6;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 10px 16px;
+    border-radius: 16px;
+    box-shadow: 0 4px 0 #eee7db;
+    margin-bottom: 4px;
+    overflow: auto;
+  }
+  .card-category {
+    position: absolute;
+    top: 8px;
+    left: 14px;
+    right: 14px;
+    font-size: 9px;
+  }
+  .game-card h1 {
+    font-size: clamp(1.5rem, 1rem + 2.4vh, 2.125rem);
+    letter-spacing: -1px;
+    line-height: 1.12;
+    margin: 14px 0 8px;
+  }
+  .forbidden-label {
+    font-size: 8px;
+    gap: 10px;
+  }
+  .forbidden-words {
+    margin: 6px 0 4px;
+    gap: 2px;
+    font-size: clamp(0.9375rem, 0.5rem + 1.9vh, 1.0625rem);
+    line-height: 1.3;
+  }
+  .card-detail {
+    margin-top: 4px;
+    font-size: 8px;
+  }
+  .paused-card h1 {
+    font-size: 22px;
+    margin: 6px 0;
+  }
+  .paused-card .pause-art {
+    font-size: 36px;
+  }
+  .paused-card .button {
+    margin-top: 10px;
+  }
+
+  /* Right column: the three scoring buttons, undo, round toolbar. */
+  .play-actions {
+    grid-column: 2;
+    grid-row: 1 / 4;
+    display: flex;
+    flex-direction: column;
+    gap: var(--pl-gap);
+    margin: 0;
+    min-height: 0;
+  }
+  .game-action {
+    flex: 1 1 0;
+    min-height: min(var(--action-min-h), 100%);
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 8px;
+    padding: 6px 12px 4px;
+    border-radius: 12px;
+    text-align: left;
+    min-width: 0;
+  }
+  .game-action .icon {
+    width: 22px;
+    height: 22px;
+  }
+  .game-action strong {
+    font-size: 14px;
+  }
+  .game-action > span {
+    margin-left: auto;
+    font-size: 10px;
+    text-align: right;
+  }
+
+  .play-bottom {
+    grid-column: 2;
+    grid-row: 4;
+    margin-top: 4px;
+    gap: 8px;
+    flex-wrap: wrap;
+    font-size: 9px;
+  }
+  .play-bottom .text-button {
+    min-height: var(--tap-min);
+    font-size: 10px;
+  }
+
+  .speech-feedback {
+    grid-column: 1;
+    grid-row: 6;
+    min-height: 0;
+    margin-top: 2px;
+    font-size: 10px;
+    line-height: 1.4;
+  }
+  .speech-feedback:empty {
+    display: none;
+  }
+  .play-layout:has(.speech-feedback:not(:empty)) {
+    grid-template-rows: auto auto minmax(0, 1fr) auto auto auto;
+  }
+
+  /* The round sidebar shrinks to one row: sound, microphone, end turn. The
+     running round score is shown small; the detailed counts are hidden. */
+  .round-sidebar {
+    grid-column: 2;
+    grid-row: 5;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+    margin: 0;
+    padding: 0 0 0 8px;
+    text-align: left;
+    border-radius: 12px;
+    min-width: 0;
+  }
+  .round-sidebar > .eyebrow,
+  .round-sidebar > span:nth-of-type(2),
+  .round-counts {
+    display: none;
+  }
+  .round-points {
+    font-size: 18px;
+    letter-spacing: 0;
+    line-height: 1;
+    margin: 0;
+  }
+  .round-toolbar {
+    margin: 0;
+    gap: 2px;
+  }
+  .round-toolbar .icon-button {
+    border: 0;
+    min-width: var(--tap-min);
+    min-height: var(--tap-min);
+    padding: 8px;
+  }
+  .round-sidebar > .text-button {
+    margin: 0;
+    width: auto;
+    min-height: var(--tap-min);
+    padding: 0 8px 0 0;
+    border: 0;
+    font-size: 10px;
+    white-space: nowrap;
+  }
+}
