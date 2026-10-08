@@ -19,6 +19,7 @@ import "./ui/install-hint.js";
 import "./sound.js";
 import "./haptics.js";
 import "./shortcuts.js";
+import "./device.js";
 
 installActions();
 

@@ -1,1 +1,84 @@
-/* Reserved for the v2 task that owns this file (see docs/plan-v2.md). */
+/*
+ * Input modality (plan-v2 C7).
+ *
+ * src/device.js sets data-input="touch|mouse|pen" on <html> from the last
+ * pointer interaction and from (any-pointer: coarse) / (pointer: fine)
+ * changes. Target sizes follow how the user is interacting right now, not the
+ * viewport width: a Surface in tablet mode or an iPad gets touch sizes, the
+ * same screen with a trackpad keeps the compact desktop sizes.
+ *
+ * Mouse and pen keep the compact v1 sizes, so there are no rules for them
+ * here. New hover effects belong behind @media (hover: hover) or
+ * [data-input="mouse"]; the touch block below cancels the existing v1 hover
+ * effects so that they do not stick after a tap.
+ */
+
+/* Touch targets: at least 44 × 44 px (Apple HIG, plan-v2 criterion 3).
+   Only controls that are smaller than that in v1 are listed: overriding
+   min-height on .button (47 px), .start-button (53 px) or .category (126 px)
+   would shrink them; category labels stay well above 44 px in every
+   layout (the C7 test checks this), so they need no rule here. */
+[data-input="touch"] .small-button,
+[data-input="touch"] .icon-button,
+[data-input="touch"] .text-button,
+[data-input="touch"] .remove-team,
+[data-input="touch"] .category-tools button,
+[data-input="touch"] .settings-row select,
+[data-input="touch"] .toggle-row,
+[data-input="touch"] .speech-setting {
+  min-height: var(--tap-min);
+}
+[data-input="touch"] .icon-button,
+[data-input="touch"] .remove-team {
+  min-width: var(--tap-min);
+}
+[data-input="touch"] .remove-team {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+[data-input="touch"] .site-footer a,
+[data-input="touch"] .site-footer button {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--tap-min);
+}
+
+/* Scoring buttons: at least 64 px high (plan-v2 criterion 3). */
+[data-input="touch"] .game-action {
+  min-height: var(--action-min-h);
+}
+
+/* Bigger switch so the thumb is easy to hit; the whole row stays the label. */
+[data-input="touch"] .toggle-row input {
+  width: 44px;
+  height: 26px;
+}
+[data-input="touch"] .toggle-row input:before {
+  width: 20px;
+  height: 20px;
+}
+[data-input="touch"] .toggle-row input:checked:before {
+  transform: translateX(18px);
+}
+
+/* No hover-dependent styling on touch: cancel the v1 hover effects, keep
+   :active feedback. */
+[data-input="touch"] .button:hover:not(:active),
+[data-input="touch"] .category:hover {
+  transform: none;
+}
+[data-input="touch"] .primary:hover {
+  background: var(--purple);
+}
+[data-input="touch"] .small-button:hover,
+[data-input="touch"] .icon-button:hover {
+  background: transparent;
+}
+[data-input="touch"] .preset-buttons .small-button:hover {
+  background: #fff;
+}
+[data-input="touch"] .site-footer a:hover,
+[data-input="touch"] .site-footer button:hover {
+  color: inherit;
+}
