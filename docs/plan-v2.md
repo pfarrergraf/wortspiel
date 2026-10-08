@@ -21,7 +21,7 @@ Karten vor dem Anzeigen reservieren, Offline, keine Cloud, Mikrofon standardmä�
 4. **Keine neuen Abhängigkeiten** ohne Freigabe durch den Integrator. Alles muss offline aus dem Bundle laufen.
 5. **Tests gehören zur Aufgabe.** Jede Aufgabe legt eigene Testdateien an (`tests/<ID>.test.mjs`,
    `tests/browser/<ID>.spec.js`), damit Tests sich nicht gegenseitig in die Quere kommen.
-6. **Vor dem PR:** `npm test`. Bei UI-Änderungen zusätzlich `npm run build && npm run test:e2e`.
+6. **Vor dem PR:** `npm test`. Bei UI-Änderungen zusätzlich `npm run build && PW_PORT=<eigener Port> npm run test:e2e`. Parallele Worktrees brauchen verschiedene Ports, sonst testet man den Build eines anderen Worktrees.
 7. **PR-Beschreibung:** ID, geänderte Dateien, ausgeführte Tests mit Ergebnis, bei UI Screenshots in
    390×844, 820×1180 und 1440×900, Integrationsbedarf.
 8. **Die Checkliste in dieser Datei hakt nur der Integrator ab**, und zwar beim Merge. So gibt es keine Konflikte in dieser Datei.
@@ -237,7 +237,7 @@ Summe: rund 2 000 neue Karten, davon mehr als 1 500 speziell für Jugendliche.
 | [ ] C5 | **Notebook und Monitor**: begrenzte Lesebreite, Tastenkürzel-Hinweise sichtbar (siehe E3), Hover-Zustände nur bei `hover: hover`. | `responsive/desktop.css` | C1 |
 | [ ] C6 | **Großbild / Beamer** (≥ 1800 px oder Option „Großbildmodus“): Karte und Punktestand skalieren für den Blick von weitem. | `responsive/large.css` | C1 |
 | [ ] C7 | **Eingabeart erkennen (Surface, Convertibles)**: `src/device.js` setzt `data-input="touch|mouse|pen"` am `<html>` beim letzten `pointerdown` und bei `matchMedia('(any-pointer: coarse)')`-Änderungen, außerdem `data-orientation`. Touch-Größen gelten über `[data-input=touch]`, nicht nur über die Breite. Resize und Rotation lösen **kein** `render()` aus. | `src/device.js`, `platform/input.css`, `tests/browser/C7.spec.js` | C1 |
-| [ ] C8 | **Apple (iPhone, iPad, Safari, Home-Bildschirm-App)**: `apple-mobile-web-app-capable`, `-status-bar-style`, `-title`, `apple-touch-icon` 180×180, Safe-Area oben, unten und seitlich, `touch-action: manipulation` und `-webkit-tap-highlight-color` auf Spielknöpfen, kein Gummiband-Scrollen im Spiel (`overscroll-behavior`), Hinweis „Zum Home-Bildschirm hinzufügen“, weil iOS kein `beforeinstallprompt` kennt. | `index.html` (nur `<head>`), `public/apple-touch-icon.png`, `platform/ios.css`, `src/ui/install-hint.js` | C1 |
+| [x] C8 | **Apple (iPhone, iPad, Safari, Home-Bildschirm-App)**: `apple-mobile-web-app-capable`, `-status-bar-style`, `-title`, `apple-touch-icon` 180×180, Safe-Area oben, unten und seitlich, `touch-action: manipulation` und `-webkit-tap-highlight-color` auf Spielknöpfen, kein Gummiband-Scrollen im Spiel (`overscroll-behavior`), Hinweis „Zum Home-Bildschirm hinzufügen“, weil iOS kein `beforeinstallprompt` kennt. | `index.html` (nur `<head>`), `public/apple-touch-icon.png`, `platform/ios.css`, `src/ui/install-hint.js` | C1 |
 | [ ] C9 | **Automatischer Gerätetest** `@matrix`: prüft für jedes Gerät die Kriterien 1–5. Dazu ein Rotationstest (Viewport mitten im Zug wechseln → gleiche Karte, Timer läuft, Kartenspeicher unverändert). Screenshots als Artefakt (nicht als Baseline-Vergleich, weil sie je nach OS abweichen). | `tests/browser/matrix.spec.js` (Grundgerüst existiert, inkl. `KNOWN_LAYOUT_GAPS`) | F8, darf parallel zu C2–C8 entstehen |
 | [ ] C10 | **Optionaler CI-Lauf in WebKit** (echte Safari-Engine) für `@matrix`, als separater, nicht blockierender Job. | `.github/workflows/webkit.yml` | C9 |
 

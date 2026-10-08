@@ -2,6 +2,7 @@ import { ctx, dialog } from "../app.js";
 import { registerAction } from "../actions.js";
 import { cards } from "../data.js";
 import { action } from "../ui/html.js";
+import { iosInstallSteps } from "../ui/install-hint.js";
 
 window.addEventListener("beforeinstallprompt", (event) => {
   event.preventDefault();
@@ -15,7 +16,7 @@ registerAction("install", async () => {
   } else
     dialog(
       "Wortspiel auf den Startbildschirm",
-      "<p><strong>iPhone / iPad:</strong> Öffne diese Adresse in Safari, tippe auf „Teilen“ und dann „Zum Home-Bildschirm“.</p><p><strong>Android:</strong> Öffne diese Adresse in Chrome und wähle im Menü „App installieren“ oder „Zum Startbildschirm hinzufügen“.</p><p>Warte einmal auf „Offline bereit“. Danach kannst du auch ohne Internet spielen. Nutze für euren Kartenspeicher möglichst immer denselben Browser oder dieselbe installierte App.</p>",
+      `${iosInstallSteps}<p><strong>Android:</strong> Öffne diese Adresse in Chrome und wähle im Menü „App installieren“ oder „Zum Startbildschirm hinzufügen“.</p><p>Warte einmal auf „Offline bereit“. Danach kannst du auch ohne Internet spielen. Nutze für euren Kartenspeicher möglichst immer denselben Browser oder dieselbe installierte App.</p>`,
       action("close-dialog", "Alles klar", "button primary"),
     );
 });

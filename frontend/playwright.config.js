@@ -22,6 +22,9 @@ const matrix = {
   large: { viewport: { width: 2560, height: 1440 } },
 };
 
+// Parallel worktrees must use distinct ports: PW_PORT=4201 npx playwright test
+const port = Number(process.env.PW_PORT) || 4173;
+
 export default defineConfig({
   testDir: "./tests/browser",
   fullyParallel: false,
@@ -29,7 +32,7 @@ export default defineConfig({
   timeout: 30000,
   reporter: "list",
   use: {
-    baseURL: "http://127.0.0.1:4173",
+    baseURL: `http://127.0.0.1:${port}`,
     channel: process.env.CI ? undefined : "chrome",
     trace: "retain-on-failure",
   },
@@ -51,8 +54,8 @@ export default defineConfig({
     })),
   ],
   webServer: {
-    command: "npm run preview -- --port 4173 --strictPort",
-    url: "http://127.0.0.1:4173",
+    command: `npm run preview -- --port ${port} --strictPort`,
+    url: `http://127.0.0.1:${port}`,
     reuseExistingServer: !process.env.CI,
   },
 });
