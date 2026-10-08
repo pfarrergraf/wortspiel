@@ -1,3 +1,6 @@
+import { matchesAudience } from "./rules/audience.js";
+import { pickMode } from "./rules/modes.js";
+
 export const SCHEMA = 1;
 export const normalize = (text) =>
   String(text)
@@ -74,12 +77,20 @@ export function ensureGroup(state, name = state.settings.group) {
   return state.groups[id];
 }
 
+// Every per-card filter that does not depend on categories or history.
+export function matchesSettings(card, settings) {
+  return (
+    matchesDifficulty(card, settings.difficulty) &&
+    matchesAudience(card, settings)
+  );
+}
+
 export function availableCards(cards, settings, seen = {}) {
   const selected = new Set(settings.selected);
   return cards.filter(
     (card) =>
       card.categories.some((id) => selected.has(id)) &&
-      matchesDifficulty(card, settings.difficulty) &&
+      matchesSettings(card, settings) &&
       !Object.hasOwn(seen, card.id),
   );
 }
@@ -175,6 +186,7 @@ export function drawCard(state, cards, random = Math.random, now = Date.now()) {
     ];
   group.seen[chosen.id] = now;
   session.current = chosen.id;
+  session.currentMode = pickMode(chosen, session.settings, random);
   return true;
 }
 
