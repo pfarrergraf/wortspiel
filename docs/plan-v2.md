@@ -115,7 +115,7 @@ Das Verhalten der App bleibt in dieser Phase **unverändert**. Alle bestehenden 
       Die neuen Projekte laufen nur für Specs mit dem Tag `@matrix`.
       **Ausgangsbefund:** Auf `phone-small`, `iphone-se`, `iphone-landscape` und `ipad-landscape` liegen Karte oder
       Wertungsknöpfe im Zug außerhalb des Bildschirms. Sie stehen in `KNOWN_LAYOUT_GAPS` in `tests/browser/matrix.spec.js`.
-      Wer eine Lücke schließt, entfernt den Eintrag.
+      Wer eine Lücke schließt, entfernt den Eintrag. **Stand: alle vier Lücken durch C2–C4 geschlossen, Liste leer.**
 - [x] **F9 AGENTS.md ergänzen.** Verweis auf diesen Plan und die Regeln aus Abschnitt 0.
 - [x] **F10** `npm test`, `npm run build`, `npm run test:e2e` grün → Merge auf `main`, Tag `v2-foundation`.
 
@@ -231,12 +231,12 @@ Summe: rund 2 000 neue Karten, davon mehr als 1 500 speziell für Jugendliche.
 | ID | Aufgabe | Dateien (exklusiv) | Abhängig |
 | --- | --- | --- | --- |
 | [x] C1 | **Design-Tokens**: fluide Typografie mit `clamp()`, Abstände, Kartengröße als Custom Properties, `dvh`/`svh` statt `vh`, Container Queries für Karte und Knopfleiste. Basis für alle C-Aufgaben. | `styles/tokens.css`, `styles/base.css` | F4 |
-| [ ] C2 | **Smartphone hoch** (320–430 px): kompakte Kopfzeile im Spiel, Knöpfe als unterer Daumenbereich, Punktestand als schmale Leiste, kleine Geräte (iPhone SE, 320 px) zuerst. | `responsive/phone.css` | C1 |
-| [ ] C3 | **Smartphone quer**: zweispaltig mit Karte links und Knöpfen rechts, Kopfzeile ausgeblendet, Safe-Area links/rechts (Notch/Dynamic Island). | `responsive/phone-landscape.css` | C1 |
-| [ ] C4 | **Tablet** (hoch und quer, 744–1366 px): eigenes Layout. Hochformat: große Karte mittig, Knopfleiste unten. Querformat: Karte links, Knopfspalte rechts in Daumenreichweite, Rundenleiste ausklappbar. Setup zweispaltig. | `responsive/tablet.css` | C1 |
+| [x] C2 | **Smartphone hoch** (320–430 px): kompakte Kopfzeile im Spiel, Knöpfe als unterer Daumenbereich, Punktestand als schmale Leiste, kleine Geräte (iPhone SE, 320 px) zuerst. | `responsive/phone.css` | C1 |
+| [x] C3 | **Smartphone quer**: zweispaltig mit Karte links und Knöpfen rechts, Kopfzeile ausgeblendet, Safe-Area links/rechts (Notch/Dynamic Island). | `responsive/phone-landscape.css` | C1 |
+| [x] C4 | **Tablet** (hoch und quer, 744–1366 px): eigenes Layout. Hochformat: große Karte mittig, Knopfleiste unten. Querformat: Karte links, Knopfspalte rechts in Daumenreichweite, Rundenleiste ausklappbar. Setup zweispaltig. | `responsive/tablet.css` | C1 |
 | [ ] C5 | **Notebook und Monitor**: begrenzte Lesebreite, Tastenkürzel-Hinweise sichtbar (siehe E3), Hover-Zustände nur bei `hover: hover`. | `responsive/desktop.css` | C1 |
 | [ ] C6 | **Großbild / Beamer** (≥ 1800 px oder Option „Großbildmodus“): Karte und Punktestand skalieren für den Blick von weitem. | `responsive/large.css` | C1 |
-| [ ] C7 | **Eingabeart erkennen (Surface, Convertibles)**: `src/device.js` setzt `data-input="touch|mouse|pen"` am `<html>` beim letzten `pointerdown` und bei `matchMedia('(any-pointer: coarse)')`-Änderungen, außerdem `data-orientation`. Touch-Größen gelten über `[data-input=touch]`, nicht nur über die Breite. Resize und Rotation lösen **kein** `render()` aus. | `src/device.js`, `platform/input.css`, `tests/browser/C7.spec.js` | C1 |
+| [x] C7 | **Eingabeart erkennen (Surface, Convertibles)**: `src/device.js` setzt `data-input="touch|mouse|pen"` am `<html>` beim letzten `pointerdown` und bei `matchMedia('(any-pointer: coarse)')`-Änderungen, außerdem `data-orientation`. Touch-Größen gelten über `[data-input=touch]`, nicht nur über die Breite. Resize und Rotation lösen **kein** `render()` aus. | `src/device.js`, `platform/input.css`, `tests/browser/C7.spec.js` | C1 |
 | [x] C8 | **Apple (iPhone, iPad, Safari, Home-Bildschirm-App)**: `apple-mobile-web-app-capable`, `-status-bar-style`, `-title`, `apple-touch-icon` 180×180, Safe-Area oben, unten und seitlich, `touch-action: manipulation` und `-webkit-tap-highlight-color` auf Spielknöpfen, kein Gummiband-Scrollen im Spiel (`overscroll-behavior`), Hinweis „Zum Home-Bildschirm hinzufügen“, weil iOS kein `beforeinstallprompt` kennt. | `index.html` (nur `<head>`), `public/apple-touch-icon.png`, `platform/ios.css`, `src/ui/install-hint.js` | C1 |
 | [ ] C9 | **Automatischer Gerätetest** `@matrix`: prüft für jedes Gerät die Kriterien 1–5. Dazu ein Rotationstest (Viewport mitten im Zug wechseln → gleiche Karte, Timer läuft, Kartenspeicher unverändert). Screenshots als Artefakt (nicht als Baseline-Vergleich, weil sie je nach OS abweichen). | `tests/browser/matrix.spec.js` (Grundgerüst existiert, inkl. `KNOWN_LAYOUT_GAPS`) | F8, darf parallel zu C2–C8 entstehen |
 | [ ] C10 | **Optionaler CI-Lauf in WebKit** (echte Safari-Engine) für `@matrix`, als separater, nicht blockierender Job. | `.github/workflows/webkit.yml` | C9 |
