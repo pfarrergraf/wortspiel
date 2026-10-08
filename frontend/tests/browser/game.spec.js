@@ -27,9 +27,9 @@ test("responsive setup, selectable categories and a complete manual round", asyn
   await expect(
     page.getByRole("heading", { name: "Was kommt auf die Karten?" }),
   ).toBeVisible();
-  expect(await page.locator('input[name="category"]:checked').count()).toBe(12);
+  await expect(page.locator('input[name="category"]:checked')).toHaveCount(12);
   await page.getByRole("button", { name: "Alle abwählen" }).click();
-  expect(await page.locator('input[name="category"]:checked').count()).toBe(0);
+  await expect(page.locator('input[name="category"]:checked')).toHaveCount(0);
   await page
     .locator("label.category")
     .filter({ hasText: "Glaube & Kirche" })
@@ -40,7 +40,7 @@ test("responsive setup, selectable categories and a complete manual round", asyn
   await page.getByRole("button", { name: "Los geht’s" }).click();
   await page.getByRole("button", { name: "Wir sind bereit" }).click();
   await expect(page.locator("#current-word")).toBeVisible();
-  expect(await seen(page)).toBe(1);
+  await expect.poll(() => seen(page)).toBe(1);
   const first = await page.locator("#current-word").innerText();
   await page.screenshot({
     path: `../test-results/${testInfo.project.name}-game.png`,
@@ -60,7 +60,7 @@ test("responsive setup, selectable categories and a complete manual round", asyn
   await page.getByRole("button", { name: "Letzte Wertung zurück" }).click();
   await expect(page.locator("#current-word")).toHaveText(first);
   await expect(page.locator(".round-points")).toHaveText("0");
-  expect(await seen(page)).toBe(2);
+  await expect.poll(() => seen(page)).toBe(2);
   await page
     .getByRole("button", { name: "Runde beenden", exact: true })
     .click();
@@ -96,7 +96,7 @@ test("reload, offline play, backup import and manual reset retain history correc
   ).toBeVisible();
   await page.getByRole("button", { name: "Weiter geht’s" }).click();
   await expect(page.locator("#current-word")).toHaveText(first);
-  expect(await seen(page)).toBe(1);
+  await expect.poll(() => seen(page)).toBe(1);
   await page.getByRole("button", { name: "Spielübersicht" }).click();
   await page
     .getByRole("button", { name: "Kartenspeicher", exact: false })
@@ -109,10 +109,10 @@ test("reload, offline play, backup import and manual reset retain history correc
     .getByRole("button", { name: "Kartenspeicher zurücksetzen" })
     .click();
   await page.getByRole("button", { name: "Ja, Speicher zurücksetzen" }).click();
-  expect(await seen(page)).toBe(0);
+  await expect.poll(() => seen(page)).toBe(0);
   await page.locator("#backup-input").setInputFiles(backupPath);
   await expect(page.locator("#toast")).toContainText("1 zusätzliche Karten");
-  expect(await seen(page)).toBe(1);
+  await expect.poll(() => seen(page)).toBe(1);
   await page.getByRole("button", { name: "Spiel vorbereiten" }).click();
   await expect(page.locator("#connection")).toHaveText("Offline bereit");
   await page.evaluate(() =>
@@ -134,7 +134,7 @@ test("reload, offline play, backup import and manual reset retain history correc
   await page.getByRole("button", { name: "Los geht’s" }).click();
   await page.getByRole("button", { name: "Wir sind bereit" }).click();
   await expect(page.locator("#current-word")).not.toHaveText(first);
-  expect(await seen(page)).toBe(2);
+  await expect.poll(() => seen(page)).toBe(2);
   await page.screenshot({
     path: `../test-results/${testInfo.project.name}-offline.png`,
     fullPage: true,
@@ -181,7 +181,7 @@ test("history survives an actual Chrome restart and a new game", async ({}, test
     await expect(
       page.getByRole("heading", { name: "Kurz durchatmen." }),
     ).toBeVisible();
-    expect(await seen(page)).toBe(1);
+    await expect.poll(() => seen(page)).toBe(1);
     await page.getByRole("button", { name: "Spielübersicht" }).click();
     await page.getByRole("button", { name: "Los geht’s" }).click();
     await page
@@ -190,7 +190,7 @@ test("history survives an actual Chrome restart and a new game", async ({}, test
       .click();
     await page.getByRole("button", { name: "Wir sind bereit" }).click();
     await expect(page.locator("#current-word")).not.toHaveText(first);
-    expect(await seen(page)).toBe(2);
+    await expect.poll(() => seen(page)).toBe(2);
   } finally {
     await context.close();
   }
@@ -212,6 +212,7 @@ test("timer ends the turn and all teams reach the final result", async ({
   ).toBeVisible();
   await page.getByRole("button", { name: "Nächstes Team" }).click();
   await page.getByRole("button", { name: "Wir sind bereit" }).click();
+  await expect(page.locator("#current-word")).toBeVisible();
   await page.clock.fastForward(61000);
   await expect(
     page.getByRole("heading", { name: "Das war eure Runde!" }),
@@ -222,5 +223,5 @@ test("timer ends the turn and all teams reach the final result", async ({
   ).toBeVisible();
   await page.getByRole("button", { name: "Neue Partie", exact: false }).click();
   await expect(page.getByRole("button", { name: "Los geht’s" })).toBeVisible();
-  expect(await seen(page)).toBe(3);
+  await expect.poll(() => seen(page)).toBe(3);
 });
