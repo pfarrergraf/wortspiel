@@ -8,6 +8,38 @@ export const normalize = (text) =>
     .trim();
 export const groupId = (name) => `group:${normalize(name)}`;
 
+export const DIFFICULTIES = [
+  { id: "easy", name: "Leicht", description: "Vertraute Begriffe aus Alltag, Schule und Freizeit. Keine seltenen Promis oder Spezialbegriffe." },
+  { id: "medium", name: "Mittel", description: "Leichte Karten plus mehr Allgemeinwissen, bekannte Personen und Begriffe aus dem Konfi-Unterricht." },
+  { id: "all", name: "Alles / knifflig", description: "Der gesamte Bestand, einschließlich seltener Promis und Spezialwissen." },
+];
+export const PRESETS = [
+  { id: "youth", name: "Jugendliche", difficulty: "easy", categories: ["animals", "city-country", "food", "sports", "things", "tv", "web", "everyday"] },
+  { id: "confirmation", name: "Konfis", difficulty: "easy", categories: ["animals", "city-country", "food", "sports", "things", "tv", "web", "everyday", "faith"] },
+  { id: "mixed", name: "Gemischte Runde", difficulty: "medium", categories: null },
+];
+
+export function applyPreset(settings, presetId, categories) {
+  const preset = PRESETS.find((p) => p.id === presetId);
+  if (!preset) throw new Error("Unbekannte Gruppenauswahl.");
+  settings.difficulty = preset.difficulty;
+  settings.selected = categories
+    .filter((c) => !preset.categories || preset.categories.includes(c.id))
+    .map((c) => c.id);
+}
+
+export function matchesDifficulty(card, difficulty = "all") {
+  // Missing metadata is never treated as an easy card.
+  return difficulty === "all" || card.difficulty === "easy" ||
+    (difficulty === "medium" && card.difficulty === "medium");
+}
+
+export function migrateDifficulty(state) {
+  // Safer defaults for future games; keep an existing game's original pool.
+  state.settings.difficulty ??= "easy";
+  if (state.session) state.session.settings.difficulty ??= "all";
+}
+
 export function initialState(categories) {
   return {
     schema: SCHEMA,
@@ -18,6 +50,7 @@ export function initialState(categories) {
       group: "Unsere Runde",
       teams: ["Team Konfetti", "Team Rakete"],
       selected: categories.map((c) => c.id),
+      difficulty: "easy",
       seconds: 60,
       cycles: 3,
       skipPenalty: 0,
@@ -46,11 +79,14 @@ export function availableCards(cards, settings, seen = {}) {
   return cards.filter(
     (card) =>
       card.categories.some((id) => selected.has(id)) &&
+      matchesDifficulty(card, settings.difficulty) &&
       !Object.hasOwn(seen, card.id),
   );
 }
 
 export function validateSettings(settings, categories) {
+  if (!DIFFICULTIES.some((d) => d.id === (settings.difficulty ?? "all")))
+    throw new Error("Wähle einen gültigen Schwierigkeitsgrad.");
   if (
     typeof settings.group !== "string" ||
     !settings.group.trim() ||
@@ -98,7 +134,7 @@ export function createSession(state, cards, categories) {
   const group = ensureGroup(state);
   if (!availableCards(cards, state.settings, group.seen).length)
     throw new Error(
-      "Diese Themenpakete sind ausgespielt. Wähle weitere Pakete oder setze den Kartenspeicher zurück.",
+      "Für diese Themen und diese Stufe sind keine ungespielten Karten übrig (oder die Auswahl ist ausgespielt). Wähle weitere Themen oder eine höhere Stufe. Der Kartenspeicher bleibt erhalten.",
     );
   state.session = {
     settings: structuredClone(state.settings),

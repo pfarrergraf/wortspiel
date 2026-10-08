@@ -8,7 +8,7 @@ Quelle: https://github.com/Kovah/Taboo-Data
 
 Lizenz: GNU General Public License, Version 3 oder neuer. Der vollständige Text liegt in LICENSE. Importierter Stand: 02001345db07d7f440103c35ad9ef1ccf83f8065.
 
-Änderungen: nur vollständige deutsche Karten übernommen; leere Texte entfernt; Begriffe normalisiert und dedupliziert; Kategorien zusammengeführt; bestehende und neu geschriebene Karten ergänzt. Ausgabe: frontend/src/data/cards.json.
+Änderungen: nur vollständige deutsche Karten übernommen; leere Texte entfernt; Begriffe normalisiert und dedupliziert; Kategorien zusammengeführt; bestehende und neu geschriebene Karten ergänzt; Karten redaktionell nach Bekanntheit eingestuft. Einordnungen: frontend/data/difficulty.json. 80 zusätzliche eigene Grundbegriffe: frontend/data/easy-cards.json. Ausgabe: frontend/src/data/cards.json.
 
 ## Manrope
 

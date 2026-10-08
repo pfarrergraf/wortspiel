@@ -172,6 +172,39 @@ for (const [category, entries] of Object.entries(supplements)) {
   for (const [word, ...taboo] of entries)
     add(word, taboo, category, "original");
 }
+const easyCards = JSON.parse(
+  await readFile(path.join(root, "frontend/data/easy-cards.json"), "utf8"),
+);
+for (const [category, entries] of Object.entries(easyCards))
+  for (const [word, ...taboo] of entries) add(word, taboo, category, "original");
+// Explicit, reviewed allowlists: new upstream cards stay in the hardest pool.
+const difficultyLists = JSON.parse(
+  await readFile(path.join(root, "frontend/data/difficulty.json"), "utf8"),
+);
+for (const card of cards.values()) card.difficulty = "hard";
+const reviewed = new Set();
+for (const [difficulty, lists] of Object.entries(difficultyLists)) {
+  if (!["easy", "medium"].includes(difficulty))
+    throw new Error(`Unknown difficulty: ${difficulty}`);
+  for (const [category, words] of Object.entries(lists)) {
+    for (const word of words.split(" | ")) {
+      const id = `de:${normalize(word)}`;
+      const card = cards.get(id);
+      if (!card || !card.categories.includes(category) || reviewed.has(id))
+        throw new Error(`Invalid or duplicate difficulty entry: ${word}`);
+      reviewed.add(id);
+      card.difficulty = difficulty;
+    }
+  }
+}
+for (const entries of Object.values(easyCards))
+  for (const [word] of entries) {
+    const id = `de:${normalize(word)}`;
+    if (reviewed.has(id))
+      throw new Error(`Duplicate easy card: ${word}`);
+    reviewed.add(id);
+    cards.get(id).difficulty = "easy";
+  }
 await mkdir(path.join(root, "frontend/src/data"), { recursive: true });
 const output = {
   version: 1,

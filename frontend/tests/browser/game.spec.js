@@ -1,4 +1,7 @@
 import { test, expect, chromium } from "@playwright/test";
+import { readFile } from "node:fs/promises";
+
+const dataset = JSON.parse(await readFile(new URL("../../src/data/cards.json", import.meta.url), "utf8"));
 
 async function begin(page) {
   await page.goto("/");
@@ -17,6 +20,78 @@ async function seen(page) {
     ).reduce((n, group) => n + Object.keys(group.seen).length, 0),
   );
 }
+
+test("youth and Konfi presets filter cards and counts, persist offline, and keep history across levels", async ({ page, context }, testInfo) => {
+  await page.goto("/");
+  await expect(page.getByLabel("Schwierigkeitsgrad")).toHaveValue("easy");
+  await page.getByRole("button", { name: "Jugendliche", exact: true }).click();
+  await expect(page.locator('input[name="category"]:checked')).toHaveCount(8);
+  await expect(page.locator('input[value="faith"]')).not.toBeChecked();
+  await page.getByRole("button", { name: "Konfis", exact: true }).click();
+  await expect(page.locator('input[name="category"]:checked')).toHaveCount(9);
+  await expect(page.locator('input[value="faith"]')).toBeChecked();
+  const selected = await page.locator('input[name="category"]:checked').evaluateAll((inputs) => inputs.map((input) => input.value));
+  const pool = dataset.cards.filter((c) => c.difficulty === "easy" && c.categories.some((id) => selected.includes(id)));
+  await expect(page.locator("#available-count")).toHaveText(pool.length.toLocaleString("de-DE"));
+  const faith = dataset.cards.filter((c) => c.difficulty === "easy" && c.categories.includes("faith")).length;
+  await expect(page.locator("label.category").filter({ hasText: "Glaube & Kirche" })).toContainText(`${faith} von ${faith} ungespielt`);
+  await page.getByRole("button", { name: "Los geht’s" }).click();
+  await expect(page.locator(".game-heading")).toContainText("Leicht");
+  await page.getByRole("button", { name: "Wir sind bereit" }).click();
+  await expect(page.locator("#current-word")).toBeVisible();
+  const first = await page.locator("#current-word").innerText();
+  expect(pool.some((c) => c.word === first)).toBe(true);
+  await page.getByRole("button", { name: "Spielübersicht" }).click();
+  await page.getByLabel("Schwierigkeitsgrad").selectOption("all");
+  await expect(page.locator("#available-count")).toHaveText((dataset.cards.filter((c) => c.categories.some((id) => selected.includes(id))).length - 1).toLocaleString("de-DE"));
+  await page.getByRole("button", { name: "Los geht’s" }).click();
+  await page.getByRole("dialog").getByRole("button", { name: "Neue Partie starten" }).click();
+  await expect(page.locator(".game-heading")).toContainText("Alles / knifflig");
+  await page.getByRole("button", { name: "Wir sind bereit" }).click();
+  await expect(page.locator("#current-word")).toBeVisible();
+  await expect(page.locator("#current-word")).not.toHaveText(first);
+  await expect.poll(() => seen(page)).toBe(2);
+  await page.getByRole("button", { name: "Spielübersicht" }).click();
+  await page.getByRole("button", { name: "Konfis", exact: true }).click();
+  await expect(page.getByLabel("Schwierigkeitsgrad")).toHaveValue("easy");
+  // Preparing the next game must not change the current game's pool.
+  await page.getByRole("button", { name: "Partie fortsetzen" }).click();
+  await expect(page.locator(".game-heading")).toContainText("Alles / knifflig");
+  await page.getByRole("button", { name: "Spielübersicht" }).click();
+  await page.evaluate(() => navigator.serviceWorker.ready.then(() => new Promise((resolve) => {
+    if (navigator.serviceWorker.controller) return resolve();
+    navigator.serviceWorker.addEventListener("controllerchange", resolve, { once: true });
+  })));
+  await context.setOffline(true);
+  await page.reload();
+  await page.getByRole("button", { name: "Spielübersicht" }).click();
+  await expect(page.getByLabel("Schwierigkeitsgrad")).toHaveValue("easy");
+  await expect(page.locator('input[value="faith"]')).toBeChecked();
+  await expect.poll(() => seen(page)).toBe(2);
+  await page.screenshot({ path: `../test-results/${testInfo.project.name}-difficulty.png`, fullPage: true });
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+});
+
+test("existing saved games upgrade without losing cards or changing their active pool", async ({ page }) => {
+  await begin(page);
+  const first = await page.locator("#current-word").innerText();
+  await page.getByRole("button", { name: "Runde pausieren" }).click();
+  await expect(page.getByRole("heading", { name: "Kurz durchatmen." })).toBeVisible();
+  await page.evaluate(() => {
+    const old = JSON.parse(localStorage.getItem("wortspiel.state.v1"));
+    delete old.settings.difficulty;
+    delete old.session.settings.difficulty;
+    old.revision += 100;
+    localStorage.setItem("wortspiel.state.v1", JSON.stringify(old));
+  });
+  await page.reload();
+  await expect(page.locator(".game-heading")).toContainText("Alles / knifflig");
+  await page.getByRole("button", { name: "Weiter geht’s" }).click();
+  await expect(page.locator("#current-word")).toHaveText(first);
+  await page.getByRole("button", { name: "Spielübersicht" }).click();
+  await expect(page.getByLabel("Schwierigkeitsgrad")).toHaveValue("easy");
+  await expect.poll(() => seen(page)).toBe(1);
+});
 
 test("responsive setup, selectable categories and a complete manual round", async ({
   page,

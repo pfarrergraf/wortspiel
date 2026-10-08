@@ -16,6 +16,9 @@ import {
   resetGroup,
   exportBackup,
   importBackup,
+  matchesDifficulty,
+  applyPreset,
+  migrateDifficulty,
 } from "../src/engine.js";
 import { findSpeechMatches } from "../src/speech.js";
 import { readFile } from "node:fs/promises";
@@ -26,6 +29,7 @@ const cards = Array.from({ length: 8 }, (_, i) => ({
   word: `Wort ${i}`,
   taboo: ["Haus", "Straße", "Gute Laune"],
   categories: [i < 4 ? "a" : "b"],
+  difficulty: "easy",
 }));
 const state = () => initialState(categories);
 const begin = (s) => {
@@ -184,6 +188,7 @@ test("the shipped dataset has complete, unique cards and no empty categories", a
   for (const card of dataset.cards)
     assert.ok(
       card.word.trim() &&
+        ["easy", "medium", "hard"].includes(card.difficulty) &&
         card.taboo.length >= 3 &&
         card.taboo.every((x) => x.trim()),
     );
@@ -192,4 +197,90 @@ test("the shipped dataset has complete, unique cards and no empty categories", a
       dataset.cards.some((c) => c.categories.includes(category.id)),
       `${category.name} has no cards`,
     );
+});
+
+test("difficulty filters the real pool, keeping rare names out of easy and medium games", async () => {
+  const dataset = JSON.parse(await readFile(new URL("../src/data/cards.json", import.meta.url), "utf8"));
+  const s = initialState(dataset.categories);
+  const alison = dataset.cards.find((c) => c.word === "Alison Brie");
+  assert.ok(alison);
+  const easy = availableCards(dataset.cards, s.settings);
+  assert.ok(easy.length >= 350);
+  assert.ok(easy.every((c) => c.difficulty === "easy"));
+  assert.ok(!easy.some((c) => c.id === alison.id));
+  assert.ok(easy.some((c) => c.word === "Apfel"));
+  assert.ok(easy.some((c) => c.word === "Konfirmation"));
+  s.settings.difficulty = "medium";
+  const medium = availableCards(dataset.cards, s.settings);
+  assert.ok(medium.length > easy.length);
+  assert.ok(medium.some((c) => c.word === "Albert Einstein"));
+  assert.ok(!medium.some((c) => c.id === alison.id));
+  s.settings.difficulty = "all";
+  assert.equal(availableCards(dataset.cards, s.settings).length, dataset.cards.length);
+  assert.equal(matchesDifficulty({ difficulty: undefined }, "easy"), false);
+});
+
+test("changing difficulty never resets history, and running games retain their chosen difficulty", () => {
+  const pool = [
+    { ...cards[0], difficulty: "easy" },
+    { ...cards[1], difficulty: "medium" },
+    { ...cards[2], difficulty: "hard" },
+  ];
+  const s = state();
+  createSession(s, pool, categories);
+  startTurn(s, pool, 1000, () => 0);
+  assert.equal(s.session.current, pool[0].id);
+  s.settings.difficulty = "all";
+  recordResult(s, pool, "skip", 2000, () => 0);
+  assert.equal(s.session.exhausted, true);
+  createSession(s, pool, categories);
+  startTurn(s, pool, 3000, () => 0);
+  assert.equal(s.session.current, pool[1].id);
+  finishTurn(s, 4000);
+  s.settings.difficulty = "easy";
+  assert.throws(() => createSession(s, pool, categories), /keine ungespielten/);
+  assert.deepEqual(Object.keys(ensureGroup(s).seen), [pool[0].id, pool[1].id]);
+  s.settings.difficulty = "unknown";
+  assert.throws(() => createSession(s, pool, categories), /Schwierigkeitsgrad/);
+});
+
+test("presets change only card selection and difficulty; Konfis includes basic faith cards", async () => {
+  const dataset = JSON.parse(await readFile(new URL("../src/data/cards.json", import.meta.url), "utf8"));
+  const s = initialState(dataset.categories);
+  s.settings.group = "Konfis 2026";
+  s.settings.seconds = 90;
+  s.settings.teams = ["A", "B"];
+  ensureGroup(s).seen["de:kirche"] = 42;
+  applyPreset(s.settings, "confirmation", dataset.categories);
+  assert.equal(s.settings.difficulty, "easy");
+  assert.ok(s.settings.selected.includes("faith"));
+  assert.ok(!s.settings.selected.includes("people"));
+  assert.ok(availableCards(dataset.cards, s.settings).some((c) => c.word === "Kirche"));
+  assert.ok(!availableCards(dataset.cards, s.settings, ensureGroup(s).seen).some((c) => c.word === "Kirche"));
+  applyPreset(s.settings, "youth", dataset.categories);
+  assert.ok(!s.settings.selected.includes("faith"));
+  assert.equal(s.settings.group, "Konfis 2026");
+  assert.equal(s.settings.seconds, 90);
+  assert.deepEqual(s.settings.teams, ["A", "B"]);
+  assert.equal(ensureGroup(s).seen["de:kirche"], 42);
+  applyPreset(s.settings, "mixed", dataset.categories);
+  assert.equal(s.settings.difficulty, "medium");
+  assert.equal(s.settings.selected.length, dataset.categories.length);
+});
+
+test("upgrades default future games to easy while preserving legacy sessions and histories", () => {
+  const s = state();
+  begin(s);
+  delete s.settings.difficulty;
+  delete s.session.settings.difficulty;
+  const history = structuredClone(s.groups);
+  const current = s.session.current;
+  migrateDifficulty(s);
+  assert.equal(s.settings.difficulty, "easy");
+  assert.equal(s.session.settings.difficulty, "all");
+  assert.equal(s.session.current, current);
+  assert.deepEqual(s.groups, history);
+  s.settings.difficulty = "medium";
+  migrateDifficulty(s);
+  assert.equal(s.settings.difficulty, "medium");
 });

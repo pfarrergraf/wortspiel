@@ -460,6 +460,52 @@ main {
   font-weight: 700;
   white-space: nowrap;
 }
+.difficulty-settings {
+  margin: 22px 0;
+  padding: 18px;
+  border-radius: 14px;
+  background: #f3eefc;
+}
+.difficulty-settings label {
+  display: block;
+  font-size: 14px;
+  font-weight: 800;
+}
+.preset-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 10px 0 20px;
+}
+.preset-buttons .small-button {
+  min-height: 44px;
+  background: #fff;
+  font-size: 13px;
+}
+.difficulty-settings select {
+  display: block;
+  width: 100%;
+  min-height: 48px;
+  padding: 10px 12px;
+  margin-top: 8px;
+  border: 1px solid #cbb8ef;
+  border-radius: 9px;
+  background: #fff;
+  color: var(--ink);
+  font-size: 16px;
+}
+.difficulty-settings p {
+  margin-top: 10px;
+  font-size: 14px;
+  line-height: 1.6;
+}
+.difficulty-settings small {
+  display: block;
+  margin-top: 8px;
+  font-size: 12px;
+  line-height: 1.6;
+  color: #62586f;
+}
 .category-tools {
   display: flex;
   align-items: center;

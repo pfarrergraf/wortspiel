@@ -20,6 +20,11 @@ import {
   resetGroup,
   exportBackup,
   importBackup,
+  DIFFICULTIES,
+  PRESETS,
+  applyPreset,
+  matchesDifficulty,
+  migrateDifficulty,
 } from "./engine.js";
 import { Storage, persistentStorage } from "./storage.js";
 import { LocalSpeech, findSpeechMatches } from "./speech.js";
@@ -95,15 +100,18 @@ function setup() {
     <div class="hero-art" aria-hidden="true"><span class="art-star">✦</span><span class="art-circle"></span><div class="back-card"></div><div class="sample-card"><span class="sample-label">ERKLÄR MAL …</span><strong>Gute Laune</strong><span class="sample-rule">Diese Wörter sind tabu</span><ul><li>Lachen</li><li>Glück</li><li>Freude</li><li>Spaß</li><li>Grinsen</li></ul><span class="sample-bottom">Psst. Das geht auch anders.</span></div><span class="art-badge">Kopf an.<br>Handy weiter.</span></div></section>
     <nav class="section-tabs" aria-label="Spielbereiche"><button class="tab active" data-action="setup">${icon("play")} Spiel vorbereiten</button><button class="tab" data-action="storage">${icon("lock")} Kartenspeicher <span class="count-badge">${Object.keys(group?.seen || {}).length}</span></button></nav>
     ${state.session ? `<div class="resume-banner"><div><strong>Eure Partie ist gespeichert.</strong><span>${escape(state.session.settings.group)} · Runde ${Math.min(cycle(state.session), state.session.settings.cycles)}</span></div>${action("continue", `Partie fortsetzen ${icon("arrow")}`)}</div>` : ""}
-    <form id="setup-form" class="setup-grid"><section class="panel category-panel"><div class="section-heading"><span class="step">01</span><div><h2>Was kommt auf die Karten?</h2><p>Wählt eure Themen. Mischt, was euch gefällt.</p></div><span class="small-tag">${cards.length.toLocaleString("de-DE")} Karten</span></div><div class="category-tools"><span id="selection-count">${settings.selected.length} von ${categories.length} ausgewählt</span><button type="button" data-action="all-categories">Alle auswählen</button><button type="button" data-action="no-categories">Alle abwählen</button></div>
+    <form id="setup-form" class="setup-grid"><section class="panel category-panel"><div class="section-heading"><span class="step">01</span><div><h2>Was kommt auf die Karten?</h2><p>Wählt eure Themen. Mischt, was euch gefällt.</p></div><span class="small-tag">${cards.length.toLocaleString("de-DE")} Karten</span></div>
+      <div class="difficulty-settings"><span class="field-label">Schnellauswahl für eure Gruppe</span><div class="preset-buttons">${PRESETS.map((p) => action(`preset:${p.id}`, p.name, "small-button")).join("")}</div><label for="difficulty">Schwierigkeitsgrad</label><select id="difficulty" name="difficulty" aria-describedby="difficulty-note">${DIFFICULTIES.map((d) => `<option value="${d.id}" ${settings.difficulty === d.id ? "selected" : ""}>${d.name}</option>`).join("")}</select><p id="difficulty-note">${DIFFICULTIES.find((d) => d.id === settings.difficulty)?.description || ""}</p><small>Eine Einschätzung nach Bekanntheit, keine feste Altersgrenze. Themen und Stufe könnt ihr frei anpassen.</small></div>
+      <div class="category-tools"><span id="selection-count">${settings.selected.length} von ${categories.length} ausgewählt</span><button type="button" data-action="all-categories">Alle auswählen</button><button type="button" data-action="no-categories">Alle abwählen</button></div>
       <div class="category-grid">${categories
         .map((category) => {
           const total = cards.filter((c) =>
-            c.categories.includes(category.id),
+            c.categories.includes(category.id) && matchesDifficulty(c, settings.difficulty),
           ).length;
           const fresh = cards.filter(
             (c) =>
               c.categories.includes(category.id) &&
+              matchesDifficulty(c, settings.difficulty) &&
               !Object.hasOwn(group?.seen || {}, c.id),
           ).length;
           return `<label class="category ${category.color} ${settings.selected.includes(category.id) ? "selected" : ""}"><input type="checkbox" name="category" value="${category.id}" ${settings.selected.includes(category.id) ? "checked" : ""}><span class="category-check">${icon("check")}</span><span class="category-emoji">${category.emoji}</span><strong>${escape(category.name)}</strong><span>${fresh} von ${total} ungespielt</span></label>`;
@@ -170,7 +178,7 @@ function game() {
         "",
       )}</div><div class="summary-actions">${action("new-game", `Neue Partie ${icon("arrow")}`, "button primary")}${action("storage", "Kartenspeicher ansehen")}</div><p class="fine-print">Der Kartenspeicher bleibt erhalten. ${remaining} ungespielte Karten in euren Themen.</p><details class="turn-history"><summary>Alle Runden ansehen</summary>${session.turns.map((turn) => `<div class="history-turn"><h3>Runde ${turn.cycle} · ${escape(session.settings.teams[turn.team])} <span>${turn.points} Punkte</span></h3>${logList(turn.log)}</div>`).join("")}</details></section>`;
   }
-  return `<div class="game-heading"><button data-action="setup" class="text-button">← Spielübersicht</button><span>${escape(session.settings.group)}</span></div>${scoreStrip(session)}${content}`;
+  return `<div class="game-heading"><button data-action="setup" class="text-button">← Spielübersicht</button><span>${escape(session.settings.group)} · ${DIFFICULTIES.find((d) => d.id === session.settings.difficulty)?.name || "Alles / knifflig"}</span></div>${scoreStrip(session)}${content}`;
 }
 
 function logList(log) {
@@ -237,6 +245,7 @@ function readSettings() {
     group: String(data.get("group")).trim(),
     teams: data.getAll("team").map((team) => String(team).trim()),
     selected: data.getAll("category"),
+    difficulty: String(data.get("difficulty")),
     seconds: Number(data.get("seconds")),
     cycles: Number(data.get("cycles")),
     skipPenalty: Number(data.get("skipPenalty")),
@@ -412,7 +421,7 @@ document.addEventListener("change", async (event) => {
             );
           document.querySelectorAll(".category").forEach((label) => {
             const id = label.querySelector("input").value;
-            const total = cards.filter((c) => c.categories.includes(id));
+            const total = cards.filter((c) => c.categories.includes(id) && matchesDifficulty(c, settings.difficulty));
             label.lastElementChild.textContent = `${total.filter((c) => !Object.hasOwn(group?.seen || {}, c.id)).length} von ${total.length} ungespielt`;
           });
         }
@@ -489,6 +498,12 @@ document.addEventListener("click", async (event) => {
         ...settings,
         selected: id === "all-categories" ? categories.map((c) => c.id) : [],
       };
+    });
+  } else if (id.startsWith("preset:")) {
+    const settings = readSettings();
+    await change((s) => {
+      s.settings = settings;
+      applyPreset(s.settings, id.split(":")[1], categories);
     });
   } else if (id === "add-team" || id.startsWith("remove-team:")) {
     const settings = readSettings();
@@ -640,6 +655,7 @@ async function boot() {
   try {
     state = await store.open(initialState(categories));
     state = await store.update((s) => {
+      migrateDifficulty(s);
       restoreSession(s);
       ensureGroup(s);
     });

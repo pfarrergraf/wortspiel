@@ -6,7 +6,9 @@ Ein buntes, kostenloses Spiel zum Begriffe-Erklären für eine Gruppe an **einem
 
 ## Was die erste Version kann
 
-- 1.136 vollständige deutsche Karten in zwölf einzeln auswählbaren Themenpaketen, darunter Alltag & Jugend sowie Glaube & Kirche.
+- 1.216 vollständige deutsche Karten in zwölf einzeln auswählbaren Themenpaketen, darunter Alltag & Jugend sowie Glaube & Kirche.
+- Drei Schwierigkeitsstufen: **Leicht** (382 Karten, Voreinstellung), **Mittel** (673 Karten einschließlich der leichten) und **Alles / knifflig** (alle 1.216 Karten). Die Zähler berücksichtigen Stufe, Themen und den Kartenspeicher.
+- Schnellauswahlen **Jugendliche**, **Konfis** und **Gemischte Runde**. Konfis kombiniert die leichte Auswahl mit Grundlagen aus Glaube & Kirche; Jugendliche verwendet Alltagsthemen ohne das Kirchenpaket. Themen und Stufe bleiben frei anpassbar.
 - Zwei bis sechs frei benennbare Teams, Rundenzeit von 30 bis 180 Sekunden, einstellbare Runden pro Team und Punkteabzüge.
 - Erraten, Überspringen und Tabuwort; Pause, verdeckte Karte, Rücknahme der letzten Wertung, Rundenprotokoll und Ergebnisübersicht.
 - Gruppenbezogener Kartenspeicher ohne Ablaufdatum. Bereits **angezeigte** Karten werden gespeichert, auch bei Überspringen oder vorzeitigem Rundenende. Neue Partien und App-Updates löschen ihn nicht. Ist ein Paket ausgespielt, gibt es keine automatische Wiederholung.
@@ -15,6 +17,14 @@ Ein buntes, kostenloses Spiel zum Begriffe-Erklären für eine Gruppe an **einem
 - Optionale lokale Spracherkennung, **standardmäßig ausgeschaltet**, mit ausdrücklichem `processLocally: true`. Kein automatischer Cloud-Fallback, keine Transkriptionskosten. Nur Browser mit lokaler Verarbeitung und deutschem Sprachpaket bieten diese Funktion an.
 
 Die Spracherkennung gibt Hinweise auf gehörte Begriffe. Sie kann erklärende und ratende Personen nicht unterscheiden und vergibt deshalb keine Punkte automatisch. Die manuelle Wertung bleibt immer verfügbar. Ein echtes Android- oder iOS-Gerät mit Mikrofon wurde nicht für die Sprachfunktion getestet; Browserunterstützung ist experimentell.
+
+## Begriffe passend zur Gruppe
+
+Für eine Konfi- oder Jugendrunde zuerst **Konfis** beziehungsweise **Jugendliche** auswählen. Beide verwenden „Leicht“: gezielt ausgewählte Begriffe aus Schule, Freizeit, Essen, Tieren und Alltag, einschließlich 80 neuer Grundbegriffe. Seltene Personen wie Alison Brie, spezielle Automarken, unbekannte Tierarten und entlegene Gebiete erscheinen dort nicht. „Mittel“ ergänzt mehr Allgemeinwissen und weitere Kirchenbegriffe. Erst „Alles / knifflig“ öffnet den gesamten ursprünglichen Bestand.
+
+Die redaktionelle Einschätzung richtet sich nach vermuteter Bekanntheit und wurde noch nicht mit Jugendgruppen erprobt. Sie ist keine feste Altersfreigabe und bewertet nicht automatisch alle Schwierigkeiten beim Erklären. Eine leichtere Karte kann je nach Vorwissen weiterhin schwierig sein.
+
+Eine laufende Partie behält ihre gewählte Stufe. Für eine neue Auswahl unter „Spielübersicht“ die gewünschten Einstellungen wählen und eine neue Partie starten. Beim Update erhält eine ältere laufende Partie den bisherigen vollständigen Pool; zukünftige Partien sind zunächst auf „Leicht“ eingestellt. Gesehene Karten bleiben über alle Stufen hinweg gesperrt. Wenn die leichte Auswahl ausgespielt ist, zeigt die App das an und wiederholt keine Karten automatisch.
 
 ## Eine Woche ohne wiederholte Karten
 
@@ -72,6 +82,8 @@ Das Projekt steht unter **GPL-3.0-or-later**; der vollständige Lizenztext liegt
 - [Manrope](https://github.com/sharanda/manrope), Mikhail Sharanda: lokal eingebundene Schrift über `@fontsource/manrope`, SIL Open Font License; siehe [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
 
 Leere oder unvollständige Einträge wurden ausgelassen, Texte getrimmt, Begriffe über normalisierte, stabile IDs zusammengeführt und Kategorien bei mehrfach vorkommenden Begriffen ergänzt. Eine Karte kann mehreren Themen angehören; die Sperre gilt für alle ihre Kategorien. Die Illustration auf der Startseite ist eine Beispielkarte und kein Teil des Kartenstapels.
+
+Die Einordnung bestehender Karten ist in `frontend/data/difficulty.json` als ausdrückliche Auswahl gepflegt. Neue, nicht eingeordnete Quelldaten gelangen ausschließlich in „Alles / knifflig“. `frontend/data/easy-cards.json` enthält die 80 neu geschriebenen leichten Karten. Der Import prüft die Einordnungen auf unbekannte und doppelte Begriffe. Für eigene Anpassungen diese Quelldateien bearbeiten und anschließend den Import sowie Tests und Build ausführen.
 
 Um die Kartendatei reproduzierbar neu zu importieren:
 
