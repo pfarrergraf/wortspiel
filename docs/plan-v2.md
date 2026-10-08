@@ -230,7 +230,7 @@ Summe: rund 2 000 neue Karten, davon mehr als 1 500 speziell für Jugendliche.
 
 | ID | Aufgabe | Dateien (exklusiv) | Abhängig |
 | --- | --- | --- | --- |
-| [ ] C1 | **Design-Tokens**: fluide Typografie mit `clamp()`, Abstände, Kartengröße als Custom Properties, `dvh`/`svh` statt `vh`, Container Queries für Karte und Knopfleiste. Basis für alle C-Aufgaben. | `styles/tokens.css`, `styles/base.css` | F4 |
+| [x] C1 | **Design-Tokens**: fluide Typografie mit `clamp()`, Abstände, Kartengröße als Custom Properties, `dvh`/`svh` statt `vh`, Container Queries für Karte und Knopfleiste. Basis für alle C-Aufgaben. | `styles/tokens.css`, `styles/base.css` | F4 |
 | [ ] C2 | **Smartphone hoch** (320–430 px): kompakte Kopfzeile im Spiel, Knöpfe als unterer Daumenbereich, Punktestand als schmale Leiste, kleine Geräte (iPhone SE, 320 px) zuerst. | `responsive/phone.css` | C1 |
 | [ ] C3 | **Smartphone quer**: zweispaltig mit Karte links und Knöpfen rechts, Kopfzeile ausgeblendet, Safe-Area links/rechts (Notch/Dynamic Island). | `responsive/phone-landscape.css` | C1 |
 | [ ] C4 | **Tablet** (hoch und quer, 744–1366 px): eigenes Layout. Hochformat: große Karte mittig, Knopfleiste unten. Querformat: Karte links, Knopfspalte rechts in Daumenreichweite, Rundenleiste ausklappbar. Setup zweispaltig. | `responsive/tablet.css` | C1 |
