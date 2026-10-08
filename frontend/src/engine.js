@@ -5,6 +5,12 @@ import {
 } from "./rules/audience.js";
 import { migrateModes, pickMode, validateModes } from "./rules/modes.js";
 import { migrateTabooMode, validateTabooMode } from "./rules/taboo.js";
+import {
+  isPantomime,
+  migrateGameMode,
+  validateGameMode,
+  PANTOMIME,
+} from "./rules/pantomime.js";
 
 export const SCHEMA = 1;
 export const normalize = (text) =>
@@ -54,6 +60,7 @@ export function migrateSettings(state) {
   migrateAudience(state);
   migrateTabooMode(state);
   migrateModes(state);
+  migrateGameMode(state);
 }
 
 export function migrateDifficulty(state) {
@@ -105,7 +112,8 @@ export function matchesSettings(card, settings) {
 }
 
 export function availableCards(cards, settings, seen = {}) {
-  const selected = new Set(settings.selected);
+  // The pantomime mode plays its own word pool and ignores the theme packs.
+  const selected = new Set(isPantomime(settings) ? [PANTOMIME] : settings.selected);
   return cards.filter(
     (card) =>
       card.categories.some((id) => selected.has(id)) &&
@@ -118,6 +126,7 @@ export function validateSettings(settings, categories) {
   validateAgeGroup(settings.ageGroup);
   validateTabooMode(settings.tabooMode);
   validateModes(settings.modes);
+  validateGameMode(settings.gameMode);
   if (!DIFFICULTIES.some((d) => d.id === (settings.difficulty ?? "all")))
     throw new Error("Wähle einen gültigen Schwierigkeitsgrad.");
   if (
@@ -139,7 +148,7 @@ export function validateSettings(settings, categories) {
     throw new Error("Bitte verwende unterschiedliche Teamnamen.");
   if (
     !Array.isArray(settings.selected) ||
-    settings.selected.length === 0 ||
+    (settings.selected.length === 0 && !isPantomime(settings)) ||
     settings.selected.some((id) => !categories.some((c) => c.id === id))
   )
     throw new Error("Wähle mindestens ein Themenpaket.");
@@ -167,7 +176,9 @@ export function createSession(state, cards, categories) {
   const group = ensureGroup(state);
   if (!availableCards(cards, state.settings, group.seen).length)
     throw new Error(
-      "Für diese Themen und diese Stufe sind keine ungespielten Karten übrig (oder die Auswahl ist ausgespielt). Wähle weitere Themen oder eine höhere Stufe. Der Kartenspeicher bleibt erhalten.",
+      isPantomime(state.settings)
+        ? "Für diese Stufe sind keine ungespielten Pantomime-Wörter übrig. Wähle eine höhere Stufe. Der Kartenspeicher bleibt erhalten."
+        : "Für diese Themen und diese Stufe sind keine ungespielten Karten übrig (oder die Auswahl ist ausgespielt). Wähle weitere Themen oder eine höhere Stufe. Der Kartenspeicher bleibt erhalten.",
     );
   state.session = {
     settings: structuredClone(state.settings),
@@ -208,7 +219,9 @@ export function drawCard(state, cards, random = Math.random, now = Date.now()) {
     ];
   group.seen[chosen.id] = now;
   session.current = chosen.id;
-  session.currentMode = pickMode(chosen, session.settings, random);
+  session.currentMode = isPantomime(session.settings)
+    ? PANTOMIME
+    : pickMode(chosen, session.settings, random);
   return true;
 }
 

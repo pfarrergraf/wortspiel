@@ -1,0 +1,67 @@
+/* Pantomime game mode: mode choice in the setup and the word card. */
+.game-mode-settings {
+  margin: 22px 0 0;
+}
+.game-mode-options {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--space-3);
+  margin-top: var(--space-2);
+}
+.game-mode {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-height: var(--tap-min);
+  padding: 14px 16px;
+  border: 2px solid var(--line);
+  border-radius: 14px;
+  background: #fff;
+  cursor: pointer;
+}
+.game-mode input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+.game-mode strong {
+  font-size: var(--fs-md);
+}
+.game-mode span {
+  font-size: var(--fs-sm);
+  line-height: 1.5;
+  color: var(--muted);
+}
+.game-mode.selected {
+  border-color: var(--purple);
+  background: #f3eefc;
+}
+.game-mode:has(input:focus-visible) {
+  outline: 3px solid var(--purple);
+  outline-offset: 2px;
+}
+.pantomime-pool {
+  display: flex;
+  gap: var(--space-3);
+  align-items: flex-start;
+  padding: 18px;
+  margin-bottom: 15px;
+  border-radius: 14px;
+  background: #fff6dc;
+  font-size: var(--fs-md);
+  line-height: 1.6;
+}
+.pantomime-emoji {
+  display: block;
+  margin-top: var(--space-5);
+  font-size: clamp(3.5rem, 8vw, 5.5rem);
+  line-height: 1;
+}
+/* Keep emoji and word together; the phone layout pushes the word down. */
+.game-card.pantomime-card .pantomime-emoji {
+  margin-top: auto;
+}
+.game-card.pantomime-card h1 {
+  margin-top: var(--space-4);
+}

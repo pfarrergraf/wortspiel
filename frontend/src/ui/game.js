@@ -10,6 +10,7 @@ import {
 } from "../engine.js";
 import { escape, icon, action, colors, teamSymbols } from "./html.js";
 import { renderCard } from "./card.js";
+import { isPantomime } from "../rules/pantomime.js";
 import { renderPlayActions } from "./play-actions.js";
 import { setup } from "./setup.js";
 import { turnSummary, finalResult } from "./summary.js";
@@ -22,7 +23,7 @@ function scoreStrip(session) {
 }
 
 function handover(session, team, remaining) {
-  return `<section class="handover panel"><span class="round-pill">RUNDE ${cycle(session)} VON ${session.settings.cycles}</span><span class="handover-symbol ${colors[teamIndex(session)]}">${teamSymbols[teamIndex(session)]}</span><p>Gebt das Gerät an die erklärende Person von</p><h1>${escape(team)}</h1><p class="handover-sub">Nur sie und die Person, die kontrolliert, sehen die Karte.<br>Der Rest eures Teams rät laut mit.</p><div class="ready-facts"><span>${icon("clock")} ${session.settings.seconds} Sekunden</span><span>${remaining} Karten übrig</span></div>${action("start-turn", `Wir sind bereit ${icon("play")}`, "button primary")}<small>Die erste Karte erscheint, sobald ihr startet.</small></section>`;
+  return `<section class="handover panel"><span class="round-pill">RUNDE ${cycle(session)} VON ${session.settings.cycles}</span><span class="handover-symbol ${colors[teamIndex(session)]}">${teamSymbols[teamIndex(session)]}</span><p>Gebt das Gerät an die ${isPantomime(session.settings) ? "vorspielende" : "erklärende"} Person von</p><h1>${escape(team)}</h1><p class="handover-sub">Nur sie und die Person, die kontrolliert, sehen die Karte.<br>Der Rest eures Teams rät laut mit.</p><div class="ready-facts"><span>${icon("clock")} ${session.settings.seconds} Sekunden</span><span>${remaining} Karten übrig</span></div>${action("start-turn", `Wir sind bereit ${icon("play")}`, "button primary")}<small>Die erste Karte erscheint, sobald ihr startet.</small></section>`;
 }
 
 function play(session, team, remaining) {
@@ -51,5 +52,5 @@ export function game() {
         : session.phase === "summary"
           ? turnSummary(session, team)
           : finalResult(session, remaining);
-  return `<div class="game-heading"><button data-action="setup" class="text-button">← Spielübersicht</button><span>${escape(session.settings.group)} · ${DIFFICULTIES.find((d) => d.id === session.settings.difficulty)?.name || "Alles / knifflig"}</span></div>${scoreStrip(session)}${content}`;
+  return `<div class="game-heading"><button data-action="setup" class="text-button">← Spielübersicht</button><span>${escape(session.settings.group)} · ${isPantomime(session.settings) ? "🎭 Pantomime · " : ""}${DIFFICULTIES.find((d) => d.id === session.settings.difficulty)?.name || "Alles / knifflig"}</span></div>${scoreStrip(session)}${content}`;
 }
