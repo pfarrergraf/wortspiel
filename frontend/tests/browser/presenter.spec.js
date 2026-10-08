@@ -119,3 +119,68 @@ test("an extra mouse button can be learned for skipping", async ({ page }) => {
   await page.mouse.up({ button: "middle" });
   await expect(page.locator("#current-word")).not.toHaveText(word);
 });
+
+// A simulated Logitech Spotlight behind WebHID: its pointer button (0x00F0)
+// sends nothing unless diverted via HID++ 0x1B04.
+function fakeHid() {
+  const listeners = new Set();
+  const diverted = new Set();
+  const controls = [[0x00d7, 0x20], [0x00da, 0x20], [0x00f0, 0x20]];
+  const emit = (reportId, bytes) => {
+    const data = new DataView(Uint8Array.from([...bytes, ...Array(19).fill(0)].slice(0, 19)).buffer);
+    for (const fn of listeners) fn({ reportId, data });
+  };
+  const device = {
+    vendorId: 0x046d,
+    productName: "Spotlight (Test)",
+    opened: false,
+    collections: [{ usagePage: 0xff00, outputReports: [{ reportId: 0x11 }] }],
+    open: async () => { device.opened = true; },
+    addEventListener: (type, fn) => listeners.add(fn),
+    removeEventListener: (type, fn) => listeners.delete(fn),
+    async sendReport(reportId, data) {
+      const [index, feature, fnsw, ...p] = data;
+      const fn = fnsw >> 4;
+      const reply = (params) => setTimeout(() => emit(0x11, [index, feature, fnsw, ...params]));
+      if (index !== 1) return setTimeout(() => emit(0x10, [index, 0x8f, feature, fnsw, 0x08]));
+      if (feature === 0) return reply([9]);
+      if (fn === 0) return reply([controls.length]);
+      if (fn === 1) { const [cid, flags] = controls[p[0]]; return reply([cid >> 8, cid & 0xff, 0, 0, flags]); }
+      if (fn === 3) { const cid = (p[0] << 8) | p[1]; p[2] & 1 ? diverted.add(cid) : diverted.delete(cid); return reply(p.slice(0, 5)); }
+    },
+  };
+  window.__pointer = () => {
+    if (!diverted.has(0x00f0)) return;
+    emit(0x11, [1, 9, 0x00, 0x00, 0xf0]);
+    setTimeout(() => emit(0x11, [1, 9, 0x00]), 50);
+  };
+  window.__diverted = () => [...diverted];
+  Object.defineProperty(navigator, "hid", {
+    value: {
+      requestDevice: async () => [device],
+      getDevices: async () => (device.opened || localStorage.getItem("wortspiel.presenter.v1")?.includes("hid") ? [device] : []),
+      addEventListener() {},
+    },
+  });
+}
+
+test("a Spotlight pointer button that sends nothing can be connected directly and learned", async ({ page }) => {
+  await page.addInitScript(fakeHid);
+  await page.goto("/");
+  await page.getByRole("button", { name: "Presenter einrichten" }).click();
+  await page.getByRole("button", { name: "Spotlight verbinden" }).click();
+  await expect(page.locator("#presenter-hid")).toContainText("verbunden mit Spotlight (Test)");
+  await page.getByRole("button", { name: "Dritte Taste anlernen" }).click();
+  await expect.poll(() => page.evaluate(() => window.__diverted().length)).toBe(3);
+  await page.evaluate(() => window.__pointer());
+  await expect(page.locator("#presenter-binding")).toContainText("0x00F0");
+  // Only the pointer stays diverted, so next/back keep sending their keys.
+  await expect.poll(() => page.evaluate(() => window.__diverted())).toEqual([0x00f0]);
+  await page.getByRole("button", { name: "Fertig" }).click();
+
+  await startTurn(page);
+  const word = await page.locator("#current-word").innerText();
+  await page.evaluate(() => window.__pointer());
+  await expect(page.locator("#current-word")).not.toHaveText(word);
+  expect((await state(page)).session.log.map((e) => e.result)).toEqual(["skip"]);
+});

@@ -36,12 +36,15 @@ export function sameInput(a, b) {
   if (!a || !b || a.type !== b.type) return false;
   if (a.type === "key") return a.code && b.code ? a.code === b.code : a.key === b.key;
   if (a.type === "mouse") return a.button === b.button;
+  if (a.type === "hid") return a.cid === b.cid;
   return a.dir === b.dir;
 }
 
 export function describeInput(input) {
   if (!input) return "–";
   if (input.type === "mouse") return MOUSE[input.button] || `Maustaste ${input.button}`;
+  if (input.type === "hid")
+    return `Presenter-Taste (direkt verbunden, ID 0x${input.cid.toString(16).toUpperCase().padStart(4, "0")})`;
   if (input.type === "wheel") return `Mausrad nach ${input.dir === "up" ? "oben" : "unten"}`;
   const name = input.key === " " ? "Leertaste" : input.key;
   return input.code && input.code !== input.key ? `Taste „${name}“ (${input.code})` : `Taste „${name}“`;
@@ -98,6 +101,12 @@ function handle(input, event) {
     return true;
   }
   return false;
+}
+
+// Signals from a directly connected presenter (presenter-hid.js).
+export function externalInput(input) {
+  report(input);
+  handle(input, { preventDefault() {}, repeat: false });
 }
 
 const downAt = new Map();

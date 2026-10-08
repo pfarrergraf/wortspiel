@@ -2,26 +2,44 @@ import { dialog, toast } from "../app.js";
 import { registerAction } from "../actions.js";
 import {
   describeInput,
+  externalInput,
   isReserved,
   learnSkip,
   loadConfig,
   onInput,
   saveConfig,
 } from "../presenter.js";
-import { action } from "../ui/html.js";
+import { connectHid, currentHid, hidState, hidSupported } from "../presenter-hid.js";
+import { action, escape } from "../ui/html.js";
+
+const handlers = {
+  onPress: (cid) => externalInput({ type: "hid", cid }),
+  onLog: () => {},
+};
+const learnedCids = () => {
+  const skip = loadConfig().skip;
+  return skip?.type === "hid" ? [skip.cid] : [];
+};
+
+function hidSection() {
+  if (!hidSupported()) return "";
+  const hid = hidState();
+  return `<h3>3. Logitech Spotlight direkt verbinden <small>(Chrome/Edge, experimentell)</small></h3><p>Für Tasten, die gar nichts an den Browser senden, etwa die Zeigertaste des Spotlight. Danach „Dritte Taste anlernen“ wählen.</p><p class="presenter-binding">Status: <strong id="presenter-hid">${hid.connected ? `verbunden mit ${escape(hid.name)}` : escape(hid.status)}</strong></p>`;
+}
 
 function open(message = "") {
   const config = loadConfig();
   dialog(
     "Presenter einrichten",
-    `<p><strong>Weiter</strong> startet und zählt „Erraten“. <strong>Zurück</strong> zählt „Tabuwort“. Für <strong>Überspringen</strong> gibt es zwei Wege:</p>
+    `<p><strong>Weiter</strong> startet und zählt „Erraten“. <strong>Zurück</strong> zählt „Tabuwort“. Für <strong>Überspringen</strong> gibt es mehrere Wege:</p>
     <h3>1. Eine dritte Taste anlernen</h3><p>Klicke auf „Dritte Taste anlernen“ und drücke innerhalb von 10 Sekunden die gewünschte Taste am Presenter. Erkannt werden Tasten, zusätzliche Maustasten und das Mausrad.</p>
     <p class="presenter-binding">Überspringen liegt auf: <strong id="presenter-binding">${config.skip ? describeInput(config.skip) : "noch nichts angelernt"}</strong></p>
     <h3>2. Zurück lange drücken</h3><label class="toggle-row"><span>Zurück gedrückt halten = Überspringen</span><input type="checkbox" role="switch" data-presenter-hold ${config.holdBack ? "checked" : ""}></label>
     <p class="fine-print">Kurz drücken bleibt „Tabuwort“, ab 0,6 Sekunden Halten wird übersprungen. Beim Logitech Spotlight in Logi Options+ bei „Zurück-Taste gedrückt halten“ <strong>Keiner</strong> einstellen, sonst fängt die Logitech-Software das Halten ab.</p>
+    ${hidSection()}
     <div class="presenter-monitor" role="status" aria-live="polite"><span>Zuletzt empfangen</span><strong id="presenter-last">Drück eine Taste am Presenter …</strong></div>
     ${message ? `<p class="presenter-message">${message}</p>` : ""}`,
-    `${action("presenter-learn", "Dritte Taste anlernen", "button primary")}${config.skip ? action("presenter-clear", "Angelernte Taste löschen") : ""}${action("close-dialog", "Fertig")}`,
+    `${action("presenter-learn", "Dritte Taste anlernen", "button primary")}${hidSupported() && !currentHid() ? action("presenter-hid", "Spotlight verbinden") : ""}${config.skip ? action("presenter-clear", "Angelernte Taste löschen") : ""}${action("close-dialog", "Fertig")}`,
   );
 }
 
@@ -32,6 +50,18 @@ onInput((input, detail) => {
 
 registerAction("presenter-setup", () => open());
 
+registerAction("presenter-hid", async () => {
+  try {
+    const hid = await connectHid(handlers);
+    await hid.divertOnly(learnedCids());
+    open(`Verbunden mit ${escape(hidState().name)}. Jetzt „Dritte Taste anlernen“ und die Zeigertaste drücken.`);
+  } catch (error) {
+    // Closing the browser's device picker is not an error worth showing.
+    if (error?.name === "NotFoundError") return open();
+    open(`Verbinden hat nicht geklappt: ${escape(error.message)}`);
+  }
+});
+
 let waiting = false;
 registerAction("presenter-learn", async (id, button) => {
   // Not disabled: Chrome drops mouse events over disabled buttons, and the
@@ -40,10 +70,26 @@ registerAction("presenter-learn", async (id, button) => {
   waiting = true;
   button.setAttribute("aria-busy", "true");
   button.textContent = "Jetzt die Taste am Presenter drücken …";
+  // While learning, every divertable control of a connected presenter reports to us.
+  const hid = currentHid();
+  try {
+    await hid?.divertOnly(hid.divertable());
+  } catch {
+    /* Learning still works for keys and mouse buttons. */
+  }
   const input = await learnSkip();
   waiting = false;
+  try {
+    await hid?.divertOnly(input?.type === "hid" ? [input.cid] : learnedCids());
+  } catch {
+    /* Re-diverting is retried on the next connect. */
+  }
   if (!input)
-    open("Es kam kein Signal an. Diese Taste sendet nichts an den Browser. Nutze stattdessen „Zurück gedrückt halten“.");
+    open(
+      hidSupported() && !hid
+        ? "Es kam kein Signal an. Diese Taste sendet nichts an den Browser. Versuche „Spotlight verbinden“ oder „Zurück gedrückt halten“."
+        : "Es kam kein Signal an. Nutze „Zurück gedrückt halten“.",
+    );
   else if (isReserved(input))
     open(`${describeInput(input)} ist schon mit Weiter, Zurück oder der Tastatur belegt. Bitte eine andere Taste wählen.`);
   else {
@@ -52,8 +98,9 @@ registerAction("presenter-learn", async (id, button) => {
   }
 });
 
-registerAction("presenter-clear", () => {
+registerAction("presenter-clear", async () => {
   saveConfig({ ...loadConfig(), skip: null });
+  await currentHid()?.divertOnly([]).catch(() => {});
   open("Die angelernte Taste wurde gelöscht.");
 });
 
@@ -66,3 +113,18 @@ document.addEventListener("change", (event) => {
       : "Zurück zählt wieder immer als Tabuwort.",
   );
 });
+
+// Reconnect a previously allowed presenter without asking again.
+async function reconnect() {
+  if (!learnedCids().length || currentHid()) return;
+  try {
+    const hid = await connectHid(handlers, { ask: false });
+    await hid.divertOnly(learnedCids());
+  } catch {
+    /* Not plugged in or not allowed yet; the setup dialog offers to connect. */
+  }
+}
+if (hidSupported()) {
+  reconnect();
+  navigator.hid.addEventListener("connect", () => setTimeout(reconnect, 500));
+}
