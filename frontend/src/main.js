@@ -18,7 +18,9 @@ import "./features/info.js";
 import "./ui/install-hint.js";
 import "./sound.js";
 import "./haptics.js";
+import "./presenter.js";
 import "./shortcuts.js";
+import "./features/presenter-setup.js";
 import "./device.js";
 import "./wakelock.js";
 

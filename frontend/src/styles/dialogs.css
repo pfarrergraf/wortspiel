@@ -109,3 +109,27 @@ dialog::backdrop {
   opacity: 1;
   transform: translate(-50%, 0);
 }
+.dialog-body h3 {
+  margin: 18px 0 6px;
+  font-size: var(--fs-md);
+}
+.presenter-binding,
+.presenter-message {
+  margin-top: 10px;
+}
+.presenter-message {
+  font-weight: 700;
+}
+.presenter-monitor {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 14px;
+  padding: 12px 14px;
+  border-radius: var(--radius-md);
+  background: var(--soft, rgba(0, 0, 0, 0.05));
+  font-size: var(--fs-sm);
+}
+.presenter-monitor strong {
+  font-size: var(--fs-md);
+}

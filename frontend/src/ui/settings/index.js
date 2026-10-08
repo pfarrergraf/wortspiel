@@ -6,7 +6,8 @@ import rounds from "./rounds.js";
 import rules from "./rules.js";
 import sound from "./sound.js";
 import speech from "./speech.js";
+import presenter from "./presenter.js";
 
-export const sections = [audience, rounds, rules, sound, speech].sort(
+export const sections = [audience, rounds, rules, sound, speech, presenter].sort(
   (a, b) => a.order - b.order,
 );

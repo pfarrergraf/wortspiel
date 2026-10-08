@@ -6,6 +6,7 @@
 //         pause → resume, summary → next team
 //   back: turn → taboo (penalty)
 //   third button / ArrowDown: turn → skip
+//   Learned third button and "hold back = skip": see presenter.js.
 //   Space / P: pause during a turn, S: skip, T: taboo, Ctrl/Cmd+Z: undo, ?: help
 import { ctx } from "./app.js";
 
@@ -40,6 +41,8 @@ function click(id) {
 
 window.addEventListener("keydown", (event) => {
   const target = event.target;
+  // presenter.js already handled it (learned skip key or "hold back").
+  if (event.defaultPrevented) return;
   if (!ctx.state || document.querySelector("dialog[open]") || typing(target)) return;
   if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "z") {
     if (ctx.state.session?.phase !== "playing") return;
