@@ -1,13 +1,17 @@
 import { categories } from "../data.js";
 import { visibleTaboo } from "../rules/taboo.js";
 import { escape } from "./html.js";
-import { isPantomime } from "../rules/pantomime.js";
+import { cardPoints, isPantomime } from "../rules/pantomime.js";
+import { pantomimeCategories } from "../data.js";
 
 // The visible game card. Taboo level (B2/E4), mode badges (E5) and kid emoji
 // (E6) plug in here.
 export function renderCard(card, session) {
-  if (isPantomime(session.settings))
-    return `<article class="game-card pantomime-card" aria-label="Aktuelle Spielkarte"><div class="card-category"><span>🎭 Pantomime</span><span>SPIEL MAL VOR …</span></div><span class="pantomime-emoji" aria-hidden="true">${escape(card?.emoji || "🎭")}</span><h1 id="current-word">${escape(card?.word || "")}</h1><p class="free-explain">Ohne Worte, ohne Geräusche, ohne Gegenstände. Zeigen und Gesten sind erlaubt.</p></article>`;
+  if (isPantomime(session.settings)) {
+    const group = pantomimeCategories.find((c) => card?.categories.includes(c.id));
+    const points = cardPoints(card, session.settings);
+    return `<article class="game-card pantomime-card" aria-label="Aktuelle Spielkarte"><div class="card-category"><span>${group?.emoji || "🎭"} ${escape(group?.name || "Pantomime")}</span><span>SPIEL MAL VOR …</span></div><span class="card-points points-${points}" aria-label="${points} ${points === 1 ? "Punkt" : "Punkte"}">${"★".repeat(points)} ${points} ${points === 1 ? "Punkt" : "Punkte"}</span><span class="pantomime-emoji" aria-hidden="true">${escape(card?.emoji || "🎭")}</span><h1 id="current-word">${escape(card?.word || "")}</h1><p class="free-explain">Ohne Worte, ohne Geräusche, ohne Gegenstände. Zeigen und Gesten sind erlaubt.</p></article>`;
+  }
   const category = categories.find(
     (c) =>
       card?.categories.includes(c.id) &&

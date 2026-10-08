@@ -6,6 +6,8 @@ import {
 import { migrateModes, pickMode, validateModes } from "./rules/modes.js";
 import { migrateTabooMode, validateTabooMode } from "./rules/taboo.js";
 import {
+  cardPoints,
+  inPantomimeSelection,
   isPantomime,
   migrateGameMode,
   validateGameMode,
@@ -112,11 +114,14 @@ export function matchesSettings(card, settings) {
 }
 
 export function availableCards(cards, settings, seen = {}) {
-  // The pantomime mode plays its own word pool and ignores the theme packs.
-  const selected = new Set(isPantomime(settings) ? [PANTOMIME] : settings.selected);
+  // The pantomime mode plays its own categories and ignores the theme packs.
+  const pantomime = isPantomime(settings);
+  const selected = new Set(settings.selected);
   return cards.filter(
     (card) =>
-      card.categories.some((id) => selected.has(id)) &&
+      (pantomime
+        ? inPantomimeSelection(card, settings)
+        : card.categories.some((id) => selected.has(id))) &&
       matchesSettings(card, settings) &&
       !Object.hasOwn(seen, card.id),
   );
@@ -126,7 +131,7 @@ export function validateSettings(settings, categories) {
   validateAgeGroup(settings.ageGroup);
   validateTabooMode(settings.tabooMode);
   validateModes(settings.modes);
-  validateGameMode(settings.gameMode);
+  validateGameMode(settings);
   if (!DIFFICULTIES.some((d) => d.id === (settings.difficulty ?? "all")))
     throw new Error("Wähle einen gültigen Schwierigkeitsgrad.");
   if (
@@ -177,7 +182,7 @@ export function createSession(state, cards, categories) {
   if (!availableCards(cards, state.settings, group.seen).length)
     throw new Error(
       isPantomime(state.settings)
-        ? "Für diese Stufe sind keine ungespielten Pantomime-Wörter übrig. Wähle eine höhere Stufe. Der Kartenspeicher bleibt erhalten."
+        ? "Für diese Kategorien und diese Stufe sind keine ungespielten Pantomime-Wörter übrig. Wähle weitere Kategorien oder eine höhere Stufe. Der Kartenspeicher bleibt erhalten."
         : "Für diese Themen und diese Stufe sind keine ungespielten Karten übrig (oder die Auswahl ist ausgespielt). Wähle weitere Themen oder eine höhere Stufe. Der Kartenspeicher bleibt erhalten.",
     );
   state.session = {
@@ -278,7 +283,7 @@ export function recordResult(
   if (!card) throw new Error("Karte nicht gefunden.");
   const delta =
     result === "correct"
-      ? 1
+      ? cardPoints(card, session.settings)
       : result === "taboo"
         ? -session.settings.tabooPenalty
         : -session.settings.skipPenalty;

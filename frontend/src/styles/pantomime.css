@@ -65,3 +65,26 @@
 .game-card.pantomime-card h1 {
   margin-top: var(--space-4);
 }
+.card-points {
+  display: inline-block;
+  margin-top: var(--space-3);
+  padding: 4px 12px;
+  border-radius: var(--radius-pill);
+  background: var(--mint);
+  font-size: var(--fs-sm);
+  font-weight: 800;
+}
+.card-points.points-2 {
+  background: var(--yellow);
+}
+.card-points.points-3 {
+  background: var(--coral);
+  color: #fff;
+}
+/* Phone cards are flex columns: keep the badge compact, centre the word. */
+.game-card.pantomime-card .card-points {
+  align-self: center;
+}
+.game-card.pantomime-card .free-explain {
+  margin-bottom: auto;
+}

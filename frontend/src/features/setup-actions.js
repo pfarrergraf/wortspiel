@@ -1,6 +1,7 @@
 import { ctx, change, dialog } from "../app.js";
 import { registerAction } from "../actions.js";
-import { cards, categories } from "../data.js";
+import { cards, categories, pantomimeCategories } from "../data.js";
+import { isPantomime } from "../rules/pantomime.js";
 import {
   applyPreset,
   availableCards,
@@ -71,10 +72,13 @@ document.addEventListener("change", async (event) => {
 for (const id of ["all-categories", "no-categories"])
   registerAction(id, () => {
     const settings = readSettings();
+    const pantomime = isPantomime(settings);
+    const ids = (pantomime ? pantomimeCategories : categories).map((c) => c.id);
     return change((s) => {
       s.settings = {
         ...settings,
-        selected: id === "all-categories" ? categories.map((c) => c.id) : [],
+        [pantomime ? "pantomimeSelected" : "selected"]:
+          id === "all-categories" ? ids : [],
       };
     });
   });
