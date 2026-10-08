@@ -1,3 +1,16 @@
+/*
+ * Design tokens (plan-v2 C1).
+ *
+ * The colour tokens below are the original v1 palette and stay unchanged.
+ * Everything after them is the shared foundation for the layout tasks
+ * C2 (phone), C3 (phone landscape), C4 (tablet), C5 (desktop) and C6 (large).
+ * Responsive partials should override these properties inside their media or
+ * container queries instead of repeating raw pixel values.
+ *
+ * Fluid values use clamp(MIN, PREFERRED, MAX). MIN applies at about 320 px
+ * viewport width, MAX at about 1440 px. All sizes are in rem so that the
+ * user's browser font size is respected (1rem = 16px by default).
+ */
 :root {
   font-family: Manrope, "Segoe UI", sans-serif;
   color: #292632;
@@ -12,4 +25,68 @@
   --yellow: #f5d564;
   --line: #e6e1d7;
   --muted: #76727e;
+
+  /* Fluid type scale ------------------------------------------------------ */
+  --fs-xs: clamp(0.5625rem, 0.53rem + 0.18vw, 0.6875rem); /*  9 → 11 px: eyebrows, labels */
+  --fs-sm: clamp(0.6875rem, 0.66rem + 0.18vw, 0.8125rem); /* 11 → 13 px: secondary text */
+  --fs-md: clamp(0.875rem, 0.84rem + 0.18vw, 1rem); /*        14 → 16 px: body text */
+  --fs-lg: clamp(1.0625rem, 1rem + 0.36vw, 1.3125rem); /*     17 → 21 px: lead, buttons */
+  --fs-xl: clamp(1.3125rem, 1.15rem + 0.8vw, 1.875rem); /*    21 → 30 px: section titles */
+  --fs-2xl: clamp(1.75rem, 1.45rem + 1.43vw, 2.75rem); /*     28 → 44 px: page titles */
+  --fs-display: clamp(2.25rem, 1.6rem + 3.2vw, 3.625rem); /*  36 → 58 px: hero, big numbers */
+  /* Minimum for form controls; below 16 px iOS Safari zooms on focus. */
+  --fs-input-min: 16px;
+
+  /* Spacing scale (4 px based) ------------------------------------------- */
+  --space-1: 0.25rem; /*  4 px */
+  --space-2: 0.5rem; /*   8 px */
+  --space-3: 0.75rem; /* 12 px */
+  --space-4: 1rem; /*    16 px */
+  --space-5: 1.5rem; /*  24 px */
+  --space-6: 2rem; /*    32 px */
+  --space-7: 3rem; /*    48 px */
+  --space-8: 4rem; /*    64 px */
+
+  /* Radii (values already used by the v1 partials) ---------------------- */
+  --radius-sm: 10px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-xl: 26px;
+  --radius-pill: 999px;
+
+  /* Touch and action targets (Apple HIG, plan-v2 criterion 3) ----------- */
+  --tap-min: 44px;
+  --action-min-h: 64px;
+
+  /* Card sizing ---------------------------------------------------------- */
+  --card-max-w: 760px;
+  /* Same curve as the v1 .game-card h1 (26 → 43 px), expressed in rem. */
+  --card-word-size: clamp(1.625rem, 3.1vw, 2.6875rem);
+
+  /* Page layout ---------------------------------------------------------- */
+  --page-max-w: 1160px;
+  --page-gutter: 28px;
+
+  /* Safe areas (notch, Dynamic Island, home indicator). Needs
+     viewport-fit=cover, which index.html sets. Zero everywhere else. */
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-right: env(safe-area-inset-right, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-left: env(safe-area-inset-left, 0px);
+
+  /* Viewport heights. Use these instead of raw vh:
+     --vh-full  dynamic height, follows the mobile browser toolbar,
+     --vh-small smallest height (toolbar shown), never jumps,
+     --vh-large largest height (toolbar hidden). */
+  --vh-full: 100vh;
+  --vh-small: 100vh;
+  --vh-large: 100vh;
+}
+
+@supports (height: 100dvh) {
+  :root {
+    --vh-full: 100dvh;
+    --vh-small: 100svh;
+    --vh-large: 100lvh;
+  }
 }
