@@ -102,7 +102,7 @@ test("responsive setup, selectable categories and a complete manual round", asyn
   await expect(
     page.getByRole("heading", { name: "Was kommt auf die Karten?" }),
   ).toBeVisible();
-  await expect(page.locator('input[name="category"]:checked')).toHaveCount(12);
+  await expect(page.locator('input[name="category"]:checked')).toHaveCount(dataset.categories.length);
   await page.getByRole("button", { name: "Alle abwählen" }).click();
   await expect(page.locator('input[name="category"]:checked')).toHaveCount(0);
   await page
@@ -110,7 +110,7 @@ test("responsive setup, selectable categories and a complete manual round", asyn
     .filter({ hasText: "Glaube & Kirche" })
     .click();
   await expect(page.locator("#selection-count")).toHaveText(
-    "1 von 12 ausgewählt",
+    `1 von ${dataset.categories.length} ausgewählt`,
   );
   await page.getByRole("button", { name: "Los geht’s" }).click();
   await page.getByRole("button", { name: "Wir sind bereit" }).click();

@@ -53,7 +53,7 @@ A18 wartet auf F6. Alle anderen Pakete warten auf den Tag `v2-foundation`.
 ## Ablauf in Wellen
 
 ```
-Phase 1  Fundament (seriell, 1 Agent)          → Tag v2-foundation
+Phase 1  Fundament (seriell, 1 Agent)          → Tag v2-foundation  ✅ erledigt 2026-10-08
 Phase 2  Welle 1: A*, B*, C1, D1, E1–E3 parallel
          Welle 2: C2–C9, D2–D3, E4–E12 parallel  (brauchen C1 / B1 / D1)
          Welle 3: R* Reviews und QA parallel
@@ -62,54 +62,62 @@ Phase 3  Integration (seriell, 1 Agent): Merges, cards.json neu erzeugen, Gesamt
 
 ---
 
-## Phase 1 – Fundament (seriell, blockiert alles andere)
+## Phase 1 – Fundament (seriell, blockiert alles andere) – ✅ erledigt
+
+Umgesetzt wie beschrieben, mit diesen Abweichungen: Zusätzlich gibt es den Ereignisbus `src/events.js`
+(`render`, `result`, `turn-start`, `turn-end`, `pause`, `resume`, `tick`), Feature-Module unter `src/features/`,
+`src/sound.js`, `src/haptics.js` und `src/shortcuts.js` als Andockpunkte für D1, D3 und E3, sowie die
+CSS-Partials `buttons.css` und `motion.css`. Die Architektur ist in `AGENTS.md` beschrieben.
 
 Zweck: Den Code so aufteilen, dass ~40 Agenten parallel arbeiten können, ohne dieselben Dateien anzufassen.
 Das Verhalten der App bleibt in dieser Phase **unverändert**. Alle bestehenden Tests müssen grün bleiben.
 
-- [ ] **F0 Stand sichern.** Laufende Arbeit am Schwierigkeitsgrad committen
+- [x] **F0 Stand sichern.** Laufende Arbeit am Schwierigkeitsgrad committen
       (`difficulty.json`, `easy-cards.json`, Änderungen in engine/main/styles/tests/import). Erst dann neu verzweigen.
-- [ ] **F1 main.js aufteilen** in:
+- [x] **F1 main.js aufteilen** in:
       `src/app.js` (State, `change()`, `render()`, Timer),
       `src/actions.js` (Registry: `registerAction(id, handler)` statt eines großen `if/else`),
       `src/ui/icons.js`, `src/ui/chrome.js` (Header/Footer), `src/ui/setup.js`, `src/ui/game.js`,
       `src/ui/summary.js`, `src/ui/memory.js`, `src/ui/dialogs.js`.
       `main.js` importiert nur noch und startet.
-- [ ] **F2 Slots für Einstellungen.** `src/ui/settings/index.js` exportiert eine Liste von Abschnitten
+- [x] **F2 Slots für Einstellungen.** `src/ui/settings/index.js` exportiert eine Liste von Abschnitten
       `{ id, order, render(settings, ctx), read(formData, settings) }`. `setup.js` rendert diese Liste.
       Bestehende Einstellungen (Zeit, Runden, Strafen, Sound, Sprache) werden zu Abschnitts-Modulen.
       Neue Features hängen sich mit **einer Zeile** in `index.js` ein.
-- [ ] **F3 Slots für die Spielkarte.** `game.js` rendert die Karte über `renderCard(card, session)` aus
+- [x] **F3 Slots für die Spielkarte.** `game.js` rendert die Karte über `renderCard(card, session)` aus
       `src/ui/card.js`, die Aktionsknöpfe über `src/ui/play-actions.js`. Damit können B2 (Tabu-Stufe) und E5 (Spielmodi) unabhängig arbeiten.
-- [ ] **F4 styles.css aufteilen** in `src/styles/` mit `tokens.css`, `base.css`, `chrome.css`, `setup.css`,
+- [x] **F4 styles.css aufteilen** in `src/styles/` mit `tokens.css`, `base.css`, `chrome.css`, `setup.css`,
       `game.css`, `summary.css`, `memory.css`, `dialogs.css` und leeren Dateien
       `responsive/phone.css`, `responsive/phone-landscape.css`, `responsive/tablet.css`,
       `responsive/desktop.css`, `responsive/large.css`, `platform/ios.css`, `platform/input.css`, `themes/dark.css`.
       `styles/index.css` importiert alles in fester Reihenfolge. Bestehende Media Queries ziehen in die responsive-Dateien.
-- [ ] **F5 Regel-Module mit Stubs.** Neue reine Module, die `engine.js` schon aufruft und die zunächst
+- [x] **F5 Regel-Module mit Stubs.** Neue reine Module, die `engine.js` schon aufruft und die zunächst
       neutral antworten:
       - `src/rules/audience.js`: `matchesAudience(card, settings)` gibt vorerst `true` zurück.
       - `src/rules/taboo.js`: `visibleTaboo(card, settings)` gibt vorerst `card.taboo` zurück.
       - `src/rules/modes.js`: `pickMode(card, settings, random)` gibt vorerst `"explain"` zurück.
       - `src/rules/stats.js`: `sessionStats(session)` gibt vorerst `{}` zurück.
       `availableCards` ruft `matchesAudience` auf. `drawCard` speichert `session.currentMode = pickMode(...)`.
-- [ ] **F6 Kartenpakete als Quelle.** Neues Verzeichnis `frontend/data/packs/`. Je Paket eine Datei
+- [x] **F6 Kartenpakete als Quelle.** Neues Verzeichnis `frontend/data/packs/`. Je Paket eine Datei
       (Format unten). `scripts/import-cards.mjs` liest alle Pakete. Die Pakete hängen sich an die bestehenden Quellen an,
       Reihenfolge und IDs bisheriger Karten bleiben gleich. Neue optionale Kartenfelder
       `ageMin`, `emoji`, `topical`, `retired` werden in `cards.json` übernommen.
-- [ ] **F7 Kartenprüfung** `scripts/check-cards.mjs` und npm-Script `cards:check`. Es prüft das Paketformat,
+- [x] **F7 Kartenprüfung** `scripts/check-cards.mjs` und npm-Script `cards:check`. Es prüft das Paketformat,
       Duplikate (über normalisierte ID, auch gegen den Bestand), 5 bis 6 Tabuwörter je neuer Karte,
       kein Tabuwort enthält den Begriff oder ist in ihm enthalten, gültige `difficulty` und `ageMin`,
       Kategorie existiert, gültige Farbe, Sperrwortliste (`data/blocklist.txt`). Ausgabe als lesbarer Bericht.
       Dazu kommen npm-Scripts `cards:import`. **package.json ändert nur F7.**
-- [ ] **F8 Gerätematrix vorbereiten** in `playwright.config.js`: Projekte `phone-small` (320×568),
+- [x] **F8 Gerätematrix vorbereiten** in `playwright.config.js`: Projekte `phone-small` (320×568),
       `iphone-se` (375×667), `iphone-15` (393×852), `iphone-landscape` (852×393), `pixel-7`,
       `ipad-mini` (768×1024), `ipad-landscape` (1180×820), `surface-pro` (1368×912, hasTouch),
       `notebook` (1440×900), `monitor` (1920×1080), `large` (2560×1440). Alle laufen mit Chrome/Chromium
       (`defaultBrowserType: "chromium"`). Die vorhandenen Specs laufen weiter auf `mobile` und `desktop`.
       Die neuen Projekte laufen nur für Specs mit dem Tag `@matrix`.
-- [ ] **F9 AGENTS.md ergänzen.** Verweis auf diesen Plan und die Regeln aus Abschnitt 0.
-- [ ] **F10** `npm test`, `npm run build`, `npm run test:e2e` grün → Merge auf `main`, Tag `v2-foundation`.
+      **Ausgangsbefund:** Auf `phone-small`, `iphone-se`, `iphone-landscape` und `ipad-landscape` liegen Karte oder
+      Wertungsknöpfe im Zug außerhalb des Bildschirms. Sie stehen in `KNOWN_LAYOUT_GAPS` in `tests/browser/matrix.spec.js`.
+      Wer eine Lücke schließt, entfernt den Eintrag.
+- [x] **F9 AGENTS.md ergänzen.** Verweis auf diesen Plan und die Regeln aus Abschnitt 0.
+- [x] **F10** `npm test`, `npm run build`, `npm run test:e2e` grün → Merge auf `main`, Tag `v2-foundation`.
 
 ### Verträge, die in Phase 1 festgelegt werden (alle anderen bauen darauf auf)
 
@@ -198,7 +206,7 @@ Summe: rund 2 000 neue Karten, davon mehr als 1 500 speziell für Jugendliche.
 | --- | --- | --- | --- |
 | [ ] B1 | **Altersfilter**: `matchesAudience` filtert nach `ageGroup` und `card.ageMin` (Standard 14) und blendet `retired`-Karten immer aus. `validateSettings` prüft `ageGroup`. Migration. | `src/rules/audience.js`, `tests/B1.test.mjs` | F5 |
 | [ ] B2 | **Tabu-Stufen**: `visibleTaboo` mit `classic` (alle), `light` (die ersten 3) und `none` (keine). Im Modus `none` bleibt die Wertung `taboo` intern, die Oberfläche nennt sie „Wort gesagt“ (Begriff oder Wortteil ausgesprochen). Strafe nach Einstellung. Migration und Validierung. | `src/rules/taboo.js`, `tests/B2.test.mjs` | F5 |
-| [ ] B3 | **Neue Schnellauswahl** in `PRESETS`: „Kinder (6–9)“: `ageGroup 8`, `tabooMode none`, 90 s, keine Strafen, Kategorien kids/fantasy/animals/food/hobbies/camp. „Jüngere Jugendliche (10–13)“: `light`. „Jugendliche (14–17)“: `classic`, Jugend-Kategorien. „Konfis“ (+faith/camp). „Erwachsene / gemischt“. Bitte nur den `PRESETS`-Block und `applyPreset` in `engine.js` ändern. | `engine.js` (nur PRESETS/applyPreset), `tests/B3.test.mjs` | B1, B2 |
+| [ ] B3 | **Neue Schnellauswahl** (passt auch die Preset-Zahlen in `tests/browser/game.spec.js` an) in `PRESETS`: „Kinder (6–9)“: `ageGroup 8`, `tabooMode none`, 90 s, keine Strafen, Kategorien kids/fantasy/animals/food/hobbies/camp. „Jüngere Jugendliche (10–13)“: `light`. „Jugendliche (14–17)“: `classic`, Jugend-Kategorien. „Konfis“ (+faith/camp). „Erwachsene / gemischt“. Bitte nur den `PRESETS`-Block und `applyPreset` in `engine.js` ändern. | `engine.js` (nur PRESETS/applyPreset), `tests/B3.test.mjs` | B1, B2 |
 | [ ] B4 | **Statistik**: `sessionStats` mit erratenen Karten pro Team, bester Runde, schnellster Karte (Zeitstempel im Log ergänzen, nur additiv), Tabu-König. | `src/rules/stats.js`, `tests/B4.test.mjs` | F5 |
 | [ ] B5 | **Spielmodi-Logik**: `pickMode` wählt zufällig aus `settings.modes`, gleichmäßig verteilt. `pantomime` und `draw` nur bei Karten mit `difficulty easy/medium`. | `src/rules/modes.js`, `tests/B5.test.mjs` | F5 |
 | [ ] B6 | **Eigene Karten** (Logik): `customCards` pro Gruppe im State, IDs `custom:<gruppe>:<normalisiert>`. Validierung beim Anlegen. `importBackup` akzeptiert zusätzlich `custom:`-Schlüssel und eigene Karten (validiert, gemergt, nie überschrieben). | `src/rules/custom.js`, `tests/B6.test.mjs`. Änderung in `importBackup`/`exportBackup` unter Integrationsbedarf beschreiben | F5 |
@@ -226,7 +234,7 @@ Summe: rund 2 000 neue Karten, davon mehr als 1 500 speziell für Jugendliche.
 | [ ] C6 | **Großbild / Beamer** (≥ 1800 px oder Option „Großbildmodus“): Karte und Punktestand skalieren für den Blick von weitem. | `responsive/large.css` | C1 |
 | [ ] C7 | **Eingabeart erkennen (Surface, Convertibles)**: `src/device.js` setzt `data-input="touch|mouse|pen"` am `<html>` beim letzten `pointerdown` und bei `matchMedia('(any-pointer: coarse)')`-Änderungen, außerdem `data-orientation`. Touch-Größen gelten über `[data-input=touch]`, nicht nur über die Breite. Resize und Rotation lösen **kein** `render()` aus. | `src/device.js`, `platform/input.css`, `tests/browser/C7.spec.js` | C1 |
 | [ ] C8 | **Apple (iPhone, iPad, Safari, Home-Bildschirm-App)**: `apple-mobile-web-app-capable`, `-status-bar-style`, `-title`, `apple-touch-icon` 180×180, Safe-Area oben, unten und seitlich, `touch-action: manipulation` und `-webkit-tap-highlight-color` auf Spielknöpfen, kein Gummiband-Scrollen im Spiel (`overscroll-behavior`), Hinweis „Zum Home-Bildschirm hinzufügen“, weil iOS kein `beforeinstallprompt` kennt. | `index.html` (nur `<head>`), `public/apple-touch-icon.png`, `platform/ios.css`, `src/ui/install-hint.js` | C1 |
-| [ ] C9 | **Automatischer Gerätetest** `@matrix`: prüft für jedes Gerät die Kriterien 1–5. Dazu ein Rotationstest (Viewport mitten im Zug wechseln → gleiche Karte, Timer läuft, Kartenspeicher unverändert). Screenshots als Artefakt (nicht als Baseline-Vergleich, weil sie je nach OS abweichen). | `tests/browser/C9-matrix.spec.js` | F8, darf parallel zu C2–C8 entstehen |
+| [ ] C9 | **Automatischer Gerätetest** `@matrix`: prüft für jedes Gerät die Kriterien 1–5. Dazu ein Rotationstest (Viewport mitten im Zug wechseln → gleiche Karte, Timer läuft, Kartenspeicher unverändert). Screenshots als Artefakt (nicht als Baseline-Vergleich, weil sie je nach OS abweichen). | `tests/browser/matrix.spec.js` (Grundgerüst existiert, inkl. `KNOWN_LAYOUT_GAPS`) | F8, darf parallel zu C2–C8 entstehen |
 | [ ] C10 | **Optionaler CI-Lauf in WebKit** (echte Safari-Engine) für `@matrix`, als separater, nicht blockierender Job. | `.github/workflows/webkit.yml` | C9 |
 
 **Manuelle Abnahme auf echten Geräten** (Phase 3, mit Häkchen im PR):
