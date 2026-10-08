@@ -179,14 +179,14 @@ Jede A-Aufgabe besitzt **genau eine Datei** `frontend/data/packs/<paket-id>.json
 
 | ID | Paket-ID / Kategorie | Neu oder Erweiterung | Ziel | Fokus Alter | Beispiele |
 | --- | --- | --- | --- | --- | --- |
-| [ ] A01 | `gaming` 🎮 Gaming | neu | 150 | 8–17 | Minecraft, Controller, Level, Speedrun, Mario Kart, Respawn, Lootbox |
-| [ ] A02 | `social` 📱 Social Media & Apps | neu | 130 | 10–17 | Story, Follower, Reel, Gruppenchat, Sprachnachricht, Filter, Livestream |
-| [ ] A03 | `school` 🎒 Schule & Ausbildung | neu | 150 | 8–17 | Hausaufgaben, Klassenfahrt, Vertretungsstunde, Spickzettel, Praktikum, Abi |
-| [ ] A04 | `slang` 💬 Jugendsprache | neu, `topical` | 100 | 12–17 | Digga, cringe, lost, Ehrenmann, sus, Aura, Side-Eye, NPC, wild |
-| [ ] A05 | `music` 🎧 Musik & Stars | neu | 120 | 10–17 | Playlist, Festival, Beat, Kopfhörer, Karaoke, Bandprobe, Rap |
-| [ ] A06 | `hobbies` 🛹 Freizeit & Hobbys | neu | 130 | 8–17 | Skatepark, Bouldern, Trampolin, Escape Room, Freibad, Kino |
-| [ ] A07 | `friends` 💛 Freundschaft & Gefühle | neu | 100 | 10–17 | beste Freundin, Liebeskummer, Gruppenzwang, Geheimnis, Versöhnung |
-| [ ] A08 | `style` 👟 Mode & Style | neu | 80 | 12–17 | Sneaker, Hoodie, Undercut, Nagellack, Second Hand, Bucket Hat |
+| [x] A01 | `gaming` 🎮 Gaming | neu | 150 | 8–17 | Minecraft, Controller, Level, Speedrun, Mario Kart, Respawn, Lootbox |
+| [x] A02 | `social` 📱 Social Media & Apps | neu | 130 | 10–17 | Story, Follower, Reel, Gruppenchat, Sprachnachricht, Filter, Livestream |
+| [x] A03 | `school` 🎒 Schule & Ausbildung | neu | 150 | 8–17 | Hausaufgaben, Klassenfahrt, Vertretungsstunde, Spickzettel, Praktikum, Abi |
+| [x] A04 | `slang` 💬 Jugendsprache | neu, `topical` | 100 | 12–17 | Digga, cringe, lost, Ehrenmann, sus, Aura, Side-Eye, NPC, wild |
+| [x] A05 | `music` 🎧 Musik & Stars | neu | 120 | 10–17 | Playlist, Festival, Beat, Kopfhörer, Karaoke, Bandprobe, Rap |
+| [x] A06 | `hobbies` 🛹 Freizeit & Hobbys | neu | 130 | 8–17 | Skatepark, Bouldern, Trampolin, Escape Room, Freibad, Kino |
+| [x] A07 | `friends` 💛 Freundschaft & Gefühle | neu | 100 | 10–17 | beste Freundin, Liebeskummer, Gruppenzwang, Geheimnis, Versöhnung |
+| [x] A08 | `style` 👟 Mode & Style | neu | 80 | 12–17 | Sneaker, Hoodie, Undercut, Nagellack, Second Hand, Bucket Hat |
 | [ ] A09 | `future` 🚀 Technik, KI & Zukunft | neu | 110 | 10–17 | KI, Roboter, Akku, Smartwatch, E-Scooter, Passwort, Ladekabel |
 | [ ] A10 | `planet` 🌱 Natur & Umwelt | neu | 100 | 8–17 | Mülltrennung, Klimawandel, Gewitter, Regenwald, Fahrradtour |
 | [ ] A11 | `camp` 🏕️ Freizeit, Camp & Fahrten | neu | 100 | 8–17 | Lagerfeuer, Nachtwanderung, Zeltlager, Stockbrot, Taschenlampe, Heimweh |
@@ -197,6 +197,10 @@ Jede A-Aufgabe besitzt **genau eine Datei** `frontend/data/packs/<paket-id>.json
 | [ ] A16 | `food` Snacks & Fast Food | Erweiterung | 80 | 6–17 | Döner, Bubble Tea, Pausenbrot, Pizza Hawaii, Smoothie |
 | [ ] A17 | `faith` Glaube & Konfi | Erweiterung | 80 | 10–17 | Jugendgottesdienst, Lobpreis, Konfi-Unterricht, Teamer, Andacht, Taizé |
 | [ ] A18 | Bestand taggen | nur `frontend/data/age-tags.json` (neu) | alle `easy`/`medium` Bestandskarten | – | `ageMin` für Bestandskarten nachtragen. F6 liest die Datei wie `difficulty.json` |
+
+Stand 2026-10-08: A01–A08 gemergt, 977 neue Karten, Bestand 2 193 Karten in 20 Kategorien.
+Review-Notizen für R1–R3: „Gaslighting“ und „Situationship“ (slang, ab 14) für Konfi-Gruppen prüfen; Trendwörter 2025 in slang
+unbestätigt (Das crazy, Six Seven, Tuff, Aura farmen); „Werwolf (Spiel)“ in hobbies umbenennen (Klammer auf der Karte).
 
 Summe: rund 2 000 neue Karten, davon mehr als 1 500 speziell für Jugendliche.
 
