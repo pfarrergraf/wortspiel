@@ -1,0 +1,2296 @@
+{
+  "category": {
+    "id": "hobbies",
+    "name": "Freizeit & Hobbys",
+    "emoji": "🛹",
+    "color": "mint"
+  },
+  "cards": [
+    {
+      "word": "Trampolin",
+      "taboo": [
+        "springen",
+        "hüpfen",
+        "Garten",
+        "Netz",
+        "hoch"
+      ],
+      "difficulty": "easy",
+      "ageMin": 6,
+      "emoji": "🤸"
+    },
+    {
+      "word": "Freibad",
+      "taboo": [
+        "Schwimmen",
+        "Sommer",
+        "Becken",
+        "Sprungturm",
+        "Pommes"
+      ],
+      "difficulty": "easy",
+      "ageMin": 6,
+      "emoji": "🏊"
+    },
+    {
+      "word": "Minigolf",
+      "taboo": [
+        "Schläger",
+        "Ball",
+        "Loch",
+        "Bahn",
+        "Hindernis"
+      ],
+      "difficulty": "easy",
+      "ageMin": 6,
+      "emoji": "⛳"
+    },
+    {
+      "word": "Bowling",
+      "taboo": [
+        "Kugel",
+        "Pins",
+        "Kegel",
+        "Strike",
+        "Bahn"
+      ],
+      "difficulty": "easy",
+      "ageMin": 8,
+      "emoji": "🎳"
+    },
+    {
+      "word": "Lasertag",
+      "taboo": [
+        "Weste",
+        "Punkte",
+        "dunkel",
+        "Team",
+        "Treffer"
+      ],
+      "difficulty": "medium",
+      "ageMin": 10
+    },
+    {
+      "word": "Kletterwald",
+      "taboo": [
+        "Seile",
+        "Bäume",
+        "Gurt",
+        "Parcours",
+        "Karabiner"
+      ],
+      "difficulty": "easy",
+      "ageMin": 8,
+      "emoji": "🌲"
+    },
+    {
+      "word": "Jugendtreff",
+      "taboo": [
+        "Freunde",
+        "Kicker",
+        "abhängen",
+        "Betreuer",
+        "Raum"
+      ],
+      "difficulty": "medium",
+      "ageMin": 12
+    },
+    {
+      "word": "Pfadfinder",
+      "taboo": [
+        "Halstuch",
+        "Zelt",
+        "Lager",
+        "Wölflinge",
+        "Abenteuer"
+      ],
+      "difficulty": "medium",
+      "ageMin": 8,
+      "emoji": "⚜️"
+    },
+    {
+      "word": "Jugendfeuerwehr",
+      "taboo": [
+        "Löschen",
+        "Schlauch",
+        "Helm",
+        "Übung",
+        "Brand"
+      ],
+      "difficulty": "medium",
+      "ageMin": 10,
+      "emoji": "🚒"
+    },
+    {
+      "word": "Malen",
+      "taboo": [
+        "Pinsel",
+        "Farbe",
+        "Bild",
+        "Leinwand",
+        "Kunst"
+      ],
+      "difficulty": "easy",
+      "ageMin": 6,
+      "emoji": "🎨"
+    },
+    {
+      "word": "Häkeln",
+      "taboo": [
+        "Wolle",
+        "Nadel",
+        "Masche",
+        "Garn",
+        "Stricken"
+      ],
+      "difficulty": "medium",
+      "ageMin": 10,
+      "emoji": "🧶"
+    },
+    {
+      "word": "Fotografieren",
+      "taboo": [
+        "Kamera",
+        "Bild",
+        "Objektiv",
+        "Motiv",
+        "knipsen"
+      ],
+      "difficulty": "easy",
+      "ageMin": 8,
+      "emoji": "📷"
+    },
+    {
+      "word": "Backen",
+      "taboo": [
+        "Ofen",
+        "Kuchen",
+        "Teig",
+        "Mehl",
+        "Plätzchen"
+      ],
+      "difficulty": "easy",
+      "ageMin": 6,
+      "emoji": "🧁"
+    },
+    {
+      "word": "Zaubertrick",
+      "taboo": [
+        "Magier",
+        "Hut",
+        "Kaninchen",
+        "Karten",
+        "Illusion"
+      ],
+      "difficulty": "easy",
+      "ageMin": 8,
+      "emoji": "🎩"
+    },
+    {
+      "word": "Zauberwürfel",
+      "taboo": [
+        "Rubik",
+        "Farben",
+        "drehen",
+        "Rätsel",
+        "Seiten"
+      ],
+      "difficulty": "easy",
+      "ageMin": 8
+    },
+    {
+      "word": "Uno",
+      "taboo": [
+        "Karten",
+        "Farben",
+        "aussetzen",
+        "ziehen",
+        "rufen"
+      ],
+      "difficulty": "easy",
+      "ageMin": 6,
+      "emoji": "🃏"
+    },
+    {
+      "word": "Werwolf (Spiel)",
+      "taboo": [
+        "Dorf",
+        "Nacht",
+        "Spielleiter",
+        "Seherin",
+        "abstimmen"
+      ],
+      "difficulty": "medium",
+      "ageMin": 12,
+      "emoji": "🐺"
+    },
+    {
+      "word": "Pyjamaparty",
+      "taboo": [
+        "Übernachten",
+        "Schlafanzug",
+        "Freundinnen",
+        "Schlafsack",
+        "Kissenschlacht"
+      ],
+      "difficulty": "easy",
+      "ageMin": 8
+    },
+    {
+      "word": "Kissenschlacht",
+      "taboo": [
+        "Federn",
+        "werfen",
+        "Bett",
+        "Pyjamaparty",
+        "Sofa"
+      ],
+      "difficulty": "easy",
+      "ageMin": 6
+    },
+    {
+      "word": "Geocaching",
+      "taboo": [
+        "Schatz",
+        "GPS",
+        "Dose",
+        "Koordinaten",
+        "suchen"
+      ],
+      "difficulty": "medium",
+      "ageMin": 10,
+      "emoji": "🧭"
+    },
+    {
+      "word": "Angeln",
+      "taboo": [
+        "Fisch",
+        "Rute",
+        "Haken",
+        "Wurm",
+        "See"
+      ],
+      "difficulty": "easy",
+      "ageMin": 8,
+      "emoji": "🎣"
+    },
+    {
+      "word": "Tanzkurs",
+      "taboo": [
+        "Schritte",
+        "Walzer",
+        "Partner",
+        "Lehrer",
+        "Abschlussball"
+      ],
+      "difficulty": "medium",
+      "ageMin": 12,
+      "emoji": "💃"
+    },
+    {
+      "word": "Theater-AG",
+      "taboo": [
+        "Bühne",
+        "Schauspielen",
+        "Rolle",
+        "Schule",
+        "Aufführung"
+      ],
+      "difficulty": "medium",
+      "ageMin": 10,
+      "emoji": "🎭"
+    },
+    {
+      "word": "Lego",
+      "taboo": [
+        "Steine",
+        "bauen",
+        "Dänemark",
+        "Bausatz",
+        "Figuren"
+      ],
+      "difficulty": "easy",
+      "ageMin": 6,
+      "emoji": "🧱"
+    },
+    {
+      "word": "Modellbau",
+      "taboo": [
+        "Kleber",
+        "Bausatz",
+        "Flugzeug",
+        "Eisenbahn",
+        "Miniatur"
+      ],
+      "difficulty": "hard",
+      "ageMin": 12
+    },
+    {
+      "word": "Slackline",
+      "taboo": [
+        "Band",
+        "balancieren",
+        "Bäume",
+        "Gleichgewicht",
+        "spannen"
+      ],
+      "difficulty": "medium",
+      "ageMin": 10
+    },
+    {
+      "word": "Waveboard",
+      "taboo": [
+        "Rollen",
+        "Skateboard",
+        "schlängeln",
+        "zwei",
+        "Brett"
+      ],
+      "difficulty": "medium",
+      "ageMin": 8
+    },
+    {
+      "word": "Inliner",
+      "taboo": [
+        "Rollschuhe",
+        "Rollen",
+        "Helm",
+        "Knieschoner",
+        "bremsen"
+      ],
+      "difficulty": "easy",
+      "ageMin": 8
+    },
+    {
+      "word": "Wasserrutsche",
+      "taboo": [
+        "Schwimmbad",
+        "Freibad",
+        "Röhre",
+        "nass",
+        "Kurven"
+      ],
+      "difficulty": "easy",
+      "ageMin": 6
+    },
+    {
+      "word": "Rummel",
+      "taboo": [
+        "Kirmes",
+        "Karussell",
+        "Zuckerwatte",
+        "Riesenrad",
+        "Jahrmarkt"
+      ],
+      "difficulty": "easy",
+      "ageMin": 6,
+      "emoji": "🎪"
+    },
+    {
+      "word": "Freizeitpark",
+      "taboo": [
+        "Achterbahn",
+        "Fahrgeschäfte",
+        "Eintritt",
+        "Europa-Park",
+        "Attraktionen"
+      ],
+      "difficulty": "easy",
+      "ageMin": 8,
+      "emoji": "🎢"
+    },
+    {
+      "word": "Achterbahn",
+      "taboo": [
+        "Looping",
+        "schnell",
+        "Freizeitpark",
+        "Wagen",
+        "schreien"
+      ],
+      "difficulty": "easy",
+      "ageMin": 6,
+      "emoji": "🎢"
+    },
+    {
+      "word": "Zuckerwatte",
+      "taboo": [
+        "Rummel",
+        "rosa",
+        "Stäbchen",
+        "süß",
+        "klebrig"
+      ],
+      "difficulty": "easy",
+      "ageMin": 6,
+      "emoji": "🍭"
+    },
+    {
+      "word": "Riesenrad",
+      "taboo": [
+        "Gondel",
+        "Rummel",
+        "hoch",
+        "drehen",
+        "Aussicht"
+      ],
+      "difficulty": "easy",
+      "ageMin": 6,
+      "emoji": "🎡"
+    },
+    {
+      "word": "Autoscooter",
+      "taboo": [
+        "Rummel",
+        "rammen",
+        "Kirmes",
+        "Chip",
+        "lenken"
+      ],
+      "difficulty": "easy",
+      "ageMin": 8
+    },
+    {
+      "word": "Karussell",
+      "taboo": [
+        "drehen",
+        "Pferde",
+        "Rummel",
+        "Kreis",
+        "Spielplatz"
+      ],
+      "difficulty": "easy",
+      "ageMin": 6
+    },
+    {
+      "word": "Skatepark",
+      "taboo": [
+        "Rampe",
+        "Halfpipe",
+        "Rollbrett",
+        "Tricks",
+        "BMX"
+      ],
+      "difficulty": "easy",
+      "ageMin": 10,
+      "emoji": "🛹"
+    },
+    {
+      "word": "Halfpipe",
+      "taboo": [
+        "Rampe",
+        "Skateboard",
+        "U-Form",
+        "Tricks",
+        "Snowboard"
+      ],
+      "difficulty": "medium",
+      "ageMin": 10
+    },
+    {
+      "word": "Kickflip",
+      "taboo": [
+        "Skateboard",
+        "Trick",
+        "drehen",
+        "springen",
+        "Brett"
+      ],
+      "difficulty": "hard",
+      "ageMin": 12
+    },
+    {
+      "word": "Ollie",
+      "taboo": [
+        "Skateboard",
+        "springen",
+        "Trick",
+        "Brett",
+        "Grundlage"
+      ],
+      "difficulty": "hard",
+      "ageMin": 12
+    },
+    {
+      "word": "BMX",
+      "taboo": [
+        "Fahrrad",
+        "klein",
+        "Tricks",
+        "Dirt",
+        "Rampe"
+      ],
+      "difficulty": "medium",
+      "ageMin": 10,
+      "emoji": "🚲"
+    },
+    {
+      "word": "Mountainbike",
+      "taboo": [
+        "Fahrrad",
+        "Wald",
+        "Trail",
+        "Federung",
+        "Gelände"
+      ],
+      "difficulty": "easy",
+      "ageMin": 8,
+      "emoji": "🚵"
+    },
+    {
+      "word": "Longboard",
+      "taboo": [
+        "Skateboard",
+        "lang",
+        "Rollen",
+        "cruisen",
+        "Brett"
+      ],
+      "difficulty": "medium",
+      "ageMin": 10
+    },
+    {
+      "word": "Kanu",
+      "taboo": [
+        "Paddel",
+        "Boot",
+        "Fluss",
+        "Kajak",
+        "Wasser"
+      ],
+      "difficulty": "easy",
+      "ageMin": 8,
+      "emoji": "🛶"
+    },
+    {
+      "word": "Stand-up-Paddling",
+      "taboo": [
+        "Brett",
+        "See",
+        "Board",
+        "Gleichgewicht",
+        "SUP"
+      ],
+      "difficulty": "medium",
+      "ageMin": 10
+    },
+    {
+      "word": "Schlittenfahren",
+      "taboo": [
+        "Schnee",
+        "Winter",
+        "Hang",
+        "rodeln",
+        "Kufen"
+      ],
+      "difficulty": "easy",
+      "ageMin": 6,
+      "emoji": "🛷"
+    },
+    {
+      "word": "Schlittschuhlaufen",
+      "taboo": [
+        "Eis",
+        "Kufen",
+        "Eishalle",
+        "Pirouette",
+        "Winter"
+      ],
+      "difficulty": "easy",
+      "ageMin": 8,
+      "emoji": "⛸️"
+    },
+    {
+      "word": "Drachensteigen",
+      "taboo": [
+        "Wind",
+        "Schnur",
+        "Herbst",
+        "fliegen",
+        "Feld"
+      ],
+      "difficulty": "easy",
+      "ageMin": 6,
+      "emoji": "🪁"
+    },
+    {
+      "word": "Seifenblasen",
+      "taboo": [
+        "pusten",
+        "Ring",
+        "Lauge",
+        "platzen",
+        "schillern"
+      ],
+      "difficulty": "easy",
+      "ageMin": 6,
+      "emoji": "🫧"
+    },
+    {
+      "word": "Sandburg",
+      "taboo": [
+        "Strand",
+        "Eimer",
+        "Schaufel",
+        "bauen",
+        "Meer"
+      ],
+      "difficulty": "easy",
+      "ageMin": 6,
+      "emoji": "🏖️"
+    },
+    {
+      "word": "Hüpfburg",
+      "taboo": [
+        "Luft",
+        "springen",
+        "Kindergeburtstag",
+        "aufblasen",
+        "Gummi"
+      ],
+      "difficulty": "easy",
+      "ageMin": 6
+    },
+    {
+      "word": "Straßenkreide",
+      "taboo": [
+        "malen",
+        "Boden",
+        "bunt",
+        "Bürgersteig",
+        "Hüpfkästchen"
+      ],
+      "difficulty": "easy",
+      "ageMin": 6
+    },
+    {
+      "word": "Fangen",
+      "taboo": [
+        "rennen",
+        "abklatschen",
+        "Schulhof",
+        "schnell",
+        "Spiel"
+      ],
+      "difficulty": "easy",
+      "ageMin": 6,
+      "emoji": "🏃"
+    },
+    {
+      "word": "Gummitwist",
+      "taboo": [
+        "Band",
+        "springen",
+        "Schulhof",
+        "Beine",
+        "hüpfen"
+      ],
+      "difficulty": "medium",
+      "ageMin": 8
+    },
+    {
+      "word": "Seilspringen",
+      "taboo": [
+        "hüpfen",
+        "Schwung",
+        "Pausenhof",
+        "Turnen",
+        "zählen"
+      ],
+      "difficulty": "easy",
+      "ageMin": 6
+    },
+    {
+      "word": "Kicker",
+      "taboo": [
+        "Tischfußball",
+        "Stangen",
+        "drehen",
+        "Tor",
+        "Figuren"
+      ],
+      "difficulty": "easy",
+      "ageMin": 8,
+      "emoji": "⚽"
+    },
+    {
+      "word": "Billard",
+      "taboo": [
+        "Queue",
+        "Kugeln",
+        "Tisch",
+        "Loch",
+        "Kreide"
+      ],
+      "difficulty": "medium",
+      "ageMin": 12,
+      "emoji": "🎱"
+    },
+    {
+      "word": "Darts",
+      "taboo": [
+        "Pfeile",
+        "Scheibe",
+        "werfen",
+        "Bullseye",
+        "Punkte"
+      ],
+      "difficulty": "medium",
+      "ageMin": 12,
+      "emoji": "🎯"
+    },
+    {
+      "word": "Schach",
+      "taboo": [
+        "König",
+        "Dame",
+        "Brett",
+        "Matt",
+        "Figuren"
+      ],
+      "difficulty": "easy",
+      "ageMin": 8,
+      "emoji": "♟️"
+    },
+    {
+      "word": "Mensch ärgere dich nicht",
+      "taboo": [
+        "Würfel",
+        "Figuren",
+        "rausschmeißen",
+        "Brettspiel",
+        "sechs"
+      ],
+      "difficulty": "easy",
+      "ageMin": 6,
+      "emoji": "🎲"
+    },
+    {
+      "word": "Monopoly",
+      "taboo": [
+        "Geld",
+        "Straßen",
+        "Häuser",
+        "Gefängnis",
+        "Schlossallee"
+      ],
+      "difficulty": "easy",
+      "ageMin": 8
+    },
+    {
+      "word": "Memory",
+      "taboo": [
+        "Karten",
+        "Paare",
+        "umdrehen",
+        "merken",
+        "Gedächtnis"
+      ],
+      "difficulty": "easy",
+      "ageMin": 6
+    },
+    {
+      "word": "Jenga",
+      "taboo": [
+        "Turm",
+        "Holz",
+        "Klötze",
+        "umfallen",
+        "ziehen"
+      ],
+      "difficulty": "easy",
+      "ageMin": 6
+    },
+    {
+      "word": "Puzzle",
+      "taboo": [
+        "Teile",
+        "zusammensetzen",
+        "Bild",
+        "Ecken",
+        "Rand"
+      ],
+      "difficulty": "easy",
+      "ageMin": 6,
+      "emoji": "🧩"
+    },
+    {
+      "word": "Mau-Mau",
+      "taboo": [
+        "Karten",
+        "Bube",
+        "aussetzen",
+        "ziehen",
+        "Sieben"
+      ],
+      "difficulty": "medium",
+      "ageMin": 8
+    },
+    {
+      "word": "Twister",
+      "taboo": [
+        "Matte",
+        "Farben",
+        "Hand",
+        "Fuß",
+        "verrenken"
+      ],
+      "difficulty": "medium",
+      "ageMin": 8
+    },
+    {
+      "word": "Activity",
+      "taboo": [
+        "Pantomime",
+        "zeichnen",
+        "erklären",
+        "Brettspiel",
+        "Team"
+      ],
+      "difficulty": "medium",
+      "ageMin": 10
+    },
+    {
+      "word": "Stadt, Land, Fluss",
+      "taboo": [
+        "Buchstabe",
+        "Kategorien",
+        "Zettel",
+        "Stopp",
+        "Punkte"
+      ],
+      "difficulty": "easy",
+      "ageMin": 8
+    },
+    {
+      "word": "Wahrheit oder Pflicht",
+      "taboo": [
+        "Frage",
+        "Aufgabe",
+        "ehrlich",
+        "mutig",
+        "Flasche"
+      ],
+      "difficulty": "medium",
+      "ageMin": 10
+    },
+    {
+      "word": "Schnitzeljagd",
+      "taboo": [
+        "Hinweise",
+        "Pfeile",
+        "Spur",
+        "Schatz",
+        "Kreide"
+      ],
+      "difficulty": "easy",
+      "ageMin": 8
+    },
+    {
+      "word": "Topfschlagen",
+      "taboo": [
+        "Kochlöffel",
+        "Augenbinde",
+        "Kindergeburtstag",
+        "krabbeln",
+        "heiß"
+      ],
+      "difficulty": "easy",
+      "ageMin": 6
+    },
+    {
+      "word": "Stopptanz",
+      "taboo": [
+        "Musik",
+        "aus",
+        "einfrieren",
+        "Kindergeburtstag",
+        "Party"
+      ],
+      "difficulty": "easy",
+      "ageMin": 6
+    },
+    {
+      "word": "Reise nach Jerusalem",
+      "taboo": [
+        "Stühle",
+        "Musik",
+        "Kindergeburtstag",
+        "setzen",
+        "ausscheiden"
+      ],
+      "difficulty": "medium",
+      "ageMin": 8
+    },
+    {
+      "word": "Blinde Kuh",
+      "taboo": [
+        "Augenbinde",
+        "tasten",
+        "fangen",
+        "Kinder",
+        "raten"
+      ],
+      "difficulty": "medium",
+      "ageMin": 8
+    },
+    {
+      "word": "Nachtwanderung",
+      "taboo": [
+        "dunkel",
+        "Taschenlampe",
+        "Wald",
+        "gruselig",
+        "Freizeit"
+      ],
+      "difficulty": "easy",
+      "ageMin": 8,
+      "emoji": "🔦"
+    },
+    {
+      "word": "Zelten",
+      "taboo": [
+        "Camping",
+        "Schlafsack",
+        "Heringe",
+        "Isomatte",
+        "draußen"
+      ],
+      "difficulty": "easy",
+      "ageMin": 6,
+      "emoji": "⛺"
+    },
+    {
+      "word": "Hängematte",
+      "taboo": [
+        "schaukeln",
+        "Bäume",
+        "liegen",
+        "Netz",
+        "entspannen"
+      ],
+      "difficulty": "easy",
+      "ageMin": 6
+    },
+    {
+      "word": "Baumhaus",
+      "taboo": [
+        "Leiter",
+        "klettern",
+        "Holz",
+        "Garten",
+        "Ast"
+      ],
+      "difficulty": "easy",
+      "ageMin": 6
+    },
+    {
+      "word": "Basteln",
+      "taboo": [
+        "Kleber",
+        "Schere",
+        "Papier",
+        "Kindergarten",
+        "Glitzer"
+      ],
+      "difficulty": "easy",
+      "ageMin": 6,
+      "emoji": "✂️"
+    },
+    {
+      "word": "Origami",
+      "taboo": [
+        "Papier",
+        "falten",
+        "Kranich",
+        "Japan",
+        "Kunst"
+      ],
+      "difficulty": "medium",
+      "ageMin": 10
+    },
+    {
+      "word": "Stricken",
+      "taboo": [
+        "Nadeln",
+        "Wolle",
+        "Schal",
+        "Masche",
+        "Oma"
+      ],
+      "difficulty": "easy",
+      "ageMin": 8
+    },
+    {
+      "word": "Nähen",
+      "taboo": [
+        "Nadel",
+        "Faden",
+        "Stoff",
+        "Maschine",
+        "Kleidung"
+      ],
+      "difficulty": "easy",
+      "ageMin": 8,
+      "emoji": "🪡"
+    },
+    {
+      "word": "Töpfern",
+      "taboo": [
+        "Ton",
+        "Drehscheibe",
+        "Vase",
+        "Brennofen",
+        "Lehm"
+      ],
+      "difficulty": "medium",
+      "ageMin": 10,
+      "emoji": "🏺"
+    },
+    {
+      "word": "Graffiti",
+      "taboo": [
+        "Sprühdose",
+        "Wand",
+        "Farbe",
+        "Tag",
+        "Kunst"
+      ],
+      "difficulty": "medium",
+      "ageMin": 12
+    },
+    {
+      "word": "Comic",
+      "taboo": [
+        "Sprechblase",
+        "Heft",
+        "Bilder",
+        "Superheld",
+        "Manga"
+      ],
+      "difficulty": "easy",
+      "ageMin": 8,
+      "emoji": "💬"
+    },
+    {
+      "word": "Manga",
+      "taboo": [
+        "Japan",
+        "Comic",
+        "Anime",
+        "lesen",
+        "rückwärts"
+      ],
+      "difficulty": "medium",
+      "ageMin": 10
+    },
+    {
+      "word": "Tagebuch",
+      "taboo": [
+        "schreiben",
+        "geheim",
+        "Schloss",
+        "Gedanken",
+        "täglich"
+      ],
+      "difficulty": "easy",
+      "ageMin": 8,
+      "emoji": "📔"
+    },
+    {
+      "word": "Bullet Journal",
+      "taboo": [
+        "Notizbuch",
+        "Punkte",
+        "Kalender",
+        "gestalten",
+        "Planer"
+      ],
+      "difficulty": "hard",
+      "ageMin": 14
+    },
+    {
+      "word": "Handlettering",
+      "taboo": [
+        "Schrift",
+        "Stift",
+        "Buchstaben",
+        "schön",
+        "Brush"
+      ],
+      "difficulty": "hard",
+      "ageMin": 12
+    },
+    {
+      "word": "Diamond Painting",
+      "taboo": [
+        "Steinchen",
+        "Glitzer",
+        "Bild",
+        "kleben",
+        "Pinzette"
+      ],
+      "difficulty": "hard",
+      "ageMin": 12
+    },
+    {
+      "word": "Freundschaftsarmband",
+      "taboo": [
+        "knüpfen",
+        "Fäden",
+        "Handgelenk",
+        "bunt",
+        "schenken"
+      ],
+      "difficulty": "medium",
+      "ageMin": 8
+    },
+    {
+      "word": "Bügelperlen",
+      "taboo": [
+        "Steckplatte",
+        "bunt",
+        "Papier",
+        "heiß",
+        "Figuren"
+      ],
+      "difficulty": "medium",
+      "ageMin": 6
+    },
+    {
+      "word": "Knete",
+      "taboo": [
+        "formen",
+        "weich",
+        "Farben",
+        "Kinder",
+        "Play-Doh"
+      ],
+      "difficulty": "easy",
+      "ageMin": 6
+    },
+    {
+      "word": "Slime",
+      "taboo": [
+        "glibberig",
+        "Kleber",
+        "Glitzer",
+        "selbermachen",
+        "grün"
+      ],
+      "difficulty": "medium",
+      "ageMin": 8
+    },
+    {
+      "word": "Gärtnern",
+      "taboo": [
+        "Pflanzen",
+        "Beet",
+        "Gießkanne",
+        "Erde",
+        "Blumen"
+      ],
+      "difficulty": "easy",
+      "ageMin": 8,
+      "emoji": "🌱"
+    },
+    {
+      "word": "Vogelbeobachtung",
+      "taboo": [
+        "Fernglas",
+        "Natur",
+        "Federn",
+        "zwitschern",
+        "Bestimmungsbuch"
+      ],
+      "difficulty": "medium",
+      "ageMin": 10,
+      "emoji": "🐦"
+    },
+    {
+      "word": "Teleskop",
+      "taboo": [
+        "Sterne",
+        "Fernrohr",
+        "Planeten",
+        "Nacht",
+        "Himmel"
+      ],
+      "difficulty": "medium",
+      "ageMin": 10,
+      "emoji": "🔭"
+    },
+    {
+      "word": "Briefmarkensammlung",
+      "taboo": [
+        "Album",
+        "Post",
+        "Pinzette",
+        "Hobby",
+        "wertvoll"
+      ],
+      "difficulty": "hard",
+      "ageMin": 10
+    },
+    {
+      "word": "Sammelkarten",
+      "taboo": [
+        "Pokémon",
+        "tauschen",
+        "Album",
+        "selten",
+        "Fußball"
+      ],
+      "difficulty": "easy",
+      "ageMin": 8
+    },
+    {
+      "word": "Sammelbilder",
+      "taboo": [
+        "Fußball",
+        "WM",
+        "kleben",
+        "tauschen",
+        "Sticker"
+      ],
+      "difficulty": "medium",
+      "ageMin": 8
+    },
+    {
+      "word": "Jonglieren",
+      "taboo": [
+        "Bälle",
+        "werfen",
+        "Zirkus",
+        "fangen",
+        "Keulen"
+      ],
+      "difficulty": "easy",
+      "ageMin": 8,
+      "emoji": "🤹"
+    },
+    {
+      "word": "Einrad",
+      "taboo": [
+        "Zirkus",
+        "Gleichgewicht",
+        "fahren",
+        "Pedale",
+        "Sattel"
+      ],
+      "difficulty": "medium",
+      "ageMin": 8
+    },
+    {
+      "word": "Diabolo",
+      "taboo": [
+        "Schnur",
+        "Stöcke",
+        "jonglieren",
+        "Zirkus",
+        "Spule"
+      ],
+      "difficulty": "hard",
+      "ageMin": 10
+    },
+    {
+      "word": "Parkour",
+      "taboo": [
+        "springen",
+        "Mauern",
+        "klettern",
+        "Stadt",
+        "Hindernisse"
+      ],
+      "difficulty": "medium",
+      "ageMin": 12
+    },
+    {
+      "word": "Breakdance",
+      "taboo": [
+        "Kopf",
+        "drehen",
+        "Hip-Hop",
+        "Boden",
+        "Battle"
+      ],
+      "difficulty": "medium",
+      "ageMin": 12
+    },
+    {
+      "word": "Musical",
+      "taboo": [
+        "singen",
+        "Bühne",
+        "Theater",
+        "Lieder",
+        "Schauspieler"
+      ],
+      "difficulty": "medium",
+      "ageMin": 10
+    },
+    {
+      "word": "Chor",
+      "taboo": [
+        "singen",
+        "Stimmen",
+        "Dirigent",
+        "Lieder",
+        "Sopran"
+      ],
+      "difficulty": "easy",
+      "ageMin": 8
+    },
+    {
+      "word": "Schülerband",
+      "taboo": [
+        "Schlagzeug",
+        "Gitarre",
+        "Bühne",
+        "Probe",
+        "Sänger"
+      ],
+      "difficulty": "medium",
+      "ageMin": 10,
+      "emoji": "🎸"
+    },
+    {
+      "word": "Schlagzeug",
+      "taboo": [
+        "Trommeln",
+        "Sticks",
+        "laut",
+        "Becken",
+        "Drums"
+      ],
+      "difficulty": "easy",
+      "ageMin": 8,
+      "emoji": "🥁"
+    },
+    {
+      "word": "Blockflöte",
+      "taboo": [
+        "Grundschule",
+        "Musikunterricht",
+        "blasen",
+        "Löcher",
+        "quietschen"
+      ],
+      "difficulty": "easy",
+      "ageMin": 6
+    },
+    {
+      "word": "Ukulele",
+      "taboo": [
+        "Gitarre",
+        "klein",
+        "vier",
+        "Saiten",
+        "Hawaii"
+      ],
+      "difficulty": "medium",
+      "ageMin": 10
+    },
+    {
+      "word": "Karaoke",
+      "taboo": [
+        "singen",
+        "Mikrofon",
+        "Text",
+        "Bildschirm",
+        "Party"
+      ],
+      "difficulty": "easy",
+      "ageMin": 8,
+      "emoji": "🎤"
+    },
+    {
+      "word": "Hörspiel",
+      "taboo": [
+        "Kassette",
+        "CD",
+        "Geschichte",
+        "Sprecher",
+        "einschlafen"
+      ],
+      "difficulty": "medium",
+      "ageMin": 8,
+      "emoji": "🎧"
+    },
+    {
+      "word": "Lesenacht",
+      "taboo": [
+        "Bücher",
+        "Taschenlampe",
+        "Bibliothek",
+        "übernachten",
+        "Schule"
+      ],
+      "difficulty": "medium",
+      "ageMin": 8,
+      "emoji": "📚"
+    },
+    {
+      "word": "Filmabend",
+      "taboo": [
+        "Sofa",
+        "Popcorn",
+        "Fernseher",
+        "Decke",
+        "Freunde"
+      ],
+      "difficulty": "easy",
+      "ageMin": 8,
+      "emoji": "🍿"
+    },
+    {
+      "word": "Spieleabend",
+      "taboo": [
+        "Brettspiele",
+        "Freunde",
+        "Karten",
+        "Snacks",
+        "gewinnen"
+      ],
+      "difficulty": "easy",
+      "ageMin": 8
+    },
+    {
+      "word": "Stadtrallye",
+      "taboo": [
+        "Gruppen",
+        "Aufgaben",
+        "Stationen",
+        "Karte",
+        "Fotos"
+      ],
+      "difficulty": "medium",
+      "ageMin": 10
+    },
+    {
+      "word": "Kegeln",
+      "taboo": [
+        "Kugel",
+        "Bahn",
+        "neun",
+        "Bowling",
+        "Verein"
+      ],
+      "difficulty": "medium",
+      "ageMin": 10
+    },
+    {
+      "word": "Spaßbad",
+      "taboo": [
+        "Rutsche",
+        "Wellen",
+        "Schwimmen",
+        "Erlebnis",
+        "Becken"
+      ],
+      "difficulty": "easy",
+      "ageMin": 8
+    },
+    {
+      "word": "Sprungturm",
+      "taboo": [
+        "Freibad",
+        "Meter",
+        "hoch",
+        "Becken",
+        "Mut"
+      ],
+      "difficulty": "easy",
+      "ageMin": 8
+    },
+    {
+      "word": "Tretboot",
+      "taboo": [
+        "See",
+        "Pedale",
+        "Schwan",
+        "strampeln",
+        "mieten"
+      ],
+      "difficulty": "medium",
+      "ageMin": 8
+    },
+    {
+      "word": "Ponyhof",
+      "taboo": [
+        "Reiten",
+        "Pferde",
+        "Ferien",
+        "Stall",
+        "striegeln"
+      ],
+      "difficulty": "easy",
+      "ageMin": 8,
+      "emoji": "🐴"
+    },
+    {
+      "word": "Voltigieren",
+      "taboo": [
+        "Pferd",
+        "Turnen",
+        "Longe",
+        "Kür",
+        "Reiten"
+      ],
+      "difficulty": "hard",
+      "ageMin": 10
+    },
+    {
+      "word": "Gassi gehen",
+      "taboo": [
+        "Hund",
+        "Leine",
+        "spazieren",
+        "Park",
+        "Tüte"
+      ],
+      "difficulty": "easy",
+      "ageMin": 6,
+      "emoji": "🐕"
+    },
+    {
+      "word": "Aquarium",
+      "taboo": [
+        "Fische",
+        "Glas",
+        "Wasser",
+        "Pumpe",
+        "Pflanzen"
+      ],
+      "difficulty": "easy",
+      "ageMin": 6,
+      "emoji": "🐠"
+    },
+    {
+      "word": "Streichelzoo",
+      "taboo": [
+        "Ziegen",
+        "Tiere",
+        "füttern",
+        "Bauernhof",
+        "Kinder"
+      ],
+      "difficulty": "easy",
+      "ageMin": 6,
+      "emoji": "🐐"
+    },
+    {
+      "word": "Planetarium",
+      "taboo": [
+        "Sterne",
+        "Kuppel",
+        "Himmel",
+        "Planeten",
+        "Weltall"
+      ],
+      "difficulty": "medium",
+      "ageMin": 10
+    },
+    {
+      "word": "Museum",
+      "taboo": [
+        "Ausstellung",
+        "Bilder",
+        "Kunst",
+        "alt",
+        "Führung"
+      ],
+      "difficulty": "easy",
+      "ageMin": 8,
+      "emoji": "🏛️"
+    },
+    {
+      "word": "Erste-Hilfe-Kurs",
+      "taboo": [
+        "Pflaster",
+        "Verband",
+        "Notruf",
+        "stabile Seitenlage",
+        "Unfall"
+      ],
+      "difficulty": "medium",
+      "ageMin": 12,
+      "emoji": "⛑️"
+    },
+    {
+      "word": "Schwimmabzeichen",
+      "taboo": [
+        "Seepferdchen",
+        "Bronze",
+        "Silber",
+        "Gold",
+        "Freibad"
+      ],
+      "difficulty": "medium",
+      "ageMin": 8
+    },
+    {
+      "word": "Fahrradtour",
+      "taboo": [
+        "Radeln",
+        "Helm",
+        "Ausflug",
+        "Strecke",
+        "Pause"
+      ],
+      "difficulty": "easy",
+      "ageMin": 8
+    },
+    {
+      "word": "Kletterhalle",
+      "taboo": [
+        "Bouldern",
+        "Seil",
+        "Wand",
+        "Griffe",
+        "Gurt"
+      ],
+      "difficulty": "medium",
+      "ageMin": 10,
+      "emoji": "🧗"
+    },
+    {
+      "word": "Sommerrodelbahn",
+      "taboo": [
+        "Berg",
+        "Schlitten",
+        "Schiene",
+        "Bremse",
+        "Ferien"
+      ],
+      "difficulty": "medium",
+      "ageMin": 8
+    },
+    {
+      "word": "Hoverboard",
+      "taboo": [
+        "balancieren",
+        "Rollen",
+        "elektrisch",
+        "Akku",
+        "fahren"
+      ],
+      "difficulty": "medium",
+      "ageMin": 10
+    },
+    {
+      "word": "Drohne",
+      "taboo": [
+        "fliegen",
+        "Kamera",
+        "Fernsteuerung",
+        "Propeller",
+        "Luft"
+      ],
+      "difficulty": "medium",
+      "ageMin": 10
+    },
+    {
+      "word": "Disco",
+      "taboo": [
+        "Tanzen",
+        "Musik",
+        "DJ",
+        "Licht",
+        "Party"
+      ],
+      "difficulty": "easy",
+      "ageMin": 10,
+      "emoji": "🪩"
+    },
+    {
+      "word": "Grillen",
+      "taboo": [
+        "Würstchen",
+        "Kohle",
+        "Rost",
+        "Sommer",
+        "Garten"
+      ],
+      "difficulty": "easy",
+      "ageMin": 8
+    },
+    {
+      "word": "Wasserbombe",
+      "taboo": [
+        "Luftballon",
+        "werfen",
+        "nass",
+        "Sommer",
+        "platzen"
+      ],
+      "difficulty": "easy",
+      "ageMin": 6,
+      "emoji": "💦"
+    },
+    {
+      "word": "Planschbecken",
+      "taboo": [
+        "Garten",
+        "aufblasen",
+        "Kinder",
+        "Wasser",
+        "Sommer"
+      ],
+      "difficulty": "easy",
+      "ageMin": 6
+    },
+    {
+      "word": "Murmeln",
+      "taboo": [
+        "Kugeln",
+        "Glas",
+        "rollen",
+        "Loch",
+        "Spiel"
+      ],
+      "difficulty": "easy",
+      "ageMin": 6
+    },
+    {
+      "word": "Jo-Jo",
+      "taboo": [
+        "Schnur",
+        "rauf",
+        "runter",
+        "Trick",
+        "Spielzeug"
+      ],
+      "difficulty": "easy",
+      "ageMin": 6,
+      "emoji": "🪀"
+    },
+    {
+      "word": "Kartenhaus",
+      "taboo": [
+        "stapeln",
+        "einstürzen",
+        "vorsichtig",
+        "wackeln",
+        "Turm"
+      ],
+      "difficulty": "medium",
+      "ageMin": 8
+    },
+    {
+      "word": "Domino",
+      "taboo": [
+        "Steine",
+        "umfallen",
+        "Reihe",
+        "Kette",
+        "Punkte"
+      ],
+      "difficulty": "easy",
+      "ageMin": 6
+    },
+    {
+      "word": "Sudoku",
+      "taboo": [
+        "Zahlen",
+        "neun",
+        "Rätsel",
+        "Kästchen",
+        "Logik"
+      ],
+      "difficulty": "medium",
+      "ageMin": 10
+    },
+    {
+      "word": "Kreuzworträtsel",
+      "taboo": [
+        "Kästchen",
+        "Buchstaben",
+        "waagerecht",
+        "senkrecht",
+        "Zeitung"
+      ],
+      "difficulty": "medium",
+      "ageMin": 10
+    },
+    {
+      "word": "Fan-Fiction",
+      "taboo": [
+        "Geschichten",
+        "Fans",
+        "schreiben",
+        "Figuren",
+        "Internet"
+      ],
+      "difficulty": "hard",
+      "ageMin": 14
+    },
+    {
+      "word": "Cosplay",
+      "taboo": [
+        "Kostüm",
+        "Anime",
+        "verkleiden",
+        "Convention",
+        "Figur"
+      ],
+      "difficulty": "hard",
+      "ageMin": 12
+    },
+    {
+      "word": "Seifenkiste",
+      "taboo": [
+        "Rennen",
+        "Holz",
+        "bergab",
+        "Räder",
+        "bauen"
+      ],
+      "difficulty": "hard",
+      "ageMin": 10
+    },
+    {
+      "word": "Kartbahn",
+      "taboo": [
+        "Rennen",
+        "Helm",
+        "schnell",
+        "Kurven",
+        "Runde"
+      ],
+      "difficulty": "medium",
+      "ageMin": 10,
+      "emoji": "🏎️"
+    },
+    {
+      "word": "Schnorcheln",
+      "taboo": [
+        "Maske",
+        "Flossen",
+        "Meer",
+        "Fische",
+        "Rohr"
+      ],
+      "difficulty": "easy",
+      "ageMin": 8,
+      "emoji": "🤿"
+    },
+    {
+      "word": "Segeln",
+      "taboo": [
+        "Boot",
+        "Wind",
+        "Mast",
+        "See",
+        "Regatta"
+      ],
+      "difficulty": "medium",
+      "ageMin": 10,
+      "emoji": "⛵"
+    },
+    {
+      "word": "Rafting",
+      "taboo": [
+        "Schlauchboot",
+        "Fluss",
+        "Paddel",
+        "Wildwasser",
+        "Helm"
+      ],
+      "difficulty": "hard",
+      "ageMin": 12
+    },
+    {
+      "word": "Floßbau",
+      "taboo": [
+        "Holz",
+        "Seile",
+        "Fässer",
+        "Fluss",
+        "Pfadfinder"
+      ],
+      "difficulty": "hard",
+      "ageMin": 10
+    },
+    {
+      "word": "Knoten",
+      "taboo": [
+        "Seil",
+        "Pfadfinder",
+        "binden",
+        "Schlinge",
+        "Segeln"
+      ],
+      "difficulty": "medium",
+      "ageMin": 10
+    },
+    {
+      "word": "Schnitzen",
+      "taboo": [
+        "Messer",
+        "Holz",
+        "Stock",
+        "Figur",
+        "Pfadfinder"
+      ],
+      "difficulty": "medium",
+      "ageMin": 10
+    },
+    {
+      "word": "Malbuch",
+      "taboo": [
+        "ausmalen",
+        "Buntstifte",
+        "Linien",
+        "Kinder",
+        "Bilder"
+      ],
+      "difficulty": "easy",
+      "ageMin": 6
+    },
+    {
+      "word": "Aquarell",
+      "taboo": [
+        "Wasserfarben",
+        "Pinsel",
+        "Papier",
+        "malen",
+        "verlaufen"
+      ],
+      "difficulty": "hard",
+      "ageMin": 12
+    },
+    {
+      "word": "Skizzenbuch",
+      "taboo": [
+        "zeichnen",
+        "Bleistift",
+        "Ideen",
+        "Künstler",
+        "Blätter"
+      ],
+      "difficulty": "medium",
+      "ageMin": 10
+    },
+    {
+      "word": "Polaroid",
+      "taboo": [
+        "Sofortbild",
+        "Kamera",
+        "schütteln",
+        "Foto",
+        "retro"
+      ],
+      "difficulty": "medium",
+      "ageMin": 12
+    },
+    {
+      "word": "Stop-Motion",
+      "taboo": [
+        "Film",
+        "Knete",
+        "Bilder",
+        "Lego",
+        "Animation"
+      ],
+      "difficulty": "hard",
+      "ageMin": 12
+    },
+    {
+      "word": "DJ",
+      "taboo": [
+        "Musik",
+        "Platten",
+        "auflegen",
+        "Party",
+        "Mischpult"
+      ],
+      "difficulty": "medium",
+      "ageMin": 10,
+      "emoji": "🎧"
+    },
+    {
+      "word": "Frisbee",
+      "taboo": [
+        "Scheibe",
+        "werfen",
+        "Wiese",
+        "fangen",
+        "Strand"
+      ],
+      "difficulty": "easy",
+      "ageMin": 6,
+      "emoji": "🥏"
+    },
+    {
+      "word": "Boule",
+      "taboo": [
+        "Kugeln",
+        "werfen",
+        "Schweinchen",
+        "Frankreich",
+        "Sand"
+      ],
+      "difficulty": "medium",
+      "ageMin": 10
+    },
+    {
+      "word": "Wikingerschach",
+      "taboo": [
+        "König",
+        "Holz",
+        "werfen",
+        "Klötze",
+        "Wiese"
+      ],
+      "difficulty": "hard",
+      "ageMin": 10
+    },
+    {
+      "word": "Völkerball",
+      "taboo": [
+        "Treffer",
+        "abwerfen",
+        "Teams",
+        "Sporthalle",
+        "Feld"
+      ],
+      "difficulty": "easy",
+      "ageMin": 8
+    },
+    {
+      "word": "Airhockey",
+      "taboo": [
+        "Puck",
+        "Tisch",
+        "Luft",
+        "Tor",
+        "schieben"
+      ],
+      "difficulty": "medium",
+      "ageMin": 10
+    },
+    {
+      "word": "Bällebad",
+      "taboo": [
+        "bunt",
+        "Kinder",
+        "Plastikkugeln",
+        "IKEA",
+        "Indoorspielplatz"
+      ],
+      "difficulty": "easy",
+      "ageMin": 6
+    },
+    {
+      "word": "Schaukel",
+      "taboo": [
+        "schwingen",
+        "Spielplatz",
+        "hoch",
+        "Seil",
+        "Kette"
+      ],
+      "difficulty": "easy",
+      "ageMin": 6
+    },
+    {
+      "word": "Sandkasten",
+      "taboo": [
+        "Schaufel",
+        "Eimer",
+        "Kinder",
+        "Spielplatz",
+        "Förmchen"
+      ],
+      "difficulty": "easy",
+      "ageMin": 6
+    },
+    {
+      "word": "Wippe",
+      "taboo": [
+        "Spielplatz",
+        "hoch",
+        "runter",
+        "zwei",
+        "Balken"
+      ],
+      "difficulty": "easy",
+      "ageMin": 6
+    },
+    {
+      "word": "Konzert",
+      "taboo": [
+        "Bühne",
+        "Band",
+        "Musik",
+        "Tickets",
+        "Publikum"
+      ],
+      "difficulty": "easy",
+      "ageMin": 10
+    },
+    {
+      "word": "Shoppen",
+      "taboo": [
+        "einkaufen",
+        "Klamotten",
+        "Stadt",
+        "Geld",
+        "Tüten"
+      ],
+      "difficulty": "easy",
+      "ageMin": 10,
+      "emoji": "🛍️"
+    },
+    {
+      "word": "Chillen",
+      "taboo": [
+        "entspannen",
+        "abhängen",
+        "Sofa",
+        "faul",
+        "relaxen"
+      ],
+      "difficulty": "easy",
+      "ageMin": 10
+    },
+    {
+      "word": "Poetry Slam",
+      "taboo": [
+        "Gedichte",
+        "Bühne",
+        "vortragen",
+        "Wettbewerb",
+        "Publikum"
+      ],
+      "difficulty": "hard",
+      "ageMin": 14,
+      "emoji": "🎙️"
+    },
+    {
+      "word": "Schülerzeitung",
+      "taboo": [
+        "Artikel",
+        "Redaktion",
+        "Interview",
+        "drucken",
+        "Reporter"
+      ],
+      "difficulty": "hard",
+      "ageMin": 12,
+      "emoji": "📰"
+    },
+    {
+      "word": "Quiz",
+      "taboo": [
+        "Fragen",
+        "Antworten",
+        "raten",
+        "Wissen",
+        "Punkte"
+      ],
+      "difficulty": "easy",
+      "ageMin": 8
+    },
+    {
+      "word": "Pilze sammeln",
+      "taboo": [
+        "Wald",
+        "Herbst",
+        "Korb",
+        "giftig",
+        "Steinpilz"
+      ],
+      "difficulty": "medium",
+      "ageMin": 10,
+      "emoji": "🍄"
+    },
+    {
+      "word": "Kastanienmännchen",
+      "taboo": [
+        "Streichhölzer",
+        "basteln",
+        "Herbst",
+        "braun",
+        "Figuren"
+      ],
+      "difficulty": "medium",
+      "ageMin": 6,
+      "emoji": "🌰"
+    },
+    {
+      "word": "Makramee",
+      "taboo": [
+        "Knoten",
+        "Wandbehang",
+        "Schnur",
+        "Boho",
+        "Pflanzen"
+      ],
+      "difficulty": "hard",
+      "ageMin": 14
+    },
+    {
+      "word": "Amigurumi",
+      "taboo": [
+        "Häkeln",
+        "Figuren",
+        "Japan",
+        "Wolle",
+        "Kuscheltier"
+      ],
+      "difficulty": "hard",
+      "ageMin": 14
+    },
+    {
+      "word": "Speedcubing",
+      "taboo": [
+        "Zauberwürfel",
+        "schnell",
+        "Zeit",
+        "Rekord",
+        "lösen"
+      ],
+      "difficulty": "hard",
+      "ageMin": 12
+    },
+    {
+      "word": "Orientierungslauf",
+      "taboo": [
+        "Karte",
+        "Kompass",
+        "Posten",
+        "Wald",
+        "rennen"
+      ],
+      "difficulty": "hard",
+      "ageMin": 12
+    },
+    {
+      "word": "Upcycling",
+      "taboo": [
+        "alt",
+        "neu",
+        "basteln",
+        "Müll",
+        "wiederverwenden"
+      ],
+      "difficulty": "hard",
+      "ageMin": 12,
+      "emoji": "♻️"
+    },
+    {
+      "word": "Bonsai",
+      "taboo": [
+        "Baum",
+        "klein",
+        "Japan",
+        "schneiden",
+        "Topf"
+      ],
+      "difficulty": "hard",
+      "ageMin": 12
+    }
+  ]
+}
