@@ -391,3 +391,12 @@
   margin-top: 12px;
   color: var(--purple);
 }
+/* Taboo level "none": no forbidden list, a friendly rule instead. */
+.free-explain {
+  margin: 22px auto 10px;
+  max-width: 26ch;
+  font-size: var(--fs-lg);
+  font-weight: 700;
+  line-height: 1.4;
+  color: var(--muted);
+}

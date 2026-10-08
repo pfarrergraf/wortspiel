@@ -1,4 +1,4 @@
-# Wortspiel v2 – Plan für parallele Agentenarbeit
+| [x] E4 || [x] E2 || [x] D1 || [x] B5 || [x] B4 || [x] B3 || [x] B2 || [x] B1 || [x] A18 || [x] A17 || [x] A11 || [x] A10 || [x] A09 |# Wortspiel v2 – Plan für parallele Agentenarbeit
 
 Ziel: Wortspiel wird jugend- und kindgerecht, läuft auf jedem Bildschirm gut und klingt nach Spiel.
 Dieser Plan ist für viele gleichzeitig arbeitende Agenten gedacht (Claude Code Subagents und Codex Tasks).
@@ -291,7 +291,7 @@ Falls doch Samples kommen: nur CC0, Quelle in `THIRD_PARTY_NOTICES.md`, Dateien 
 
 - [ ] I1 Merge-Reihenfolge: B1 → B2 → B5 → B4 → B6 → B3, danach alle A-Pakete, dann C1 → C7 → C8 → C2–C6 → C9/C10, dann D1 → D2 → D3, dann E in der Reihenfolge der Tabelle.
 - [ ] I2 Integrationsbedarf aus allen PRs abarbeiten (z. B. `importBackup` für B6, Einhängen der Abschnitte in `ui/settings/index.js`).
-- [ ] I3 `npm run cards:import` (braucht `.sources/Taboo-Data`) → `npm run cards:check` → **Stabilitätsprüfung: Jede ID aus dem alten `cards.json` existiert weiterhin** (Test ergänzen).
+- [x] I3 (Zwischenstand 2026-10-08: 2 557 Karten, 23 Kategorien) `npm run cards:import` (braucht `.sources/Taboo-Data`) → `npm run cards:check` → **Stabilitätsprüfung: Jede ID aus dem alten `cards.json` existiert weiterhin** (Test ergänzen).
 - [ ] I4 `npm test`, `npm run build`, `npm run test:e2e` (inkl. `@matrix`) grün.
 - [ ] I5 Migrationstest: gespeicherten v1-State mit laufender Partie laden. Partie läuft unverändert weiter, Kartenspeicher vollständig.
 - [ ] I6 Manuelle Geräteabnahme (siehe Paket C). Ergebnisse im Release-PR.

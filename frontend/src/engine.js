@@ -1,5 +1,10 @@
-import { matchesAudience } from "./rules/audience.js";
-import { pickMode } from "./rules/modes.js";
+import {
+  matchesAudience,
+  migrateAudience,
+  validateAgeGroup,
+} from "./rules/audience.js";
+import { migrateModes, pickMode, validateModes } from "./rules/modes.js";
+import { migrateTabooMode, validateTabooMode } from "./rules/taboo.js";
 
 export const SCHEMA = 1;
 export const normalize = (text) =>
@@ -16,16 +21,22 @@ export const DIFFICULTIES = [
   { id: "medium", name: "Mittel", description: "Leichte Karten plus mehr Allgemeinwissen, bekannte Personen und Begriffe aus dem Konfi-Unterricht." },
   { id: "all", name: "Alles / knifflig", description: "Der gesamte Bestand, einschließlich seltener Promis und Spezialwissen." },
 ];
+const YOUTH = ["animals", "city-country", "food", "sports", "things", "tv", "web", "everyday", "gaming", "social", "school", "slang", "music", "hobbies", "friends", "style", "future", "planet", "camp", "fantasy"];
+// Presets set the card pool and the rules. Category ids that do not exist
+// (yet) are skipped, so packs can land in any order.
 export const PRESETS = [
-  { id: "youth", name: "Jugendliche", difficulty: "easy", categories: ["animals", "city-country", "food", "sports", "things", "tv", "web", "everyday"] },
-  { id: "confirmation", name: "Konfis", difficulty: "easy", categories: ["animals", "city-country", "food", "sports", "things", "tv", "web", "everyday", "faith"] },
-  { id: "mixed", name: "Gemischte Runde", difficulty: "medium", categories: null },
+  { id: "kids", name: "Kinder (6–9)", difficulty: "easy", ageGroup: 8, tabooMode: "none", seconds: 90, skipPenalty: 0, tabooPenalty: 0, categories: ["kids", "fantasy", "animals", "food", "hobbies", "camp", "school", "planet", "sports", "everyday"] },
+  { id: "tweens", name: "Jüngere Jugendliche (10–13)", difficulty: "easy", ageGroup: 12, tabooMode: "light", seconds: 60, skipPenalty: 0, tabooPenalty: 1, categories: YOUTH.filter((id) => id !== "slang") },
+  { id: "youth", name: "Jugendliche", difficulty: "easy", ageGroup: 14, tabooMode: "classic", categories: YOUTH },
+  { id: "confirmation", name: "Konfis", difficulty: "easy", ageGroup: 14, tabooMode: "classic", categories: [...YOUTH, "faith"] },
+  { id: "mixed", name: "Gemischte Runde", difficulty: "medium", ageGroup: null, tabooMode: "classic", categories: null },
 ];
 
 export function applyPreset(settings, presetId, categories) {
   const preset = PRESETS.find((p) => p.id === presetId);
   if (!preset) throw new Error("Unbekannte Gruppenauswahl.");
-  settings.difficulty = preset.difficulty;
+  for (const key of ["difficulty", "ageGroup", "tabooMode", "seconds", "skipPenalty", "tabooPenalty"])
+    if (Object.hasOwn(preset, key)) settings[key] = preset[key];
   settings.selected = categories
     .filter((c) => !preset.categories || preset.categories.includes(c.id))
     .map((c) => c.id);
@@ -35,6 +46,14 @@ export function matchesDifficulty(card, difficulty = "all") {
   // Missing metadata is never treated as an easy card.
   return difficulty === "all" || card.difficulty === "easy" ||
     (difficulty === "medium" && card.difficulty === "medium");
+}
+
+// Adds every v2 setting with defaults that keep saved games unchanged.
+export function migrateSettings(state) {
+  migrateDifficulty(state);
+  migrateAudience(state);
+  migrateTabooMode(state);
+  migrateModes(state);
 }
 
 export function migrateDifficulty(state) {
@@ -96,6 +115,9 @@ export function availableCards(cards, settings, seen = {}) {
 }
 
 export function validateSettings(settings, categories) {
+  validateAgeGroup(settings.ageGroup);
+  validateTabooMode(settings.tabooMode);
+  validateModes(settings.modes);
   if (!DIFFICULTIES.some((d) => d.id === (settings.difficulty ?? "all")))
     throw new Error("Wähle einen gültigen Schwierigkeitsgrad.");
   if (

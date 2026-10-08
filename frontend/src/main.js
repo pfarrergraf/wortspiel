@@ -5,7 +5,7 @@ import { categories } from "./data.js";
 import {
   initialState,
   ensureGroup,
-  migrateDifficulty,
+  migrateSettings,
   restoreSession,
 } from "./engine.js";
 import { escape } from "./ui/html.js";
@@ -20,6 +20,7 @@ import "./sound.js";
 import "./haptics.js";
 import "./shortcuts.js";
 import "./device.js";
+import "./wakelock.js";
 
 installActions();
 
@@ -42,7 +43,7 @@ async function boot() {
   try {
     ctx.state = await store.open(initialState(categories));
     ctx.state = await store.update((s) => {
-      migrateDifficulty(s);
+      migrateSettings(s);
       restoreSession(s);
       ensureGroup(s);
     });

@@ -687,3 +687,9 @@
 .start-area small {
   font-size: 9px;
 }
+.field-note {
+  margin: -4px 0 14px;
+  font-size: var(--fs-sm);
+  line-height: 1.5;
+  color: var(--muted);
+}

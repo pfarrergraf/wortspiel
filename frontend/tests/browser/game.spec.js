@@ -1,7 +1,9 @@
 import { test, expect, chromium } from "@playwright/test";
 import { readFile } from "node:fs/promises";
+import { PRESETS, matchesSettings } from "../../src/engine.js";
 
 const dataset = JSON.parse(await readFile(new URL("../../src/data/cards.json", import.meta.url), "utf8"));
+const presetCount = (id) => dataset.categories.filter((c) => PRESETS.find((p) => p.id === id).categories.includes(c.id)).length;
 
 async function begin(page) {
   await page.goto("/");
@@ -25,15 +27,16 @@ test("youth and Konfi presets filter cards and counts, persist offline, and keep
   await page.goto("/");
   await expect(page.getByLabel("Schwierigkeitsgrad")).toHaveValue("easy");
   await page.getByRole("button", { name: "Jugendliche", exact: true }).click();
-  await expect(page.locator('input[name="category"]:checked')).toHaveCount(8);
+  await expect(page.locator('input[name="category"]:checked')).toHaveCount(presetCount("youth"));
   await expect(page.locator('input[value="faith"]')).not.toBeChecked();
   await page.getByRole("button", { name: "Konfis", exact: true }).click();
-  await expect(page.locator('input[name="category"]:checked')).toHaveCount(9);
+  await expect(page.locator('input[name="category"]:checked')).toHaveCount(presetCount("confirmation"));
   await expect(page.locator('input[value="faith"]')).toBeChecked();
   const selected = await page.locator('input[name="category"]:checked').evaluateAll((inputs) => inputs.map((input) => input.value));
-  const pool = dataset.cards.filter((c) => c.difficulty === "easy" && c.categories.some((id) => selected.includes(id)));
+  const youthRules = { difficulty: "easy", ageGroup: 14 };
+  const pool = dataset.cards.filter((c) => matchesSettings(c, youthRules) && c.categories.some((id) => selected.includes(id)));
   await expect(page.locator("#available-count")).toHaveText(pool.length.toLocaleString("de-DE"));
-  const faith = dataset.cards.filter((c) => c.difficulty === "easy" && c.categories.includes("faith")).length;
+  const faith = dataset.cards.filter((c) => matchesSettings(c, youthRules) && c.categories.includes("faith")).length;
   await expect(page.locator("label.category").filter({ hasText: "Glaube & Kirche" })).toContainText(`${faith} von ${faith} ungespielt`);
   await page.getByRole("button", { name: "Los geht’s" }).click();
   await expect(page.locator(".game-heading")).toContainText("Leicht");
@@ -43,7 +46,7 @@ test("youth and Konfi presets filter cards and counts, persist offline, and keep
   expect(pool.some((c) => c.word === first)).toBe(true);
   await page.getByRole("button", { name: "Spielübersicht" }).click();
   await page.getByLabel("Schwierigkeitsgrad").selectOption("all");
-  await expect(page.locator("#available-count")).toHaveText((dataset.cards.filter((c) => c.categories.some((id) => selected.includes(id))).length - 1).toLocaleString("de-DE"));
+  await expect(page.locator("#available-count")).toHaveText((dataset.cards.filter((c) => matchesSettings(c, { difficulty: "all", ageGroup: 14 }) && c.categories.some((id) => selected.includes(id))).length - 1).toLocaleString("de-DE"));
   await page.getByRole("button", { name: "Los geht’s" }).click();
   await page.getByRole("dialog").getByRole("button", { name: "Neue Partie starten" }).click();
   await expect(page.locator(".game-heading")).toContainText("Alles / knifflig");
