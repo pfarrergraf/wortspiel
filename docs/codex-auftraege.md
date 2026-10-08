@@ -1,7 +1,7 @@
 # Aufträge für Codex – Welle 1
 
 Basis: Branch `main` ab Tag `v2-foundation`. Lies vor jedem Auftrag `AGENTS.md` und `docs/plan-v2.md`
-(Abschnitt 0, „Verträge“ und die Zeile deiner Aufgabe). **Claude Code arbeitet parallel an A01–A08 und C1.**
+(Abschnitt 0, „Verträge“ und die Zeile deiner Aufgabe). **Claude Code hat A01–A08, C1–C4, C7, C8 und E3 (Presenter/Tastatur) bereits erledigt.**
 Diese IDs sind in `docs/claims/` reserviert, bitte nicht anfassen.
 
 Jeder Auftrag ist ein eigener Codex-Task auf einem eigenen Branch. Erster Commit: `docs/claims/<ID>.md`
@@ -30,7 +30,6 @@ PR-Beschreibung: geänderte Dateien, Testergebnis, Integrationsbedarf.
 | B5 | Spielmodi-Logik | `frontend/src/rules/modes.js`, `frontend/tests/B5.test.mjs` | `MODES` (`explain`, `pantomime`, `draw`, `oneword` mit deutschem Namen und Kurzregel). `pickMode(card, settings, random)`: aus `settings.modes` (fehlend → `["explain"]`), `pantomime`/`draw` nur für `difficulty` easy/medium, sonst Rückfall auf `explain`. `random` wird höchstens einmal aufgerufen und nur wenn mehr als ein Modus möglich ist (damit bestehende Tests mit festem `random` gleich bleiben). `validateModes`, `migrateModes`. |
 | D1 | Sound-Engine | `frontend/src/sound.js`, `frontend/tests/D1.test.mjs` | Synthetisierte Klänge per Web Audio für die Ereignisse `correct`, `skip`, `taboo`, `tick` (letzte 10 s, einmal pro Sekunde, Tonhöhe steigt), `countdown`, `turnEnd`, `win`. Reagiert nur auf `on(...)` aus `src/events.js` (render, result, turn-start, turn-end, tick); `toggle-sound` bleibt. `settings.volume` (Standard 0.8) und `settings.tick` (Standard true) beachten. Ein gemeinsamer `AudioContext`, beim ersten `pointerdown` entsperren (iOS). Klang-Definitionen als reine Daten exportieren und im Test mit einem Fake-AudioContext prüfen. Keine Audiodateien. |
 | E2 | Wake Lock | `frontend/src/wakelock.js` | Bildschirm bleibt an, solange `ctx.state.session.phase === "playing"` (über `on("render")`). Freigeben bei Pause, Ende und `visibilitychange`, wieder anfordern bei Rückkehr. Ohne `navigator.wakeLock` still. Import in `main.js` → Integrationsbedarf. |
-| E3 | Tastenkürzel | `frontend/src/shortcuts.js`, `frontend/tests/browser/E3.spec.js` | Bestehende Pfeiltasten bleiben. Neu: Enter = Erraten, S = Überspringen, T = Tabu, P/Leertaste = Pause/Weiter, Strg/Cmd+Z = Rückgängig, `?` öffnet einen Hilfe-Dialog mit allen Kürzeln. Nie in Eingabefeldern oder bei offenem Dialog. Browser-Test auf `desktop`. |
 
 ## Wortpakete A09–A17 – sofort startbar
 
