@@ -1,0 +1,1246 @@
+{
+  "category": {
+    "id": "friends",
+    "name": "Freundschaft & Gefühle",
+    "emoji": "💛",
+    "color": "pink"
+  },
+  "cards": [
+    {
+      "word": "Beste Freundin",
+      "taboo": [
+        "BFF",
+        "Mädchen",
+        "Vertrauen",
+        "Geheimnisse",
+        "zusammen"
+      ],
+      "difficulty": "easy",
+      "ageMin": 8,
+      "emoji": "💕"
+    },
+    {
+      "word": "Bester Freund",
+      "taboo": [
+        "BFF",
+        "Junge",
+        "Kumpel",
+        "Vertrauen",
+        "zusammen"
+      ],
+      "difficulty": "easy",
+      "ageMin": 8
+    },
+    {
+      "word": "Liebeskummer",
+      "taboo": [
+        "Herz",
+        "traurig",
+        "Schluss",
+        "weinen",
+        "verliebt"
+      ],
+      "difficulty": "medium",
+      "ageMin": 12,
+      "emoji": "💔"
+    },
+    {
+      "word": "Gruppenzwang",
+      "taboo": [
+        "mitmachen",
+        "Druck",
+        "cool",
+        "Clique",
+        "nein sagen"
+      ],
+      "difficulty": "medium",
+      "ageMin": 12
+    },
+    {
+      "word": "Geheimnis",
+      "taboo": [
+        "verraten",
+        "niemand",
+        "flüstern",
+        "verschweigen",
+        "Vertrauen"
+      ],
+      "difficulty": "easy",
+      "ageMin": 6,
+      "emoji": "🤫"
+    },
+    {
+      "word": "Versöhnung",
+      "taboo": [
+        "Streit",
+        "Entschuldigung",
+        "vertragen",
+        "Frieden",
+        "verzeihen"
+      ],
+      "difficulty": "medium",
+      "ageMin": 10,
+      "emoji": "🤝"
+    },
+    {
+      "word": "Eifersucht",
+      "taboo": [
+        "neidisch",
+        "Partner",
+        "Angst",
+        "verlieren",
+        "grün"
+      ],
+      "difficulty": "medium",
+      "ageMin": 12
+    },
+    {
+      "word": "Heimweh",
+      "taboo": [
+        "Zuhause",
+        "vermissen",
+        "Eltern",
+        "Ferienlager",
+        "traurig"
+      ],
+      "difficulty": "easy",
+      "ageMin": 8,
+      "emoji": "🏠"
+    },
+    {
+      "word": "Lampenfieber",
+      "taboo": [
+        "Bühne",
+        "Auftritt",
+        "nervös",
+        "Angst",
+        "Publikum"
+      ],
+      "difficulty": "medium",
+      "ageMin": 10,
+      "emoji": "🎭"
+    },
+    {
+      "word": "Schmetterlinge im Bauch",
+      "taboo": [
+        "verliebt",
+        "Kribbeln",
+        "Gefühl",
+        "Herz",
+        "nervös"
+      ],
+      "difficulty": "easy",
+      "ageMin": 10,
+      "emoji": "🦋"
+    },
+    {
+      "word": "Verknallt",
+      "taboo": [
+        "verliebt",
+        "Schwarm",
+        "Herz",
+        "rot werden",
+        "mögen"
+      ],
+      "difficulty": "easy",
+      "ageMin": 10,
+      "emoji": "😍"
+    },
+    {
+      "word": "Freundschaftsarmband",
+      "taboo": [
+        "Handgelenk",
+        "knüpfen",
+        "Faden",
+        "bunt",
+        "Geschenk"
+      ],
+      "difficulty": "easy",
+      "ageMin": 8
+    },
+    {
+      "word": "Umarmung",
+      "taboo": [
+        "drücken",
+        "Arme",
+        "knuddeln",
+        "festhalten",
+        "Hallo"
+      ],
+      "difficulty": "easy",
+      "ageMin": 6,
+      "emoji": "🤗"
+    },
+    {
+      "word": "Vertrauen",
+      "taboo": [
+        "verlassen",
+        "glauben",
+        "ehrlich",
+        "Geheimnis",
+        "sicher"
+      ],
+      "difficulty": "medium",
+      "ageMin": 10
+    },
+    {
+      "word": "Streit",
+      "taboo": [
+        "zanken",
+        "laut",
+        "Meinung",
+        "sauer",
+        "schreien"
+      ],
+      "difficulty": "easy",
+      "ageMin": 6
+    },
+    {
+      "word": "Ausrede",
+      "taboo": [
+        "Lüge",
+        "Hausaufgaben",
+        "Hund",
+        "Entschuldigung",
+        "erfinden"
+      ],
+      "difficulty": "easy",
+      "ageMin": 8
+    },
+    {
+      "word": "Lästern",
+      "taboo": [
+        "hinter dem Rücken",
+        "schlecht reden",
+        "tratschen",
+        "gemein",
+        "über andere"
+      ],
+      "difficulty": "medium",
+      "ageMin": 10
+    },
+    {
+      "word": "Kompliment",
+      "taboo": [
+        "loben",
+        "nett",
+        "schön",
+        "sagen",
+        "freuen"
+      ],
+      "difficulty": "easy",
+      "ageMin": 8
+    },
+    {
+      "word": "Überraschungsparty",
+      "taboo": [
+        "Geburtstag",
+        "heimlich",
+        "verstecken",
+        "Gäste",
+        "feiern"
+      ],
+      "difficulty": "easy",
+      "ageMin": 8,
+      "emoji": "🎉"
+    },
+    {
+      "word": "Geburtstagskarte",
+      "taboo": [
+        "Glückwunsch",
+        "schreiben",
+        "Post",
+        "älter",
+        "Geschenk"
+      ],
+      "difficulty": "easy",
+      "ageMin": 6,
+      "emoji": "🎂"
+    },
+    {
+      "word": "Mutprobe",
+      "taboo": [
+        "trauen",
+        "Angst",
+        "beweisen",
+        "gefährlich",
+        "Aufgabe"
+      ],
+      "difficulty": "medium",
+      "ageMin": 10
+    },
+    {
+      "word": "Peinlich",
+      "taboo": [
+        "rot werden",
+        "schämen",
+        "Fettnäpfchen",
+        "unangenehm",
+        "lachen"
+      ],
+      "difficulty": "easy",
+      "ageMin": 8,
+      "emoji": "😳"
+    },
+    {
+      "word": "Schadenfreude",
+      "taboo": [
+        "lachen",
+        "Pech",
+        "andere",
+        "hinfallen",
+        "gemein"
+      ],
+      "difficulty": "medium",
+      "ageMin": 12
+    },
+    {
+      "word": "Fremdschämen",
+      "taboo": [
+        "peinlich",
+        "andere",
+        "zuschauen",
+        "unangenehm",
+        "weggucken"
+      ],
+      "difficulty": "medium",
+      "ageMin": 12
+    },
+    {
+      "word": "Mitleid",
+      "taboo": [
+        "leidtun",
+        "traurig",
+        "trösten",
+        "arm",
+        "Gefühl"
+      ],
+      "difficulty": "medium",
+      "ageMin": 10
+    },
+    {
+      "word": "Stolz",
+      "taboo": [
+        "geschafft",
+        "Brust",
+        "Leistung",
+        "Eltern",
+        "freuen"
+      ],
+      "difficulty": "easy",
+      "ageMin": 8
+    },
+    {
+      "word": "Langeweile",
+      "taboo": [
+        "nichts",
+        "tun",
+        "öde",
+        "Zeit",
+        "gähnen"
+      ],
+      "difficulty": "easy",
+      "ageMin": 6,
+      "emoji": "🥱"
+    },
+    {
+      "word": "Wutanfall",
+      "taboo": [
+        "schreien",
+        "sauer",
+        "toben",
+        "Trotz",
+        "stampfen"
+      ],
+      "difficulty": "easy",
+      "ageMin": 8,
+      "emoji": "😡"
+    },
+    {
+      "word": "Gänsehaut",
+      "taboo": [
+        "frieren",
+        "Arme",
+        "Kälte",
+        "Grusel",
+        "Haare"
+      ],
+      "difficulty": "easy",
+      "ageMin": 8
+    },
+    {
+      "word": "Glückskeks",
+      "taboo": [
+        "chinesisch",
+        "Zettel",
+        "Spruch",
+        "Restaurant",
+        "knacken"
+      ],
+      "difficulty": "medium",
+      "ageMin": 10,
+      "emoji": "🥠"
+    },
+    {
+      "word": "Seelenverwandt",
+      "taboo": [
+        "verstehen",
+        "gleich",
+        "Herz",
+        "perfekt",
+        "Partner"
+      ],
+      "difficulty": "hard",
+      "ageMin": 14
+    },
+    {
+      "word": "Ghosting",
+      "taboo": [
+        "melden",
+        "Nachricht",
+        "verschwinden",
+        "ignorieren",
+        "Antwort"
+      ],
+      "difficulty": "medium",
+      "ageMin": 14,
+      "emoji": "👻"
+    },
+    {
+      "word": "Clique",
+      "taboo": [
+        "Gruppe",
+        "Freunde",
+        "zusammen",
+        "Schule",
+        "Gang"
+      ],
+      "difficulty": "medium",
+      "ageMin": 12
+    },
+    {
+      "word": "Neid",
+      "taboo": [
+        "haben wollen",
+        "eifersüchtig",
+        "andere",
+        "gönnen",
+        "grün"
+      ],
+      "difficulty": "medium",
+      "ageMin": 10
+    },
+    {
+      "word": "Zusammenhalt",
+      "taboo": [
+        "Team",
+        "gemeinsam",
+        "helfen",
+        "Gruppe",
+        "Freunde"
+      ],
+      "difficulty": "medium",
+      "ageMin": 10
+    },
+    {
+      "word": "Trost",
+      "taboo": [
+        "traurig",
+        "umarmen",
+        "weinen",
+        "Schulter",
+        "helfen"
+      ],
+      "difficulty": "easy",
+      "ageMin": 8
+    },
+    {
+      "word": "Taschentuch",
+      "taboo": [
+        "Nase",
+        "putzen",
+        "weinen",
+        "Schnupfen",
+        "Papier"
+      ],
+      "difficulty": "easy",
+      "ageMin": 6,
+      "emoji": "🤧"
+    },
+    {
+      "word": "Freundebuch",
+      "taboo": [
+        "eintragen",
+        "Seiten",
+        "Lieblingsessen",
+        "Grundschule",
+        "Steckbrief"
+      ],
+      "difficulty": "easy",
+      "ageMin": 8,
+      "emoji": "📖"
+    },
+    {
+      "word": "Pyjamaparty",
+      "taboo": [
+        "Übernachtung",
+        "Schlafanzug",
+        "Freundinnen",
+        "Schlafsack",
+        "Nacht"
+      ],
+      "difficulty": "easy",
+      "ageMin": 8
+    },
+    {
+      "word": "Brieffreund",
+      "taboo": [
+        "schreiben",
+        "Post",
+        "Ausland",
+        "kennenlernen",
+        "Umschlag"
+      ],
+      "difficulty": "medium",
+      "ageMin": 10
+    },
+    {
+      "word": "Lachanfall",
+      "taboo": [
+        "kichern",
+        "aufhören",
+        "Bauch",
+        "prusten",
+        "Tränen"
+      ],
+      "difficulty": "easy",
+      "ageMin": 8,
+      "emoji": "😂"
+    },
+    {
+      "word": "Kichern",
+      "taboo": [
+        "lachen",
+        "leise",
+        "albern",
+        "Hand vor dem Mund",
+        "giggeln"
+      ],
+      "difficulty": "easy",
+      "ageMin": 6
+    },
+    {
+      "word": "Schüchtern",
+      "taboo": [
+        "zurückhaltend",
+        "leise",
+        "rot werden",
+        "Angst",
+        "reden"
+      ],
+      "difficulty": "easy",
+      "ageMin": 8
+    },
+    {
+      "word": "Freudentränen",
+      "taboo": [
+        "weinen",
+        "glücklich",
+        "Hochzeit",
+        "Augen",
+        "Gefühl"
+      ],
+      "difficulty": "medium",
+      "ageMin": 10
+    },
+    {
+      "word": "Erstes Date",
+      "taboo": [
+        "treffen",
+        "verliebt",
+        "Kino",
+        "nervös",
+        "Eis essen"
+      ],
+      "difficulty": "medium",
+      "ageMin": 12
+    },
+    {
+      "word": "Liebesbrief",
+      "taboo": [
+        "schreiben",
+        "Herz",
+        "verliebt",
+        "heimlich",
+        "Schwarm"
+      ],
+      "difficulty": "easy",
+      "ageMin": 10,
+      "emoji": "💌"
+    },
+    {
+      "word": "Schwarm",
+      "taboo": [
+        "verliebt",
+        "heimlich",
+        "mögen",
+        "Star",
+        "Herz"
+      ],
+      "difficulty": "medium",
+      "ageMin": 10
+    },
+    {
+      "word": "Herzklopfen",
+      "taboo": [
+        "Puls",
+        "schnell",
+        "aufgeregt",
+        "verliebt",
+        "Brust"
+      ],
+      "difficulty": "easy",
+      "ageMin": 10
+    },
+    {
+      "word": "Entschuldigung",
+      "taboo": [
+        "Tut mir leid",
+        "Fehler",
+        "verzeihen",
+        "Streit",
+        "sagen"
+      ],
+      "difficulty": "easy",
+      "ageMin": 6
+    },
+    {
+      "word": "Verzeihen",
+      "taboo": [
+        "Entschuldigung",
+        "Fehler",
+        "vergeben",
+        "Streit",
+        "nachtragend"
+      ],
+      "difficulty": "medium",
+      "ageMin": 10
+    },
+    {
+      "word": "Prüfungsangst",
+      "taboo": [
+        "Klassenarbeit",
+        "nervös",
+        "Test",
+        "lernen",
+        "Bauchweh"
+      ],
+      "difficulty": "medium",
+      "ageMin": 10
+    },
+    {
+      "word": "Lieblingsmensch",
+      "taboo": [
+        "wichtig",
+        "mögen",
+        "Herz",
+        "Freund",
+        "Nummer eins"
+      ],
+      "difficulty": "medium",
+      "ageMin": 12
+    },
+    {
+      "word": "High Five",
+      "taboo": [
+        "Hand",
+        "abklatschen",
+        "Jubel",
+        "Erfolg",
+        "fünf"
+      ],
+      "difficulty": "easy",
+      "ageMin": 6,
+      "emoji": "✋"
+    },
+    {
+      "word": "Einsamkeit",
+      "taboo": [
+        "allein",
+        "niemand",
+        "Freunde",
+        "traurig",
+        "Isolation"
+      ],
+      "difficulty": "hard",
+      "ageMin": 12
+    },
+    {
+      "word": "Mobbing",
+      "taboo": [
+        "ärgern",
+        "Schule",
+        "Opfer",
+        "fertigmachen",
+        "gemein"
+      ],
+      "difficulty": "medium",
+      "ageMin": 12
+    },
+    {
+      "word": "Außenseiter",
+      "taboo": [
+        "allein",
+        "Gruppe",
+        "dazugehören",
+        "anders",
+        "Pause"
+      ],
+      "difficulty": "medium",
+      "ageMin": 12
+    },
+    {
+      "word": "Zivilcourage",
+      "taboo": [
+        "einschreiten",
+        "helfen",
+        "Mut",
+        "Unrecht",
+        "wegsehen"
+      ],
+      "difficulty": "hard",
+      "ageMin": 14
+    },
+    {
+      "word": "Ehrlichkeit",
+      "taboo": [
+        "Wahrheit",
+        "lügen",
+        "sagen",
+        "Vertrauen",
+        "offen"
+      ],
+      "difficulty": "medium",
+      "ageMin": 10
+    },
+    {
+      "word": "Lüge",
+      "taboo": [
+        "Wahrheit",
+        "Pinocchio",
+        "Nase",
+        "schwindeln",
+        "flunkern"
+      ],
+      "difficulty": "easy",
+      "ageMin": 6
+    },
+    {
+      "word": "Notlüge",
+      "taboo": [
+        "klein",
+        "Wahrheit",
+        "schonen",
+        "Ausrede",
+        "harmlos"
+      ],
+      "difficulty": "hard",
+      "ageMin": 12
+    },
+    {
+      "word": "Petzen",
+      "taboo": [
+        "verraten",
+        "Lehrer",
+        "erzählen",
+        "Eltern",
+        "Ärger"
+      ],
+      "difficulty": "easy",
+      "ageMin": 8
+    },
+    {
+      "word": "Ehrenwort",
+      "taboo": [
+        "versprechen",
+        "schwören",
+        "Wahrheit",
+        "halten",
+        "Hand"
+      ],
+      "difficulty": "medium",
+      "ageMin": 10
+    },
+    {
+      "word": "Versprechen",
+      "taboo": [
+        "halten",
+        "brechen",
+        "schwören",
+        "Wort",
+        "sicher"
+      ],
+      "difficulty": "easy",
+      "ageMin": 8
+    },
+    {
+      "word": "Händchenhalten",
+      "taboo": [
+        "verliebt",
+        "Pärchen",
+        "Finger",
+        "spazieren",
+        "Paar"
+      ],
+      "difficulty": "easy",
+      "ageMin": 10
+    },
+    {
+      "word": "Schlussmachen",
+      "taboo": [
+        "trennen",
+        "Beziehung",
+        "Freund",
+        "Liebeskummer",
+        "Ende"
+      ],
+      "difficulty": "medium",
+      "ageMin": 12
+    },
+    {
+      "word": "Gruppenchat",
+      "taboo": [
+        "WhatsApp",
+        "Nachrichten",
+        "Klasse",
+        "viele",
+        "Handy"
+      ],
+      "difficulty": "easy",
+      "ageMin": 10
+    },
+    {
+      "word": "Aufmuntern",
+      "taboo": [
+        "trösten",
+        "traurig",
+        "lachen",
+        "besser",
+        "Laune"
+      ],
+      "difficulty": "medium",
+      "ageMin": 10
+    },
+    {
+      "word": "Gute Laune",
+      "taboo": [
+        "fröhlich",
+        "Stimmung",
+        "lachen",
+        "Sonne",
+        "glücklich"
+      ],
+      "difficulty": "easy",
+      "ageMin": 6
+    },
+    {
+      "word": "Schlechte Laune",
+      "taboo": [
+        "mies",
+        "sauer",
+        "Morgenmuffel",
+        "grummeln",
+        "Stimmung"
+      ],
+      "difficulty": "easy",
+      "ageMin": 8
+    },
+    {
+      "word": "Morgenmuffel",
+      "taboo": [
+        "aufstehen",
+        "müde",
+        "früh",
+        "schlecht gelaunt",
+        "Kaffee"
+      ],
+      "difficulty": "easy",
+      "ageMin": 8
+    },
+    {
+      "word": "Grinsen",
+      "taboo": [
+        "lächeln",
+        "breit",
+        "Mund",
+        "Zähne",
+        "Smiley"
+      ],
+      "difficulty": "easy",
+      "ageMin": 6
+    },
+    {
+      "word": "Schmollen",
+      "taboo": [
+        "beleidigt",
+        "Lippe",
+        "schweigen",
+        "Trotz",
+        "sauer"
+      ],
+      "difficulty": "medium",
+      "ageMin": 8
+    },
+    {
+      "word": "Beleidigt",
+      "taboo": [
+        "gekränkt",
+        "schmollen",
+        "sauer",
+        "Leberwurst",
+        "schweigen"
+      ],
+      "difficulty": "easy",
+      "ageMin": 8
+    },
+    {
+      "word": "Freundeskreis",
+      "taboo": [
+        "Clique",
+        "Gruppe",
+        "Leute",
+        "kennen",
+        "zusammen"
+      ],
+      "difficulty": "medium",
+      "ageMin": 10
+    },
+    {
+      "word": "Kumpel",
+      "taboo": [
+        "Freund",
+        "Junge",
+        "Kollege",
+        "Bro",
+        "abhängen"
+      ],
+      "difficulty": "easy",
+      "ageMin": 8
+    },
+    {
+      "word": "Chillen",
+      "taboo": [
+        "entspannen",
+        "Couch",
+        "nichts tun",
+        "Freunde",
+        "gemütlich"
+      ],
+      "difficulty": "easy",
+      "ageMin": 8
+    },
+    {
+      "word": "Sehnsucht",
+      "taboo": [
+        "vermissen",
+        "Wunsch",
+        "Fernweh",
+        "Herz",
+        "weit weg"
+      ],
+      "difficulty": "hard",
+      "ageMin": 12
+    },
+    {
+      "word": "Vorfreude",
+      "taboo": [
+        "warten",
+        "Weihnachten",
+        "Urlaub",
+        "kribbeln",
+        "bald"
+      ],
+      "difficulty": "easy",
+      "ageMin": 8
+    },
+    {
+      "word": "Enttäuschung",
+      "taboo": [
+        "traurig",
+        "erwartet",
+        "Hoffnung",
+        "schade",
+        "Pech"
+      ],
+      "difficulty": "medium",
+      "ageMin": 10
+    },
+    {
+      "word": "Dankbarkeit",
+      "taboo": [
+        "Gebet",
+        "Geschenk",
+        "froh",
+        "schätzen",
+        "Gott"
+      ],
+      "difficulty": "medium",
+      "ageMin": 10
+    },
+    {
+      "word": "Geduld",
+      "taboo": [
+        "warten",
+        "ruhig",
+        "Nerven",
+        "Zeit",
+        "abwarten"
+      ],
+      "difficulty": "easy",
+      "ageMin": 8
+    },
+    {
+      "word": "Selbstvertrauen",
+      "taboo": [
+        "sicher",
+        "glauben",
+        "können",
+        "stark",
+        "Zweifel"
+      ],
+      "difficulty": "hard",
+      "ageMin": 12
+    },
+    {
+      "word": "Zweifel",
+      "taboo": [
+        "unsicher",
+        "glauben",
+        "Frage",
+        "nicht wissen",
+        "Thomas"
+      ],
+      "difficulty": "hard",
+      "ageMin": 12
+    },
+    {
+      "word": "Hilfsbereitschaft",
+      "taboo": [
+        "helfen",
+        "nett",
+        "anpacken",
+        "Unterstützung",
+        "freiwillig"
+      ],
+      "difficulty": "hard",
+      "ageMin": 12
+    },
+    {
+      "word": "Schummeln",
+      "taboo": [
+        "mogeln",
+        "Spiel",
+        "Regeln",
+        "betrügen",
+        "Spickzettel"
+      ],
+      "difficulty": "easy",
+      "ageMin": 8
+    },
+    {
+      "word": "Daumen drücken",
+      "taboo": [
+        "Glück",
+        "hoffen",
+        "Faust",
+        "Prüfung",
+        "Toi toi toi"
+      ],
+      "difficulty": "easy",
+      "ageMin": 6,
+      "emoji": "🤞"
+    },
+    {
+      "word": "Gruppenfoto",
+      "taboo": [
+        "Kamera",
+        "Bild",
+        "alle",
+        "lächeln",
+        "Cheese"
+      ],
+      "difficulty": "easy",
+      "ageMin": 6,
+      "emoji": "📸"
+    },
+    {
+      "word": "Insider",
+      "taboo": [
+        "Witz",
+        "nur wir",
+        "verstehen",
+        "Gruppe",
+        "Geheimnis"
+      ],
+      "difficulty": "hard",
+      "ageMin": 12
+    },
+    {
+      "word": "Empathie",
+      "taboo": [
+        "hineinversetzen",
+        "Gefühle",
+        "verstehen",
+        "andere",
+        "Mitgefühl"
+      ],
+      "difficulty": "hard",
+      "ageMin": 14
+    },
+    {
+      "word": "Nachtragend",
+      "taboo": [
+        "vergessen",
+        "Streit",
+        "Groll",
+        "verzeihen",
+        "merken"
+      ],
+      "difficulty": "hard",
+      "ageMin": 12
+    },
+    {
+      "word": "Stimmungsschwankungen",
+      "taboo": [
+        "Laune",
+        "Pubertät",
+        "plötzlich",
+        "Gefühle",
+        "wechseln"
+      ],
+      "difficulty": "hard",
+      "ageMin": 12
+    },
+    {
+      "word": "Pubertät",
+      "taboo": [
+        "Teenager",
+        "Pickel",
+        "Hormone",
+        "erwachsen",
+        "Stimmbruch"
+      ],
+      "difficulty": "medium",
+      "ageMin": 12
+    },
+    {
+      "word": "Gemeinschaft",
+      "taboo": [
+        "zusammen",
+        "Gruppe",
+        "Kirche",
+        "teilen",
+        "miteinander"
+      ],
+      "difficulty": "medium",
+      "ageMin": 10
+    },
+    {
+      "word": "Abschied",
+      "taboo": [
+        "tschüss",
+        "winken",
+        "weinen",
+        "gehen",
+        "Umzug"
+      ],
+      "difficulty": "easy",
+      "ageMin": 8,
+      "emoji": "👋"
+    },
+    {
+      "word": "Neue Schule",
+      "taboo": [
+        "Klasse",
+        "fremd",
+        "Umzug",
+        "kennenlernen",
+        "aufgeregt"
+      ],
+      "difficulty": "easy",
+      "ageMin": 10
+    },
+    {
+      "word": "Spitzname",
+      "taboo": [
+        "Kurzform",
+        "Freunde",
+        "nennen",
+        "rufen",
+        "lustig"
+      ],
+      "difficulty": "easy",
+      "ageMin": 8
+    },
+    {
+      "word": "Gefühlschaos",
+      "taboo": [
+        "durcheinander",
+        "verwirrt",
+        "Herz",
+        "Kopf",
+        "verliebt"
+      ],
+      "difficulty": "hard",
+      "ageMin": 12
+    },
+    {
+      "word": "Funkstille",
+      "taboo": [
+        "melden",
+        "Streit",
+        "reden",
+        "Kontakt",
+        "schweigen"
+      ],
+      "difficulty": "hard",
+      "ageMin": 12
+    },
+    {
+      "word": "Kloß im Hals",
+      "taboo": [
+        "weinen",
+        "schlucken",
+        "traurig",
+        "Kehle",
+        "sprechen"
+      ],
+      "difficulty": "hard",
+      "ageMin": 12
+    },
+    {
+      "word": "Gerücht",
+      "taboo": [
+        "erzählen",
+        "stimmt nicht",
+        "Tratsch",
+        "weitersagen",
+        "Klatsch"
+      ],
+      "difficulty": "medium",
+      "ageMin": 10
+    },
+    {
+      "word": "Stille Post",
+      "taboo": [
+        "flüstern",
+        "Ohr",
+        "Kette",
+        "weitersagen",
+        "Spiel"
+      ],
+      "difficulty": "easy",
+      "ageMin": 6
+    }
+  ]
+}
