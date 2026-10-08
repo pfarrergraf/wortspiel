@@ -1,115 +1,1408 @@
 {
-  "category": { "id": "future", "name": "Technik, KI & Zukunft", "emoji": "🚀", "color": "blue" },
+  "category": {
+    "id": "future",
+    "name": "Technik, KI & Zukunft",
+    "emoji": "🚀",
+    "color": "blue"
+  },
   "cards": [
-    { "word": "Akku", "taboo": ["Laden", "Handy", "Strom", "Batterie", "Prozent"], "difficulty": "easy", "ageMin": 10 },
-    { "word": "Steckdose", "taboo": ["Strom", "Wand", "Kabel", "Löcher", "Laden"], "difficulty": "easy", "ageMin": 10 },
-    { "word": "Ladegerät", "taboo": ["Handy", "Akku", "Strom", "Steckdose", "Kabel"], "difficulty": "easy", "ageMin": 10 },
-    { "word": "Powerbank", "taboo": ["Akku", "Unterwegs", "Handy", "Laden", "Strom"], "difficulty": "easy", "ageMin": 10 },
-    { "word": "Stromausfall", "taboo": ["Dunkel", "Kerze", "Licht", "Elektrizität", "Blackout"], "difficulty": "easy", "ageMin": 10 },
-    { "word": "Bildschirmfoto", "taboo": ["Screenshot", "Handy", "Speichern", "Tasten", "Abbildung"], "difficulty": "easy", "ageMin": 10 },
-    { "word": "Steckdosenleiste", "taboo": ["Kabel", "Strom", "Mehrere", "Anschließen", "Schalter"], "difficulty": "easy", "ageMin": 10 },
-    { "word": "Fernsehantenne", "taboo": ["Empfang", "Dach", "Sender", "Signal", "Programm"], "difficulty": "easy", "ageMin": 10 },
-    { "word": "Digitaluhr", "taboo": ["Zeit", "Zahlen", "Anzeige", "Zeiger", "Wecker"], "difficulty": "easy", "ageMin": 10 },
-    { "word": "Elektrische Zahnbürste", "taboo": ["Putzen", "Akku", "Badezimmer", "Borsten", "Vibration"], "difficulty": "easy", "ageMin": 10 },
-    { "word": "Bluetooth", "taboo": ["Kopfhörer", "Kabellos", "Verbinden", "Handy", "Koppeln"], "difficulty": "medium", "ageMin": 12 },
-    { "word": "WLAN", "taboo": ["Internet", "Router", "Kabellos", "Passwort", "Verbindung"], "difficulty": "easy", "ageMin": 10 },
-    { "word": "Laptop", "taboo": ["Computer", "Tragbar", "Tastatur", "Aufklappen", "Akku"], "difficulty": "easy", "ageMin": 10 },
-    { "word": "Tablet", "taboo": ["Bildschirm", "Berühren", "Apps", "Handy", "Flach"], "difficulty": "easy", "ageMin": 10 },
-    { "word": "Leertaste", "taboo": ["Tastatur", "Daumen", "Abstand", "Wörter", "Drücken"], "difficulty": "easy", "ageMin": 10 },
-    { "word": "Monitor", "taboo": ["Bildschirm", "Computer", "Anzeige", "Schreibtisch", "Anschließen"], "difficulty": "easy", "ageMin": 10 },
-    { "word": "Stummtaste", "taboo": ["Ton", "Ausschalten", "Mikrofon", "Knopf", "Ruhe"], "difficulty": "easy", "ageMin": 10 },
-    { "word": "Scanner", "taboo": ["Papier", "Computer", "Kopie", "Einlesen", "Dokument"], "difficulty": "easy", "ageMin": 10 },
-    { "word": "Handyhalterung", "taboo": ["Befestigen", "Auto", "Lenker", "Klemme", "Navigation"], "difficulty": "easy", "ageMin": 10 },
-    { "word": "In-Ear-Kopfhörer", "taboo": ["Musik", "Ohren", "Klein", "Bluetooth", "Stöpsel"], "difficulty": "easy", "ageMin": 10 },
-    { "word": "Selfiestick", "taboo": ["Handy", "Arm", "Foto", "Stange", "Gruppe"], "difficulty": "easy", "ageMin": 10 },
-    { "word": "Videoaufnahme", "taboo": ["Filmen", "Kamera", "Bewegung", "Speichern", "Clip"], "difficulty": "easy", "ageMin": 10 },
-    { "word": "Videotelefonie", "taboo": ["Kamera", "Anrufen", "Gesicht", "Bildschirm", "Gespräch"], "difficulty": "easy", "ageMin": 10 },
-    { "word": "Diktierfunktion", "taboo": ["Sprechen", "Text", "Mikrofon", "Schreiben", "Stimme"], "difficulty": "easy", "ageMin": 10 },
-    { "word": "Saugroboter", "taboo": ["Boden", "Staub", "Putzen", "Automatisch", "Rund"], "difficulty": "easy", "ageMin": 10 },
-    { "word": "Roboter", "taboo": ["Maschine", "Programmieren", "Bewegen", "Metall", "Automatisch"], "difficulty": "easy", "ageMin": 10 },
-    { "word": "Aufzug", "taboo": ["Etage", "Knopf", "Hoch", "Treppen", "Kabine"], "difficulty": "easy", "ageMin": 10 },
-    { "word": "Rolltreppe", "taboo": ["Stufen", "Kaufhaus", "Hoch", "Bewegen", "Stehen"], "difficulty": "easy", "ageMin": 10 },
-    { "word": "E-Scooter", "taboo": ["Roller", "Akku", "Lenker", "Fahren", "App"], "difficulty": "easy", "ageMin": 10 },
-    { "word": "E-Bike", "taboo": ["Fahrrad", "Akku", "Motor", "Pedale", "Unterstützung"], "difficulty": "easy", "ageMin": 10 },
-    { "word": "Elektroauto", "taboo": ["Strom", "Akku", "Fahren", "Laden", "Stecker"], "difficulty": "easy", "ageMin": 10 },
-    { "word": "Parkscheinautomat", "taboo": ["Münzen", "Ticket", "Straße", "Gebühr", "Zeit"], "difficulty": "easy", "ageMin": 10 },
-    { "word": "Fahrkartenautomat", "taboo": ["Bahnhof", "Ticket", "Kaufen", "Geld", "Ziel"], "difficulty": "easy", "ageMin": 10 },
-    { "word": "Pfandautomat", "taboo": ["Flaschen", "Supermarkt", "Zurückgeben", "Bon", "Geld"], "difficulty": "easy", "ageMin": 10 },
-    { "word": "Strichcode", "taboo": ["Kasse", "Scannen", "Linien", "Verpackung", "Zahlen"], "difficulty": "easy", "ageMin": 10 },
-    { "word": "QR-Code", "taboo": ["Quadrat", "Scannen", "Kamera", "Handy", "Link"], "difficulty": "easy", "ageMin": 10 },
-    { "word": "Smartwatch", "taboo": ["Uhr", "Handgelenk", "Schritte", "Nachrichten", "Akku"], "difficulty": "easy", "ageMin": 10 },
-    { "word": "Ladekabel", "taboo": ["Handy", "Strom", "Steckdose", "USB", "Akku"], "difficulty": "easy", "ageMin": 10 },
-    { "word": "Passwort", "taboo": ["Geheim", "Anmelden", "Zeichen", "Konto", "Sicherheit"], "difficulty": "easy", "ageMin": 10 },
-    { "word": "Drohne", "taboo": ["Fliegen", "Kamera", "Fernsteuerung", "Propeller", "Luft"], "difficulty": "medium", "ageMin": 12 },
-    { "word": "Rakete", "taboo": ["Weltraum", "Start", "Feuer", "Fliegen", "Countdown"], "difficulty": "easy", "ageMin": 10 },
-    { "word": "Astronaut", "taboo": ["Weltraum", "Rakete", "Anzug", "Schwerelos", "Mond"], "difficulty": "easy", "ageMin": 10 },
-    { "word": "Raumstation", "taboo": ["Weltraum", "Astronaut", "Erde", "Umlaufbahn", "ISS"], "difficulty": "easy", "ageMin": 10 },
-    { "word": "Mondlandung", "taboo": ["Astronaut", "Rakete", "Fußabdruck", "Krater", "Armstrong"], "difficulty": "easy", "ageMin": 10 },
-    { "word": "Mars", "taboo": ["Planet", "Rot", "Weltraum", "Rover", "Erde"], "difficulty": "easy", "ageMin": 10 },
-    { "word": "Sternschnuppe", "taboo": ["Wünschen", "Himmel", "Nacht", "Leuchten", "Meteor"], "difficulty": "easy", "ageMin": 10 },
-    { "word": "Sternwarte", "taboo": ["Teleskop", "Himmel", "Beobachten", "Kuppel", "Nacht"], "difficulty": "medium", "ageMin": 12 },
-    { "word": "Sonnensystem", "taboo": ["Planeten", "Umlaufbahn", "Erde", "Mars", "Weltraum"], "difficulty": "easy", "ageMin": 10 },
-    { "word": "Batterie", "taboo": ["Strom", "Fernbedienung", "Plus", "Minus", "Wechseln"], "difficulty": "easy", "ageMin": 10 },
-    { "word": "Schalter", "taboo": ["Knopf", "Licht", "An", "Aus", "Drücken"], "difficulty": "easy", "ageMin": 10 },
-    { "word": "Glühbirne", "taboo": ["Lampe", "Licht", "Leuchten", "Glas", "Einschrauben"], "difficulty": "easy", "ageMin": 10 },
-    { "word": "LED", "taboo": ["Licht", "Lampe", "Leuchten", "Sparsam", "Diode"], "difficulty": "easy", "ageMin": 10 },
-    { "word": "Kabelsalat", "taboo": ["Durcheinander", "Verheddert", "Stecker", "Schreibtisch", "Entwirren"], "difficulty": "easy", "ageMin": 10 },
-    { "word": "Stecker", "taboo": ["Steckdose", "Kabel", "Anschließen", "Strom", "Metall"], "difficulty": "easy", "ageMin": 10 },
-    { "word": "Ladesäule", "taboo": ["Elektroauto", "Strom", "Akku", "Parkplatz", "Stecker"], "difficulty": "easy", "ageMin": 10 },
-    { "word": "Künstliche Intelligenz", "taboo": ["ChatGPT", "Roboter", "Maschine", "Algorithmus", "Computer"], "difficulty": "easy", "ageMin": 10 },
-    { "word": "Chatbot", "taboo": ["KI", "Fragen", "Antworten", "Computer", "Gespräch"], "difficulty": "medium", "ageMin": 12 },
-    { "word": "Spracherkennung", "taboo": ["Mikrofon", "Stimme", "Text", "Diktieren", "Computer"], "difficulty": "medium", "ageMin": 12 },
-    { "word": "Gesichtserkennung", "taboo": ["Kamera", "Augen", "Handy", "Entsperren", "Person"], "difficulty": "medium", "ageMin": 12 },
-    { "word": "Fingerabdrucksensor", "taboo": ["Daumen", "Entsperren", "Handy", "Haut", "Identität"], "difficulty": "medium", "ageMin": 12 },
-    { "word": "Zwei-Faktor-Anmeldung", "taboo": ["Passwort", "Bestätigung", "Sicherheit", "Konto", "SMS"], "difficulty": "medium", "ageMin": 12 },
-    { "word": "Software", "taboo": ["Programm", "Computer", "Installieren", "App", "Update"], "difficulty": "medium", "ageMin": 12 },
-    { "word": "Backup", "taboo": ["Kopie", "Daten", "Sichern", "Speichern", "Verlust"], "difficulty": "medium", "ageMin": 12 },
-    { "word": "Dateianhang", "taboo": ["E-Mail", "Senden", "Büroklammer", "Dokument", "Foto"], "difficulty": "medium", "ageMin": 12 },
-    { "word": "Bildersuche", "taboo": ["Google", "Foto", "Internet", "Ergebnisse", "Ähnlich"], "difficulty": "medium", "ageMin": 12 },
-    { "word": "Navigationsgerät", "taboo": ["Auto", "Karte", "Route", "Abbiegen", "Ziel"], "difficulty": "medium", "ageMin": 12 },
-    { "word": "GPS", "taboo": ["Satellit", "Standort", "Navigation", "Karte", "Koordinaten"], "difficulty": "medium", "ageMin": 12 },
-    { "word": "Fitnessarmband", "taboo": ["Schritte", "Handgelenk", "Sport", "Puls", "Messen"], "difficulty": "medium", "ageMin": 12 },
-    { "word": "Schrittzähler", "taboo": ["Gehen", "Bewegung", "Handy", "Distanz", "Laufen"], "difficulty": "medium", "ageMin": 12 },
-    { "word": "Smart Home", "taboo": ["Wohnung", "Vernetzt", "Licht", "Steuerung", "Automatisch"], "difficulty": "medium", "ageMin": 12 },
-    { "word": "Spielekonsole", "taboo": ["Controller", "Fernseher", "PlayStation", "Xbox", "Anschließen"], "difficulty": "medium", "ageMin": 12 },
-    { "word": "Virtuelle Realität", "taboo": ["Brille", "Computer", "Eintauchen", "Welt", "Simulation"], "difficulty": "medium", "ageMin": 12 },
-    { "word": "Datenbrille", "taboo": ["Augen", "Anzeige", "Information", "Durchschauen", "Kopf"], "difficulty": "medium", "ageMin": 12 },
-    { "word": "3D-Drucker", "taboo": ["Kunststoff", "Schichten", "Modell", "Herstellen", "Düse"], "difficulty": "medium", "ageMin": 12 },
-    { "word": "Roboterarm", "taboo": ["Fabrik", "Greifen", "Maschine", "Gelenk", "Automatisch"], "difficulty": "medium", "ageMin": 12 },
-    { "word": "Fernsteuerung", "taboo": ["Drohne", "Knöpfe", "Entfernung", "Funk", "Lenken"], "difficulty": "medium", "ageMin": 12 },
-    { "word": "Bordcomputer", "taboo": ["Auto", "Anzeige", "Verbrauch", "Armaturenbrett", "Information"], "difficulty": "medium", "ageMin": 12 },
-    { "word": "Induktionsladen", "taboo": ["Kabellos", "Akku", "Handy", "Auflegen", "Magnetfeld"], "difficulty": "medium", "ageMin": 12 },
-    { "word": "Wärmepumpe", "taboo": ["Heizung", "Haus", "Strom", "Luft", "Temperatur"], "difficulty": "medium", "ageMin": 12 },
-    { "word": "Induktionsherd", "taboo": ["Kochen", "Topf", "Magnet", "Platte", "Küche"], "difficulty": "medium", "ageMin": 12 },
-    { "word": "Mikrowelle", "taboo": ["Essen", "Warm", "Küche", "Drehteller", "Erhitzen"], "difficulty": "easy", "ageMin": 10 },
-    { "word": "Zeitschaltuhr", "taboo": ["Steckdose", "Automatisch", "An", "Aus", "Timer"], "difficulty": "medium", "ageMin": 12 },
-    { "word": "Berührungsloses Bezahlen", "taboo": ["Karte", "Handy", "Kasse", "Dranhalten", "NFC"], "difficulty": "medium", "ageMin": 12 },
-    { "word": "Onlinebanking", "taboo": ["Konto", "Überweisung", "Geld", "App", "TAN"], "difficulty": "medium", "ageMin": 12 },
-    { "word": "E-Book-Reader", "taboo": ["Lesen", "Bücher", "Bildschirm", "Kindle", "Seiten"], "difficulty": "easy", "ageMin": 10 },
-    { "word": "Bildauflösung", "taboo": ["Pixel", "Schärfe", "Foto", "Qualität", "Details"], "difficulty": "medium", "ageMin": 12 },
-    { "word": "Programmiersprache", "taboo": ["Code", "Computer", "Befehle", "Python", "JavaScript"], "difficulty": "medium", "ageMin": 12 },
-    { "word": "Selbstfahrendes Auto", "taboo": ["Lenkrad", "Fahrer", "Verkehr", "Sensoren", "Autonom"], "difficulty": "medium", "ageMin": 12 },
-    { "word": "Weltraumteleskop", "taboo": ["Sterne", "Hubble", "Bilder", "Umlaufbahn", "Beobachten"], "difficulty": "medium", "ageMin": 12 },
-    { "word": "Raumanzug", "taboo": ["Astronaut", "Helm", "Sauerstoff", "Weltraum", "Schutz"], "difficulty": "medium", "ageMin": 12 },
-    { "word": "Satellit", "taboo": ["Umlaufbahn", "Erde", "Weltraum", "Signal", "GPS"], "difficulty": "medium", "ageMin": 12 },
-    { "word": "Stromzähler", "taboo": ["Energie", "Verbrauch", "Haus", "Kilowattstunde", "Ablesen"], "difficulty": "medium", "ageMin": 12 },
-    { "word": "Schnellladen", "taboo": ["Akku", "Minuten", "Strom", "Handy", "Geschwindigkeit"], "difficulty": "medium", "ageMin": 12 },
-    { "word": "Algorithmus", "taboo": ["Schritte", "Regeln", "Computer", "Berechnen", "Ablauf"], "difficulty": "hard", "ageMin": 14 },
-    { "word": "Quantencomputer", "taboo": ["Qubit", "Physik", "Rechnen", "Teilchen", "Zukunft"], "difficulty": "hard", "ageMin": 14 },
-    { "word": "Neuronales Netz", "taboo": ["Gehirn", "KI", "Lernen", "Muster", "Computer"], "difficulty": "hard", "ageMin": 14 },
-    { "word": "Maschinelles Lernen", "taboo": ["KI", "Daten", "Training", "Muster", "Computer"], "difficulty": "hard", "ageMin": 14 },
-    { "word": "Verschlüsselung", "taboo": ["Geheim", "Daten", "Sicherheit", "Code", "Lesen"], "difficulty": "hard", "ageMin": 14 },
-    { "word": "Open Source", "taboo": ["Code", "Öffentlich", "Software", "Mitmachen", "Frei"], "difficulty": "hard", "ageMin": 14 },
-    { "word": "Augmented Reality", "taboo": ["Kamera", "Einblenden", "Umgebung", "Digital", "Pokémon GO"], "difficulty": "hard", "ageMin": 14 },
-    { "word": "Cybersicherheit", "taboo": ["Hacker", "Passwort", "Schutz", "Internet", "Angriff"], "difficulty": "hard", "ageMin": 14 },
-    { "word": "Glasfaser", "taboo": ["Internet", "Kabel", "Licht", "Schnell", "Verbindung"], "difficulty": "hard", "ageMin": 14 },
-    { "word": "Halbleiter", "taboo": ["Chip", "Silizium", "Elektronik", "Strom", "Transistor"], "difficulty": "hard", "ageMin": 14 },
-    { "word": "Wasserstoffantrieb", "taboo": ["Gas", "Auto", "Tank", "Brennstoffzelle", "Energie"], "difficulty": "hard", "ageMin": 14 },
-    { "word": "Magnetschwebebahn", "taboo": ["Zug", "Gleiten", "Schienen", "Anziehung", "Geschwindigkeit"], "difficulty": "hard", "ageMin": 14 },
-    { "word": "Exoskelett", "taboo": ["Körper", "Stützen", "Anzug", "Kraft", "Außen"], "difficulty": "hard", "ageMin": 14 },
-    { "word": "Biometrie", "taboo": ["Fingerabdruck", "Gesicht", "Identität", "Erkennung", "Körper"], "difficulty": "hard", "ageMin": 14 },
-    { "word": "Weltraumschrott", "taboo": ["Satellit", "Trümmer", "Umlaufbahn", "Erde", "Kollision"], "difficulty": "hard", "ageMin": 14 },
-    { "word": "Lichtjahr", "taboo": ["Entfernung", "Sterne", "Weltraum", "Geschwindigkeit", "Strecke"], "difficulty": "hard", "ageMin": 14 },
-    { "word": "Firewall", "taboo": ["Schutz", "Netzwerk", "Blockieren", "Angriff", "Computer"], "difficulty": "hard", "ageMin": 14 }
+    {
+      "word": "Akku",
+      "taboo": [
+        "Laden",
+        "Handy",
+        "Strom",
+        "Batterie",
+        "Prozent"
+      ],
+      "difficulty": "easy",
+      "ageMin": 10
+    },
+    {
+      "word": "Steckdose",
+      "taboo": [
+        "Strom",
+        "Wand",
+        "Kabel",
+        "Löcher",
+        "Laden"
+      ],
+      "difficulty": "easy",
+      "ageMin": 10
+    },
+    {
+      "word": "Ladegerät",
+      "taboo": [
+        "Handy",
+        "Akku",
+        "Strom",
+        "Steckdose",
+        "Kabel"
+      ],
+      "difficulty": "easy",
+      "ageMin": 10
+    },
+    {
+      "word": "Powerbank",
+      "taboo": [
+        "Akku",
+        "Unterwegs",
+        "Handy",
+        "Laden",
+        "Strom"
+      ],
+      "difficulty": "easy",
+      "ageMin": 10
+    },
+    {
+      "word": "Stromausfall",
+      "taboo": [
+        "Dunkel",
+        "Kerze",
+        "Licht",
+        "Elektrizität",
+        "Blackout"
+      ],
+      "difficulty": "easy",
+      "ageMin": 10
+    },
+    {
+      "word": "Bildschirmfoto",
+      "taboo": [
+        "Screenshot",
+        "Handy",
+        "Speichern",
+        "Tasten",
+        "Abbildung"
+      ],
+      "difficulty": "easy",
+      "ageMin": 10,
+      "retired": true
+    },
+    {
+      "word": "Steckdosenleiste",
+      "taboo": [
+        "Kabel",
+        "Strom",
+        "Mehrere",
+        "Anschließen",
+        "Schalter"
+      ],
+      "difficulty": "easy",
+      "ageMin": 10
+    },
+    {
+      "word": "Fernsehantenne",
+      "taboo": [
+        "Empfang",
+        "Dach",
+        "Sender",
+        "Signal",
+        "Programm"
+      ],
+      "difficulty": "easy",
+      "ageMin": 10
+    },
+    {
+      "word": "Digitaluhr",
+      "taboo": [
+        "Zeit",
+        "Zahlen",
+        "Anzeige",
+        "Zeiger",
+        "Wecker"
+      ],
+      "difficulty": "easy",
+      "ageMin": 10
+    },
+    {
+      "word": "Elektrische Zahnbürste",
+      "taboo": [
+        "Putzen",
+        "Akku",
+        "Badezimmer",
+        "Borsten",
+        "Vibration"
+      ],
+      "difficulty": "easy",
+      "ageMin": 10
+    },
+    {
+      "word": "Bluetooth",
+      "taboo": [
+        "Kopfhörer",
+        "Kabellos",
+        "Verbinden",
+        "Handy",
+        "Koppeln"
+      ],
+      "difficulty": "medium",
+      "ageMin": 12
+    },
+    {
+      "word": "WLAN",
+      "taboo": [
+        "Internet",
+        "Router",
+        "Kabellos",
+        "Passwort",
+        "Verbindung"
+      ],
+      "difficulty": "easy",
+      "ageMin": 10
+    },
+    {
+      "word": "Laptop",
+      "taboo": [
+        "Computer",
+        "Tragbar",
+        "Tastatur",
+        "Aufklappen",
+        "Akku"
+      ],
+      "difficulty": "easy",
+      "ageMin": 10
+    },
+    {
+      "word": "Tablet",
+      "taboo": [
+        "Bildschirm",
+        "Berühren",
+        "Apps",
+        "Handy",
+        "Flach"
+      ],
+      "difficulty": "easy",
+      "ageMin": 10
+    },
+    {
+      "word": "Leertaste",
+      "taboo": [
+        "Tastatur",
+        "Daumen",
+        "Abstand",
+        "Wörter",
+        "Drücken"
+      ],
+      "difficulty": "easy",
+      "ageMin": 10
+    },
+    {
+      "word": "Monitor",
+      "taboo": [
+        "Bildschirm",
+        "Computer",
+        "Anzeige",
+        "Schreibtisch",
+        "Anschließen"
+      ],
+      "difficulty": "easy",
+      "ageMin": 10
+    },
+    {
+      "word": "Stummtaste",
+      "taboo": [
+        "Ton",
+        "Ausschalten",
+        "Mikrofon",
+        "Knopf",
+        "Ruhe"
+      ],
+      "difficulty": "easy",
+      "ageMin": 10
+    },
+    {
+      "word": "Scanner",
+      "taboo": [
+        "Papier",
+        "Computer",
+        "Kopie",
+        "Einlesen",
+        "Dokument"
+      ],
+      "difficulty": "easy",
+      "ageMin": 10
+    },
+    {
+      "word": "Handyhalterung",
+      "taboo": [
+        "Befestigen",
+        "Auto",
+        "Lenker",
+        "Klemme",
+        "Navigation"
+      ],
+      "difficulty": "easy",
+      "ageMin": 10
+    },
+    {
+      "word": "In-Ear-Kopfhörer",
+      "taboo": [
+        "Musik",
+        "Ohren",
+        "Klein",
+        "Bluetooth",
+        "Stöpsel"
+      ],
+      "difficulty": "easy",
+      "ageMin": 10
+    },
+    {
+      "word": "Selfiestick",
+      "taboo": [
+        "Handy",
+        "Arm",
+        "Foto",
+        "Stange",
+        "Gruppe"
+      ],
+      "difficulty": "easy",
+      "ageMin": 10,
+      "retired": true
+    },
+    {
+      "word": "Videoaufnahme",
+      "taboo": [
+        "Filmen",
+        "Kamera",
+        "Bewegung",
+        "Speichern",
+        "Clip"
+      ],
+      "difficulty": "easy",
+      "ageMin": 10
+    },
+    {
+      "word": "Videotelefonie",
+      "taboo": [
+        "Kamera",
+        "Anrufen",
+        "Gesicht",
+        "Bildschirm",
+        "Gespräch"
+      ],
+      "difficulty": "easy",
+      "ageMin": 10,
+      "retired": true
+    },
+    {
+      "word": "Diktierfunktion",
+      "taboo": [
+        "Sprechen",
+        "Text",
+        "Mikrofon",
+        "Schreiben",
+        "Stimme"
+      ],
+      "difficulty": "easy",
+      "ageMin": 10
+    },
+    {
+      "word": "Saugroboter",
+      "taboo": [
+        "Boden",
+        "Staub",
+        "Putzen",
+        "Automatisch",
+        "Rund"
+      ],
+      "difficulty": "easy",
+      "ageMin": 10
+    },
+    {
+      "word": "Roboter",
+      "taboo": [
+        "Maschine",
+        "Programmieren",
+        "Bewegen",
+        "Metall",
+        "Automatisch"
+      ],
+      "difficulty": "easy",
+      "ageMin": 10
+    },
+    {
+      "word": "Aufzug",
+      "taboo": [
+        "Etage",
+        "Knopf",
+        "Hoch",
+        "Treppen",
+        "Kabine"
+      ],
+      "difficulty": "easy",
+      "ageMin": 10
+    },
+    {
+      "word": "Rolltreppe",
+      "taboo": [
+        "Stufen",
+        "Kaufhaus",
+        "Hoch",
+        "Bewegen",
+        "Stehen"
+      ],
+      "difficulty": "easy",
+      "ageMin": 10
+    },
+    {
+      "word": "E-Scooter",
+      "taboo": [
+        "Roller",
+        "Akku",
+        "Lenker",
+        "Fahren",
+        "App"
+      ],
+      "difficulty": "easy",
+      "ageMin": 10
+    },
+    {
+      "word": "E-Bike",
+      "taboo": [
+        "Fahrrad",
+        "Akku",
+        "Motor",
+        "Pedale",
+        "Unterstützung"
+      ],
+      "difficulty": "easy",
+      "ageMin": 10
+    },
+    {
+      "word": "Elektroauto",
+      "taboo": [
+        "Strom",
+        "Akku",
+        "Fahren",
+        "Laden",
+        "Stecker"
+      ],
+      "difficulty": "easy",
+      "ageMin": 10
+    },
+    {
+      "word": "Parkscheinautomat",
+      "taboo": [
+        "Münzen",
+        "Ticket",
+        "Straße",
+        "Gebühr",
+        "Zeit"
+      ],
+      "difficulty": "easy",
+      "ageMin": 10
+    },
+    {
+      "word": "Fahrkartenautomat",
+      "taboo": [
+        "Bahnhof",
+        "Ticket",
+        "Kaufen",
+        "Geld",
+        "Ziel"
+      ],
+      "difficulty": "easy",
+      "ageMin": 10
+    },
+    {
+      "word": "Pfandautomat",
+      "taboo": [
+        "Flaschen",
+        "Supermarkt",
+        "Zurückgeben",
+        "Bon",
+        "Geld"
+      ],
+      "difficulty": "easy",
+      "ageMin": 10
+    },
+    {
+      "word": "Strichcode",
+      "taboo": [
+        "Kasse",
+        "Scannen",
+        "Linien",
+        "Verpackung",
+        "Zahlen"
+      ],
+      "difficulty": "easy",
+      "ageMin": 10
+    },
+    {
+      "word": "QR-Code",
+      "taboo": [
+        "Quadrat",
+        "Scannen",
+        "Kamera",
+        "Handy",
+        "Link"
+      ],
+      "difficulty": "easy",
+      "ageMin": 10
+    },
+    {
+      "word": "Smartwatch",
+      "taboo": [
+        "Uhr",
+        "Handgelenk",
+        "Schritte",
+        "Nachrichten",
+        "Akku"
+      ],
+      "difficulty": "easy",
+      "ageMin": 10
+    },
+    {
+      "word": "Ladekabel",
+      "taboo": [
+        "Handy",
+        "Strom",
+        "Steckdose",
+        "USB",
+        "Akku"
+      ],
+      "difficulty": "easy",
+      "ageMin": 10
+    },
+    {
+      "word": "Passwort",
+      "taboo": [
+        "Geheim",
+        "Anmelden",
+        "Zeichen",
+        "Konto",
+        "Sicherheit"
+      ],
+      "difficulty": "easy",
+      "ageMin": 10
+    },
+    {
+      "word": "Drohne",
+      "taboo": [
+        "Fliegen",
+        "Kamera",
+        "Fernsteuerung",
+        "Propeller",
+        "Luft"
+      ],
+      "difficulty": "medium",
+      "ageMin": 12
+    },
+    {
+      "word": "Rakete",
+      "taboo": [
+        "Weltraum",
+        "Start",
+        "Feuer",
+        "Fliegen",
+        "Countdown"
+      ],
+      "difficulty": "easy",
+      "ageMin": 10
+    },
+    {
+      "word": "Astronaut",
+      "taboo": [
+        "Weltraum",
+        "Rakete",
+        "Anzug",
+        "Schwerelos",
+        "Mond"
+      ],
+      "difficulty": "easy",
+      "ageMin": 10
+    },
+    {
+      "word": "Raumstation",
+      "taboo": [
+        "Weltraum",
+        "Astronaut",
+        "Erde",
+        "Umlaufbahn",
+        "ISS"
+      ],
+      "difficulty": "easy",
+      "ageMin": 10
+    },
+    {
+      "word": "Mondlandung",
+      "taboo": [
+        "Astronaut",
+        "Rakete",
+        "Fußabdruck",
+        "Krater",
+        "Armstrong"
+      ],
+      "difficulty": "easy",
+      "ageMin": 10
+    },
+    {
+      "word": "Mars",
+      "taboo": [
+        "Planet",
+        "Rot",
+        "Weltraum",
+        "Rover",
+        "Erde"
+      ],
+      "difficulty": "easy",
+      "ageMin": 10
+    },
+    {
+      "word": "Sternschnuppe",
+      "taboo": [
+        "Wünschen",
+        "Himmel",
+        "Nacht",
+        "Leuchten",
+        "Meteor"
+      ],
+      "difficulty": "easy",
+      "ageMin": 10
+    },
+    {
+      "word": "Sternwarte",
+      "taboo": [
+        "Teleskop",
+        "Himmel",
+        "Beobachten",
+        "Kuppel",
+        "Nacht"
+      ],
+      "difficulty": "medium",
+      "ageMin": 12
+    },
+    {
+      "word": "Sonnensystem",
+      "taboo": [
+        "Planeten",
+        "Umlaufbahn",
+        "Erde",
+        "Mars",
+        "Weltraum"
+      ],
+      "difficulty": "easy",
+      "ageMin": 10
+    },
+    {
+      "word": "Batterie",
+      "taboo": [
+        "Strom",
+        "Fernbedienung",
+        "Plus",
+        "Minus",
+        "Wechseln"
+      ],
+      "difficulty": "easy",
+      "ageMin": 10
+    },
+    {
+      "word": "Schalter",
+      "taboo": [
+        "Knopf",
+        "Licht",
+        "An",
+        "Aus",
+        "Drücken"
+      ],
+      "difficulty": "easy",
+      "ageMin": 10
+    },
+    {
+      "word": "Glühbirne",
+      "taboo": [
+        "Lampe",
+        "Licht",
+        "Leuchten",
+        "Glas",
+        "Einschrauben"
+      ],
+      "difficulty": "easy",
+      "ageMin": 10,
+      "retired": true
+    },
+    {
+      "word": "LED",
+      "taboo": [
+        "Licht",
+        "Lampe",
+        "Leuchten",
+        "Sparsam",
+        "Diode"
+      ],
+      "difficulty": "easy",
+      "ageMin": 10
+    },
+    {
+      "word": "Kabelsalat",
+      "taboo": [
+        "Durcheinander",
+        "Verheddert",
+        "Stecker",
+        "Schreibtisch",
+        "Entwirren"
+      ],
+      "difficulty": "easy",
+      "ageMin": 10
+    },
+    {
+      "word": "Stecker",
+      "taboo": [
+        "Steckdose",
+        "Kabel",
+        "Anschließen",
+        "Strom",
+        "Metall"
+      ],
+      "difficulty": "easy",
+      "ageMin": 10
+    },
+    {
+      "word": "Ladesäule",
+      "taboo": [
+        "Elektroauto",
+        "Strom",
+        "Akku",
+        "Parkplatz",
+        "Stecker"
+      ],
+      "difficulty": "easy",
+      "ageMin": 10
+    },
+    {
+      "word": "Künstliche Intelligenz",
+      "taboo": [
+        "ChatGPT",
+        "Roboter",
+        "Maschine",
+        "Algorithmus",
+        "Computer"
+      ],
+      "difficulty": "easy",
+      "ageMin": 10
+    },
+    {
+      "word": "Chatbot",
+      "taboo": [
+        "KI",
+        "Fragen",
+        "Antworten",
+        "Computer",
+        "Gespräch"
+      ],
+      "difficulty": "medium",
+      "ageMin": 12
+    },
+    {
+      "word": "Spracherkennung",
+      "taboo": [
+        "Mikrofon",
+        "Stimme",
+        "Text",
+        "Diktieren",
+        "Computer"
+      ],
+      "difficulty": "medium",
+      "ageMin": 12
+    },
+    {
+      "word": "Gesichtserkennung",
+      "taboo": [
+        "Kamera",
+        "Augen",
+        "Handy",
+        "Entsperren",
+        "Person"
+      ],
+      "difficulty": "medium",
+      "ageMin": 12
+    },
+    {
+      "word": "Fingerabdrucksensor",
+      "taboo": [
+        "Daumen",
+        "Entsperren",
+        "Handy",
+        "Haut",
+        "Identität"
+      ],
+      "difficulty": "medium",
+      "ageMin": 12
+    },
+    {
+      "word": "Zwei-Faktor-Anmeldung",
+      "taboo": [
+        "Passwort",
+        "Bestätigung",
+        "Sicherheit",
+        "Konto",
+        "SMS"
+      ],
+      "difficulty": "medium",
+      "ageMin": 12,
+      "retired": true
+    },
+    {
+      "word": "Software",
+      "taboo": [
+        "Programm",
+        "Computer",
+        "Installieren",
+        "App",
+        "Update"
+      ],
+      "difficulty": "medium",
+      "ageMin": 12
+    },
+    {
+      "word": "Backup",
+      "taboo": [
+        "Kopie",
+        "Daten",
+        "Sichern",
+        "Speichern",
+        "Verlust"
+      ],
+      "difficulty": "medium",
+      "ageMin": 12
+    },
+    {
+      "word": "Dateianhang",
+      "taboo": [
+        "E-Mail",
+        "Senden",
+        "Büroklammer",
+        "Dokument",
+        "Foto"
+      ],
+      "difficulty": "medium",
+      "ageMin": 12
+    },
+    {
+      "word": "Bildersuche",
+      "taboo": [
+        "Google",
+        "Foto",
+        "Internet",
+        "Ergebnisse",
+        "Ähnlich"
+      ],
+      "difficulty": "medium",
+      "ageMin": 12
+    },
+    {
+      "word": "Navigationsgerät",
+      "taboo": [
+        "Auto",
+        "Karte",
+        "Route",
+        "Abbiegen",
+        "Ziel"
+      ],
+      "difficulty": "medium",
+      "ageMin": 12
+    },
+    {
+      "word": "GPS",
+      "taboo": [
+        "Satellit",
+        "Standort",
+        "Navigation",
+        "Karte",
+        "Koordinaten"
+      ],
+      "difficulty": "medium",
+      "ageMin": 12
+    },
+    {
+      "word": "Fitnessarmband",
+      "taboo": [
+        "Schritte",
+        "Handgelenk",
+        "Sport",
+        "Puls",
+        "Messen"
+      ],
+      "difficulty": "medium",
+      "ageMin": 12
+    },
+    {
+      "word": "Schrittzähler",
+      "taboo": [
+        "Gehen",
+        "Bewegung",
+        "Handy",
+        "Distanz",
+        "Laufen"
+      ],
+      "difficulty": "medium",
+      "ageMin": 12
+    },
+    {
+      "word": "Smart Home",
+      "taboo": [
+        "Wohnung",
+        "Vernetzt",
+        "Licht",
+        "Steuerung",
+        "Automatisch"
+      ],
+      "difficulty": "medium",
+      "ageMin": 12
+    },
+    {
+      "word": "Spielekonsole",
+      "taboo": [
+        "Controller",
+        "Fernseher",
+        "PlayStation",
+        "Xbox",
+        "Anschließen"
+      ],
+      "difficulty": "medium",
+      "ageMin": 12,
+      "retired": true
+    },
+    {
+      "word": "Virtuelle Realität",
+      "taboo": [
+        "Brille",
+        "Computer",
+        "Eintauchen",
+        "Welt",
+        "Simulation"
+      ],
+      "difficulty": "medium",
+      "ageMin": 12
+    },
+    {
+      "word": "Datenbrille",
+      "taboo": [
+        "Augen",
+        "Anzeige",
+        "Information",
+        "Durchschauen",
+        "Kopf"
+      ],
+      "difficulty": "medium",
+      "ageMin": 12
+    },
+    {
+      "word": "3D-Drucker",
+      "taboo": [
+        "Kunststoff",
+        "Schichten",
+        "Modell",
+        "Herstellen",
+        "Düse"
+      ],
+      "difficulty": "medium",
+      "ageMin": 12
+    },
+    {
+      "word": "Roboterarm",
+      "taboo": [
+        "Fabrik",
+        "Greifen",
+        "Maschine",
+        "Gelenk",
+        "Automatisch"
+      ],
+      "difficulty": "medium",
+      "ageMin": 12
+    },
+    {
+      "word": "Fernsteuerung",
+      "taboo": [
+        "Drohne",
+        "Knöpfe",
+        "Entfernung",
+        "Funk",
+        "Lenken"
+      ],
+      "difficulty": "medium",
+      "ageMin": 12
+    },
+    {
+      "word": "Bordcomputer",
+      "taboo": [
+        "Auto",
+        "Anzeige",
+        "Verbrauch",
+        "Armaturenbrett",
+        "Information"
+      ],
+      "difficulty": "medium",
+      "ageMin": 12
+    },
+    {
+      "word": "Induktionsladen",
+      "taboo": [
+        "Kabellos",
+        "Akku",
+        "Handy",
+        "Auflegen",
+        "Magnetfeld"
+      ],
+      "difficulty": "medium",
+      "ageMin": 12
+    },
+    {
+      "word": "Wärmepumpe",
+      "taboo": [
+        "Heizung",
+        "Haus",
+        "Strom",
+        "Luft",
+        "Temperatur"
+      ],
+      "difficulty": "medium",
+      "ageMin": 12
+    },
+    {
+      "word": "Induktionsherd",
+      "taboo": [
+        "Kochen",
+        "Topf",
+        "Magnet",
+        "Platte",
+        "Küche"
+      ],
+      "difficulty": "medium",
+      "ageMin": 12
+    },
+    {
+      "word": "Mikrowelle",
+      "taboo": [
+        "Essen",
+        "Warm",
+        "Küche",
+        "Drehteller",
+        "Erhitzen"
+      ],
+      "difficulty": "easy",
+      "ageMin": 10
+    },
+    {
+      "word": "Zeitschaltuhr",
+      "taboo": [
+        "Steckdose",
+        "Automatisch",
+        "An",
+        "Aus",
+        "Timer"
+      ],
+      "difficulty": "medium",
+      "ageMin": 12
+    },
+    {
+      "word": "Berührungsloses Bezahlen",
+      "taboo": [
+        "Karte",
+        "Handy",
+        "Kasse",
+        "Dranhalten",
+        "NFC"
+      ],
+      "difficulty": "medium",
+      "ageMin": 12
+    },
+    {
+      "word": "Onlinebanking",
+      "taboo": [
+        "Konto",
+        "Überweisung",
+        "Geld",
+        "App",
+        "TAN"
+      ],
+      "difficulty": "medium",
+      "ageMin": 12
+    },
+    {
+      "word": "E-Book-Reader",
+      "taboo": [
+        "Lesen",
+        "Bücher",
+        "Bildschirm",
+        "Kindle",
+        "Seiten"
+      ],
+      "difficulty": "easy",
+      "ageMin": 10
+    },
+    {
+      "word": "Bildauflösung",
+      "taboo": [
+        "Pixel",
+        "Schärfe",
+        "Foto",
+        "Qualität",
+        "Details"
+      ],
+      "difficulty": "medium",
+      "ageMin": 12
+    },
+    {
+      "word": "Programmiersprache",
+      "taboo": [
+        "Code",
+        "Computer",
+        "Befehle",
+        "Python",
+        "JavaScript"
+      ],
+      "difficulty": "medium",
+      "ageMin": 12
+    },
+    {
+      "word": "Selbstfahrendes Auto",
+      "taboo": [
+        "Lenkrad",
+        "Fahrer",
+        "Verkehr",
+        "Sensoren",
+        "Autonom"
+      ],
+      "difficulty": "medium",
+      "ageMin": 12
+    },
+    {
+      "word": "Weltraumteleskop",
+      "taboo": [
+        "Sterne",
+        "Hubble",
+        "Bilder",
+        "Umlaufbahn",
+        "Beobachten"
+      ],
+      "difficulty": "medium",
+      "ageMin": 12
+    },
+    {
+      "word": "Raumanzug",
+      "taboo": [
+        "Astronaut",
+        "Helm",
+        "Sauerstoff",
+        "Weltraum",
+        "Schutz"
+      ],
+      "difficulty": "medium",
+      "ageMin": 12
+    },
+    {
+      "word": "Satellit",
+      "taboo": [
+        "Umlaufbahn",
+        "Erde",
+        "Weltraum",
+        "Signal",
+        "GPS"
+      ],
+      "difficulty": "medium",
+      "ageMin": 12
+    },
+    {
+      "word": "Stromzähler",
+      "taboo": [
+        "Energie",
+        "Verbrauch",
+        "Haus",
+        "Kilowattstunde",
+        "Ablesen"
+      ],
+      "difficulty": "medium",
+      "ageMin": 12
+    },
+    {
+      "word": "Schnellladen",
+      "taboo": [
+        "Akku",
+        "Minuten",
+        "Strom",
+        "Handy",
+        "Geschwindigkeit"
+      ],
+      "difficulty": "medium",
+      "ageMin": 12
+    },
+    {
+      "word": "Algorithmus",
+      "taboo": [
+        "Schritte",
+        "Regeln",
+        "Computer",
+        "Berechnen",
+        "Ablauf"
+      ],
+      "difficulty": "hard",
+      "ageMin": 14
+    },
+    {
+      "word": "Quantencomputer",
+      "taboo": [
+        "Qubit",
+        "Physik",
+        "Rechnen",
+        "Teilchen",
+        "Zukunft"
+      ],
+      "difficulty": "hard",
+      "ageMin": 14
+    },
+    {
+      "word": "Neuronales Netz",
+      "taboo": [
+        "Gehirn",
+        "KI",
+        "Lernen",
+        "Muster",
+        "Computer"
+      ],
+      "difficulty": "hard",
+      "ageMin": 14
+    },
+    {
+      "word": "Maschinelles Lernen",
+      "taboo": [
+        "KI",
+        "Daten",
+        "Training",
+        "Muster",
+        "Computer"
+      ],
+      "difficulty": "hard",
+      "ageMin": 14
+    },
+    {
+      "word": "Verschlüsselung",
+      "taboo": [
+        "Geheim",
+        "Daten",
+        "Sicherheit",
+        "Code",
+        "Lesen"
+      ],
+      "difficulty": "hard",
+      "ageMin": 14
+    },
+    {
+      "word": "Open Source",
+      "taboo": [
+        "Code",
+        "Öffentlich",
+        "Software",
+        "Mitmachen",
+        "Frei"
+      ],
+      "difficulty": "hard",
+      "ageMin": 14
+    },
+    {
+      "word": "Augmented Reality",
+      "taboo": [
+        "Kamera",
+        "Einblenden",
+        "Umgebung",
+        "Digital",
+        "Pokémon GO"
+      ],
+      "difficulty": "hard",
+      "ageMin": 14
+    },
+    {
+      "word": "Cybersicherheit",
+      "taboo": [
+        "Hacker",
+        "Passwort",
+        "Schutz",
+        "Internet",
+        "Angriff"
+      ],
+      "difficulty": "hard",
+      "ageMin": 14
+    },
+    {
+      "word": "Glasfaser",
+      "taboo": [
+        "Internet",
+        "Kabel",
+        "Licht",
+        "Schnell",
+        "Verbindung"
+      ],
+      "difficulty": "hard",
+      "ageMin": 14
+    },
+    {
+      "word": "Halbleiter",
+      "taboo": [
+        "Chip",
+        "Silizium",
+        "Elektronik",
+        "Strom",
+        "Transistor"
+      ],
+      "difficulty": "hard",
+      "ageMin": 14
+    },
+    {
+      "word": "Wasserstoffantrieb",
+      "taboo": [
+        "Gas",
+        "Auto",
+        "Tank",
+        "Brennstoffzelle",
+        "Energie"
+      ],
+      "difficulty": "hard",
+      "ageMin": 14
+    },
+    {
+      "word": "Magnetschwebebahn",
+      "taboo": [
+        "Zug",
+        "Gleiten",
+        "Schienen",
+        "Anziehung",
+        "Geschwindigkeit"
+      ],
+      "difficulty": "hard",
+      "ageMin": 14
+    },
+    {
+      "word": "Exoskelett",
+      "taboo": [
+        "Körper",
+        "Stützen",
+        "Anzug",
+        "Kraft",
+        "Außen"
+      ],
+      "difficulty": "hard",
+      "ageMin": 14
+    },
+    {
+      "word": "Biometrie",
+      "taboo": [
+        "Fingerabdruck",
+        "Gesicht",
+        "Identität",
+        "Erkennung",
+        "Körper"
+      ],
+      "difficulty": "hard",
+      "ageMin": 14
+    },
+    {
+      "word": "Weltraumschrott",
+      "taboo": [
+        "Satellit",
+        "Trümmer",
+        "Umlaufbahn",
+        "Erde",
+        "Kollision"
+      ],
+      "difficulty": "hard",
+      "ageMin": 14
+    },
+    {
+      "word": "Lichtjahr",
+      "taboo": [
+        "Entfernung",
+        "Sterne",
+        "Weltraum",
+        "Geschwindigkeit",
+        "Strecke"
+      ],
+      "difficulty": "hard",
+      "ageMin": 14
+    },
+    {
+      "word": "Firewall",
+      "taboo": [
+        "Schutz",
+        "Netzwerk",
+        "Blockieren",
+        "Angriff",
+        "Computer"
+      ],
+      "difficulty": "hard",
+      "ageMin": 14
+    },
+    {
+      "word": "Bildschirmhelligkeit",
+      "taboo": [
+        "Display",
+        "Dunkel",
+        "Regler",
+        "Licht",
+        "Handy"
+      ],
+      "difficulty": "easy",
+      "ageMin": 10
+    },
+    {
+      "word": "Router",
+      "taboo": [
+        "WLAN",
+        "Internet",
+        "Signal",
+        "Netzwerk",
+        "Blinken"
+      ],
+      "difficulty": "easy",
+      "ageMin": 10
+    },
+    {
+      "word": "Leselampe",
+      "taboo": [
+        "Buch",
+        "Licht",
+        "Tisch",
+        "Dunkel",
+        "Leuchten"
+      ],
+      "difficulty": "easy",
+      "ageMin": 10
+    },
+    {
+      "word": "Thermometer",
+      "taboo": [
+        "Temperatur",
+        "Messen",
+        "Fieber",
+        "Grad",
+        "Warm"
+      ],
+      "difficulty": "easy",
+      "ageMin": 10
+    },
+    {
+      "word": "Bildschirmfreigabe",
+      "taboo": [
+        "Videoanruf",
+        "Zeigen",
+        "Präsentation",
+        "Fenster",
+        "Teilen"
+      ],
+      "difficulty": "medium",
+      "ageMin": 12
+    },
+    {
+      "word": "Sprechanlage",
+      "taboo": [
+        "Tür",
+        "Klingel",
+        "Stimme",
+        "Besucher",
+        "Mikrofon"
+      ],
+      "difficulty": "medium",
+      "ageMin": 12
+    }
   ]
 }
