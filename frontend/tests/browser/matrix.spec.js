@@ -38,8 +38,6 @@ async function hiddenPlayControls(page) {
 // need scrolling during a turn. A C task that fixes one removes it here
 // (Playwright reports "expected to fail, but passed" until it is removed).
 const KNOWN_LAYOUT_GAPS = {
-  "phone-small": "C2",
-  "iphone-se": "C2",
   "ipad-landscape": "C4",
 };
 
