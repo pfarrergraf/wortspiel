@@ -31,6 +31,9 @@ export class HidppPresenter {
     this.timeout = timeout;
     this.pending = [];
     this.pressed = new Set();
+    this.gesture = false; // a press, motion or release is in progress
+    this.lastCid = null;
+    this.quietUntil = 0; // status reports right after (un)diverting are no clicks
     this.diverted = new Set();
     this.index = null;
     this.feature = null;
@@ -105,11 +108,45 @@ export class HidppPresenter {
     const raw = [...d.slice(0, 11)].map((b) => b.toString(16).padStart(2, "0")).join(" ");
     this.note(`event ${event.reportId.toString(16)}: ${raw}`);
     this.onLog(`Rohdaten: ${raw}`);
-    if (index === this.index && feature === this.feature && fnsw >> 4 === 0) {
+    if (index !== this.index || feature !== this.feature) return;
+    // One "press" per gesture, whichever signal comes first. A Spotlight pointer
+    // may send only raw motion (function 1) and a release, without a press event.
+    const fn = fnsw >> 4;
+    if (fn === 0) {
       const now = new Set(cidsFromEvent(d.slice(3)));
-      for (const cid of now) if (!this.pressed.has(cid)) this.onPress(cid);
+      for (const cid of now)
+        if (!this.pressed.has(cid)) {
+          this.lastCid = cid;
+          if (!this.gesture) this.onPress(cid);
+        }
+      if (now.size) this.gesture = true;
+      else {
+        // A release without any seen press or motion still was a click.
+        if (!this.gesture && Date.now() >= this.quietUntil) this.pressGesture();
+        this.gesture = false;
+      }
       this.pressed = now;
+    } else if (fn === 1 && !this.gesture) {
+      this.gesture = true;
+      this.pressGesture();
     }
+  }
+
+  // The control a press/motion without id belongs to: the only diverted one,
+  // else the last one seen pressed, else the only diverted motion control.
+  pressGesture() {
+    const diverted = [...this.diverted];
+    // Controls that can report raw motion (additional flags bit 0, "raw XY").
+    const motion = this.controls.filter((c) => c.extra & 0x01 && this.diverted.has(c.cid));
+    const cid =
+      diverted.length === 1
+        ? diverted[0]
+        : diverted.includes(this.lastCid)
+          ? this.lastCid
+          : motion.length === 1
+            ? motion[0].cid
+            : null;
+    if (cid != null) this.onPress(cid);
   }
 
   // Finds the device index and the 0x1B04 feature, then lists the controls.
@@ -139,6 +176,7 @@ export class HidppPresenter {
   }
 
   async divert(cid, on) {
+    this.quietUntil = Date.now() + 800;
     // Flags: bit0 divert, bit1 "divert valid".
     await this.request(this.index, this.feature, 3, [cid >> 8, cid & 0xff, on ? 0x03 : 0x02, 0, 0]);
     on ? this.diverted.add(cid) : this.diverted.delete(cid);
