@@ -3,6 +3,7 @@ import { registerAction } from "../actions.js";
 import {
   describeInput,
   externalInput,
+  hidCids,
   isReserved,
   learnSkip,
   loadConfig,
@@ -14,17 +15,23 @@ import { action, escape } from "../ui/html.js";
 
 const handlers = {
   onPress: (cid) => externalInput({ type: "hid", cid }),
-  onLog: () => {},
+  onLog: (text) => {
+    // Keep the last few reports so a quick click (press + release) stays visible.
+    const target = document.querySelector("#presenter-raw");
+    if (!target) return;
+    const previous = target.textContent.split("\n").filter((l) => l && l !== "–");
+    target.textContent = [text, ...previous].slice(0, 5).join("\n");
+  },
 };
 const learnedCids = () => {
   const skip = loadConfig().skip;
-  return skip?.type === "hid" ? [skip.cid] : [];
+  return skip?.type === "hid" ? hidCids(skip) : [];
 };
 
 function hidSection() {
   if (!hidSupported()) return "";
   const hid = hidState();
-  return `<h3>3. Logitech Spotlight direkt verbinden <small>(Chrome/Edge, experimentell)</small></h3><p>Für Tasten, die gar nichts an den Browser senden, etwa die Zeigertaste des Spotlight. Danach „Dritte Taste anlernen“ wählen.</p><p class="presenter-binding">Status: <strong id="presenter-hid">${hid.connected ? `verbunden mit ${escape(hid.name)}` : escape(hid.status)}</strong></p>`;
+  return `<h3>3. Logitech Spotlight direkt verbinden <small>(Chrome/Edge, experimentell)</small></h3><p>Für Tasten, die gar nichts an den Browser senden, etwa die Zeigertaste des Spotlight. Danach „Dritte Taste anlernen“ wählen.</p><p class="presenter-binding">Status: <strong id="presenter-hid">${hid.connected ? `verbunden mit ${escape(hid.name)}` : escape(hid.status)}</strong></p><p class="fine-print">Reagiert eine Taste nur beim Halten oder nur beim Klicken? Einfach noch einmal „Dritte Taste anlernen“ wählen und die Taste auf die andere Art drücken. Das ergänzt die bisherige Belegung.</p>${hid.connected ? '<p class="fine-print presenter-raw">Vom Gerät: <code id="presenter-raw">–</code></p>' : ""}`;
 }
 
 function open(message = "") {
@@ -80,7 +87,7 @@ registerAction("presenter-learn", async (id, button) => {
   const input = await learnSkip();
   waiting = false;
   try {
-    await hid?.divertOnly(input?.type === "hid" ? [input.cid] : learnedCids());
+    await hid?.divertOnly(learnedCids());
   } catch {
     /* Re-diverting is retried on the next connect. */
   }

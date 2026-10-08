@@ -32,19 +32,25 @@ export function saveConfig(config) {
 
 let current = loadConfig();
 
+// A learned presenter binding may cover several control ids (e.g. click and hold).
+export const hidCids = (input) => input.cids ?? (input.cid != null ? [input.cid] : []);
+const hex = (cid) => `0x${cid.toString(16).toUpperCase().padStart(4, "0")}`;
+
 export function sameInput(a, b) {
   if (!a || !b || a.type !== b.type) return false;
   if (a.type === "key") return a.code && b.code ? a.code === b.code : a.key === b.key;
   if (a.type === "mouse") return a.button === b.button;
-  if (a.type === "hid") return a.cid === b.cid;
+  if (a.type === "hid") return hidCids(a).some((cid) => hidCids(b).includes(cid));
   return a.dir === b.dir;
 }
 
 export function describeInput(input) {
   if (!input) return "–";
   if (input.type === "mouse") return MOUSE[input.button] || `Maustaste ${input.button}`;
-  if (input.type === "hid")
-    return `Presenter-Taste (direkt verbunden, ID 0x${input.cid.toString(16).toUpperCase().padStart(4, "0")})`;
+  if (input.type === "hid") {
+    const cids = hidCids(input);
+    return `Presenter-Taste (direkt verbunden, ${cids.length > 1 ? "IDs" : "ID"} ${cids.map(hex).join(", ")})`;
+  }
   if (input.type === "wheel") return `Mausrad nach ${input.dir === "up" ? "oben" : "unten"}`;
   const name = input.key === " " ? "Leertaste" : input.key;
   return input.code && input.code !== input.key ? `Taste „${name}“ (${input.code})` : `Taste „${name}“`;
@@ -60,6 +66,12 @@ export function onInput(fn) {
 }
 const report = (input, detail = "") => watchers.forEach((fn) => fn(input, detail));
 
+// Learning another id of the same directly connected presenter adds to it.
+function merge(previous, input) {
+  if (input.type !== "hid" || previous?.type !== "hid") return input;
+  return { type: "hid", cids: [...new Set([...hidCids(previous), input.cid])] };
+}
+
 let learning = null;
 let learnTimeout;
 // Resolves with the learned input, or null after `ms` without a signal.
@@ -68,7 +80,7 @@ export function learnSkip(ms = 10000) {
     learning = (input) => {
       clearTimeout(learnTimeout);
       learning = null;
-      if (!isReserved(input)) saveConfig({ ...current, skip: input });
+      if (!isReserved(input)) saveConfig({ ...current, skip: merge(current.skip, input) });
       resolve(input);
     };
     learnTimeout = setTimeout(() => {

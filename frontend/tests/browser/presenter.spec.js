@@ -125,7 +125,7 @@ test("an extra mouse button can be learned for skipping", async ({ page }) => {
 function fakeHid() {
   const listeners = new Set();
   const diverted = new Set();
-  const controls = [[0x00d7, 0x20], [0x00da, 0x20], [0x00f0, 0x20]];
+  const controls = [[0x00d7, 0x20], [0x00da, 0x20], [0x00f0, 0x20], [0x00f1, 0x20]];
   const emit = (reportId, bytes) => {
     const data = new DataView(Uint8Array.from([...bytes, ...Array(19).fill(0)].slice(0, 19)).buffer);
     for (const fn of listeners) fn({ reportId, data });
@@ -154,6 +154,12 @@ function fakeHid() {
     emit(0x11, [1, 9, 0x00, 0x00, 0xf0]);
     setTimeout(() => emit(0x11, [1, 9, 0x00]), 50);
   };
+  // A short click reports a different control id than holding.
+  window.__click = () => {
+    if (!diverted.has(0x00f1)) return;
+    emit(0x11, [1, 9, 0x00, 0x00, 0xf1]);
+    setTimeout(() => emit(0x11, [1, 9, 0x00]), 20);
+  };
   window.__diverted = () => [...diverted];
   Object.defineProperty(navigator, "hid", {
     value: {
@@ -171,16 +177,26 @@ test("a Spotlight pointer button that sends nothing can be connected directly an
   await page.getByRole("button", { name: "Spotlight verbinden" }).click();
   await expect(page.locator("#presenter-hid")).toContainText("verbunden mit Spotlight (Test)");
   await page.getByRole("button", { name: "Dritte Taste anlernen" }).click();
-  await expect.poll(() => page.evaluate(() => window.__diverted().length)).toBe(3);
+  await expect.poll(() => page.evaluate(() => window.__diverted().length)).toBe(4);
   await page.evaluate(() => window.__pointer());
   await expect(page.locator("#presenter-binding")).toContainText("0x00F0");
   // Only the pointer stays diverted, so next/back keep sending their keys.
   await expect.poll(() => page.evaluate(() => window.__diverted())).toEqual([0x00f0]);
+  // Learning again with a short click adds its id instead of replacing.
+  await page.getByRole("button", { name: "Dritte Taste anlernen" }).click();
+  await page.evaluate(() => window.__click());
+  await expect(page.locator("#presenter-binding")).toContainText("IDs 0x00F0, 0x00F1");
+  await expect.poll(() => page.evaluate(() => window.__diverted().sort())).toEqual([0x00f0, 0x00f1]);
+  await expect(page.locator("#presenter-raw")).not.toHaveText("–");
   await page.getByRole("button", { name: "Fertig" }).click();
 
   await startTurn(page);
-  const word = await page.locator("#current-word").innerText();
+  let word = await page.locator("#current-word").innerText();
   await page.evaluate(() => window.__pointer());
   await expect(page.locator("#current-word")).not.toHaveText(word);
-  expect((await state(page)).session.log.map((e) => e.result)).toEqual(["skip"]);
+  word = await page.locator("#current-word").innerText();
+  await page.waitForTimeout(350);
+  await page.evaluate(() => window.__click());
+  await expect(page.locator("#current-word")).not.toHaveText(word);
+  expect((await state(page)).session.log.map((e) => e.result)).toEqual(["skip", "skip"]);
 });

@@ -133,3 +133,9 @@ dialog::backdrop {
 .presenter-monitor strong {
   font-size: var(--fs-md);
 }
+.presenter-raw code {
+  display: block;
+  white-space: pre;
+  overflow-x: auto;
+  font-size: var(--fs-xs);
+}

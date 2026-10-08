@@ -84,6 +84,8 @@ export class HidppPresenter {
       setTimeout(() => this.reapply().catch(() => {}), 500);
       return;
     }
+    // Raw device reports for the setup dialog, to see what a button really sends.
+    this.onLog(`Rohdaten: ${[...d.slice(0, 7)].map((b) => b.toString(16).padStart(2, "0")).join(" ")}`);
     if (index === this.index && feature === this.feature && fnsw >> 4 === 0) {
       const now = new Set(cidsFromEvent(d.slice(3)));
       for (const cid of now) if (!this.pressed.has(cid)) this.onPress(cid);
