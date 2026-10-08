@@ -1,4 +1,4 @@
-@media (max-width: 760px) {
+@media (max-width: 743px) {
   :root {
     /* base.css keeps the safe-area insets in main's padding. */
     --page-gutter: 20px;
