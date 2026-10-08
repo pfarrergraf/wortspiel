@@ -1,0 +1,141 @@
+.site-header {
+  max-width: 1216px;
+  margin: auto;
+  padding: 29px 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.brand {
+  font-weight: 800;
+  font-size: 29px;
+  letter-spacing: -1.7px;
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  text-decoration: none;
+}
+.brand-dot {
+  color: var(--purple);
+}
+.brand-icon {
+  position: relative;
+  display: block;
+  width: 40px;
+  height: 39px;
+}
+.brand-icon i {
+  position: absolute;
+  background: var(--yellow);
+  width: 31px;
+  height: 27px;
+  top: 0;
+  left: 0;
+  border-radius: 9px;
+  transform: rotate(-12deg);
+}
+.brand-icon b {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--purple);
+  color: #fff;
+  font-size: 15px;
+  letter-spacing: 2px;
+  width: 32px;
+  height: 29px;
+  top: 9px;
+  left: 9px;
+  border-radius: 9px;
+  transform: rotate(7deg);
+}
+.brand-icon b:after {
+  content: "";
+  position: absolute;
+  bottom: -4px;
+  right: 5px;
+  border-top: 8px solid var(--purple);
+  border-right: 7px solid transparent;
+}
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.connection {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 12px;
+  color: var(--muted);
+  white-space: nowrap;
+}
+.connection i {
+  background: #a7a3a9;
+  height: 6px;
+  width: 6px;
+  border-radius: 50%;
+}
+.connection.cached i {
+  background: #51947a;
+}
+.small-button,
+.icon-button {
+  border: 1px solid var(--line);
+  border-radius: 11px;
+  background: transparent;
+  padding: 9px 13px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  min-height: 40px;
+}
+.icon-button {
+  padding: 10px;
+  min-height: 44px;
+  min-width: 44px;
+}
+.icon-button:hover,
+.small-button:hover {
+  background: #fff;
+}
+.enabled {
+  background: #e9e0fc !important;
+  color: #5d3eac;
+  border-color: #cbb8ef;
+}
+
+.site-footer {
+  max-width: 1160px;
+  padding: 35px 28px 27px;
+  margin: 15px auto 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  font-size: 9px;
+  color: #8c8790;
+}
+.site-footer > div {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+.site-footer a,
+.site-footer button {
+  font-size: 9px;
+  background: none;
+  border: 0;
+  text-decoration: none;
+  color: inherit;
+  padding: 4px 0;
+}
+.site-footer a:hover,
+.site-footer button:hover {
+  color: var(--purple);
+}

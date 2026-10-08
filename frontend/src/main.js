@@ -1,4 +1,4 @@
-import "./styles.css";
+import "./styles/index.css";
 import { ctx, store, render, toast } from "./app.js";
 import { installActions } from "./actions.js";
 import { categories } from "./data.js";

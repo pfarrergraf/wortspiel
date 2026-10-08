@@ -1,0 +1,15 @@
+:root {
+  font-family: Manrope, "Segoe UI", sans-serif;
+  color: #292632;
+  background: #faf7ef;
+  font-synthesis: none;
+  --paper: #faf7ef;
+  --ink: #292632;
+  --purple: #7351cd;
+  --purple-dark: #5938ae;
+  --coral: #ef7d66;
+  --mint: #b4e4ce;
+  --yellow: #f5d564;
+  --line: #e6e1d7;
+  --muted: #76727e;
+}
