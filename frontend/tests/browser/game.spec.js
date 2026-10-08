@@ -243,7 +243,7 @@ test("history survives an actual Chrome restart and a new game", async ({}, test
   const options = {
     channel: process.env.CI ? undefined : "chrome",
     headless: true,
-    baseURL: "http://127.0.0.1:4173",
+    baseURL: testInfo.project.use.baseURL,
     viewport: { width: 390, height: 844 },
   };
   let context = await chromium.launchPersistentContext(profile, options);

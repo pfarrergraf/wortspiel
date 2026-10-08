@@ -139,3 +139,11 @@ dialog::backdrop {
   overflow-x: auto;
   font-size: var(--fs-xs);
 }
+.presenter-diagnose {
+  max-height: 12rem;
+  overflow: auto;
+  padding: 8px;
+  font-size: var(--fs-xs);
+  white-space: pre-wrap;
+  user-select: text;
+}

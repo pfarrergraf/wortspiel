@@ -200,3 +200,20 @@ test("a Spotlight pointer button that sends nothing can be connected directly an
   await expect(page.locator("#current-word")).not.toHaveText(word);
   expect((await state(page)).session.log.map((e) => e.result)).toEqual(["skip", "skip"]);
 });
+
+test("the presenter dialog offers a diagnosis text and a full reset of diverted buttons", async ({ page, context }) => {
+  await context.grantPermissions(["clipboard-read", "clipboard-write"]).catch(() => {});
+  await page.addInitScript(fakeHid);
+  await page.goto("/");
+  await page.getByRole("button", { name: "Presenter einrichten" }).click();
+  await page.getByRole("button", { name: "Spotlight verbinden" }).click();
+  await page.getByRole("button", { name: "Dritte Taste anlernen" }).click();
+  await page.evaluate(() => window.__pointer());
+  await expect(page.locator("#presenter-binding")).toContainText("0x00F0");
+  await page.getByRole("button", { name: "Diagnose kopieren" }).click();
+  await expect(page.locator(".presenter-diagnose")).toContainText("Umgeleitet: 0x00F0");
+  await expect(page.locator(".presenter-diagnose")).toContainText("Tasten: 0x00D7");
+  await page.getByRole("button", { name: "Angelernte Taste löschen" }).click();
+  await expect.poll(() => page.evaluate(() => window.__diverted())).toEqual([]);
+  await expect(page.locator("#presenter-binding")).toHaveText("noch nichts angelernt");
+});

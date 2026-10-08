@@ -35,8 +35,24 @@ export class HidppPresenter {
     this.index = null;
     this.feature = null;
     this.controls = [];
+    this.trace = []; // last raw reports and errors, for the diagnosis text
     this.listener = (event) => this.receive(event);
     device.addEventListener("inputreport", this.listener);
+  }
+
+  note(text) {
+    this.trace = [`${Math.round(performance.now())} ${text}`, ...this.trace].slice(0, 40);
+  }
+
+  diagnostics() {
+    return [
+      `Gerät: ${this.device.productName || "?"} (${this.device.vendorId?.toString(16)}:${this.device.productId?.toString(16)})`,
+      `Slot: ${this.index}, Feature 0x1B04 an Index: ${this.feature}`,
+      `Tasten: ${this.controls.map((c) => `${hexCid(c.cid)}${c.divertable ? "" : "(fest)"} flags=${c.flags?.toString(16)} add=${c.extra?.toString(16)}`).join(", ")}`,
+      `Umgeleitet: ${[...this.diverted].map(hexCid).join(", ") || "keine"}`,
+      "Letzte Signale (neueste zuerst):",
+      ...this.trace,
+    ].join("\n");
   }
 
   async request(index, feature, fn, params = []) {
@@ -66,6 +82,7 @@ export class HidppPresenter {
       if (!entry) return false;
       clearTimeout(entry.timer);
       this.pending = this.pending.filter((p) => p !== entry);
+      if (!ok) this.note(`Fehler ${value} bei Feature ${entry.feature} Funktion ${entry.fn}`);
       ok ? entry.resolve(value) : entry.reject(new Error(`HID++-Fehler ${value}`));
       return true;
     };
@@ -85,7 +102,9 @@ export class HidppPresenter {
       return;
     }
     // Raw device reports for the setup dialog, to see what a button really sends.
-    this.onLog(`Rohdaten: ${[...d.slice(0, 7)].map((b) => b.toString(16).padStart(2, "0")).join(" ")}`);
+    const raw = [...d.slice(0, 11)].map((b) => b.toString(16).padStart(2, "0")).join(" ");
+    this.note(`event ${event.reportId.toString(16)}: ${raw}`);
+    this.onLog(`Rohdaten: ${raw}`);
     if (index === this.index && feature === this.feature && fnsw >> 4 === 0) {
       const now = new Set(cidsFromEvent(d.slice(3)));
       for (const cid of now) if (!this.pressed.has(cid)) this.onPress(cid);
@@ -114,7 +133,7 @@ export class HidppPresenter {
     for (let i = 0; i < count; i++) {
       const r = await this.request(this.index, this.feature, 1, [i]);
       const flags = r[4];
-      this.controls.push({ cid: (r[0] << 8) | r[1], divertable: Boolean(flags & 0x20) });
+      this.controls.push({ cid: (r[0] << 8) | r[1], divertable: Boolean(flags & 0x20), flags, extra: r[8] });
     }
     return this.controls;
   }
@@ -126,12 +145,19 @@ export class HidppPresenter {
   }
 
   async divertOnly(cids) {
+    // Sets every divertable control explicitly: the device may have lost or
+    // kept a diversion we don't know about. One failing control must not
+    // leave the others half switched.
     const wanted = new Set(cids);
     for (const { cid, divertable } of this.controls) {
       if (!divertable) continue;
-      if (wanted.has(cid) && !this.diverted.has(cid)) await this.divert(cid, true);
-      else if (!wanted.has(cid) && this.diverted.has(cid)) await this.divert(cid, false);
+      await this.divert(cid, wanted.has(cid)).catch(() => {});
     }
+  }
+
+  async releaseAll() {
+    for (const { cid, divertable } of this.controls)
+      if (divertable) await this.divert(cid, false).catch(() => {});
   }
 
   divertable() {

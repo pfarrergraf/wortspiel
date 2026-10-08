@@ -46,7 +46,7 @@ function open(message = "") {
     ${hidSection()}
     <div class="presenter-monitor" role="status" aria-live="polite"><span>Zuletzt empfangen</span><strong id="presenter-last">Drück eine Taste am Presenter …</strong></div>
     ${message ? `<p class="presenter-message">${message}</p>` : ""}`,
-    `${action("presenter-learn", "Dritte Taste anlernen", "button primary")}${hidSupported() && !currentHid() ? action("presenter-hid", "Spotlight verbinden") : ""}${config.skip ? action("presenter-clear", "Angelernte Taste löschen") : ""}${action("close-dialog", "Fertig")}`,
+    `${action("presenter-learn", "Dritte Taste anlernen", "button primary")}${hidSupported() && !currentHid() ? action("presenter-hid", "Spotlight verbinden") : ""}${config.skip || currentHid() ? action("presenter-clear", "Angelernte Taste löschen") : ""}${currentHid() ? action("presenter-diagnose", "Diagnose kopieren") : ""}${action("close-dialog", "Fertig")}`,
   );
 }
 
@@ -105,10 +105,25 @@ registerAction("presenter-learn", async (id, button) => {
   }
 });
 
+registerAction("presenter-diagnose", async () => {
+  const text = [
+    `Belegung: ${JSON.stringify(loadConfig())}`,
+    currentHid()?.diagnostics() ?? "Kein Presenter direkt verbunden.",
+  ].join("\n");
+  let copied = false;
+  try {
+    await navigator.clipboard.writeText(text);
+    copied = true;
+  } catch {
+    /* Shown in the dialog to copy by hand. */
+  }
+  open(`${copied ? "Diagnose in die Zwischenablage kopiert. Bitte in den Chat einfügen." : "Bitte diesen Text markieren und kopieren:"}<pre class="presenter-diagnose">${escape(text)}</pre>`);
+});
+
 registerAction("presenter-clear", async () => {
   saveConfig({ ...loadConfig(), skip: null });
-  await currentHid()?.divertOnly([]).catch(() => {});
-  open("Die angelernte Taste wurde gelöscht.");
+  await currentHid()?.releaseAll();
+  open("Die angelernte Taste wurde gelöscht und alle Presenter-Tasten arbeiten wieder normal.");
 });
 
 document.addEventListener("change", (event) => {
