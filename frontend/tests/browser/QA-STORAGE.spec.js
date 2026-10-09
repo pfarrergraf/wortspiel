@@ -3,6 +3,78 @@ import { readFile } from "node:fs/promises";
 
 const KEY = "wortspiel.state.v1";
 
+for (const relative of [-1, 0]) {
+  test(`older local history is preserved against a ${relative ? "newer" : "same-revision"} database fork`, async ({ context }) => {
+    const [a, b] = await harness(context);
+    const committed = await a.evaluate(key => JSON.parse(localStorage.getItem(key)), KEY);
+    const local = structuredClone(committed);
+    local.revision += relative;
+    local.groups[Object.keys(local.groups)[0]].seen["de:birne"] = 42;
+    const raw = JSON.stringify(local);
+    await b.evaluate(({ key, raw }) => localStorage.setItem(key, raw), { key: KEY, raw });
+    const result = await a.evaluate(async key => {
+      const { store, engine, categories } = window.__qa;
+      const { Storage } = await import("./storage.js");
+      const errors = [];
+      for (const operation of [() => new Storage().open(engine.initialState(categories)), () => store.update(() => {}), () => store.snapshot()]) {
+        try { await operation(); errors.push(null); } catch (error) { errors.push(error.name); }
+      }
+      const saved = await new Promise((resolve, reject) => {
+        const request = store.db.transaction("state").objectStore("state").get(key);
+        request.onsuccess = () => resolve(request.result); request.onerror = reject;
+      });
+      return { errors, saved };
+    }, KEY);
+    expect(result.errors).toEqual(["StorageLineageError", "StorageLineageError", "StorageLineageError"]);
+    expect(result.saved).toEqual(committed);
+    expect(await b.evaluate(key => localStorage.getItem(key), KEY)).toBe(raw);
+    await Promise.all([a.close(), b.close()]);
+  });
+}
+
+for (const mode of ["indexeddb", "local"]) {
+  for (const revision of [-1, Number.MAX_SAFE_INTEGER + 1, Number.MAX_SAFE_INTEGER]) {
+    test(`malformed revision or exhausted counter preserves original snapshot (${mode}, ${revision})`, async ({ context }) => {
+      const [a, b] = await harness(context, mode);
+      const before = await a.evaluate(key => JSON.parse(localStorage.getItem(key)), KEY);
+      before.revision = revision;
+      const raw = JSON.stringify(before);
+      const result = await a.evaluate(async ({ key, before, raw, mode }) => {
+        const { store, engine, categories } = window.__qa;
+        localStorage.setItem(key, raw);
+        if (mode === "indexeddb") await new Promise((resolve, reject) => {
+          const tx = store.db.transaction("state", "readwrite"); tx.objectStore("state").put(before, key); tx.oncomplete = resolve; tx.onerror = reject;
+        });
+        const { Storage } = await import("./storage.js");
+        let message;
+        try { await new Storage().open(engine.initialState(categories)); } catch (error) { message = error.message; }
+        let saved;
+        if (store.db) saved = await new Promise((resolve, reject) => {
+          const request = store.db.transaction("state").objectStore("state").get(key); request.onsuccess = () => resolve(request.result); request.onerror = reject;
+        });
+        return { message, raw: localStorage.getItem(key), saved };
+      }, { key: KEY, before, raw, mode });
+      expect(result.message).toBeTruthy();
+      expect(result.raw).toBe(raw);
+      if (mode === "indexeddb") expect(result.saved).toEqual(before);
+      await Promise.all([a.close(), b.close()]);
+    });
+  }
+}
+
+test("zero revision local snapshot is kept instead of an empty initial state", async ({ context }) => {
+  const [a, b] = await harness(context, "local");
+  const before = await a.evaluate(key => JSON.parse(localStorage.getItem(key)), KEY);
+  before.revision = 0;
+  const after = await a.evaluate(async ({ key, before }) => {
+    localStorage.setItem(key, JSON.stringify(before));
+    const { Storage } = await import("./storage.js");
+    return new Storage().open(window.__qa.engine.initialState(window.__qa.categories));
+  }, { key: KEY, before });
+  expect(after).toEqual({ ...before, revision: 1 });
+  await Promise.all([a.close(), b.close()]);
+});
+
 async function harness(context, mode = "indexeddb") {
   await context.route("**/__qa/**", async (route) => {
     const path = new URL(route.request().url()).pathname.split("/__qa/")[1];

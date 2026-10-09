@@ -43,12 +43,15 @@ function extendsHistory(candidate, previous) {
 function chooseState(saved, local, fallback) {
   if (saved !== undefined && !valid(saved))
     throw new Error("Der vorhandene Datenbank-Spielstand hat ein unbekanntes Format. Er bleibt unverändert gespeichert.");
-  if (valid(saved) && local && local.revision > saved.revision && !extendsHistory(local, saved)) {
+  const conflicting = valid(saved) && local && (local.revision > saved.revision
+    ? !extendsHistory(local, saved)
+    : !extendsHistory(saved, local));
+  if (conflicting) {
     const error = new Error("Die Datenbank und die lokale Kopie enthalten unterschiedliche Kartenhistorien. Beide Spielstände bleiben unverändert erhalten; bitte sichere beide Kopien vor einer Reparatur.");
     error.name = "StorageLineageError";
     throw error;
   }
-  const current = local && local.revision > fallback.revision ? local : fallback;
+  const current = local && local.revision >= fallback.revision ? local : fallback;
   return valid(saved) && saved.revision >= current.revision ? saved : current;
 }
 
@@ -69,7 +72,7 @@ function readLocal() {
 function valid(state) {
   return (
     state?.schema === 1 &&
-    Number.isInteger(state.revision) &&
+    Number.isSafeInteger(state.revision) && state.revision >= 0 &&
     state.groups && typeof state.groups === "object" && !Array.isArray(state.groups) &&
     state.settings && typeof state.settings === "object" && !Array.isArray(state.settings)
   );
@@ -216,6 +219,8 @@ export class Storage {
     if (!this.db && previousPending !== null && current.revision < previousPending)
       throw new StorageMirrorPendingError();
     const check = (basis) => {
+      if (basis.revision === Number.MAX_SAFE_INTEGER)
+        throw new Error("Der Revisionszähler des Spielstands ist ausgeschöpft. Der gespeicherte Stand bleibt unverändert erhalten; bitte sichere ihn vor einer Reparatur.");
       if (expectedRevision !== undefined && basis.revision !== expectedRevision) {
         this.state = basis;
         throw new StorageConflictError();
