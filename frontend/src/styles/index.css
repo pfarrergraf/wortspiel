@@ -13,6 +13,7 @@
 @import "./responsive/large.css";
 @import "./responsive/tablet.css";
 @import "./responsive/phone.css";
+@import "./responsive/mobile-wizard.css";
 @import "./responsive/phone-landscape.css";
 @import "./platform/input.css";
 @import "./platform/ios.css";
