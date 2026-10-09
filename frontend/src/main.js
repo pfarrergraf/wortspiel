@@ -54,7 +54,8 @@ async function boot() {
     render();
   } catch (error) {
     document.querySelector("#app").innerHTML =
-      `<main class="startup-error"><h1>Der Kartenspeicher braucht Platz.</h1><p>${escape(error.message)}</p><p>Bitte erlaube Website-Speicher und lade die Seite erneut.</p><button onclick="location.reload()" class="button primary">Erneut versuchen</button></main>`;
+      `<main class="startup-error"><h1>Der Kartenspeicher braucht Platz.</h1><p>${escape(error.message)}</p><p>Bitte erlaube Website-Speicher und lade die Seite erneut.</p><button class="button primary">Erneut versuchen</button></main>`;
+    document.querySelector(".startup-error button").addEventListener("click", () => location.reload());
     return;
   }
   if ("serviceWorker" in navigator && import.meta.env.PROD) {
