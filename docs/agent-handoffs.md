@@ -24,7 +24,7 @@ Prompt:
 
 > Prüfe Schnellstart, Guided- und vollständiges Formular, Spielfläche und Dialoge mit Tastatur und Browser-Accessibility-Informationen. Ergänze gezielte Tests für sichtbaren Fokus, Labels, Reihenfolge, native ungültige Pflichtfelder, Hilfe/Pause, Dialog-Escape, reduced-motion und mindestens 44px Touch-Ziele. Dokumentiere messbare Kontrastbefunde, zwei Personen lesende klassische Karte und nicht automatisch prüfbare Grenzen. Keine bestehenden Tests deaktivieren und keine CSS-/UI-/Kernmodule ändern; notwendige Reparaturen mit Datei/Zeile/Repro und Akzeptanz im PR unter Integrationsbedarf melden. Keine neue Dependency. npm test, build und eigene Browserfälle auf isoliertem Port ausführen, Ergebnis ehrlich festhalten.
 
-## QA-DEVICES – Geräte-/Offline-Abnahme, Claude Code, vorbereitet
+## QA-DEVICES – Geräte-/Offline-Abnahme, Claude Code, automatischer Teil integriert
 
 Branch `v2/QA-DEVICES-matrix`; exklusiv `frontend/tests/browser/QA-DEVICES.spec.js`, `docs/reviews/QA-DEVICES.md`, Claim.
 
@@ -50,7 +50,7 @@ Auftrag: ältere echte Struktur-Fixtures mit laufender Runde und mehreren Gruppe
 
 - MOBILE-02: sinnvolle Themenbereiche, freiwillige Regeln-/Rollen-Einführung mit Beispiel und Proberunde; jederzeit Hilfe, erfahrene Nutzer nicht aufhalten.
 - I18N-01: UI-Texte aus Regeln/Views lösen; uiLanguage und cardLanguage getrennt. Zunächst de unverändert, englische Karten nur eigenständig redaktionell geprüfte Quelle. IDs/Historien erhalten.
-- DEPLOY-CF: Projektbestand prüfen, getestetes Preview und Origin-Migrationshinweis; Accountzugriff fehlt. Produktion/Domain/Legal erst nach konkreter Freigabe. Details in cloudflare-deployment.md.
+- DEPLOY-CF: Projektbestand prüfen, getestetes Preview und Origin-Migrationshinweis; Claude hat Workers-Zugriff, aber keine Pages-Tools; Pages-Projektbestand unbekannt. Produktion/Domain/Legal erst nach konkreter Freigabe. Details in cloudflare-deployment.md.
 - Android folgt erst nach Web-Abnahme; keine Kosten, Accounts oder Paket-Upgrades vor Bedarf.
 
 ## Prüfprotokoll und Übergabe
@@ -59,7 +59,9 @@ Basis-Audit 9a7a938; Karten 19be010; Regeln/UI 18a9f2e. Scroll-/Matrix-Korrektur
 
 ## Aktive Übergabe 2026-10-09
 
-- Claude hat Geräte-/Offline-/SW-Update-Tests als PR #22 und Cloudflare-Simulationsbefunde als PR #23 geliefert. Codex prüft und integriert; deren neue Test-/Review-/Cloudflare-Dateien werden während des Reviews nicht parallel verändert.
+- Claude hat Geräte-/Offline-/SW-Update-Tests als PR #22 und Cloudflare-Simulationsbefunde als PR #23 geliefert. PR #22 ist nach Review und grüner CI in main `35389e3` integriert; PR #23 wartet auf präzise Darstellung des unbekannten Pages-Bestands. Deren neue Test-/Review-/Cloudflare-Dateien werden während des Reviews nicht parallel verändert.
 - Codex QA-STORAGE behebt stale Wertungen und tabübergreifendes Speichern, prüft historische Engine-Fixtures sowie unbekannte Speicherformate und Quota/Abbruch. Bekannte Grenzen: optionaler Vollbackup ist bislang Entwurf; ohne Web Locks kann ein abrupt abgestürzter Schreiber ein nicht ablaufendes Koordinationsticket hinterlassen (sicherer Abbruch statt Überschreiben).
 - CF-1 aus PR #23: Redirect `/index.html` und nicht ausgelieferte `_headers` müssen im SW berücksichtigt werden. Codex übernimmt diesen Kern-/Build-Integrationsbedarf als separates Paket; Cloudflare-Konto/Preview verbleibt bei Claude. Kein neues Hosting ohne Freigabe.
 - QA-A11Y/NOISE/A15 laufen nur, wenn ihr neuer Claim/PR dies belegt. Die Prompts oben bleiben für unabhängige Arbeit verfügbar.
+
+- QA-STORAGE PR #24: Nach zunächst 107 Unit/170 Browser grün belegten Spiegelungsfehler behoben. Persistente Pending-Markierung verhindert stale localStorage-Forks; fehlende Koordinationsberechtigung bedeutet sicheren Abbruch. Export liest schreibfreien frischen Snapshot. Pending-Markierung niemals manuell löschen. Vollbackup und geführte Absturz-Reparatur bleiben Folgepakete; finale Tests/CI im PR.

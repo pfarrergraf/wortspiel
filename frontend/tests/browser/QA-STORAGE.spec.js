@@ -324,3 +324,162 @@ test("unknown IndexedDB snapshot is never overwritten by a valid older local mir
   expect(await b.evaluate(key => localStorage.getItem(key), KEY)).toBe(before);
   await Promise.all([a.close(), b.close()]);
 });
+
+for (const noLocks of [false, true]) {
+  test(`unmirrored database commit blocks a stale fallback writer until recovery (${noLocks ? "bakery" : "Web Locks"})`, async ({ context }) => {
+    const [a, b] = await harness(context, noLocks ? ["indexeddb-no-locks", "local-no-locks"] : ["indexeddb", "local"]);
+    const before = await b.evaluate(key => localStorage.getItem(key), KEY);
+    await a.evaluate(async () => {
+      const original = Storage.prototype.setItem;
+      Storage.prototype.setItem = function(key, value) {
+        if (key === "wortspiel.state.v1") throw new DOMException("Test mirror quota exhausted", "QuotaExceededError");
+        return original.call(this, key, value);
+      };
+      try {
+        const { store, engine, cards } = window.__qa;
+        await store.update(s => engine.recordResult(s, cards, "correct", Date.now(), () => 0));
+      } finally { Storage.prototype.setItem = original; }
+    });
+    expect(await b.evaluate(key => localStorage.getItem(key), KEY)).toBe(before);
+    const snapshot = await a.evaluate(async () => {
+      const snapshot = await window.__qa.store.snapshot();
+      snapshot.session.scores[0] = 99;
+      return window.__qa.store.snapshot();
+    });
+    expect(snapshot.session.scores).toEqual([1, 0]);
+    expect(snapshot.revision).toBe(JSON.parse(before).revision + 1);
+    const backupError = await b.evaluate(async () => {
+      try { await window.__qa.store.snapshot(); } catch (error) { return error.name; }
+    });
+    expect(backupError).toBe("StorageMirrorPendingError");
+    const error = await b.evaluate(async () => {
+      const { store, engine, cards } = window.__qa;
+      try { await store.update(s => engine.recordResult(s, cards, "correct", Date.now(), () => 0), { expectedRevision: store.state.revision }); }
+      catch (error) { return { name: error.name, message: error.message }; }
+      return null;
+    });
+    expect(error?.name).toBe("StorageMirrorPendingError");
+    expect(await b.evaluate(key => localStorage.getItem(key), KEY)).toBe(before);
+    // A readable database can publish its durable snapshot without losing its
+    // point/card, then B must first refresh its old action rather than score it.
+    await a.evaluate(async () => { await window.__qa.store.update(() => {}); });
+    const stale = await b.evaluate(async () => {
+      const { store, engine, cards } = window.__qa;
+      try { await store.update(s => engine.recordResult(s, cards, "correct", Date.now(), () => 0), { expectedRevision: store.state.revision }); }
+      catch (error) { return error.name; }
+    });
+    expect(stale).toBe("StorageConflictError");
+    await b.evaluate(async () => {
+      const { store, engine, cards } = window.__qa;
+      await store.update(s => engine.recordResult(s, cards, "correct", Date.now(), () => 0), { expectedRevision: store.state.revision });
+    });
+    await a.evaluate(async () => { await window.__qa.store.update(() => {}); });
+    const saved = await a.evaluate(key => JSON.parse(localStorage.getItem(key)), KEY);
+    expect(saved.session.scores).toEqual([2, 0]);
+    expect(saved.session.log.map(entry => entry.id)).toEqual(["de:apfel", "de:brot"]);
+    expect(Object.values(saved.groups).flatMap(g => Object.keys(g.seen))).toEqual(["de:apfel", "de:brot", "de:milch"]);
+    expect(await a.evaluate(() => localStorage.getItem("wortspiel.state.v1.pending"))).toBeNull();
+    await Promise.all([a.close(), b.close()]);
+  });
+}
+
+test("a pre-existing legacy local fork never overwrites a database's missing card history", async ({ context }) => {
+  const [a, b] = await harness(context, ["indexeddb", "local"]);
+  const old = await b.evaluate(key => JSON.parse(localStorage.getItem(key)), KEY);
+  await a.evaluate(async () => {
+    const { store, engine, cards } = window.__qa;
+    await store.update(s => engine.recordResult(s, cards, "correct", Date.now(), () => 0));
+  });
+  const committed = await a.evaluate(key => JSON.parse(localStorage.getItem(key)), KEY);
+  // Model an already-forked pre-journal backup, not an allowed new write.
+  old.revision = committed.revision + 1;
+  await b.evaluate(({ key, old }) => localStorage.setItem(key, JSON.stringify(old)), { key: KEY, old });
+  const result = await a.evaluate(async key => {
+    let name;
+    try { await window.__qa.store.update(() => {}); } catch (error) { name = error.name; }
+    const saved = await new Promise((resolve, reject) => {
+      const request = window.__qa.store.db.transaction("state").objectStore("state").get(key);
+      request.onsuccess = () => resolve(request.result); request.onerror = reject;
+    });
+    return { name, saved };
+  }, KEY);
+  expect(result.name).toBe("StorageLineageError");
+  expect(result.saved).toEqual(committed);
+  expect(await b.evaluate(key => JSON.parse(localStorage.getItem(key)), KEY)).toEqual(old);
+  await Promise.all([a.close(), b.close()]);
+});
+
+test("an explicitly reset local group still syncs without resurrecting old history", async ({ context }) => {
+  const [a, b] = await harness(context, ["indexeddb", "local"]);
+  await b.evaluate(async () => {
+    const { store, engine } = window.__qa;
+    await store.update(s => engine.resetGroup(s, s.settings.group));
+  });
+  await a.evaluate(async () => { await window.__qa.store.update(() => {}); });
+  const saved = await a.evaluate(key => JSON.parse(localStorage.getItem(key)), KEY);
+  expect(saved.session).toBeNull();
+  const group = saved.groups[Object.keys(saved.groups)[0]];
+  expect(group.seen).toEqual({});
+  expect(group.resetAt).toBeGreaterThan(0);
+  await Promise.all([a.close(), b.close()]);
+});
+
+for (const mode of ["indexeddb", "indexeddb-no-locks"]) {
+  for (const access of ["get", "set", ...(mode.endsWith("no-locks") ? ["lock"] : [])]) {
+    test(`unavailable durable journal aborts before database mutation (${mode}, ${access})`, async ({ context }) => {
+      const [a, b] = await harness(context, mode);
+      const before = await a.evaluate(key => JSON.parse(localStorage.getItem(key)), KEY);
+      const result = await a.evaluate(async ({ key, access }) => {
+        const method = `${access === "lock" ? "set" : access}Item`;
+        const original = Storage.prototype[method];
+        Storage.prototype[method] = function(key, ...args) {
+          if (access === "lock" ? key.startsWith("wortspiel.state.v1.lock:") : key === "wortspiel.state.v1.pending") throw new DOMException("Test journal unavailable", "SecurityError");
+          return original.call(this, key, ...args);
+        };
+        let message;
+        try {
+          const { store, engine, cards } = window.__qa;
+          await store.update(s => engine.recordResult(s, cards, "correct", Date.now(), () => 0));
+        } catch (error) { message = error.message; }
+        finally { Storage.prototype[method] = original; }
+        const saved = await new Promise((resolve, reject) => {
+          const request = window.__qa.store.db.transaction("state").objectStore("state").get(key);
+          request.onsuccess = () => resolve(request.result); request.onerror = reject;
+        });
+        return { message, saved };
+      }, { key: KEY, access });
+      expect(result.message).toContain(access === "get" ? "Website-Speicher" : "Test journal unavailable");
+      expect(result.saved).toEqual(before);
+      expect(await b.evaluate(key => JSON.parse(localStorage.getItem(key)), KEY)).toEqual(before);
+      expect(await a.evaluate(() => localStorage.getItem("wortspiel.state.v1.pending"))).toBeNull();
+      await Promise.all([a.close(), b.close()]);
+    });
+  }
+}
+
+test("a blocked local replica hides its stale card, stops navigation and preserves the live round", async ({ page, context }) => {
+  await context.addInitScript(() => Object.defineProperty(window, "indexedDB", { get: () => { throw new Error("IndexedDB unavailable in regression test"); } }));
+  await page.goto("/");
+  await page.getByRole("button", { name: "Los geht’s", exact: true }).click();
+  await page.getByRole("button", { name: "Wir sind bereit", exact: true }).click();
+  await expect(page.locator("#current-word")).toBeVisible();
+  const original = await page.locator("#current-word").innerText();
+  const before = await page.evaluate(key => JSON.parse(localStorage.getItem(key)), KEY);
+  await page.evaluate(revision => localStorage.setItem("wortspiel.state.v1.pending", JSON.stringify({ revision })), before.revision + 1);
+  await page.locator('[data-action="correct"]').click();
+  await expect(page.locator("#toast")).toContainText("neueste Spielstand");
+  await expect(page.locator("#current-word")).toHaveCount(0);
+  await expect(page.getByRole("button", { name: "Partie fortsetzen", exact: true })).toBeVisible();
+  expect(await page.evaluate(key => JSON.parse(localStorage.getItem(key)), KEY)).toEqual(before);
+  await page.getByRole("button", { name: "Partie fortsetzen", exact: true }).click();
+  await expect(page.locator("#current-word")).toHaveCount(0);
+  expect(await page.evaluate(key => JSON.parse(localStorage.getItem(key)), KEY)).toEqual(before);
+  // Explicit harness recovery after its simulated remote writer is stopped.
+  await page.evaluate(() => localStorage.removeItem("wortspiel.state.v1.pending"));
+  await page.getByRole("button", { name: "Partie fortsetzen", exact: true }).click();
+  await page.getByRole("button", { name: "Weiter geht’s", exact: true }).click();
+  await expect(page.locator("#current-word")).toHaveText(original);
+  const after = await page.evaluate(key => JSON.parse(localStorage.getItem(key)), KEY);
+  expect(after.session.scores).toEqual(before.session.scores);
+  expect(after.groups).toEqual(before.groups);
+});

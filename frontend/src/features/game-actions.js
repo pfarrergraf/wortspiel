@@ -75,7 +75,7 @@ registerAction("replace-game", () =>
 
 for (const id of ["setup", "home", "storage", "continue"])
   registerAction(id, async () => {
-    if (ctx.state.session?.phase === "playing") await change((s) => pause(s));
+    if (ctx.state.session?.phase === "playing" && !await change((s) => pause(s))) return;
     go(id === "storage" ? "storage" : id === "continue" ? "game" : "setup");
   });
 
