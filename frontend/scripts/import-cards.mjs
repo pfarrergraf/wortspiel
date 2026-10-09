@@ -202,6 +202,16 @@ for (const entries of Object.values(easyCards))
 // v2 card packs (docs/plan-v2.md). A word that already exists only gains the
 // pack category; its id, taboo words and difficulty stay unchanged.
 const packs = await readPacks(path.join(root, "frontend/data/packs"));
+// Released packs keep their precedence. Appending a new pack must not replace
+// the words/metadata of an existing ID just because its filename sorts first.
+const packOrder = JSON.parse(
+  await readFile(path.join(root, "frontend/data/pack-order.json"), "utf8"),
+);
+const rank = (file) => {
+  const index = packOrder.indexOf(file);
+  return index < 0 ? packOrder.length : index;
+};
+packs.sort((a, b) => rank(a.file) - rank(b.file) || a.file.localeCompare(b.file));
 const blocklist = await readBlocklist(path.join(root, "frontend/data/blocklist.txt"));
 const packErrors = [];
 for (const { file, pack } of packs) {
