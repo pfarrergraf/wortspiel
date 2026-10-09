@@ -30,6 +30,6 @@ test("pantomime mode: own categories, emoji card, points scale, themes kept", as
   await expect(page.locator(".round-points")).toHaveText(`+${card.points}`);
 
   await page.getByRole("button", { name: "← Spielübersicht" }).click();
-  await page.locator(".game-mode", { hasText: "Tabu" }).click();
+  await page.locator('label.game-mode:has(input[value="taboo"])').click();
   await expect(page.locator('.category-grid input[name="category"]:checked')).toHaveCount(tabooThemes);
 });

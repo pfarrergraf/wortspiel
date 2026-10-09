@@ -1,0 +1,2557 @@
+de:alpaka
+de:amazonasente
+de:ameisenbär
+de:anemonenfisch
+de:antilope
+de:arktischer wolf
+de:asiatischer elefant
+de:bahamaente
+de:bär
+de:bengaltiger
+de:bison
+de:bonobo
+de:brautente
+de:breitmaulnashorn
+de:brillenbär
+de:chihuahua
+de:chinchilla
+de:dachs
+de:delfin
+de:eichhörnchen
+de:eisbär
+de:elefant
+de:emu
+de:erdmännchen
+de:felsentaube
+de:fisch
+de:fischotter
+de:fledermaus
+de:flusspferd
+de:frettchen
+de:frosch
+de:fuchs
+de:gepard
+de:giraffe
+de:gorilla
+de:graugans
+de:grizzly
+de:hai
+de:hausesel
+de:huhn
+de:hühnergans
+de:hund
+de:hyäne
+de:igel
+de:jaguar
+de:kaiserpinguin
+de:känguruh
+de:kaninchen
+de:katze
+de:koala
+de:königspython
+de:kuh
+de:lama
+de:leopard
+de:löwe
+de:mandrill
+de:maine coon
+de:maus
+de:meerschweinchen
+de:moschusochse
+de:nasenbär
+de:nashorn
+de:ochse
+de:orang utan
+de:panda
+de:panzernashorn
+de:papagei
+de:pferd
+de:pinguin
+de:qualle
+de:rentier
+de:rotfuchs
+de:schäferhund
+de:schimpanse
+de:schmetterling
+de:schnecke
+de:schnee eule
+de:schneeleopard
+de:seehund
+de:seepferdchen
+de:spinne
+de:steinhuhn
+de:streifengans
+de:uhu
+de:walross
+de:waschbär
+de:wespe
+de:wildhund
+de:wolf
+de:yak
+de:zebra
+de:ziege
+de:zitteraal
+de:zwergesel
+de:zwergotter
+de:zwergpinguin
+de:alfa romeo
+de:bmw alpina
+de:aston martin
+de:audi
+de:bentley
+de:bmw
+de:bugatti
+de:buick
+de:cadillac
+de:chevrolet
+de:chrysler
+de:citroën
+de:corvette
+de:dacia
+de:daewoo
+de:daf
+de:daihatsu
+de:de lorean
+de:dodge
+de:ferrari
+de:ford
+de:gmc
+de:honda
+de:hummer
+de:infiniti
+de:isuzu
+de:iveco
+de:jeep
+de:königsegg
+de:lamborghini
+de:lancia
+de:land rover
+de:lexus
+de:lincoln
+de:maserati
+de:maybach
+de:mclaren
+de:mercedes amg
+de:mercedes benz
+de:mini
+de:mitsubishi
+de:moskwitsch
+de:nissan
+de:oldsmobile
+de:opel
+de:pagani
+de:peugeot
+de:piaggio
+de:polaris
+de:pontiac
+de:porsche
+de:renault
+de:rolls royce
+de:rover
+de:saab
+de:seat
+de:scania
+de:skoda
+de:smart
+de:subaru
+de:suzuki
+de:tesla
+de:trabant
+de:triumph
+de:tvr
+de:uaz
+de:volvo
+de:volkswagen
+de:wartburg
+de:afghanistan
+de:åland
+de:albanien
+de:algerien
+de:amerikanisch samoa
+de:andorra
+de:angola
+de:anguilla
+de:antigua und barbuda
+de:argentinien
+de:armenien
+de:aruba
+de:australien
+de:österreich
+de:aserbaidschan
+de:bahamas
+de:bahrain
+de:bangladesch
+de:barbados
+de:weissrussland
+de:belgien
+de:belize
+de:benin
+de:bermuda
+de:bhutan
+de:bolivien
+de:bonaire sint eustatius und saba
+de:bosnien und herzegowina
+de:botswana
+de:brasilien
+de:britisches territorium im indischen ozean
+de:britische jungferninseln
+de:amerikanische jungferninseln
+de:brunei
+de:bulgarien
+de:burkina faso
+de:burundi
+de:kambodscha
+de:kamerun
+de:kanada
+de:kap verde
+de:kaimaninseln
+de:zentralafrikanische republik
+de:tschad
+de:chile
+de:china
+de:weihnachtsinsel
+de:kokosinseln
+de:kolumbien
+de:union der komoren
+de:kongo
+de:kongo dem rep
+de:cookinseln
+de:costa rica
+de:kroatien
+de:kuba
+de:curaçao
+de:zypern
+de:tschechische republik
+de:dänemark
+de:dschibuti
+de:dominica
+de:dominikanische republik
+de:ecuador
+de:ägypten
+de:el salvador
+de:äquatorial guinea
+de:eritrea
+de:estland
+de:äthiopien
+de:falklandinseln
+de:färöer inseln
+de:fidschi
+de:finnland
+de:frankreich
+de:französisch guyana
+de:französisch polynesien
+de:französische süd und antarktisgebiete
+de:gabun
+de:gambia
+de:georgien
+de:deutschland
+de:ghana
+de:gibraltar
+de:griechenland
+de:grönland
+de:grenada
+de:guadeloupe
+de:guam
+de:guatemala
+de:guernsey
+de:guinea
+de:guinea bissau
+de:guyana
+de:haiti
+de:heiliger stuhl
+de:honduras
+de:hong kong
+de:ungarn
+de:island
+de:indien
+de:indonesien
+de:elfenbeinküste
+de:iran
+de:irak
+de:irland
+de:insel man
+de:israel
+de:italien
+de:jamaika
+de:japan
+de:jersey
+de:jordanien
+de:kasachstan
+de:kenia
+de:kiribati
+de:kuwait
+de:kirgisistan
+de:laos
+de:lettland
+de:libanon
+de:lesotho
+de:liberia
+de:libyen
+de:liechtenstein
+de:litauen
+de:luxemburg
+de:mazedonien
+de:madagaskar
+de:malawi
+de:malaysia
+de:malediven
+de:mali
+de:malta
+de:marshallinseln
+de:martinique
+de:mauretanien
+de:mauritius
+de:mayotte
+de:mexiko
+de:mikronesien
+de:moldawie
+de:monaco
+de:mongolei
+de:montenegro
+de:montserrat
+de:marokko
+de:mosambik
+de:myanmar
+de:namibia
+de:nauru
+de:népal
+de:niederlande
+de:neukaledonien
+de:neuseeland
+de:nicaragua
+de:niger
+de:nigeria
+de:niue
+de:norfolkinsel
+de:nordkorea
+de:nördliche marianen
+de:norwegen
+de:oman
+de:pakistan
+de:palau
+de:palästina
+de:panama
+de:papua neuguinea
+de:paraguay
+de:peru
+de:philippinen
+de:pitcairn
+de:polen
+de:portugal
+de:puerto rico
+de:katar
+de:réunion
+de:rumänien
+de:russland
+de:ruanda
+de:saint barthélemy
+de:sankt helena
+de:st kitts und nevis
+de:saint lucia
+de:saint martin
+de:saint pierre und miquelon
+de:saint vincent und die grenadinen
+de:samoa
+de:san marino
+de:são tomé und príncipe
+de:saudi arabien
+de:senegal
+de:serbien
+de:seychellen
+de:sierra leone
+de:singapur
+de:sint maarten niederl teil
+de:slowakei
+de:slowenien
+de:salomonen
+de:somalia
+de:republik südafrika
+de:südgeorgien und die südlichen sandwichinseln
+de:südkorea
+de:südsudan
+de:spanien
+de:sri lanka
+de:sudan
+de:suriname
+de:svalbard und jan mayen
+de:swasiland
+de:schweden
+de:schweiz
+de:syrien
+de:taiwan
+de:tadschikistan
+de:tansania
+de:thailand
+de:timor leste
+de:togo
+de:tokelau
+de:tonga
+de:trinidad und tobago
+de:tunesien
+de:türkei
+de:turkmenistan
+de:turks und caicosinseln
+de:tuvalu
+de:uganda
+de:ukraine
+de:vereinigte arabische emirate
+de:vereinigtes königreich
+de:vereinigte staaten von amerika
+de:uruguay
+de:usbekistan
+de:vanuatu
+de:venezuela
+de:vietnam
+de:wallis und futuna
+de:westsahara
+de:jemen
+de:sambia
+de:simbabwe
+de:apfelmus
+de:astra bier
+de:beck s bier
+de:berliner kindl bier
+de:berliner pilsner bier
+de:bier
+de:big mac
+de:bitburger bier
+de:blätterteiggebäck
+de:brathähnchen
+de:bratkartoffeln
+de:bratwurst
+de:brötchen
+de:budweiser bier
+de:burger king
+de:butter
+de:camembert
+de:carlsberg bier
+de:ciabatta
+de:clausthaler bier
+de:cola
+de:corona bier
+de:cornflakes
+de:crème fraiche
+de:croissant
+de:currywurst
+de:desperados bier
+de:döner kebab
+de:donut
+de:dunkin donuts
+de:dürüm
+de:eier
+de:eis
+de:ente
+de:erdinger bier
+de:falafel
+de:fischstäbchen
+de:flensburger bier
+de:forelle
+de:franziskaner bier
+de:frikadelle
+de:frischkäse
+de:fruchtsaft
+de:gans
+de:garnelen
+de:gemüse
+de:gouda
+de:griespudding
+de:grüner salat
+de:hackfleisch
+de:hähnchenbrustfilet
+de:halbfettbutter
+de:hamburger
+de:hasseröder bier
+de:heineken bier
+de:heringsfilet
+de:honig
+de:hot dog
+de:jever bier
+de:johnnie walker whisky
+de:karamalz bier
+de:karlsberg bier
+de:kartoffelchips
+de:kartoffelklossteig
+de:kartoffeln
+de:kfc
+de:knäckebrot
+de:könig pilsener bier
+de:köstritzer bier
+de:kräuterquark
+de:kroketten
+de:krombacher bier
+de:lachs
+de:lakritze
+de:leberwurst
+de:limonade
+de:löwenbräu bier
+de:lübzer bier
+de:makrele
+de:margarine
+de:marmelade
+de:marzipan
+de:mascarpone
+de:mayonnaise
+de:mcdonalds
+de:milch
+de:mousse
+de:mozzarella
+de:müsli
+de:nudeln
+de:nüsse
+de:nussnougatcreme
+de:nutella
+de:obst
+de:obstkuchen
+de:oettinger bier
+de:sonnenblumenöl
+de:oliven
+de:orangen
+de:paulaner bier
+de:pesto
+de:pfannkuchen
+de:pilsener urquell bier
+de:pizza hut
+de:popcorn
+de:pudding
+de:radeberger bier
+de:reis
+de:reiskräcker
+de:rinderhackfleisch
+de:rindersteak
+de:rindflisch
+de:rollmops
+de:rührkuchen
+de:sahne
+de:sahnetorte
+de:salami
+de:salatsosse
+de:salzstangen
+de:sauce hollandaise
+de:saure sahne
+de:schinken käse croissant
+de:schöfferhofer bier
+de:schokolade
+de:schultheiss bier
+de:schwarzbrot
+de:schweinekotelett
+de:schweineschnitzel
+de:seelachs
+de:sekt
+de:spätzle
+de:speisequark
+de:starbucks
+de:steak
+de:sternburg bier
+de:subway
+de:suppe
+de:sushi
+de:tiefkühlgemüse
+de:tiefkühlpizza
+de:tiramisu
+de:toast
+de:toast hawaii
+de:tomatensosse
+de:trockenobst
+de:veltins bier
+de:vitamalz bier
+de:wackelpudding
+de:warsteiner bier
+de:wein
+de:weissbrot
+de:wernesgrüner bier
+de:whiskey
+de:wiener würstchen
+de:alice im wunderland lewis carroll 1865
+de:buddenbrooks thomas mann 1901
+de:das fliegende klassenzimmer erich kästner 1933
+de:das nibelungenlied 13 jh
+de:das parfum patrick süskind 1985
+de:der alte mann und das meer ernest hemingway 1952
+de:der hauptmann von köpenick carl zuckmayer 1931
+de:die blechtrommel günter grass 1959
+de:die unendliche geschichte michael ende 1979
+de:die verwandlung franz kafka 1912
+de:don quijote miguel de cervantes 1605
+de:effi briest theodor fontane 1896
+de:faust der tragödie erster teil johann w goethe 1832
+de:gullivers reisen jonathan swift 1726
+de:im westen nichts neues erich m remarque 1929
+de:krabat otfried preussler 1971
+de:max und moritz wilhelm busch 1908
+de:moby dick herman melville 1851
+de:nathan der weise gotthold e lessing 1781
+de:till eulenspiegel 14 jahrhundert
+de:tristan gottfried von strassburg 1215
+de:odyssee homer 8 jh v chr
+de:oliver twist charles dickens 1838
+de:ulysses james joyce 1922
+de:wilhelm tell friedrich schiller 1805
+de:50 cent
+de:abigail breslin
+de:abraham lincoln
+de:adam sandler
+de:adolf hitler
+de:al capone
+de:al pacino
+de:alan rickman
+de:albert einstein
+de:alec baldwin
+de:alexander graham bell
+de:alfred hitchcock
+de:alison brie
+de:amanda seyfried
+de:amy adams
+de:andie macdowell
+de:andy warhol
+de:angela merkel
+de:anne hathaway
+de:anthony hopkins
+de:anthony quinn
+de:arnold schwarzenegger
+de:audrey hepburn
+de:barbara streisand
+de:ben kingsley
+de:ben stiller
+de:benedict cumberbatch
+de:benicio del toro
+de:benjamin franklin
+de:bill gates
+de:bill murray
+de:blake lively
+de:bob dylan
+de:bob marley
+de:bono
+de:brad pitt
+de:bradley cooper
+de:bruce lee
+de:buzz aldrin
+de:catherine zeta jones
+de:channing tatum
+de:charles darwin
+de:charles de gaulle
+de:charles dickens
+de:charlie chaplin
+de:charlie sheen
+de:che guevara
+de:chris evans
+de:chris hemsworth
+de:chris pratt
+de:christian bale
+de:christoph waltz
+de:christopher columbus
+de:christopher nolan
+de:christopher walken
+de:chuck norris
+de:clint eastwood
+de:colin firth
+de:dame elizabeth taylor
+de:daniel day lewis
+de:daniel radcliffe
+de:danny devito
+de:demi moore
+de:denzel washington
+de:diane kruger
+de:dustin hoffman
+de:dwayne the rock johnson
+de:eddie murphy
+de:edgar allan poe
+de:edward norton
+de:ellen page
+de:elvis presley
+de:eminem
+de:emma stone
+de:emma watson
+de:ernest hemingway
+de:federico fellini
+de:felicity jones
+de:frank sinatra
+de:freddie mercury
+de:galileo galilei
+de:gene hackman
+de:general dwight d eisenhower
+de:geoffrey rush
+de:george clooney
+de:george washington
+de:gerard depardieu
+de:grigorij rasputin
+de:harrison ford
+de:harry houdini
+de:hayley atwell
+de:heath ledger
+de:helen mirren
+de:hugh grant
+de:hugh jackman
+de:humphrey bogart
+de:ian mckellen
+de:jack nicholson
+de:jackie chan
+de:jake gyllenhaal
+de:james dean
+de:jamie lee curtis
+de:janis joplin
+de:jared leto
+de:jean reno
+de:jeff bridges
+de:jennifer aniston
+de:jennifer lawrence
+de:jim carrey
+de:jim morrison
+de:jimi hendrix
+de:joaquin phoenix
+de:jodie foster
+de:john f kennedy
+de:john goodman
+de:john lennon
+de:john wayne
+de:johnny depp
+de:josef stalin
+de:joseph gordon levitt
+de:julianne moore
+de:justin bieber
+de:karl lagerfeld
+de:kat dennings
+de:kate beckinsale
+de:kate winslet
+de:keira knightley
+de:kevin james
+de:kevin spacey
+de:kiefer sutherland
+de:kristen stewart
+de:kurt cobain
+de:lance armstrong
+de:leonardo da vinci
+de:leonardo dicaprio
+de:liam neeson
+de:louis armstrong
+de:ludwig van beethoven
+de:maggie smith
+de:mahatma gandhi
+de:malcolm x
+de:margot robbie
+de:marie antoinette
+de:marie curie
+de:marilyn monroe
+de:mark twain
+de:mark wahlberg
+de:marlene dietrich
+de:marlon brando
+de:martin lawrence
+de:martin luther king
+de:matt damon
+de:matthew mcconaughey
+de:matthew perry
+de:matthias schweighöfer
+de:mel gibson
+de:meryl streep
+de:mette marit
+de:michael caine
+de:michael douglas
+de:michael j fox
+de:michael jackson
+de:michael jordan
+de:michelangelo
+de:michelle pfeiffer
+de:mick jagger
+de:mike myers
+de:mila kunis
+de:miles davis
+de:miranda richardson
+de:mona lisa
+de:monica bellucci
+de:morgan freeman
+de:mutter teresa
+de:muhammad ali
+de:naomi watts
+de:napoleon bonaparte
+de:natalie portman
+de:neil armstrong
+de:nelson mandela
+de:nicola tesla
+de:nicolas cage
+de:nicole kidman
+de:orson welles
+de:owen wilson
+de:pablo picasso
+de:patrick stewart
+de:paul walker
+de:peter sellers
+de:papst john paul ii
+de:prinzessin diana
+de:rachel weisz
+de:rami malek
+de:rembrandt
+de:richard gere
+de:robert de niro
+de:robert downey jr
+de:robert pattinson
+de:robert redford
+de:robin williams
+de:ronald reagan
+de:rowan atkinson
+de:russell crowe
+de:salvador dali
+de:samuel l jackson
+de:scarlett johansson
+de:sean connery
+de:sean penn
+de:shahrukh khan
+de:sir isaac newton
+de:stanley kubrick
+de:steve jobs
+de:susan sarandon
+de:sylvester stallone
+de:tim allen
+de:tobey maguire
+de:tom cruise
+de:tom hanks
+de:tom hardy
+de:tommy lee jones
+de:uma thurman
+de:vin diesel
+de:vincent van gogh
+de:vladimir lenin
+de:walt disney
+de:warren buffet
+de:will smith
+de:william shakespeare
+de:william shatner
+de:winston churchill
+de:wolfgang amadeus mozart
+de:woody allen
+de:woody harrelson
+de:yuri gagarin
+de:zooey deschanel
+de:antenne
+de:benzinmotor
+de:besen
+de:besteck
+de:bettwäsche
+de:bluray
+de:bügelbrett
+de:bügeleisen
+de:butterdose
+de:computer
+de:computermaus
+de:computertomograph
+de:dampfbügeleisen
+de:digitalkamera
+de:duschvorhang
+de:düsenflugzeug
+de:dvd
+de:dynamo
+de:eierbecher
+de:eieruhr
+de:eisenbahn
+de:essstäbchen
+de:fernseher
+de:festplatte
+de:flagge
+de:füllfederhalter
+de:garderobe
+de:gasturbine
+de:gefriertruhe
+de:geigerzähler
+de:geschirr
+de:geschirrhandtücher
+de:geschirrspülmaschine
+de:giesskanne
+de:glühlampe
+de:haartrockner föhn
+de:hammer
+de:handstaubsauger
+de:heimkino
+de:heimtrainer
+de:heizkissen
+de:heizlüfter
+de:hubschrauber
+de:kabel
+de:kabeltrommel
+de:kaffeemaschine
+de:kaffeevollautomat
+de:kanne
+de:kassettenrekorder
+de:kehrblech
+de:knoblauchpresse
+de:kontaktlinsen
+de:korkenzieher
+de:kreditkarte
+de:küchenmesser
+de:küchentücher
+de:küchenwaage
+de:kugellager
+de:kühlschrank
+de:langspielplatte
+de:laserdrucker
+de:lötkolben
+de:luftbefeuchter
+de:luftschiff
+de:mauspad
+de:mehrfachsteckdose
+de:mopp
+de:mülleimer
+de:nagelschere
+de:nähgarn
+de:nähnadel
+de:pömpel
+de:rucksack
+de:schminkspiegel
+de:schneebesen
+de:schneidebrett
+de:schreibmaschine
+de:schrubber
+de:smartphone
+de:solarzelle
+de:sonnenbank
+de:sprühdose
+de:staubsauger
+de:strahltriebwerk
+de:strassenbahn
+de:tablett
+de:taschenlampe
+de:tastatur
+de:telefon
+de:teppich
+de:tintenstrahldrucker
+de:toaster
+de:tortenglocke
+de:tortenheber
+de:touchpad
+de:trekkingrucksack
+de:usb kabel
+de:usb stick
+de:ventilator
+de:verlängerungskabel
+de:viertaktmotor
+de:vorhängeschloss
+de:wärmedecke
+de:wäscheklammer
+de:wäschekorb
+de:wäscheleine
+de:waschmaschine
+de:waschtrockner
+de:wasserbett
+de:wasserkocher
+de:wasserstoffbombe
+de:wischmopp
+de:zündkerze
+de:ad blocker
+de:amazon
+de:app store
+de:avatar
+de:bitcoin
+de:blockchain
+de:blog
+de:browser
+de:cloud
+de:coinbase
+de:dark web
+de:datenschutz
+de:download
+de:ebay
+de:ebook
+de:emoticon
+de:facebook
+de:google
+de:hacker
+de:hype
+de:influencer
+de:instagram
+de:junk
+de:login
+de:logout
+de:malware
+de:mention
+de:nerd
+de:netflix
+de:newsletter
+de:passwort
+de:paypal
+de:pinterest
+de:reddit
+de:signal
+de:singlebörse
+de:snapchat
+de:spam
+de:spotify
+de:surfen
+de:tidal
+de:tinder
+de:tweet
+de:twitch
+de:twitter
+de:update
+de:viral
+de:virus
+de:vpn
+de:webcam
+de:whatsapp
+de:wikipedia
+de:youtube
+de:weihnachten
+de:freundschaft
+de:klimawandel
+de:soziale medien
+de:fussball
+de:bienen
+de:künstliche intelligenz
+de:harry potter
+de:playstation
+de:rapper
+de:schule
+de:ferien
+de:freund in
+de:skateboard
+de:fahrrad
+de:videospiele
+de:tiktok
+de:wandern
+de:musikfestival
+de:pizza
+de:umwelt
+de:taufe
+de:gebet
+de:kirche
+de:bibel
+de:ostern
+de:pfingsten
+de:advent
+de:abendmahl
+de:konfirmation
+de:reformation
+de:nächstenliebe
+de:psalm
+de:arche noah
+de:moses
+de:david
+de:maria
+de:josef
+de:bethlehem
+de:engel
+de:jünger
+de:petrus
+de:paulus
+de:barmherziger samariter
+de:verlorener sohn
+de:schöpfung
+de:segen
+de:vergebung
+de:hoffnung
+de:frieden
+de:diakonie
+de:kirchenchor
+de:orgel
+de:altar
+de:kanzel
+de:predigt
+de:gottesdienst
+de:kirchenglocke
+de:taufbecken
+de:vaterunser
+de:glaubensbekenntnis
+de:evangelium
+de:gleichnis
+de:erntedank
+de:karfreitag
+de:auferstehung
+de:himmelfahrt
+de:krippenspiel
+de:sternsinger
+de:pilgern
+de:kloster
+de:kirchenjahr
+de:konfi freizeit
+de:kollekte
+de:ehrenamt
+de:basketball
+de:handball
+de:volleyball
+de:tennis
+de:badminton
+de:schwimmen
+de:marathon
+de:olympische spiele
+de:skifahren
+de:snowboard
+de:eishockey
+de:boxen
+de:judo
+de:yoga
+de:bouldern
+de:bogenschiessen
+de:reiten
+de:golf
+de:tischtennis
+de:schiedsrichter
+de:abseits
+de:elfmeter
+de:staffellauf
+de:hochsprung
+de:weitsprung
+de:fahrradrennen
+de:fechten
+de:turnen
+de:star wars
+de:der herr der ringe
+de:die eiskönigin
+de:findet nemo
+de:der könig der löwen
+de:titanic
+de:jurassic park
+de:spider man
+de:batman
+de:superman
+de:shrek
+de:toy story
+de:die simpsons
+de:spongebob
+de:die sendung mit der maus
+de:tatort
+de:tagesschau
+de:wer wird millionär
+de:sesamstrasse
+de:stranger things
+de:friends
+de:kino
+de:fernbedienung
+de:streaming
+de:hausaufgaben
+de:klassenfahrt
+de:zeltlager
+de:lagerfeuer
+de:stockbrot
+de:schlafsack
+de:powerbank
+de:kopfhörer
+de:sprachnachricht
+de:selfie
+de:emoji
+de:podcast
+de:nachhaltigkeit
+de:flohmarkt
+de:brettspiel
+de:escape room
+de:geburtstag
+de:picknick
+de:regenschirm
+de:sonnenbrille
+de:affe
+de:hamster
+de:hase
+de:schaf
+de:schwein
+de:schildkröte
+de:krokodil
+de:hummel
+de:marienkäfer
+de:ameise
+de:schlange
+de:wal
+de:apfel
+de:banane
+de:erdbeere
+de:birne
+de:wassermelone
+de:zitrone
+de:tomate
+de:gurke
+de:karotte
+de:brot
+de:käse
+de:kuchen
+de:keks
+de:pommes
+de:joghurt
+de:tee
+de:wasser
+de:kaugummi
+de:ball
+de:stuhl
+de:tisch
+de:bett
+de:sofa
+de:tür
+de:fenster
+de:schlüssel
+de:uhr
+de:stift
+de:heft
+de:buch
+de:radiergummi
+de:lineal
+de:brille
+de:zahnbürste
+de:seife
+de:handtuch
+de:kerze
+de:wecker
+de:turnschuhe
+de:mütze
+de:jacke
+de:socken
+de:gitarre
+de:klavier
+de:bus
+de:auto
+de:zug
+de:flugzeug
+de:schiff
+de:roller
+de:schwimmbad
+de:spielplatz
+de:zoo
+de:supermarkt
+de:bäckerei
+de:bibliothek
+de:schneemann
+de:schneeballschlacht
+de:regenbogen
+de:gewitter
+de:sonne
+de:mond
+de:strand
+de:verstecken
+de:tanzen
+de:singen
+de:lachen
+de:mut
+de:nachtwanderung
+de:heimweh
+de:jugendherberge
+de:ferienfreizeit
+de:campingplatz
+de:zeltplatz
+de:campingstuhl
+de:klappstuhl
+de:mückenspray
+de:sonnencreme
+de:regenponcho
+de:wanderschuhe
+de:kulturbeutel
+de:brotdose
+de:kühlbox
+de:picknickdecke
+de:luftmatratze
+de:kopfkissen
+de:schlafbrille
+de:ohrstöpsel
+de:trinkbecher
+de:grillabend
+de:wiedersehen
+de:anreise
+de:abreise
+de:abfahrt
+de:ankunft
+de:haltestelle
+de:treffpunkt
+de:verspätung
+de:fahrkarte
+de:busfahrt
+de:schifffahrt
+de:zugfahrt
+de:fensterplatz
+de:schatzsuche
+de:seilziehen
+de:sackhüpfen
+de:eierlauf
+de:tischkicker
+de:packliste
+de:namensschild
+de:bollerwagen
+de:sonnenhut
+de:fernglas
+de:geländespiel
+de:rallye
+de:wanderkarte
+de:zimmergenosse
+de:küchendienst
+de:spüldienst
+de:nachtruhe
+de:weckdienst
+de:namensrunde
+de:kennenlernspiel
+de:notfallnummer
+de:blasenpflaster
+de:zeckenzange
+de:zeltstange
+de:zeltaufbau
+de:schutzhütte
+de:wanderstock
+de:wegmarkierung
+de:fundbüro
+de:raststätte
+de:proviant
+de:paddeltour
+de:fahrgemeinschaft
+de:mehrbettzimmer
+de:doppelstockbett
+de:lagerolympiade
+de:bunter abend
+de:knicklicht
+de:stirnlampe
+de:campingkocher
+de:grillzange
+de:feuerstelle
+de:wunschprogramm
+de:tagesausflug
+de:schwimmweste
+de:abspannleine
+de:zelthering
+de:vorzelt
+de:hüttenübernachtung
+de:marschverpflegung
+de:etappenwanderung
+de:selbstversorgerhaus
+de:vollpension
+de:halbpension
+de:matratzenlager
+de:gaskartusche
+de:dreibeinlauf
+de:kooperationsspiel
+de:vertrauensübung
+de:einverständniserklärung
+de:jesus
+de:gott
+de:kreuz
+de:amen
+de:pfarrer
+de:pfarrerin
+de:gemeinde
+de:kirchenbank
+de:kirchenfenster
+de:kirchturm
+de:jugendgottesdienst
+de:andacht
+de:teamer
+de:konfi gruppe
+de:konfi unterricht
+de:bibelgeschichte
+de:kinderbibel
+de:schulgottesdienst
+de:taufkerze
+de:taufpate
+de:sonntag
+de:krippe
+de:weihnachtslied
+de:osterhase
+de:osterei
+de:christkind
+de:heilige drei könige
+de:tischgebet
+de:gebetskreis
+de:liedblatt
+de:gesangbuch
+de:spendenaktion
+de:gemeindefest
+de:gemeindesaal
+de:dank
+de:liebe
+de:glaube
+de:zuhören
+de:hilfsprojekt
+de:patenkind
+de:lobpreis
+de:taizé
+de:jugendkirche
+de:segenswunsch
+de:seelsorge
+de:nächstenliebe projekt
+de:kirchenvorstand
+de:kirchentag
+de:talar
+de:lektorin
+de:küster
+de:kantorin
+de:konfirmationsspruch
+de:taufspruch
+de:zehn gebote
+de:bergpredigt
+de:goldene regel
+de:heiliger geist
+de:palmsonntag
+de:gründonnerstag
+de:ostermorgen
+de:martin luther
+de:wittenberg
+de:schlosskirche
+de:bibelübersetzung
+de:stille zeit
+de:schöpfungsbewahrung
+de:versöhnungsritual
+de:ökumene
+de:trinität
+de:sakrament
+de:liturgie
+de:seligpreisungen
+de:apostelgeschichte
+de:protestantisch
+de:konfession
+de:rechtfertigung
+de:gnade
+de:gleichnis vom senfkorn
+de:samariter
+de:beste freundin
+de:bester freund
+de:liebeskummer
+de:gruppenzwang
+de:geheimnis
+de:versöhnung
+de:eifersucht
+de:lampenfieber
+de:schmetterlinge im bauch
+de:verknallt
+de:freundschaftsarmband
+de:umarmung
+de:vertrauen
+de:streit
+de:ausrede
+de:lästern
+de:kompliment
+de:überraschungsparty
+de:geburtstagskarte
+de:mutprobe
+de:peinlich
+de:schadenfreude
+de:fremdschämen
+de:mitleid
+de:stolz
+de:langeweile
+de:wutanfall
+de:gänsehaut
+de:glückskeks
+de:seelenverwandt
+de:ghosting
+de:clique
+de:neid
+de:zusammenhalt
+de:trost
+de:taschentuch
+de:freundebuch
+de:pyjamaparty
+de:brieffreund
+de:lachanfall
+de:kichern
+de:schüchtern
+de:freudentränen
+de:erstes date
+de:liebesbrief
+de:schwarm
+de:herzklopfen
+de:entschuldigung
+de:verzeihen
+de:prüfungsangst
+de:lieblingsmensch
+de:high five
+de:einsamkeit
+de:mobbing
+de:aussenseiter
+de:zivilcourage
+de:ehrlichkeit
+de:lüge
+de:notlüge
+de:petzen
+de:ehrenwort
+de:versprechen
+de:händchenhalten
+de:schlussmachen
+de:gruppenchat
+de:aufmuntern
+de:gute laune
+de:schlechte laune
+de:morgenmuffel
+de:grinsen
+de:schmollen
+de:beleidigt
+de:freundeskreis
+de:kumpel
+de:chillen
+de:sehnsucht
+de:vorfreude
+de:enttäuschung
+de:dankbarkeit
+de:geduld
+de:selbstvertrauen
+de:zweifel
+de:hilfsbereitschaft
+de:schummeln
+de:daumen drücken
+de:gruppenfoto
+de:insider
+de:empathie
+de:nachtragend
+de:stimmungsschwankungen
+de:pubertät
+de:gemeinschaft
+de:abschied
+de:neue schule
+de:spitzname
+de:gefühlschaos
+de:funkstille
+de:kloss im hals
+de:gerücht
+de:stille post
+de:akku
+de:steckdose
+de:ladegerät
+de:stromausfall
+de:bildschirmfoto
+de:steckdosenleiste
+de:fernsehantenne
+de:digitaluhr
+de:elektrische zahnbürste
+de:bluetooth
+de:wlan
+de:laptop
+de:tablet
+de:leertaste
+de:monitor
+de:stummtaste
+de:scanner
+de:handyhalterung
+de:in ear kopfhörer
+de:selfiestick
+de:videoaufnahme
+de:videotelefonie
+de:diktierfunktion
+de:saugroboter
+de:roboter
+de:aufzug
+de:rolltreppe
+de:e scooter
+de:e bike
+de:elektroauto
+de:parkscheinautomat
+de:fahrkartenautomat
+de:pfandautomat
+de:strichcode
+de:qr code
+de:smartwatch
+de:ladekabel
+de:drohne
+de:rakete
+de:astronaut
+de:raumstation
+de:mondlandung
+de:mars
+de:sternschnuppe
+de:sternwarte
+de:sonnensystem
+de:batterie
+de:schalter
+de:glühbirne
+de:led
+de:kabelsalat
+de:stecker
+de:ladesäule
+de:chatbot
+de:spracherkennung
+de:gesichtserkennung
+de:fingerabdrucksensor
+de:zwei faktor anmeldung
+de:software
+de:backup
+de:dateianhang
+de:bildersuche
+de:navigationsgerät
+de:gps
+de:fitnessarmband
+de:schrittzähler
+de:smart home
+de:spielekonsole
+de:virtuelle realität
+de:datenbrille
+de:3d drucker
+de:roboterarm
+de:fernsteuerung
+de:bordcomputer
+de:induktionsladen
+de:wärmepumpe
+de:induktionsherd
+de:mikrowelle
+de:zeitschaltuhr
+de:berührungsloses bezahlen
+de:onlinebanking
+de:e book reader
+de:bildauflösung
+de:programmiersprache
+de:selbstfahrendes auto
+de:weltraumteleskop
+de:raumanzug
+de:satellit
+de:stromzähler
+de:schnellladen
+de:algorithmus
+de:quantencomputer
+de:neuronales netz
+de:maschinelles lernen
+de:verschlüsselung
+de:open source
+de:augmented reality
+de:cybersicherheit
+de:glasfaser
+de:halbleiter
+de:wasserstoffantrieb
+de:magnetschwebebahn
+de:exoskelett
+de:biometrie
+de:weltraumschrott
+de:lichtjahr
+de:firewall
+de:minecraft
+de:controller
+de:level
+de:mario kart
+de:konsole
+de:endgegner
+de:pokémon
+de:tetris
+de:game over
+de:highscore
+de:joystick
+de:pac man
+de:super mario
+de:zocken
+de:gamer
+de:nintendo switch
+de:xbox
+de:roblox
+de:fortnite
+de:among us
+de:pikachu
+de:sonic
+de:luigi
+de:prinzessin peach
+de:bowser
+de:yoshi
+de:kirby
+de:zelda
+de:donkey kong
+de:lag
+de:noob
+de:skin
+de:respawn
+de:speicherstand
+de:let s play
+de:ladebildschirm
+de:pixel art
+de:headset
+de:cheatcode
+de:battle pass
+de:bonuslevel
+de:koop modus
+de:speedrun
+de:fortnite tanz
+de:lootbox
+de:extraleben
+de:power up
+de:checkpoint
+de:multiplayer
+de:einzelspieler
+de:mario party
+de:animal crossing
+de:splatoon
+de:brawl stars
+de:clash royale
+de:candy crush
+de:angry birds
+de:subway surfers
+de:fall guys
+de:tamagotchi
+de:game boy
+de:arcade
+de:handyspiel
+de:vr brille
+de:grafik
+de:grafikkarte
+de:gaming pc
+de:gaming stuhl
+de:achievement
+de:inventar
+de:quest
+de:npc
+de:open world
+de:minimap
+de:tutorial
+de:patch
+de:bug
+de:glitch
+de:server
+de:ping
+de:rage quit
+de:gg
+de:afk
+de:clan
+de:e sport
+de:streamer
+de:gamertag
+de:lobby
+de:matchmaking
+de:battle royale
+de:mod
+de:easter egg
+de:zwischensequenz
+de:splitscreen
+de:mikrotransaktion
+de:v bucks
+de:robux
+de:creeper
+de:enderman
+de:redstone
+de:nether
+de:crafting
+de:survival modus
+de:kreativmodus
+de:fragezeichenblock
+de:pokéball
+de:glurak
+de:wii
+de:just dance
+de:stardew valley
+de:die sims
+de:landwirtschafts simulator
+de:ea sports fc
+de:rocket league
+de:overcooked
+de:snake
+de:solitär
+de:minesweeper
+de:geometry dash
+de:pokémon go
+de:steam
+de:discord
+de:retro spiel
+de:pixel
+de:story modus
+de:jump n run
+de:rennspiel
+de:trophäe
+de:handheld
+de:joy con
+de:sammelkarten
+de:tower defense
+de:rollenspiel
+de:cheater
+de:toxisch
+de:bildschirmzeit
+de:usk
+de:gamescom
+de:super smash bros
+de:blauer panzer
+de:nebenquest
+de:erfahrungspunkte
+de:lebensanzeige
+de:pong
+de:pokémon trainer
+de:kahoot
+de:clash of clans
+de:talking tom
+de:schatztruhe
+de:rangliste
+de:nintendo
+de:dungeon
+de:heiltrank
+de:screenshot
+de:mario münze
+de:pausenmenü
+de:bossmusik
+de:trampolin
+de:freibad
+de:minigolf
+de:bowling
+de:lasertag
+de:kletterwald
+de:jugendtreff
+de:pfadfinder
+de:jugendfeuerwehr
+de:malen
+de:häkeln
+de:fotografieren
+de:backen
+de:zaubertrick
+de:zauberwürfel
+de:uno
+de:werwolf spiel
+de:kissenschlacht
+de:geocaching
+de:angeln
+de:tanzkurs
+de:theater ag
+de:lego
+de:modellbau
+de:slackline
+de:waveboard
+de:inliner
+de:wasserrutsche
+de:rummel
+de:freizeitpark
+de:achterbahn
+de:zuckerwatte
+de:riesenrad
+de:autoscooter
+de:karussell
+de:skatepark
+de:halfpipe
+de:kickflip
+de:ollie
+de:bmx
+de:mountainbike
+de:longboard
+de:kanu
+de:stand up paddling
+de:schlittenfahren
+de:schlittschuhlaufen
+de:drachensteigen
+de:seifenblasen
+de:sandburg
+de:hüpfburg
+de:strassenkreide
+de:fangen
+de:gummitwist
+de:seilspringen
+de:kicker
+de:billard
+de:darts
+de:schach
+de:mensch ärgere dich nicht
+de:monopoly
+de:memory
+de:jenga
+de:puzzle
+de:mau mau
+de:twister
+de:activity
+de:stadt land fluss
+de:wahrheit oder pflicht
+de:schnitzeljagd
+de:topfschlagen
+de:stopptanz
+de:reise nach jerusalem
+de:blinde kuh
+de:zelten
+de:hängematte
+de:baumhaus
+de:basteln
+de:origami
+de:stricken
+de:nähen
+de:töpfern
+de:graffiti
+de:comic
+de:manga
+de:tagebuch
+de:bullet journal
+de:handlettering
+de:diamond painting
+de:bügelperlen
+de:knete
+de:slime
+de:gärtnern
+de:vogelbeobachtung
+de:teleskop
+de:briefmarkensammlung
+de:sammelbilder
+de:jonglieren
+de:einrad
+de:diabolo
+de:parkour
+de:breakdance
+de:musical
+de:chor
+de:schülerband
+de:schlagzeug
+de:blockflöte
+de:ukulele
+de:karaoke
+de:hörspiel
+de:lesenacht
+de:filmabend
+de:spieleabend
+de:stadtrallye
+de:kegeln
+de:spassbad
+de:sprungturm
+de:tretboot
+de:ponyhof
+de:voltigieren
+de:gassi gehen
+de:aquarium
+de:streichelzoo
+de:planetarium
+de:museum
+de:erste hilfe kurs
+de:schwimmabzeichen
+de:fahrradtour
+de:kletterhalle
+de:sommerrodelbahn
+de:hoverboard
+de:disco
+de:grillen
+de:wasserbombe
+de:planschbecken
+de:murmeln
+de:jo jo
+de:kartenhaus
+de:domino
+de:sudoku
+de:kreuzworträtsel
+de:fan fiction
+de:cosplay
+de:seifenkiste
+de:kartbahn
+de:schnorcheln
+de:segeln
+de:rafting
+de:flossbau
+de:knoten
+de:schnitzen
+de:malbuch
+de:aquarell
+de:skizzenbuch
+de:polaroid
+de:stop motion
+de:dj
+de:frisbee
+de:boule
+de:wikingerschach
+de:völkerball
+de:airhockey
+de:bällebad
+de:schaukel
+de:sandkasten
+de:wippe
+de:konzert
+de:shoppen
+de:poetry slam
+de:schülerzeitung
+de:quiz
+de:pilze sammeln
+de:kastanienmännchen
+de:makramee
+de:amigurumi
+de:speedcubing
+de:orientierungslauf
+de:upcycling
+de:bonsai
+de:playlist
+de:festival
+de:beat
+de:bandprobe
+de:rap
+de:refrain
+de:ohrwurm
+de:mikrofon
+de:e gitarre
+de:remix
+de:musikvideo
+de:charts
+de:album
+de:lautsprecher
+de:bluetooth box
+de:casting show
+de:lobpreisband
+de:notenschlüssel
+de:stimmgabel
+de:zugabe
+de:backstage
+de:soundcheck
+de:moshpit
+de:hit
+de:radio
+de:schallplatte
+de:trompete
+de:geige
+de:trommel
+de:xylofon
+de:triangel
+de:keyboard
+de:saxofon
+de:harfe
+de:dirigent
+de:orchester
+de:oper
+de:noten
+de:melodie
+de:rhythmus
+de:songtext
+de:solo
+de:band
+de:sängerin
+de:fan
+de:autogramm
+de:bühne
+de:publikum
+de:applaus
+de:discokugel
+de:hip hop
+de:rockmusik
+de:schlager
+de:heavy metal
+de:jazz
+de:klassik
+de:popmusik
+de:reggae
+de:plektrum
+de:verstärker
+de:tonstudio
+de:musikschule
+de:gospel
+de:halleluja
+de:kanon
+de:lautstärke
+de:instrument
+de:sopran
+de:beatbox
+de:ticket
+de:musikunterricht
+de:lied
+de:summen
+de:pfeifen
+de:klatschen
+de:spieluhr
+de:glockenspiel
+de:tamburin
+de:rassel
+de:posaune
+de:posaunenchor
+de:tuba
+de:airpods
+de:shuffle
+de:kinderdisco
+de:akkord
+de:kapodaster
+de:eurovision song contest
+de:grammy
+de:goldene schallplatte
+de:taylor swift
+de:ed sheeran
+de:the beatles
+de:queen
+de:helene fischer
+de:johann sebastian bach
+de:abba
+de:billie eilish
+de:adele
+de:coldplay
+de:bruno mars
+de:mark forster
+de:harry styles
+de:shakira
+de:nena
+de:rolf zuckowski
+de:antonio vivaldi
+de:elton john
+de:wetter
+de:regen
+de:schnee
+de:wolke
+de:wind
+de:sturm
+de:blitz
+de:donner
+de:nebel
+de:hagel
+de:frost
+de:pfütze
+de:eiszapfen
+de:schneeflocke
+de:laubhaufen
+de:tannenzapfen
+de:kieselstein
+de:ast
+de:wurzel
+de:baumstamm
+de:baumrinde
+de:blatt
+de:moos
+de:gras
+de:wiese
+de:hecke
+de:busch
+de:blumenwiese
+de:gänseblümchen
+de:löwenzahn
+de:sonnenblume
+de:klee
+de:brennnessel
+de:kastanie
+de:eichel
+de:pusteblume
+de:feder
+de:schneckenhaus
+de:spinnennetz
+de:ameisenhaufen
+de:maulwurfshügel
+de:vogelnest
+de:teich
+de:bach
+de:quelle
+de:wasserfall
+de:mülltrennung
+de:recycling
+de:kompost
+de:biotonne
+de:pfandflasche
+de:mehrwegflasche
+de:stoffbeutel
+de:trinkwasser
+de:leitungswasser
+de:regentonne
+de:windrad
+de:solaranlage
+de:energiesparen
+de:naturschutzgebiet
+de:dürre
+de:überschwemmung
+de:lawine
+de:erdbeben
+de:gletscher
+de:vulkanausbruch
+de:regenwald
+de:korallenriff
+de:wattenmeer
+de:dünen
+de:tropfsteinhöhle
+de:bestäubung
+de:insektenhotel
+de:igelhaus
+de:zugvogel
+de:winterschlaf
+de:krötenwanderung
+de:blütenpollen
+de:wildblumen
+de:buchecker
+de:ebbe
+de:artenvielfalt
+de:fotosynthese
+de:treibhauseffekt
+de:erderwärmung
+de:mikroplastik
+de:ökosystem
+de:bodenerosion
+de:gezeiten
+de:nahrungskette
+de:klimaneutralität
+de:renaturierung
+de:versiegelung
+de:co2 fussabdruck
+de:permafrost
+de:überfischung
+de:klassenzimmer
+de:lehrerin
+de:schulranzen
+de:tafel
+de:kreide
+de:füller
+de:pausenhof
+de:hitzefrei
+de:zeugnis
+de:stundenplan
+de:mensa
+de:turnbeutel
+de:geodreieck
+de:vokabeltest
+de:referat
+de:gruppenarbeit
+de:nachsitzen
+de:lehrerzimmer
+de:klassensprecher
+de:elternabend
+de:spickzettel
+de:mathe
+de:diktat
+de:turnhalle
+de:pausenklingel
+de:klassenarbeit
+de:federmäppchen
+de:spitzer
+de:bleistift
+de:buntstift
+de:schere
+de:taschenrechner
+de:schulbus
+de:pause
+de:hausmeister
+de:direktor
+de:sitznachbar
+de:melden
+de:einschulung
+de:schultüte
+de:klassenfoto
+de:unterricht
+de:englisch
+de:erdkunde
+de:biologie
+de:atlas
+de:wandertag
+de:sommerferien
+de:schulfest
+de:freistunde
+de:einmaleins
+de:chemie
+de:religionsunterricht
+de:französisch
+de:grundschule
+de:gymnasium
+de:abschreiben
+de:karteikarten
+de:textmarker
+de:zirkel
+de:ordner
+de:beamer
+de:schulweg
+de:umkleide
+de:alphabet
+de:klassenclown
+de:mikroskop
+de:plakat
+de:klassenchat
+de:kopfrechnen
+de:sekretariat
+de:krankmeldung
+de:schwänzen
+de:klassenkasse
+de:ganztagsschule
+de:projektwoche
+de:vertretungsstunde
+de:klausur
+de:abitur
+de:abschlussball
+de:praktikum
+de:ausbildung
+de:azubi
+de:bewerbung
+de:lebenslauf
+de:vorstellungsgespräch
+de:berufsschule
+de:studium
+de:bruchrechnen
+de:physik
+de:ethik
+de:latein
+de:oberstufe
+de:sitzenbleiben
+de:klassenbuch
+de:nachhilfe
+de:schulsanitäter
+de:elternsprechtag
+de:mitarbeit
+de:lernzettel
+de:whiteboard
+de:schülerlotse
+de:spind
+de:handyverbot
+de:schreibschrift
+de:rechtschreibung
+de:duden
+de:aufsatz
+de:gedicht
+de:grammatik
+de:verb
+de:nomen
+de:textaufgabe
+de:gleichung
+de:winkel
+de:experiment
+de:schutzbrille
+de:präsentation
+de:informatik
+de:bundesjugendspiele
+de:notendurchschnitt
+de:periodensystem
+de:leistungskurs
+de:schulpflicht
+de:versetzung
+de:streitschlichter
+de:klassenrat
+de:schulordnung
+de:fibel
+de:interpretation
+de:erörterung
+de:lektüre
+de:prozentrechnung
+de:dreisatz
+de:satz des pythagoras
+de:bunsenbrenner
+de:schüleraustausch
+de:referendar
+de:vertrauenslehrer
+de:duales studium
+de:berufsberatung
+de:gesellenprüfung
+de:digga
+de:bro
+de:cringe
+de:lost
+de:ehrenmann
+de:ehrenfrau
+de:sus
+de:wild
+de:sheesh
+de:vibe
+de:flexen
+de:glow up
+de:yolo
+de:fomo
+de:gönn dir
+de:läuft bei dir
+de:red flag
+de:green flag
+de:bruh
+de:goat
+de:slay
+de:mid
+de:no cap
+de:aura
+de:abfeiern
+de:same
+de:yalla
+de:banger
+de:ghosten
+de:crush
+de:bestie
+de:ehrenlos
+de:safe
+de:kein plan
+de:toxic
+de:fake
+de:random
+de:krass
+de:lol
+de:omg
+de:sturmfrei
+de:verpeilt
+de:bff
+de:cozy
+de:was geht
+de:hater
+de:fail
+de:lowkey
+de:main character
+de:goofy
+de:rizz
+de:delulu
+de:akkurat
+de:bodenlos
+de:babo
+de:bussin
+de:jugendwort des jahres
+de:side eye
+de:skibidi
+de:brainrot
+de:tuff
+de:das crazy
+de:six seven
+de:tea
+de:clickbait
+de:gen z
+de:pov
+de:oida
+de:auf gelesen lassen
+de:streak
+de:tryhard
+de:hangry
+de:wholesome
+de:plot twist
+de:peak
+de:doomscrolling
+de:drip
+de:checkst du
+de:shippen
+de:ick
+de:highkey
+de:aura farmen
+de:gaslighting
+de:situationship
+de:ragebait
+de:hot take
+de:cooked
+de:locked in
+de:era
+de:touch grass
+de:ratio
+de:stan
+de:pookie
+de:yapping
+de:story
+de:follower
+de:reel
+de:filter
+de:livestream
+de:hashtag
+de:like
+de:kommentar
+de:blauer haken
+de:lesebestätigung
+de:push nachricht
+de:trend
+de:challenge
+de:duett
+de:profilbild
+de:status
+de:meme
+de:gif
+de:story highlight
+de:akku leer
+de:wlan passwort
+de:unboxing
+de:abo
+de:fake news
+de:cybermobbing
+de:handyhülle
+de:klingelton
+de:lautlos
+de:flugmodus
+de:sticker
+de:videoanruf
+de:blockieren
+de:entfolgen
+de:teilen
+de:online
+de:zuletzt online
+de:spoiler
+de:vlog
+de:youtuber
+de:thumbnail
+de:feed
+de:scrollen
+de:daumen hoch
+de:daumen runter
+de:herzchen
+de:app
+de:hintergrundbild
+de:face id
+de:fingerabdruck
+de:pin
+de:handysucht
+de:digital detox
+de:offline
+de:funkloch
+de:datenvolumen
+de:hotspot
+de:airdrop
+de:sprachassistent
+de:autokorrektur
+de:kettenbrief
+de:link
+de:account
+de:privates profil
+de:freundschaftsanfrage
+de:chatgpt
+de:deepfake
+de:filterblase
+de:hasskommentar
+de:produktplatzierung
+de:giveaway
+de:posten
+de:hochladen
+de:selfie stick
+de:handykamera
+de:videokonferenz
+de:speicher voll
+de:zwei faktor authentifizierung
+de:phishing
+de:e mail
+de:smiley
+de:enge freunde
+de:bereal
+de:duolingo
+de:google maps
+de:shazam
+de:spotify wrapped
+de:content creator
+de:reichweite
+de:shorts
+de:zoomen
+de:wischen
+de:touchscreen
+de:agb
+de:cookies
+de:ich bin kein roboter
+de:suchmaschine
+de:googeln
+de:inkognito modus
+de:pinnen
+de:netiquette
+de:digitaler fussabdruck
+de:privatsphäre
+de:online shopping
+de:edit
+de:capcut
+de:playback
+de:werbung überspringen
+de:sneaker
+de:hoodie
+de:nagellack
+de:jogginghose
+de:cap
+de:bauchtasche
+de:haargummi
+de:glätteisen
+de:lockenstab
+de:zahnspange
+de:ohrringe
+de:jeansjacke
+de:schnürsenkel
+de:flip flops
+de:badelatschen
+de:kleiderschrank
+de:friseur
+de:pferdeschwanz
+de:zopf
+de:glitzer
+de:umkleidekabine
+de:second hand
+de:markenklamotten
+de:haarspange
+de:regenjacke
+de:gummistiefel
+de:schlafanzug
+de:bommelmütze
+de:handschuhe
+de:schal
+de:gürtel
+de:krawatte
+de:pullover
+de:frisur
+de:spiegel
+de:kleiderbügel
+de:schmuck
+de:halskette
+de:armband
+de:tattoo
+de:undercut
+de:bucket hat
+de:oversize
+de:partnerlook
+de:laufsteg
+de:ausverkauf
+de:piercing
+de:outfit
+de:vinted
+de:strähnchen
+de:dutt
+de:mittelscheitel
+de:stirnband
+de:nähmaschine
+de:reissverschluss
+de:kniestrümpfe
+de:schuluniform
+de:trainingsanzug
+de:plateauschuhe
+de:strohhut
+de:cargohose
+de:kleidertausch
+de:lipgloss
+de:mascara
+de:make up
+de:deo
+de:fashion week
+de:fast fashion
+de:schaufensterpuppe
+de:haute couture
+de:dresscode
+de:vintage
+de:accessoire
+de:schnittmuster
+de:konfektionsgrösse
+de:modedesigner
+de:pailletten

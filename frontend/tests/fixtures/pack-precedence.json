@@ -1,0 +1,18 @@
+{
+  "id": "de:zuckerwatte",
+  "word": "Zuckerwatte",
+  "taboo": [
+    "Rummel",
+    "rosa",
+    "Stäbchen",
+    "süß",
+    "klebrig"
+  ],
+  "categories": [
+    "hobbies"
+  ],
+  "source": "original",
+  "difficulty": "easy",
+  "ageMin": 6,
+  "emoji": "🍭"
+}

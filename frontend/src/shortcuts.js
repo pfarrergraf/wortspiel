@@ -32,8 +32,8 @@ export function presenterAction(key, view, phase) {
 }
 
 const typing = (target) =>
-  /SELECT|TEXTAREA/.test(target.tagName) ||
-  (target.tagName === "INPUT" && !/checkbox|radio/.test(target.type));
+  target instanceof HTMLElement &&
+  (target.isContentEditable || target.closest("input, select, textarea"));
 
 function click(id) {
   document.querySelector(`[data-action="${id}"]:not([disabled])`)?.click();
@@ -42,17 +42,17 @@ function click(id) {
 window.addEventListener("keydown", (event) => {
   const target = event.target;
   // presenter.js already handled it (learned skip key or "hold back").
-  if (event.defaultPrevented) return;
+  if (event.defaultPrevented || event.isComposing || event.keyCode === 229 || ctx.busy) return;
   if (!ctx.state || document.querySelector("dialog[open]") || typing(target)) return;
   if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "z") {
-    if (ctx.state.session?.phase !== "playing") return;
+    if (ctx.view !== "game" || !["playing", "paused"].includes(ctx.state.session?.phase) || event.shiftKey || event.altKey) return;
     event.preventDefault();
     if (!event.repeat) click("undo");
     return;
   }
-  if (event.key === "?") {
+  if (event.key === "?" && !event.altKey && !event.ctrlKey && !event.metaKey) {
     event.preventDefault();
-    click("help");
+    if (!event.repeat) click("help");
     return;
   }
   if (event.altKey || event.ctrlKey || event.metaKey) return;

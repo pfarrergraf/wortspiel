@@ -170,8 +170,8 @@ function fakeHid() {
   });
 }
 
-// Paused: races with the learning setup on CI Chromium; fix separately.
-test.fixme("a Spotlight pointer button that sends nothing can be connected directly and learned", async ({ page }) => {
+// Listen before diversion, including immediate device reports.
+test("a Spotlight pointer button that sends nothing can be connected directly and learned", async ({ page }) => {
   await page.addInitScript(fakeHid);
   await page.goto("/");
   await page.getByRole("button", { name: "Presenter einrichten" }).click();
@@ -204,8 +204,8 @@ test.fixme("a Spotlight pointer button that sends nothing can be connected direc
   expect((await state(page)).session.log.map((e) => e.result)).toEqual(["skip", "skip"]);
 });
 
-// Paused: races with the learning setup on CI Chromium; fix separately.
-test.fixme("the presenter dialog offers a diagnosis text and a full reset of diverted buttons", async ({ page, context }) => {
+// Listen before diversion, including immediate device reports.
+test("the presenter dialog offers a diagnosis text and a full reset of diverted buttons", async ({ page, context }) => {
   await context.grantPermissions(["clipboard-read", "clipboard-write"]).catch(() => {});
   await page.addInitScript(fakeHid);
   await page.goto("/");

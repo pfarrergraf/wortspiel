@@ -1,0 +1,271 @@
+[
+  {
+    "number": 1,
+    "head": "92e9cf66945f7ef3ff831d11072ed43e182f42c0",
+    "title": "B4: Auswertung abgeschlossener Runden und eindeutige Auszeichnungen",
+    "files": [
+      {
+        "path": "docs/claims/B4.md",
+        "status": "identical"
+      },
+      {
+        "path": "frontend/src/rules/stats.js",
+        "status": "identical"
+      },
+      {
+        "path": "frontend/tests/B4.test.mjs",
+        "status": "identical"
+      }
+    ]
+  },
+  {
+    "number": 2,
+    "head": "3e96b04b9d15072e4334690a66a84ace6c939e76",
+    "title": "B1: Altersgruppen filtern und gespeicherte Partien erhalten",
+    "files": [
+      {
+        "path": "docs/claims/B1.md",
+        "status": "identical"
+      },
+      {
+        "path": "frontend/src/rules/audience.js",
+        "status": "identical"
+      },
+      {
+        "path": "frontend/tests/B1.test.mjs",
+        "status": "identical"
+      }
+    ]
+  },
+  {
+    "number": 3,
+    "head": "85b7c159996efbdf5bf5e3848a45105a3579b05b",
+    "title": "B2: Tabu-Stufen mit Migration gespeicherter Partien",
+    "files": [
+      {
+        "path": "docs/claims/B2.md",
+        "status": "identical"
+      },
+      {
+        "path": "frontend/src/rules/taboo.js",
+        "status": "different"
+      },
+      {
+        "path": "frontend/tests/B2.test.mjs",
+        "status": "identical"
+      }
+    ]
+  },
+  {
+    "number": 4,
+    "head": "a6145314278bd5a6b9ec0f1b85335cfdf0ba7e56",
+    "title": "B5: Spielmodi ausw\u00e4hlen, validieren und gespeicherte Partien migrieren",
+    "files": [
+      {
+        "path": "docs/claims/B5.md",
+        "status": "identical"
+      },
+      {
+        "path": "frontend/src/rules/modes.js",
+        "status": "identical"
+      },
+      {
+        "path": "frontend/tests/B5.test.mjs",
+        "status": "identical"
+      }
+    ]
+  },
+  {
+    "number": 5,
+    "head": "9f9a4ae76080dc43cee2cc9b6cfed400b13ed172",
+    "title": "A18: Altersangaben f\u00fcr s\u00e4mtliche leichten und mittleren Bestandskarten",
+    "files": [
+      {
+        "path": "docs/claims/A18.md",
+        "status": "identical"
+      },
+      {
+        "path": "frontend/data/age-tags.json",
+        "status": "different"
+      }
+    ]
+  },
+  {
+    "number": 6,
+    "head": "859df2c04c42cb5443b8d69d26334c497eac88d3",
+    "title": "D1: Offline-Signale per Web Audio",
+    "files": [
+      {
+        "path": "docs/claims/D1.md",
+        "status": "identical"
+      },
+      {
+        "path": "frontend/src/sound.js",
+        "status": "identical"
+      },
+      {
+        "path": "frontend/tests/D1.test.mjs",
+        "status": "identical"
+      }
+    ]
+  },
+  {
+    "number": 7,
+    "head": "6df72920c801d5a21a27d27ff848996a5f6870f0",
+    "title": "E2: Bildschirm w\u00e4hrend sichtbarer Spielz\u00fcge wachhalten",
+    "files": [
+      {
+        "path": "docs/claims/E2.md",
+        "status": "identical"
+      },
+      {
+        "path": "frontend/src/wakelock.js",
+        "status": "identical"
+      },
+      {
+        "path": "frontend/tests/E2.test.mjs",
+        "status": "identical"
+      }
+    ]
+  },
+  {
+    "number": 8,
+    "head": "e4a2eb92d809df61ce4df7bcc90dcdc4f7a4b922",
+    "title": "E3: Tastenk\u00fcrzel mit sicherer Wertung und pausierender Hilfe",
+    "files": [
+      {
+        "path": "docs/claims/E3.md",
+        "status": "different"
+      },
+      {
+        "path": "frontend/src/shortcuts.js",
+        "status": "different"
+      },
+      {
+        "path": "frontend/tests/browser/E3.spec.js",
+        "status": "missing"
+      }
+    ]
+  },
+  {
+    "number": 9,
+    "head": "5f1ce6d83618a534bc7cd4e7b52ed35e286ba857",
+    "title": "A17: 80 Karten f\u00fcr Glaube, Konfi-Unterricht und Gemeindeleben",
+    "files": [
+      {
+        "path": "docs/claims/A17.md",
+        "status": "identical"
+      },
+      {
+        "path": "frontend/data/packs/faith-plus.json",
+        "status": "different"
+      }
+    ]
+  },
+  {
+    "number": 10,
+    "head": "4cf0737a2bfd8693ce2d0d21f3d51d4dc8751862",
+    "title": "A09: 110 Karten f\u00fcr Technik, KI und Zukunft",
+    "files": [
+      {
+        "path": "docs/claims/A09.md",
+        "status": "identical"
+      },
+      {
+        "path": "frontend/data/packs/future.json",
+        "status": "different"
+      }
+    ]
+  },
+  {
+    "number": 11,
+    "head": "13156eb21d8886ffd4e7d980bc1158b957d9ae0b",
+    "title": "A10: 100 Karten f\u00fcr Natur und Umwelt",
+    "files": [
+      {
+        "path": "docs/claims/A10.md",
+        "status": "identical"
+      },
+      {
+        "path": "frontend/data/packs/planet.json",
+        "status": "identical"
+      }
+    ]
+  },
+  {
+    "number": 12,
+    "head": "5c727d104c2a71f992993c7c8ab62a297a36c99e",
+    "title": "A11: 100 Karten f\u00fcr Freizeit, Camp und Gruppenfahrten",
+    "files": [
+      {
+        "path": "docs/claims/A11.md",
+        "status": "identical"
+      },
+      {
+        "path": "frontend/data/packs/camp.json",
+        "status": "identical"
+      }
+    ]
+  },
+  {
+    "number": 13,
+    "head": "2088db21d385eb0fa1c5e92f4d7ac180fe22b9df",
+    "title": "A16: 80 Snack- und Essenskarten f\u00fcr Kinder und Jugendliche",
+    "files": [
+      {
+        "path": "docs/claims/A16.md",
+        "status": "missing"
+      },
+      {
+        "path": "frontend/data/packs/food-plus.json",
+        "status": "missing"
+      }
+    ]
+  },
+  {
+    "number": 14,
+    "head": "dae52299ddd3049770c9531f03f459b79bc640c9",
+    "title": "A13: 100 altersgerechte Karten f\u00fcr Fantasy und M\u00e4rchen",
+    "files": [
+      {
+        "path": "docs/claims/A13.md",
+        "status": "missing"
+      },
+      {
+        "path": "frontend/data/packs/fantasy.json",
+        "status": "missing"
+      }
+    ]
+  },
+  {
+    "number": 15,
+    "head": "fab0d58198af320a446897b416e0eaa8f51c9f8a",
+    "title": "Mobile Schnellstart: 5 Schritte und Frei-erkl\u00e4ren-Modus",
+    "files": [
+      {
+        "path": "frontend/src/features/mobile-wizard.js",
+        "status": "missing"
+      },
+      {
+        "path": "frontend/src/main.js",
+        "status": "different"
+      },
+      {
+        "path": "frontend/src/rules/pantomime.js",
+        "status": "different"
+      },
+      {
+        "path": "frontend/src/styles/index.css",
+        "status": "different"
+      },
+      {
+        "path": "frontend/src/styles/responsive/mobile-wizard.css",
+        "status": "missing"
+      },
+      {
+        "path": "frontend/src/ui/setup.js",
+        "status": "different"
+      }
+    ]
+  }
+]

@@ -4,10 +4,10 @@ Ein buntes, kostenloses Spiel zum Begriffe-Erklären für eine Gruppe an **einem
 
 **Spielen:** https://pfarrergraf.github.io/wortspiel/
 
-## Was die erste Version kann
+## Was die aktuelle Webversion kann
 
-- 1.216 vollständige deutsche Karten in zwölf einzeln auswählbaren Themenpaketen, darunter Alltag & Jugend sowie Glaube & Kirche.
-- Drei Schwierigkeitsstufen: **Leicht** (382 Karten, Voreinstellung), **Mittel** (673 Karten einschließlich der leichten) und **Alles / knifflig** (alle 1.216 Karten). Die Zähler berücksichtigen Stufe, Themen und den Kartenspeicher.
+- 2.744 deutsche Erklärungskarten in 24 Themenpaketen, davon 2.736 aktiv und acht begründet ausgemusterte Begriffsvarianten mit erhaltenen IDs. Zusätzlich 1.435 Pantomime-Wörter in 16 eigenen Kategorien.
+- Drei Schwierigkeitsstufen: **Leicht** (1.133 aktive Karten), **Mittel** (1.962 einschließlich der leichten) und **Alles / knifflig** (2.736 aktive Karten). Die Zähler berücksichtigen zusätzlich Altersgruppe, Themen und Kartenspeicher.
 - Schnellauswahlen **Jugendliche**, **Konfis** und **Gemischte Runde**. Konfis kombiniert die leichte Auswahl mit Grundlagen aus Glaube & Kirche; Jugendliche verwendet Alltagsthemen ohne das Kirchenpaket. Themen und Stufe bleiben frei anpassbar.
 - Zwei bis sechs frei benennbare Teams, Rundenzeit von 30 bis 180 Sekunden, einstellbare Runden pro Team und Punkteabzüge.
 - Erraten, Überspringen und Tabuwort; Pause, verdeckte Karte, Rücknahme der letzten Wertung, Rundenprotokoll und Ergebnisübersicht.
@@ -17,6 +17,14 @@ Ein buntes, kostenloses Spiel zum Begriffe-Erklären für eine Gruppe an **einem
 - Optionale lokale Spracherkennung, **standardmäßig ausgeschaltet**, mit ausdrücklichem `processLocally: true`. Kein automatischer Cloud-Fallback, keine Transkriptionskosten. Nur Browser mit lokaler Verarbeitung und deutschem Sprachpaket bieten diese Funktion an.
 
 Die Spracherkennung gibt Hinweise auf gehörte Begriffe. Sie kann erklärende und ratende Personen nicht unterscheiden und vergibt deshalb keine Punkte automatisch. Die manuelle Wertung bleibt immer verfügbar. Ein echtes Android- oder iOS-Gerät mit Mikrofon wurde nicht für die Sprachfunktion getestet; Browserunterstützung ist experimentell.
+
+## Schnellstart und Spielarten
+
+Oben stehen „Letzte Einstellungen verwenden“ beziehungsweise „Nochmal spielen“, „Neue Partie vorbereiten“ und „Spiel anpassen“. Eine laufende Partie kann weiter über „Partie fortsetzen“ geladen werden. „Nochmal spielen“ übernimmt den letzten Partie-Snapshot, einschließlich Teams, Altersgruppe, Themen, Zeit und Wertung. Laufende Partien werden nur nach Bestätigung ersetzt. Bereits gesehene Karten bleiben gesperrt, auch wenn die Auswahl erschöpft ist.
+
+Die freiwillige geführte Vorbereitung hat fünf Schritte: Spielart, Altersgruppe, Teams, Themen und Spielstart. „Alle Einstellungen“ bleibt erreichbar. Die Themensuche verändert keine Auswahl; „Alle auswählen“ und „Alle abwählen“ gelten für den ganzen jeweiligen Kartenpool.
+
+**Klassisch** verbietet die zusätzlichen Tabuwörter; **Frei erklären** verbietet nur den Begriff und seine Wortbestandteile. Auch Jugendliche wählen zwischen beiden. **Pantomime** verwendet einen eigenen Pool ohne Worte und Geräusche, mit 1–3 Punkten je Begriff. Geräuscheraten ist noch nicht veröffentlicht und erscheint nicht als unfertige Auswahl.
 
 ## Begriffe passend zur Gruppe
 
@@ -64,13 +72,15 @@ npm run build
 npm run test:e2e
 ```
 
-Die lokalen Browsertests benutzen den installierten Google Chrome. In GitHub Actions wird Chromium installiert. Getestet werden die Spielregeln einschließlich Zeitgrenze, eine Woche ohne Wiederholung, getrennte Gruppen, Undo, ausgespielte Pakete, Import und Reset. Die Browsertests prüfen mobile und Desktop-Ansichten, Tasten, pausierte Fortsetzung nach Reload, Sicherungsimport, Offline-Spiel und Einstellungen. Zusätzlich gibt es einen Test mit einem echten Chrome-Neustart und einem dauerhaften Browserprofil.
+Die lokalen Browsertests benutzen standardmäßig installierten Google Chrome. Alternativ `npx playwright install chromium` und `CI=1 npm run test:e2e` verwenden. In GitHub Actions wird Chromium installiert. Getestet werden die Spielregeln einschließlich Zeitgrenze, eine Woche ohne Wiederholung, getrennte Gruppen, Undo, ausgespielte Pakete, Import und Reset. Die Browsertests prüfen mobile und Desktop-Ansichten, Tasten, pausierte Fortsetzung nach Reload, Sicherungsimport, Offline-Spiel und Einstellungen. Zusätzlich gibt es einen Test mit einem echten Chrome-Neustart und einem dauerhaften Browserprofil.
+
+Der Audit-Stand und die PR-Entscheidungen stehen in [docs/integration-status.md](docs/integration-status.md). Die Kartenprüfung gehört ebenfalls zur CI: `npm run cards:check`. Die ursprünglichen und aktuellen ID-Fixtures bleiben erhalten. Reale Geräte und gemeinsames Ablesen durch zwei Personen sind noch Teil der [Release-Abnahme](docs/release-checklist.md).
 
 ## GitHub Pages
 
 Der Workflow `.github/workflows/pages.yml` prüft und baut die App bei Änderungen auf `main` und veröffentlicht `frontend/dist` über GitHub Pages. Unter **Settings → Pages → Source** muss **GitHub Actions** gewählt sein. Der Quellcode ist öffentlich; Spielstände bleiben auf den Geräten.
 
-Für einen anderen Repository-Namen die Quellcode-Links in `frontend/src/main.js`, diese README und die Repository-Homepage anpassen. Das relative Build-Verzeichnis und der Service Worker funktionieren auch unter einem neuen Unterpfad. Eine neue Domain bedeutet einen neuen Website-Speicher; zuvor die Gruppen exportieren und anschließend importieren.
+Für einen anderen Repository-Namen die Quellcode-Links in `frontend/src/main.js`, diese README und die Repository-Homepage anpassen. Das relative Build-Verzeichnis und der Service Worker funktionieren auch unter einem neuen Unterpfad. Eine neue Domain bedeutet einen neuen Website-Speicher; zuvor die Gruppen exportieren und anschließend importieren. Die Sicherung enthält Gruppenhistorien, keine laufenden Partien; diese zuvor fertigspielen. Cloudflare-Konfiguration und Rückfall sind in [docs/cloudflare-deployment.md](docs/cloudflare-deployment.md) beschrieben; eine Cloudflare-Version ist noch nicht veröffentlicht.
 
 ## Quellen und Lizenz
 

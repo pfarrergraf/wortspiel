@@ -6,10 +6,12 @@ import { normalize } from "../engine.js";
 // the word, so moving a word to another category or changing its points
 // keeps its history. Never rename a word once it has shipped.
 export const PANTOMIME = "pantomime";
+export const FREE = "free";
 export const CATEGORY_PREFIX = "pm-";
 
 export const GAME_MODES = [
   { id: "taboo", name: "Tabu – Begriffe erklären", description: "Die Themenpakete mit Tabuwörtern. Erklären, ohne die verbotenen Wörter zu sagen." },
+  { id: FREE, name: "Frei erklären", description: "Erklärt mit eigenen Worten, ohne zusätzliche Tabuwörter. Der Begriff selbst und seine Wortbestandteile bleiben verboten." },
   { id: PANTOMIME, name: "Pantomime – Vorspielen", description: "Wörter zum Vorspielen, ohne Worte, Geräusche oder Gegenstände. Schwere Begriffe bringen bis zu 3 Punkte." },
 ];
 
@@ -64,6 +66,8 @@ export function validateGameMode(settings) {
   const mode = settings.gameMode;
   if (mode != null && !GAME_MODES.some((m) => m.id === mode))
     throw new Error("Wähle einen gültigen Spielmodus.");
+  if (mode === FREE && settings.tabooMode !== "none")
+    throw new Error("Frei erklären verwendet keine zusätzlichen Tabuwörter.");
   const selected = settings.pantomimeSelected;
   if (
     selected != null &&
@@ -73,6 +77,20 @@ export function validateGameMode(settings) {
     throw new Error("Ungültige Pantomime-Kategorien.");
   if (mode === PANTOMIME && Array.isArray(selected) && !selected.length)
     throw new Error("Wähle mindestens eine Pantomime-Kategorie.");
+}
+
+// Only future-game setup is reconciled here. Never rewrite a saved session.
+export function configureGameMode(settings, previous, changedField) {
+  const next = { ...settings };
+  const changed = next.gameMode !== (previous.gameMode ?? "taboo");
+  if (changed && next.gameMode === PANTOMIME) next.difficulty = "all";
+  if (next.gameMode === PANTOMIME) return next;
+  if (changedField === "tabooMode")
+    next.gameMode = next.tabooMode === "none" ? FREE : "taboo";
+  else if (changed && next.gameMode === "taboo") next.tabooMode = "classic";
+  if (next.gameMode === FREE) next.tabooMode = "none";
+  else if (next.tabooMode === "none") next.gameMode = FREE;
+  return next;
 }
 
 export function migrateGameMode(state) {

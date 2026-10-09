@@ -216,7 +216,9 @@ test("difficulty filters the real pool, keeping rare names out of easy and mediu
   assert.ok(medium.some((c) => c.word === "Albert Einstein"));
   assert.ok(!medium.some((c) => c.id === alison.id));
   s.settings.difficulty = "all";
-  assert.equal(availableCards(dataset.cards, s.settings).length, dataset.cards.length);
+  const playable = dataset.cards.filter((card) => card.retired !== true);
+  assert.deepEqual(availableCards(dataset.cards, s.settings), playable);
+  assert.equal(dataset.cards.filter((card) => card.retired === true).length, 8);
   assert.equal(matchesDifficulty({ difficulty: undefined }, "easy"), false);
 });
 

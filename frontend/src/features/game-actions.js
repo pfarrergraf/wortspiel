@@ -34,6 +34,7 @@ for (const result of ["correct", "skip", "taboo"])
 registerAction("start-turn", async () => {
   const done = await change((s) => startTurn(s, cards));
   if (!done) return;
+  scroll();
   persistentStorage().catch(() => {});
   if (ctx.state.session?.phase === "playing") emit("turn-start");
 });
@@ -60,8 +61,12 @@ registerAction("new-game", () =>
 );
 registerAction("replace-game", () =>
   change(
-    (s) => createSession(s, cards, categories),
+    (s) => {
+      if (ctx.pendingGameSettings) s.settings = structuredClone(ctx.pendingGameSettings);
+      createSession(s, cards, categories);
+    },
     () => {
+      ctx.pendingGameSettings = null;
       ctx.view = "game";
       scroll();
     },
@@ -74,7 +79,10 @@ for (const id of ["setup", "home", "storage", "continue"])
     go(id === "storage" ? "storage" : id === "continue" ? "game" : "setup");
   });
 
-registerAction("close-dialog", () => document.querySelector("#modal").close());
+registerAction("close-dialog", () => {
+  ctx.pendingGameSettings = null;
+  document.querySelector("#modal").close();
+});
 
 registerAction("end-turn-confirm", async () => {
   await change((s) => pause(s));

@@ -287,7 +287,7 @@ export function recordResult(
       : result === "taboo"
         ? -session.settings.tabooPenalty
         : -session.settings.skipPenalty;
-  session.log.push({ id: card.id, word: card.word, result, delta });
+  session.log.push({ id: card.id, word: card.word, result, delta, mode: session.currentMode ?? "explain" });
   session.scores[teamIndex(session)] += delta;
   session.remaining = Math.max(0, session.deadline - now);
   if (!drawCard(state, cards, random, now)) finishTurn(state, now);
@@ -305,6 +305,7 @@ export function undoResult(state) {
   const entry = session.log.pop();
   session.scores[teamIndex(session)] -= entry.delta;
   session.current = entry.id;
+  session.currentMode = entry.mode ?? (isPantomime(session.settings) ? PANTOMIME : "explain");
 }
 
 export function pause(state, now = Date.now()) {
@@ -398,6 +399,11 @@ export function importBackup(state, backup) {
       )
     )
       throw new Error("Die Sicherung enthält ungültige Kartendaten.");
+  }
+  // Validate the complete backup before touching any group. Storage aborts
+  // transactions too, but pure engine callers must receive the same guarantee.
+  for (const [, group] of entries) {
+    const seen = Object.entries(group.seen);
     const target = ensureGroup(state, group.name);
     for (const [key, time] of seen) {
       if (!Object.hasOwn(target.seen, key)) added++;

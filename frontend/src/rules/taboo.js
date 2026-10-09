@@ -18,7 +18,7 @@ export const TABOO_MODES = Object.freeze([
 
 // Return a separate array so views cannot change the source card's taboo words.
 export function visibleTaboo(card, settings) {
-  const mode = settings?.tabooMode ?? "classic";
+  const mode = settings?.gameMode === "free" ? "none" : settings?.tabooMode ?? "classic";
   if (mode === "none") return [];
   return mode === "light" ? card.taboo.slice(0, 3) : card.taboo.slice();
 }
@@ -26,7 +26,7 @@ export function visibleTaboo(card, settings) {
 // Scoring still uses the internal result "taboo" in every mode.
 export function tabooLabel(settings) {
   if (settings?.gameMode === "pantomime") return "Gesprochen";
-  return settings?.tabooMode === "none" ? "Wort gesagt" : "Tabuwort";
+  return settings?.gameMode === "free" || settings?.tabooMode === "none" ? "Wort gesagt" : "Tabuwort";
 }
 
 export function validateTabooMode(value) {
