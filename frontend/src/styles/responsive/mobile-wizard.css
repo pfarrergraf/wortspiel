@@ -1,0 +1,23 @@
+.quick-start { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; margin-bottom: 20px; }
+.quick-start h2 { margin: 0 0 8px; font-size: 20px; }
+.quick-start p { margin: 0 0 8px; overflow-wrap: anywhere; }
+.quick-available { font-size: 13px; color: var(--muted); }
+.quick-start-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.mobile-quickstart { display: flex; flex-wrap: wrap; gap: 12px; justify-content: space-between; align-items: center; margin-bottom: 16px; padding: 12px; border: 1px solid var(--line); border-radius: 14px; background: var(--paper); }
+#wizard-progress { font-size: 15px; font-weight: 800; }
+.wizard-controls { display: flex; flex-wrap: wrap; gap: 8px; }
+.wizard-controls button { min-height: 44px; }
+.category-search { display: grid; gap: 8px; margin-block: 16px; font-weight: 700; }
+.category-search input { width: 100%; min-height: 44px; font-size: 16px; padding: 10px; border: 1px solid var(--line); border-radius: 8px; }
+.mobile-quickstart[hidden], #setup-form [hidden] { display: none !important; }
+@media (max-width: 743px) {
+  #app:has(.quick-start) .hero { display: none; }
+  .quick-start { padding: 16px; }
+  .quick-start-actions { width: 100%; }
+  .quick-start-actions .button { width: 100%; min-height: 44px; }
+  #setup-form:has([data-setup-step][hidden]) { display: block; }
+  .category-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .category strong { font-size: 13px; }
+  .category > span:last-child { font-size: 11px; }
+  .game-mode-options { grid-template-columns: minmax(0, 1fr); }
+}

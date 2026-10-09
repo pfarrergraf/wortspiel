@@ -28,5 +28,5 @@ export function finalResult(session, remaining) {
     )
     .join(
       "",
-    )}</div><div class="summary-actions">${action("new-game", `Neue Partie ${icon("arrow")}`, "button primary")}${action("storage", "Kartenspeicher ansehen")}</div><p class="fine-print">Der Kartenspeicher bleibt erhalten. ${remaining} ungespielte Karten in euren Themen.</p><details class="turn-history"><summary>Alle Runden ansehen</summary>${session.turns.map((turn) => `<div class="history-turn"><h3>Runde ${turn.cycle} · ${escape(session.settings.teams[turn.team])} <span>${turn.points} Punkte</span></h3>${logList(turn.log, session.settings)}</div>`).join("")}</details></section>`;
+    )}</div><div class="summary-actions">${action("replay", "Nochmal spielen", "button primary")}${action("new-game", `Neue Partie ${icon("arrow")}`, "button primary")}${action("storage", "Kartenspeicher ansehen")}</div><p class="fine-print">Der Kartenspeicher bleibt erhalten. ${remaining} ungespielte Karten in euren Themen.</p><details class="turn-history"><summary>Alle Runden ansehen</summary>${session.turns.map((turn) => `<div class="history-turn"><h3>Runde ${turn.cycle} · ${escape(session.settings.teams[turn.team])} <span>${turn.points} Punkte</span></h3>${logList(turn.log, session.settings)}</div>`).join("")}</details></section>`;
 }

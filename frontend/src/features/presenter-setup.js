@@ -79,12 +79,15 @@ registerAction("presenter-learn", async (id, button) => {
   button.textContent = "Jetzt die Taste am Presenter drücken …";
   // While learning, every divertable control of a connected presenter reports to us.
   const hid = currentHid();
+  // Listen before diverting: a real device (or a fast click) can report as soon
+  // as its diversion takes effect, before the final HID acknowledgement.
+  const pendingInput = learnSkip();
   try {
     await hid?.divertOnly(hid.divertable());
   } catch {
     /* Learning still works for keys and mouse buttons. */
   }
-  const input = await learnSkip();
+  const input = await pendingInput;
   waiting = false;
   try {
     await hid?.divertOnly(learnedCids());

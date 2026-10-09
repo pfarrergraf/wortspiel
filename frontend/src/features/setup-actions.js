@@ -1,24 +1,26 @@
-import { ctx, change, dialog } from "../app.js";
+import { ctx, change, dialog, toast } from "../app.js";
 import { registerAction } from "../actions.js";
 import { cards, categories, pantomimeCategories } from "../data.js";
-import { isPantomime } from "../rules/pantomime.js";
+import { isPantomime, configureGameMode } from "../rules/pantomime.js";
 import {
   applyPreset,
   availableCards,
   createSession,
   groupId,
+  validateSettings,
 } from "../engine.js";
 import { action } from "../ui/html.js";
 import { categoryCounts, readSettings } from "../ui/setup.js";
 
-document.addEventListener("submit", async (event) => {
-  if (event.target.id !== "setup-form") return;
-  event.preventDefault();
-  const settings = readSettings();
+async function requestGame(settings) {
+  try {
+    validateSettings(settings, categories);
+  } catch (error) {
+    toast(error.message);
+    return;
+  }
   if (ctx.state.session && ctx.state.session.phase !== "finished") {
-    await change((s) => {
-      s.settings = settings;
-    });
+    ctx.pendingGameSettings = structuredClone(settings);
     dialog(
       "Neue Partie beginnen?",
       "<p>Die laufende Partie wird beendet. Bereits gesehene Karten bleiben im Kartenspeicher.</p>",
@@ -35,12 +37,20 @@ document.addEventListener("submit", async (event) => {
         window.scrollTo(0, 0);
       },
     );
+}
+
+document.addEventListener("submit", async (event) => {
+  if (event.target.id !== "setup-form") return;
+  event.preventDefault();
+  await requestGame(readSettings());
 });
+
+registerAction("replay", () => requestGame(structuredClone(ctx.state.session?.settings ?? ctx.state.settings)));
 
 // Text inputs save without a repaint so typing keeps focus; only counts update.
 document.addEventListener("change", async (event) => {
   if (!event.target.closest("#setup-form")) return;
-  const settings = readSettings();
+  const settings = readSettings(event.target.name);
   const textInput = event.target.matches(
     'input[name="team"], input[name="group"]',
   );
@@ -88,6 +98,7 @@ registerAction("preset:", (id) => {
   return change((s) => {
     s.settings = settings;
     applyPreset(s.settings, id.split(":")[1], categories);
+    s.settings = configureGameMode(s.settings, settings);
   });
 });
 

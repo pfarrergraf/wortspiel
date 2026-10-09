@@ -16,6 +16,9 @@ export const ctx = {
   busy: false,
   offlineReady: false,
   installPrompt: null,
+  setupWizardStep: null,
+  categoryQuery: "",
+  pendingGameSettings: null,
 };
 let toastTimeout,
   timer,

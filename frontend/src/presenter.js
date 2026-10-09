@@ -95,6 +95,7 @@ const playing = () =>
   ctx.state?.session?.phase === "playing" &&
   !document.querySelector("dialog[open]");
 const typing = (target) =>
+  target?.isContentEditable ||
   /SELECT|TEXTAREA/.test(target?.tagName) ||
   (target?.tagName === "INPUT" && !/checkbox|radio/.test(target.type));
 const click = (id) =>
@@ -127,6 +128,7 @@ let hold = null; // { timer, fired } while "back" is held during a turn
 window.addEventListener(
   "keydown",
   (event) => {
+    if (event.defaultPrevented || event.isComposing || event.keyCode === 229) return;
     const input = { type: "key", key: event.key, code: event.code };
     if (!event.repeat) {
       downAt.set(event.code || event.key, performance.now());
