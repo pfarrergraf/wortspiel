@@ -10,6 +10,7 @@ export const CATEGORY_PREFIX = "pm-";
 
 export const GAME_MODES = [
   { id: "taboo", name: "Tabu – Begriffe erklären", description: "Die Themenpakete mit Tabuwörtern. Erklären, ohne die verbotenen Wörter zu sagen." },
+  { id: "free", name: "Frei erklären", description: "Erklärt den Begriff mit eigenen Worten. Keine Tabuwörter – nur das gesuchte Wort selbst darf nicht gesagt werden." },
   { id: PANTOMIME, name: "Pantomime – Vorspielen", description: "Wörter zum Vorspielen, ohne Worte, Geräusche oder Gegenstände. Schwere Begriffe bringen bis zu 3 Punkte." },
 ];
 
