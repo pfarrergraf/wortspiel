@@ -1,110 +1,106 @@
-# Cloudflare Pages – Vorbereitung, Preview-Prüfung und Rückfall
+# Cloudflare Pages – Projekt, Preview-Prüfung und Rückfall
 
-Stand: 2026-10-09, DEPLOY-CF (Claude Code), Basis main `9c1d9d68a673e02f3e91b234a867e05a1de433b1`.
+Stand: 2026-10-09, DEPLOY-CF (Claude Code), geprüfter main-SHA `35389e3c96a2442a9a3e38fc929e6136cde1c3c2`.
+Vorheriger Stand dieser Datei (nur Simulation, ohne Kontozugang): Basis `9c1d9d6`.
 
 **Kurzstatus:**
-- Der Cloudflare-Connector ist inzwischen verbunden, kann aber keine Pages-Projekte lesen oder deployen. Es gibt kein Token und kein Wrangler-Login.
-- Der Projektbestand im Konto ist deshalb **unbekannt**.
-- Es wurde **kein Projekt angelegt** und **kein Preview oder Produktionsdeployment erstellt**.
-- Es wurden keine Berechtigungen, Kosten oder DNS-Änderungen verursacht.
-- Was ohne Konto prüfbar war, wurde lokal mit `wrangler pages dev` geprüft. Das ist der offizielle lokale Pages-Simulator, er wurde nur im Scratch-Verzeichnis installiert. Diese Ergebnisse gelten als **Simulation, nicht als Online-Abnahme**.
+- Der Nutzer hat für diese Sitzung ein API-Token (*Account → Cloudflare Pages: Edit*) als Umgebungs-Secret freigegeben. Token und Account-ID stehen in keinem Log, Commit oder PR.
+- Pages-Projekt **`wortspiel-app`** ist als **Direct-Upload-Projekt** angelegt, Produktionsbranch `main`.
+- Es gibt **kein Produktionsdeployment**. `https://wortspiel-app.pages.dev/` antwortet mit 404.
+- Es gibt nur **Preview-Deployments**. Sie sind öffentlich erreichbar und senden automatisch `X-Robots-Tag: noindex`.
+- Der Preview des unveränderten main-Builds ist **online byte-identisch** mit dem lokalen Build. Er bestätigt **CF-1 real**: `/index.html` lädt offline nicht.
+- Ein zweiter Preview mit dem lokal angewendeten, **nicht committeten** CF-1/CF-2-Patch besteht alle Online-Prüfungen. Dazu gehören `/index.html` offline, die CSP in allen drei Modi und ein SW-Update von main auf den Patch ohne Kartenverlust.
+- Keine Domain, kein DNS, keine weiteren Token, keine Kosten. Nichts wurde gelöscht.
+- **Echte Geräte bleiben offen.** Alle Browserprüfungen liefen in Headless-Chromium 141 aus der Cloud-Umgebung.
 
-## 1. Ist-Stand (lesend geprüft)
+## 1. Ist-Stand Konto (lesend geprüft, 2026-10-09)
 
 | Prüfung | Ergebnis |
 | --- | --- |
-| Cloudflare-Konto (Connector, ab 2026-10-09 verbunden) | Workers: 9 vorhanden, **keiner für Wortspiel** (u. a. kanzelclips-uploader, herz-der-kabbala, landwirtschaftssimulator, downloadthat). Keine Änderung vorgenommen |
-| Pages-Projekte | Der Connector bietet **keine Pages-Werkzeuge** (nur Workers/D1/KV/R2/Hyperdrive lesend/schreibend und Doku). Pages-Bestand deshalb weiter **unbekannt**. Preview/Deploy über den Connector nicht möglich |
-| GitHub-Deployments des Repos | nur `github-pages` (zuletzt `9c1d9d6`, 2026-10-09 20:25 UTC) |
-| Check-Runs auf `9c1d9d6` | nur `build` und `deploy` von `github-actions`; **kein Cloudflare-Pages-Check** |
-| GitHub Pages online | `https://pfarrergraf.github.io/wortspiel/` antwortet mit 200. `sw.js` trägt den Cache-Hash `2cb47ad5b8cf2a`, **identisch** mit dem lokalen Build von `9c1d9d6` |
-| `wortspiel.pages.dev` | **fremdes Projekt**: Next.js-Wordle-Klon, `author` „KilianMandscharo“. Nicht unseres |
+| Pages-Projekte vor der Anlage (`wrangler pages project list`) | 9 Projekte, **keines für Wortspiel** (u. a. wer-wird-bibel-millionaer, religionskarte-…, downloadthat, gaistreich, alltagsservice-lauda-*). Nichts verändert |
+| Workers (Connector) | 9 Worker, keiner für Wortspiel. Vor und nach der Projektanlage unverändert |
+| `wortspiel.pages.dev` | **fremdes Projekt** (Next.js-Wordle-Klon). Nicht unseres, nicht verwechseln |
+| Neues Projekt | `wortspiel-app` → `wortspiel-app.pages.dev`, Git-Provider: keiner (Direct Upload) |
+| GitHub Pages | `https://pfarrergraf.github.io/wortspiel/` liefert Cache-Hash `2cb47ad5b8cf2a`, identisch mit dem Build von `35389e3` |
 
-Folgerungen:
-- **Keine Git-Verknüpfung:** Ein mit diesem Repository Git-verknüpftes Pages-Projekt würde Check-Runs oder Deployments an Commits hinterlassen. Es gibt keine. Ein Direct-Upload-Projekt im Konto ist damit aber nicht ausgeschlossen.
-- **Name `wortspiel` ist vergeben:** Der Name ist auf `pages.dev` bereits belegt. Ein neues Projekt erhält eine andere Subdomain, z. B. `wortspiel-<zufall>.pages.dev`, oder braucht einen anderen Projektnamen. Die tatsächliche Adresse erst nach der Anlage dokumentieren und nie mit `wortspiel.pages.dev` verwechseln.
-
-## 2. Build-Konfiguration (gegen Repository und aktuelle Doku geprüft)
+## 2. Build-Konfiguration
 
 | Feld | Wert |
 | --- | --- |
 | Repository | pfarrergraf/wortspiel |
-| Produktionsbranch (erst nach Freigabe) | main |
-| Root Directory | `frontend` |
-| Build Command | `npm run build` (Vite und Service-Worker-Generator) |
-| Output Directory, relativ zum Root | `dist` |
-| Node | 22, explizit `NODE_VERSION=22` für Preview und Produktion |
+| Projekt / Adresse | `wortspiel-app` / `https://wortspiel-app.pages.dev` (erst nach Freigabe mit Inhalt) |
+| Produktionsbranch | main (nur über `wrangler pages deploy … --branch main` nach Freigabe) |
+| Build | lokal bzw. in CI: `cd frontend && npm ci && npm run build`, Node 22. Cloudflare baut **nicht** selbst |
+| Upload | `frontend/dist` per `wrangler pages deploy` |
 
-Vite `base: "./"` macht alle Pfade relativ. Der Build läuft deshalb unverändert unter `/` (Cloudflare) und unter `/wortspiel/` (GitHub Pages). Quellen, abgerufen am 2026-10-09:
-- [Build-Konfiguration](https://developers.cloudflare.com/pages/configuration/build-configuration/)
-- [Git-Integration](https://developers.cloudflare.com/pages/get-started/git-integration/)
-- [Branch-Kontrollen](https://developers.cloudflare.com/pages/configuration/branch-build-controls/)
-- [Preview-Deployments](https://developers.cloudflare.com/pages/configuration/preview-deployments/)
-- [Header](https://developers.cloudflare.com/pages/configuration/headers/)
+Vite `base: "./"` macht alle Pfade relativ. Derselbe Build läuft unter `/` (Cloudflare) und unter `/wortspiel/` (GitHub Pages). Quellen: [Direct Upload](https://developers.cloudflare.com/pages/get-started/direct-upload/), [Preview-Deployments](https://developers.cloudflare.com/pages/configuration/preview-deployments/), [Header](https://developers.cloudflare.com/pages/configuration/headers/).
 
-## 3. Wichtig: Projektanlage ohne ungewollte Produktion
+## 3. Projektanlage ohne ungewollte Produktion – und eine Wrangler-Falle
 
-Laut aktueller Doku gilt:
-- Die Einrichtung per Git-Integration endet mit **„Save and Deploy“**. Das baut und veröffentlicht sofort den gewählten Produktionsbranch auf `<projekt>.pages.dev`. Die erste Anlage per Git ist also bereits eine **öffentliche Produktion**.
-- Automatische Produktions-Deployments lassen sich erst **nach** der Anlage abschalten: *Settings → Builds & deployments → Configure Production deployments → „Enable automatic production branch deployments“*. Für Preview-Branches gibt es die Wahl „All / None / Custom branches“.
-- Ein Git-Projekt lässt sich später nicht in ein Direct-Upload-Projekt umwandeln und umgekehrt auch nicht.
-- Preview-URLs (`<hash>.<projekt>.pages.dev` und Branch-Aliase) sind **standardmäßig öffentlich**. Schützen lassen sie sich mit *Settings → General → Enable access policy* (Cloudflare Access). Das schützt nur die Previews, nicht `<projekt>.pages.dev`.
+Gewählt wurde Variante A (Direct Upload):
+- `wrangler pages project create` legt das Projekt ohne Deployment an.
+- `wrangler pages deploy … --branch <nicht main>` erzeugt nur Previews.
+- Eine Git-Integration (Variante B) würde bei der Anlage sofort den Produktionsbranch veröffentlichen. Sie wurde nicht genutzt.
 
-Empfohlener Weg, ohne erste Produktion vor der Freigabe:
+**Wichtig für alle weiteren Aufrufe (Wrangler 4.149.0):**
+- Wrangler leitet `wrangler pages project create` standardmäßig auf das neue „Pages als Teil von Workers“ um. Intern wird daraus ein **`wrangler deploy`** (Workers-Deployment).
+- Der erste Aufruf brach dabei mit `AutoConfigDetectionError` ab. Laut Log wurde nichts deployt, die Workers-Liste blieb unverändert.
+- Angelegt wurde das Projekt danach ausdrücklich über die klassische Pages-API: `wrangler pages project create wortspiel-app --production-branch main --force`. Laut Wrangler-Hinweis ist `--force` nur bei der Anlage nötig. Folgende `pages deploy`-Aufrufe liefen direkt gegen Pages (Environment „Preview“).
+- **Für CI und Produktion:** Wrangler-Version pinnen und vor dem ersten Produktionsaufruf prüfen, dass `pages deploy` nicht delegiert. Im Log steht dann kein `delegate pages to workers`.
 
-| Variante | Ablauf | Neue Berechtigung | Bewertung |
-| --- | --- | --- | --- |
-| **A – Direct Upload (empfohlen)** | `wrangler pages project create <name> --production-branch main` legt das Projekt **ohne Deployment** an. Danach erzeugt `wrangler pages deploy dist --branch preview-<sha>` ausschließlich ein Preview aus genau dem geprüften Build. Produktion entsteht erst mit `--branch main` nach Freigabe | Cloudflare-Login des Kontoinhabers (interaktiv) oder ein API-Token mit „Cloudflare Pages: Edit“ als GitHub-Secret. Kein Token im Chat | Deployt exakt das in CI getestete Artefakt. Kein unbeabsichtigter Produktionsbuild |
-| B – Git-Integration | Cloudflare-GitHub-App nur für dieses Repo freigeben. Bei der Anlage als Produktionsbranch einen **eigenen, leeren Platzhalter-Branch** wählen, sofort danach automatische Produktion deaktivieren und Preview auf „Custom: `v2/*`, `integration/*`“ stellen | Installation der Cloudflare-GitHub-App | Die Anlage veröffentlicht trotzdem den Platzhalter öffentlich. Cloudflare baut selbst, das ist ein zweiter Buildweg neben der CI |
+## 4. Befunde CF-1 und CF-2
 
-Für A wäre später ein CI-Schritt nach den Tests sinnvoll. Er gehört dem Integrator: `.github/workflows/pages.yml` mit `cloudflare/wrangler-action`, nicht-main nur als Preview, main erst nach Freigabe. Den Workflow nicht ohne Freigabe anlegen.
+### CF-1 (blockierend vor Produktion): Precache von `./index.html` – **online bestätigt**
 
-## 4. Lokale Cloudflare-Simulation (`wrangler pages dev`, Wrangler 4.149.0)
+- Cloudflare antwortet auf `/index.html` mit **308 → `/`**, geprüft mit `curl -sI` am Preview.
+- Der Service Worker von `35389e3` speichert diesen Eintrag deshalb als `redirected: true`, online nachgewiesen im Cache des Previews.
+- Folge: Ein neuer Tab auf `/index.html` schlägt offline mit `net::ERR_FAILED` fehl. Auch der Navigations-Fallback hängt an diesem Eintrag.
+- `/` und `/?from=homescreen` laufen offline.
 
-Geprüft wurde `dist/` von `9c1d9d6` mit lokalem Wrangler und Chromium 141. Das ist **Simulation**, keine Online-Abnahme.
+**Zuständigkeit:**
+- Der Integrator hat CF-1 auf `v2/CF-1-offline` beansprucht (`docs/claims/CF-1.md`). Exklusiv gehören ihm `service-worker.mjs`, `public/_headers`, der `main.js`-Startup-Handler und die CF-1-Tests.
+- Deshalb gibt es **keinen** konkurrierenden Claude-PR (`v2/DEPLOY-CF-swfix` wurde nicht angelegt).
+- Der unten stehende Patch war nur lokal angewendet, um ihn online zu prüfen.
 
-| Pfad | Antwort |
-| --- | --- |
-| `/` | 200 `text/html` |
-| `/index.html` | **308 → `/`** (Pages-Normalisierung) |
-| `/sw.js` | 200, standardmäßig `Cache-Control: public, max-age=0, must-revalidate` |
-| `/manifest.webmanifest` | 200 `application/manifest+json` |
-| `/licenses/Manrope-OFL.txt` | 200 `text/plain` |
-| unbekannter Pfad | 200 mit `index.html` (SPA-Fallback, weil kein `404.html` existiert) |
-| `/_headers` (falls vorhanden) | wird **nicht** ausgeliefert |
-
-### Befund CF-1 (blockierend vor Produktion): Precache von `./index.html`
-
-`scripts/service-worker.mjs` nimmt `./index.html` in den Precache auf. Auf Cloudflare liefert dieser Request eine Weiterleitung. Gespeichert wird dann eine Antwort mit `redirected: true`. Offline schlägt deshalb fehl:
-- die Navigation auf `/index.html` mit `net::ERR_FAILED`;
-- der Navigations-Fallback des Workers, denn er nutzt genau diesen Eintrag.
-
-`/` und `/?from=homescreen` funktionieren offline. Auf GitHub Pages tritt das Problem nicht auf, dort gibt es keine Weiterleitung.
-
-Lokal verifizierter Minimalfix, als **Integrationsbedarf** für den Integrator (die Datei gehört nicht zu diesem Paket):
+**Korrektur am früheren Minimalfix:** Der frühere Vorschlag filterte `index.html` auch aus der **Hash-Berechnung**. Dann würden reine HTML- oder `_headers`-Änderungen den Cache-Namen nicht mehr ändern, und der Service Worker würde kein Update ausführen. Der geprüfte Patch filtert deshalb nur die Precache-Liste:
 
 ```diff
---- a/frontend/scripts/service-worker.mjs
 -const files = (await list(root)).filter((file) => file !== "sw.js");
-+// index.html is served as "./" (Cloudflare Pages redirects /index.html to /);
-+// _headers/_redirects are host config, never served as files.
-+const files = (await list(root)).filter((file) => !["sw.js", "index.html", "_headers", "_redirects"].includes(file));
++const files = (await list(root)).filter((file) => file !== "sw.js").sort();
++// index.html is cached as "./" (Cloudflare Pages answers /index.html with 308 → /);
++// _headers/_redirects are host configuration and never served. All files still feed the hash.
++const HOST_ONLY = ["index.html", "_headers", "_redirects"];
++const precache = files.filter((file) => !HOST_ONLY.includes(file));
+ const hash = createHash("sha256");
+-for (const file of files.sort())
++for (const file of files)
+   hash.update(await readFile(new URL(file, root)));
+@@
+-const FILES = ${JSON.stringify(["./", ...files.map((file) => `./${file}`)])};
++const FILES = ${JSON.stringify(["./", ...precache.map((file) => `./${file}`)])};
 @@
 -      if (event.request.mode === 'navigate') return await cache.match(new URL('./index.html', self.registration.scope)) || Response.error();
 +      if (event.request.mode === 'navigate') return await cache.match(self.registration.scope) || Response.error();
+@@
+-console.log(`Offline-Cache ${version}: ${files.length} Dateien`);
++console.log(`Offline-Cache ${version}: ${precache.length} Dateien`);
 ```
 
-Ergebnis mit dem Fix in der Simulation:
-- Kein Eintrag im Cache ist mehr `redirected`.
-- Offline antworten `/`, `/?from=homescreen` und `/index.html` mit 200, und die App läuft.
+Lokaler Test mit dem Patch (Scratch-Worktree auf `35389e3`, Build `Offline-Cache 2103fdf53f8324: 16 Dateien`):
+- `npm test`: 98/98.
+- `npm run test:e2e`: **100 bestanden, 2 fehlgeschlagen.**
 
-Nötige Regressionstests: eine Unit-Prüfung des generierten `FILES` sowie der bestehende Offline-E2E und `QA-DEVICES.spec.js` (Unterpfad und SW-Update).
+Beide Fehlschläge betreffen `QA-DEVICES.spec.js:362` ([mobile] und [desktop]). Der Test verlangt ausdrücklich `…/wortspiel/index.html` im Precache, was CF-1 bewusst ändert.
 
-Ein Nebenbefund ist nicht blockierend: Offline auf einem *unbekannten Unterpfad* (z. B. `/spiel/x`) liefert der SPA-Fallback HTML. Die relativen Assets lösen dort aber falsch auf, und die App bleibt leer. Das betrifft jeden Host und ist kein regulärer Einstieg.
+**Integrationsbedarf:** Diese Zusicherung **gleichwertig ersetzen, nicht abschwächen**:
+- `index.html` ist kein eigener Precache-Eintrag, kein Eintrag ist `redirected`, und `./` ist enthalten.
+- Neu: Ein Offline-Tab auf `/wortspiel/index.html` startet die App.
 
-### Befund CF-2: Sicherheits-Header
+Dazu kommt eine Unit-Prüfung, dass das generierte `FILES` weder `./index.html` noch `./_headers` noch `./_redirects` enthält.
 
-Derzeit gibt es keine `_headers`-Datei; Cloudflare sendet nur Standard-Header. Der folgende Vorschlag wurde lokal angewendet:
+### CF-2: Sicherheits-Header (`frontend/public/_headers`, nur zusammen mit CF-1)
+
+Der Vorschlag ist unverändert gegenüber der früheren Fassung:
 
 ```
 /*
@@ -123,30 +119,66 @@ https://:version.:project.pages.dev/*
   X-Robots-Tag: noindex
 ```
 
-Ergebnis der Simulation:
-- Alle Header kommen an.
-- In den Modi Klassisch, Frei erklären und Pantomime treten **keine CSP-Verstöße und keine Konsolenfehler** auf, ebenso nicht beim Sicherung-Download und beim zusammenführenden Import in einen frischen Kontext.
+Online am Preview `preview-cf1-2103fdf` geprüft:
+- Alle Header kommen an, auch auf der 308-Antwort.
+- `/sw.js` kommt mit `no-cache`, `/assets/*` mit `immutable`.
+- `/_headers` wird **nicht** als Datei ausgeliefert, nur das SPA-Fallback-HTML.
+- Ohne `_headers` sendet Cloudflare nur `nosniff`, `strict-origin-when-cross-origin` und auf Previews `noindex`.
 
 Grenzen der Prüfung:
-- Nicht geprüft unter CSP: lokales Mikrofon (Speech) und WebHID-Presenter, das braucht echte Hardware.
-- Der Startfehler-Button in `src/main.js` nutzt `onclick="location.reload()"`. Unter dieser CSP würde der Inline-Handler blockiert, das betrifft nur den Fehlerpfad. Für den Integrator: auf `addEventListener` umstellen.
-- `X-Robots-Tag: noindex` für `*.pages.dev` ist eine Empfehlung, solange eine eigene Domain geplant ist. Das ist eine Entscheidung des Nutzers.
+- Mikrofon und WebHID unter CSP brauchen echte Hardware und sind offen.
+- Der Inline-`onclick` im Startfehler-Pfad (`main.js`) würde unter dieser CSP blockiert. Er liegt im CF-1-Claim des Integrators.
+- `X-Robots-Tag: noindex` auf `wortspiel-app.pages.dev` ist eine Entscheidung des Nutzers: sinnvoll, falls später eine eigene Domain kommt, sonst entfernen.
 
-**Integrationsbedarf:** Die Datei gehört nach `frontend/public/_headers`. Das darf **erst zusammen mit CF-1** (Ausschluss von `_headers` aus dem Precache) kommen. Sonst schlägt `cache.addAll` an der nicht ausgelieferten Datei fehl, und der Offline-Modus fällt aus. GitHub Pages ignoriert `_headers`, dort ist die Datei harmlos.
+## 5. Preview-Abnahme – **Online-Prüfung der Previews** (2026-10-09)
 
-## 5. Preview-Abnahme (erst mit Kontozugang ausführbar)
+Gemessen wurde mit Headless-Chromium 141 aus der Cloud-Umgebung über deren HTTPS-Proxy. Das ist eine Online-Prüfung der Previews, **keine Prüfung auf echten Geräten**.
 
-Mit dem exakten Preview-SHA abhaken; Ergebnisse hier eintragen:
+| Preview | Branch-Alias | Deployment | Inhalt |
+| --- | --- | --- | --- |
+| P1 | `https://preview-35389e3.wortspiel-app.pages.dev` | `47bcc476` | main `35389e3`, **unverändert**, Cache `2cb47ad5b8cf2a` |
+| P2 | `https://preview-cf1-2103fdf.wortspiel-app.pages.dev` | `3a24bd2c` | `35389e3` + lokaler CF-1/CF-2-Patch, **nicht committet, kein Produktionskandidat**, Cache `2103fdf53f8324` |
+| P3 | `https://preview-swupdate.wortspiel-app.pages.dev` | zuletzt `6e62bc2d` | SW-Update-Test: abwechselnd P1- und P2-Build auf demselben Alias |
 
-- [ ] Quell-Commit = geprüfter main-SHA; Build-Log Node 22; `Offline-Cache <hash>` identisch mit CI-Build.
-- [ ] HTTPS, tatsächlich ausgelieferte Header (`curl -sI`), `sw.js` nicht langfristig gecacht.
-- [ ] Offline: SW installiert, Reload und neuer Tab offline, `/index.html` offline (CF-1), SW-Update nach zweitem Preview ohne Verlust gesehener Karten.
-- [ ] Manifest/Icons/Installation auf Android-Chrome und iOS-Safari (Home-Bildschirm).
-- [ ] Smartphone/Tablet/Desktop real; Simulation siehe `docs/reviews/QA-DEVICES.md`.
-- [ ] Sicherung von GitHub Pages herunterladen → auf Preview zusammenführend importieren → Anzahl gesehener Karten vergleichen.
-- [ ] Netzwerkprotokoll: keine Fremd-Origins (lokal mit Blockierliste: 0 Fremdrequests).
-- [ ] Lizenzhinweise erreichbar (`licenses/Manrope-OFL.txt`, GPL/THIRD_PARTY_NOTICES im Repo verlinkt).
-- [ ] Rechtliches: Es gibt derzeit **kein Impressum und keine eigenständige Datenschutzseite**, nur den Infodialog „Karten & Datenschutz“. Ob für die Cloudflare-Adresse ein Impressum nötig ist und wer verantwortlich ist, entscheidet der Nutzer. Hier werden keine Angaben erfunden.
+Hinweis: Cloudflare zeigt bei P2 und P3 als Quelle `35389e3`, weil Direct Upload keinen Patch-Stand kennt. Der Patch-Stand ist in der Commit-Nachricht des Deployments und im Branch-Namen vermerkt.
+
+| Prüfpunkt | P1 main | P2 CF-1/CF-2 |
+| --- | --- | --- |
+| Quelle = geprüfter SHA, Node 22, Cache-Hash wie lokal | ja: alle 18 Dateien online **byte-identisch** (sha256) zum lokalen Build; `wortspiel-2cb47ad5b8cf2a` | Cache `wortspiel-2103fdf53f8324` = lokaler Patch-Build |
+| HTTPS | HTTP/2 200; `http://` → 301 `https://` | wie P1 |
+| Header (`curl -sI`) | `cache-control: public, max-age=0, must-revalidate` (auch `sw.js`), `nosniff`, `strict-origin-when-cross-origin`, `noindex`; **keine CSP**; `/index.html` → 308 `/` | volle CF-2-Header (s. o.) |
+| SW-Installation, „Offline bereit“ | ja; 18 Cache-Einträge, **1 `redirected` (`/index.html`)** | ja; 17 Einträge, 0 `redirected` |
+| Offline-Reload | ja | ja |
+| Neuer Tab offline `/` und `/?from=homescreen` | ja | ja |
+| Neuer Tab offline `/index.html` | **FEHLER `net::ERR_FAILED` (CF-1)** | ja |
+| Manifest | `application/manifest+json`; `start_url`/`scope` = Preview-Wurzel | ja |
+| Icons | 192×192 PNG, 512×512 PNG maskable, SVG, apple-touch-icon: alle erreichbar und mit korrektem Typ | ja |
+| Lizenz | `licenses/Manrope-OFL.txt` erreichbar | ja |
+| Fremdrequests | 0 | 0 |
+| Klassisch / Frei erklären / Pantomime: je eine Karte gewertet | ok, keine Konsolenfehler | ok; **0 CSP-Verstöße**, keine Konsolenfehler, Sicherung-Download funktioniert |
+| Import einer **auf GitHub Pages erzeugten** Sicherung | 3 von 3 Karten der Gruppe übernommen, Re-Export identisch | 3 von 3, Meldung „3 zusätzliche Karten in den Speicher übernommen.“, 0 CSP-Verstöße |
+
+**SW-Update über zweites Deployment (P3, persistentes Browserprofil):**
+1. Alias mit dem P1-Build: SW installiert, 2 Karten gesehen. Danach Browser-Neustart **offline**: Partie pausiert, 2 gesehene Karten erhalten.
+2. Derselbe Alias neu deployt mit dem P2-Build. `registration.update()` aktiviert den neuen Worker. Der alte Cache `…2cb47ad5b8cf2a` wird entfernt, nur `…2103fdf53f8324` bleibt. Alle gesehenen Karten bleiben erhalten. Offline laufen danach `/` **und** `/index.html`.
+
+Es gab drei Läufe, ehrlich protokolliert:
+- **Lauf 1:** Ohne Warten auf die Alias-Umstellung blieb der alte Worker 15 s aktiv. Bei einem späteren Aufruf desselben Profils übernahm der neue Worker sofort.
+- **Lauf 2:** Das Prüfskript las den Zwischenstand mit beiden Caches als Fehler. Der Endzustand war korrekt.
+- **Lauf 3:** Mit Warten auf die Alias-Umstellung und korrigierter Bedingung **vollständig grün**.
+
+Folgerung: Nach einem Deployment kann der Alias einige Sekunden lang noch den alten `sw.js` liefern. Das Update kommt dann beim nächsten Aufruf. Kein Kartenverlust in einem der Läufe.
+
+**Origin-Migration:**
+- Die Sicherung wurde in einem frischen Testbrowser auf `https://pfarrergraf.github.io/wortspiel/` erzeugt: Gruppe „CF-Migrationstest“, 3 Karten, Schema 1.
+- Bestehende Nutzerdaten auf GitHub Pages wurden nicht berührt.
+- Geprüft wurde der Import in einen leeren Kontext. Das Zusammenführen mit bereits vorhandener Historie decken die Unit-Tests ab. Online wurde es nicht eigens geprüft.
+
+Weiterhin **offen** (nicht automatisierbar):
+- [ ] Installation und Offline-Start auf echten Geräten: Android-Chrome, iOS-Safari (Home-Bildschirm), Tablet, Desktop. Siehe `docs/reviews/QA-DEVICES.md`.
+- [ ] Mikrofon/WebHID unter CSP auf echter Hardware.
+- [ ] WebKit/Safari-Engine (nicht in der Cloud-Umgebung verfügbar).
+- [ ] Wiederholung der Abnahme am **endgültigen Produktions-SHA**, sobald CF-1 auf main ist.
 
 ## 6. Originwechsel: Kartenspeicher sicher mitnehmen
 
@@ -158,25 +190,20 @@ Browser-Speicher gehört zur jeweiligen Origin. Spielstände von GitHub Pages er
 4. **Dieselben Gruppennamen** verwenden und die Anzahl gesehener Karten in beiden Origins vergleichen.
 5. Nichts automatisch löschen oder zurücksetzen. Die GitHub-Pages-Daten bleiben bestehen.
 
-Simulation: Eine Sicherung aus einem Kontext wurde in einen frischen Kontext importiert, Meldung „2 zusätzliche Karten in den Speicher übernommen“. Eine vollständige Spielstand-Migration ist **nicht** implementiert und wird nicht beworben.
+Online geprüft: Abschnitt 5, Import einer GitHub-Pages-Sicherung auf P1 und P2. Eine vollständige Spielstand-Migration ist **nicht** implementiert und wird nicht beworben.
 
 ## 7. Rückfall
 
-- GitHub Pages bleibt unter https://pfarrergraf.github.io/wortspiel/ bestehen. Aktuell ausgeliefert wird `9c1d9d6`, Cache-Hash `2cb47ad5b8cf2a`.
-- Gesicherter Alt-Stand: `backup/main-2026-10-09` → `6de6340710de3f389f8de3ba1819123dc4c9a977`.
+- GitHub Pages bleibt unter https://pfarrergraf.github.io/wortspiel/ bestehen und liefert aktuell `35389e3` (Cache `2cb47ad5b8cf2a`).
+- Gesicherte Alt-Stände: `backup/main-2026-10-09` und `backup/main-2026-10-09-pre-storage`.
 - Code-Rücknahme nur per neuem PR mit gezielten Reverts, kein Force-Push auf main.
-- Cloudflare: Rollback nur auf ein zuvor geprüftes Deployment (*Deployments → Rollback*). Projekt, Domain und DNS nur nach gesonderter Freigabe ändern.
-- Auf beiden Origins können Historien exportiert und zusammenführend importiert werden. Es gibt keine Speicherlöschung.
+- Cloudflare: Rollback nur auf ein zuvor geprüftes Produktionsdeployment (*Deployments → Rollback*). Previews bleiben unberührt.
+- Projekt, Domain und DNS nur nach gesonderter Freigabe ändern. Vorhandene Previews werden nicht gelöscht; Löschen braucht eine eigene Freigabe.
 
 ## 8. Was für die Produktionsfreigabe noch fehlt
 
-1. Der Connector ist verbunden, deckt aber Pages nicht ab. Für Inventar und Preview braucht es eine der folgenden Optionen:
-   - **a)** Der Nutzer prüft im Dashboard unter *Workers & Pages* den Pages-Bestand.
-   - **b)** Der Nutzer legt ein API-Token mit *Account → Cloudflare Pages: Edit* (für eine reine Inventur genügt *Read*) in den Einstellungen der Cloud-Umgebung als Secret `CLOUDFLARE_API_TOKEN` an, dazu `CLOUDFLARE_ACCOUNT_ID`; neue Sitzung starten.
-   - **c)** Variante B (Cloudflare-GitHub-App) wird freigegeben.
-
-   Tokens nie im Chat. Ein neues Token ist eine neue Berechtigung und braucht die Freigabe des Nutzers.
-2. Projektbestand inventarisieren, ein passendes Projekt wiederverwenden.
-3. Integrator übernimmt CF-1 (und ggf. CF-2) nach main und lässt die CI grün laufen.
-4. Preview genau dieses SHA erstellen und Abschnitt 5 vollständig online abnehmen.
-5. Gebündelte Freigabe vorlegen: Preview-URL, Produktions-SHA, Tests, Risiken, Zielprojekt und Adresse, Kosten (Pages Free: 0 €, sofern kein Access-Bezahlplan nötig), Berechtigungen, Rückfall, rechtliche Punkte.
+1. Der Integrator übernimmt CF-1, inklusive Hash-Korrektur und gleichwertigem Ersatz von `QA-DEVICES.spec.js:362`, und CF-2 nach main. Danach muss die CI grün sein.
+2. Preview genau dieses main-SHA hochladen (`--branch preview-<sha>`) und Abschnitt 5 am Preview wiederholen. Dazu gehört ein SW-Update von `35389e3` auf den neuen SHA über denselben Alias.
+3. Die gebündelte Freigabe des Nutzers (siehe PR #23) einholen. Erst dann folgt `wrangler pages deploy frontend/dist --project-name wortspiel-app --branch main --commit-hash <sha>`.
+4. Den Infodialog „Karten & Datenschutz“ anpassen. Er nennt fest „technische Zugriffsprotokolle des Hosters GitHub Pages“, was auf Cloudflare nicht zutrifft. Das ist Text in `src/features/info.js` und Sache des Integrators.
+5. Rechtliches entscheidet der Nutzer. Es gibt **kein Impressum und keine eigenständige Datenschutzseite**. Hier werden keine Angaben erfunden.
