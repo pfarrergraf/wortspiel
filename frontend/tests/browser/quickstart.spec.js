@@ -108,7 +108,10 @@ test("@matrix guided preparation and free play fit every configured screen", asy
   await expect(page.locator("#current-word")).toBeVisible();
   for (const selector of ["#current-word", "#timer", '[data-action="correct"]', '[data-action="skip"]', '[data-action="taboo"]']) {
     const box = await page.locator(selector).boundingBox();
+    expect(box.y).toBeGreaterThanOrEqual(0);
+    expect(box.x).toBeGreaterThanOrEqual(0);
     expect(box.y + box.height).toBeLessThanOrEqual(page.viewportSize().height);
+    expect(box.x + box.width).toBeLessThanOrEqual(page.viewportSize().width);
   }
   await page.screenshot({ path: testInfo.outputPath("free-play.png") });
 });

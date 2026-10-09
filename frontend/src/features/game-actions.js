@@ -34,6 +34,7 @@ for (const result of ["correct", "skip", "taboo"])
 registerAction("start-turn", async () => {
   const done = await change((s) => startTurn(s, cards));
   if (!done) return;
+  scroll();
   persistentStorage().catch(() => {});
   if (ctx.state.session?.phase === "playing") emit("turn-start");
 });
