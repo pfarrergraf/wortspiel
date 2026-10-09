@@ -12,6 +12,7 @@ import { escape } from "./ui/html.js";
 // Features register their actions and event listeners on import.
 import "./features/game-actions.js";
 import "./features/setup-actions.js";
+import "./features/mobile-wizard.js";
 import "./features/storage-actions.js";
 import "./features/speech-actions.js";
 import "./features/info.js";
