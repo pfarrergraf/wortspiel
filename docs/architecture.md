@@ -37,7 +37,7 @@ Unbekannte/malformed gespeicherte Formate bleiben unverändert statt durch Defau
 
 ## Offline, Eingabe und spätere Erweiterungen
 
-Build enthält lokale Fonts/Icons, Manifest und generierten content-gehashten Service Worker. Relativer Vite-base `./` ermöglicht GitHub-Pages-Unterpfad und Cloudflare-Root. Der Worker cached den kompletten Build, keine Browser-Spielstände. Cachewechsel löscht ausschließlich alte App-Asset-Caches.
+Build enthält lokale Fonts/Icons, Manifest und generierten content-gehashten Service Worker. Relativer Vite-base `./` ermöglicht GitHub-Pages-Unterpfad und Cloudflare-Root. Der Worker cached den kompletten Build, keine Browser-Spielstände. Cachewechsel löscht ausschließlich alte App-Asset-Caches. HTML und Hostkonfiguration bleiben Cachehash-Eingaben, `_headers`/`_redirects` werden nicht vorgeladen. Ein nicht umgeleiteter index.html-Alias aus der kanonischen Scope-Rootantwort hält auch Cloudflare-308 und alte Installationsstartadressen offline nutzbar. Pages-Sicherheitsheader erlauben Mikrofon/HID lokal; Startup-Retry benötigt kein Inline-Script.
 
 Presenter/Tastatur klicken dieselben Wertungsaktionen mit Entprellung. WebHID-Lernen registriert den Empfänger **vor** Umleitung der Tasten. LocalSpeech akzeptiert nur explizite lokale Verarbeitung; ausgeschaltet als Standard, kein Cloud-Fallback, niemals automatische Punkte. Hinweise verwenden die aktuell sichtbaren Tabuwörter, bei Pantomime hört der Helfer nicht zu.
 

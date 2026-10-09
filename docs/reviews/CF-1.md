@@ -15,7 +15,7 @@ Der Retry-Button erhält einen Eventlistener statt Inline-JavaScript. `_headers`
 - Neue Generator-Unitfälle: Hostdateien nicht gefetcht, kanonische Rootliste, HTML- und Header-Änderung wechseln jeweils Cacheversion.
 - Zwischenstand: 109 Unit grün, Produktionsbuild grün; 10 gezielte Desktopfälle grün (3 CF-1 plus Claudes 7 Geräte-/Offline-/SW-Update-Fälle).
 - Zusätzlicher echter **lokaler Wrangler-Pages-Simulator 4.149.0**, ohne Cloud-API: 320×568 Chromium; tatsächliche Header/CSP, SW no-cache, 308 index.html, nicht umgeleiteter Cachealias, keine Hostkonfig-Cacheeinträge. Korrekte Wertung und Pause; offline Root, index.html und Homescreen-Query bewahren Punkte, aktuelle Karte und Historien. Startup-Retry unter tatsächlicher CSP bewahrt absichtlich beschädigte Originaldaten. Ergebnis PASS. Wrangler wurde außerhalb des Repos installiert, keine Lockfile-/Dependencyänderung.
-- Gesamtsuite und exakte CI nach Integration des aktualisierten QA-STORAGE-Pakets: verbindliches Ergebnis im Abschlusskommentar des CF-1-PR. Erst grüne Gesamtprüfung erlaubt main-Integration.
+- Gesamtsuite nach Integration des aktualisierten QA-STORAGE-Pakets: **109 Unit und 196 Browser bestanden, keine skips**, cards:check und Build erfolgreich. Exakte CI: verbindliches Ergebnis im Abschlusskommentar des CF-1-PR. Erst grüne Gesamtprüfung erlaubt main-Integration.
 
 ## Grenzen / Übergabe an Claude
 

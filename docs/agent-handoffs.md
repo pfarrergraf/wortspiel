@@ -65,3 +65,5 @@ Basis-Audit 9a7a938; Karten 19be010; Regeln/UI 18a9f2e. Scroll-/Matrix-Korrektur
 - QA-A11Y/NOISE/A15 laufen nur, wenn ihr neuer Claim/PR dies belegt. Die Prompts oben bleiben für unabhängige Arbeit verfügbar.
 
 - QA-STORAGE PR #24: Nach zunächst 107 Unit/170 Browser grün belegten Spiegelungsfehler behoben. Persistente Pending-Markierung verhindert stale localStorage-Forks; fehlende Koordinationsberechtigung bedeutet sicheren Abbruch. Export liest schreibfreien frischen Snapshot. Pending-Markierung niemals manuell löschen. Vollbackup und geführte Absturz-Reparatur bleiben Folgepakete; finale Tests/CI im PR.
+
+- Abschlussbelege: QA-STORAGE PR #24, Head 1e162fb: 107 Unit/190 Browser lokal und CI grün. CF-1 PR #25: 109 Unit/196 Browser lokal grün, zusätzlicher Wrangler-Pages-Simulator bestanden; keine Cloud-API benutzt. Merge-SHAs/exakte finale CI im jeweiligen PR-Abschlusskommentar. Claudes PR #23 wartet weiterhin auf präzise Unbekannt-Markierung des Pages-Projektbestands.

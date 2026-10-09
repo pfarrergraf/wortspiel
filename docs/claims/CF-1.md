@@ -9,3 +9,5 @@
 - Claude-Dateien nicht ändern: docs/cloudflare-deployment.md, DEPLOY-CF-Claim, QA-DEVICES/QA-A11Y-Tests/Reviews. main.js gehört ohnehin dem Codex-Kernbereich; keine parallele Claude-Bearbeitung.
 - Akzeptanz: 308 index.html → Scope-Root online/offline verträglich; nicht umgeleiteter HTML-Cachealias, keine Hostkonfig-Fetches; HTML/Header-Änderungen invalidieren Cache; sichere lokale CSP/HTTP-Header und bedienbarer Startup-Fehlerpfad; Github-Unterpfad/Offline/SW-Update erhalten.
 - Ports: eigener Preview PW_PORT=4212, lokaler Wrangler-Simulator 4213. Kein Konto-/Projekt-/Preview-/Produktions-/DNS-Zugriff und keine neue Berechtigung in diesem Paket.
+
+- Koordinationsdokumente nach abgeschlossenem QA-STORAGE-Schreibpaket ebenfalls exklusiv bei Codex: docs/plan-v2.md, docs/integration-status.md, docs/agent-handoffs.md, docs/release-checklist.md, docs/architecture.md. Keine Übernahme von Claude-Dateien.

@@ -13,9 +13,12 @@ Ein Integrationscommit mit grüner CI ist noch kein vollständiger Release. Stab
 - [x] Vorhandene Offline-/Service-Worker-/PWA-/Browser-Neustart-Tests.
 - [x] Sound/Wake-Lock-Tests, Tastatur/Presenter, simuliertes WebHID inklusive Lern-Race.
 - [x] Bestehende elf Bildschirmgrößen einschließlich 320×568, 375×667, 393×852, Querformat, iPad, Surface, Notebook, Monitor; freie Erklärung zusätzlich pro Projekt.
-- [ ] Explizites Android-Tablet und WebKit/Safari-Engine.
+- [x] Explizites Android-Tablet hoch/quer, Rotation, Browser-Neustart und SW-Update (Claude PR #22; Simulation).
+- [ ] WebKit/Safari-Engine.
 - [x] Historische schema-1-Fixtures mit laufender/pausierter Runde, Punkten, drei Teams/Gruppen, retired IDs und Pantomime geprüft (synthetisch mit damaligen Engines erzeugt; QA-STORAGE).
 - [x] Konkurrierende Tabs und IndexedDB/localStorage mit/ohne Web Locks gegen doppelte Reservierung/stale Wertung geprüft; fehlgeschlagene Mutationen/Quota/Formate erhalten Daten (QA-STORAGE).
+- [x] Persistente Schreibmarkierung schützt veralteten Rückfall bei fehlgeschlagener DB-Spiegelung; koordinationsloser Zugriff scheitert vor Commit, alter Fork bleibt erhalten; frischer schreibfreier Export (PR #24).
+- [x] Pages-308/Hostdateien/CSP lokal und im Wrangler-Simulator geprüft; Offline Root/index/Query erhält Runde/Historie (PR #25).
 - [ ] Geführte explizite Wiederherstellung nach abruptem Absturz im Browser ohne Web Locks; nie automatische fremde Ticket-Löschung.
 - [ ] Unterstützte lokale Spracherkennung end-to-end mit Browser-Mock und tatsächlich unterstütztem Browser geprüft. Bis dahin experimentell/off by default.
 
