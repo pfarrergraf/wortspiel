@@ -1,12 +1,55 @@
 const KEY = "wortspiel.state.v1";
 const DB_NAME = "wortspiel";
 const LOCK_PREFIX = `${KEY}.lock:`;
+const PENDING_KEY = `${KEY}.pending`;
 
 export class StorageConflictError extends Error {
   constructor() {
     super("Der Spielstand hat sich inzwischen geändert. Bitte prüfe die angezeigte Karte und wiederhole die Aktion. Es wurde nichts gewertet.");
     this.name = "StorageConflictError";
   }
+}
+
+export class StorageMirrorPendingError extends Error {
+  constructor() {
+    super("Der neueste Spielstand ist in der Datenbank gesichert, aber die lokale Kopie ist noch nicht aktuell. Bitte öffne einen Tab mit funktionierendem Datenbankspeicher, bevor du hier weiterspielst. Euer Kartenspeicher bleibt erhalten.");
+    this.name = "StorageMirrorPendingError";
+  }
+}
+
+function pendingRevision() {
+  let serialized;
+  try { serialized = localStorage.getItem(PENDING_KEY); } catch {
+    throw new Error("Die Schreibkoordination braucht Website-Speicher. Bitte erlaube ihn und lade die Seite erneut. Die gespeicherten Spielstände bleiben erhalten.");
+  }
+  if (serialized === null) return null;
+  let revision;
+  try { revision = JSON.parse(serialized).revision; } catch { /* Do not discard an unknown journal. */ }
+  if (!Number.isSafeInteger(revision) || revision < 0)
+    throw new Error("Die Schreibmarkierung ist nicht lesbar. Die gespeicherten Spielstände bleiben unverändert erhalten.");
+  return revision;
+}
+
+function extendsHistory(candidate, previous) {
+  return Object.entries(previous.groups).every(([id, group]) => {
+    const next = candidate.groups[id];
+    if (!next) return false;
+    // An explicitly confirmed reset is the only legitimate history truncation.
+    if (Number.isFinite(next.resetAt) && next.resetAt > (group.resetAt ?? 0)) return true;
+    return Object.keys(group.seen).every((card) => Object.hasOwn(next.seen, card));
+  });
+}
+
+function chooseState(saved, local, fallback) {
+  if (saved !== undefined && !valid(saved))
+    throw new Error("Der vorhandene Datenbank-Spielstand hat ein unbekanntes Format. Er bleibt unverändert gespeichert.");
+  if (valid(saved) && local && local.revision > saved.revision && !extendsHistory(local, saved)) {
+    const error = new Error("Die Datenbank und die lokale Kopie enthalten unterschiedliche Kartenhistorien. Beide Spielstände bleiben unverändert erhalten; bitte sichere beide Kopien vor einer Reparatur.");
+    error.name = "StorageLineageError";
+    throw error;
+  }
+  const current = local && local.revision > fallback.revision ? local : fallback;
+  return valid(saved) && saved.revision >= current.revision ? saved : current;
 }
 
 function readLocal() {
@@ -81,13 +124,25 @@ export class Storage {
         if (!local) throw new Error("Der vorhandene Datenbankspeicher konnte nicht gelesen werden. Er bleibt erhalten; bitte versuche es erneut, bevor du eine neue Partie beginnst.");
       }
     }
-    if (saved !== undefined && !valid(saved))
-      throw new Error("Der vorhandene Datenbank-Spielstand hat ein unbekanntes Format. Er bleibt unverändert gespeichert.");
-    let chosen = valid(saved) ? saved : fallback;
-    if (valid(local) && (!valid(saved) || local.revision > saved.revision))
-      chosen = local;
-    this.state = chosen;
+    this.state = chooseState(saved, local, fallback);
     return this.update(() => {});
+  }
+
+  async snapshot() {
+    // Backups must remain read-only, including when storage is full. Read the
+    // durable root rather than exporting a UI snapshot that missed a tab event.
+    let saved;
+    if (this.db) saved = await new Promise((resolve, reject) => {
+      const request = this.db.transaction("state").objectStore("state").get(KEY);
+      request.onsuccess = () => resolve(request.result);
+      request.onerror = () => reject(request.error);
+    });
+    const current = chooseState(saved, readLocal(), this.state);
+    if (!this.db) {
+      const pending = pendingRevision();
+      if (pending !== null && current.revision < pending) throw new StorageMirrorPendingError();
+    }
+    return structuredClone(current);
   }
 
   update(change, { expectedRevision } = {}) {
@@ -131,8 +186,7 @@ export class Storage {
     try {
       localStorage.setItem(this.lockKey, JSON.stringify({ choosing: true, number: 0 }));
     } catch (error) {
-      // IndexedDB remains usable when the browser disallows localStorage.
-      if (this.db) return operation();
+      // Never bypass cross-backend coordination, even with a usable database.
       throw new Error(`Speichern nicht möglich: ${error.message}. Bitte erlaube Website-Speicher.`);
     }
     try {
@@ -158,6 +212,9 @@ export class Storage {
     let next;
     const local = readLocal();
     const current = local && local.revision > this.state.revision ? local : this.state;
+    const previousPending = pendingRevision();
+    if (!this.db && previousPending !== null && current.revision < previousPending)
+      throw new StorageMirrorPendingError();
     const check = (basis) => {
       if (expectedRevision !== undefined && basis.revision !== expectedRevision) {
         this.state = basis;
@@ -165,49 +222,59 @@ export class Storage {
       }
     };
     if (this.db) {
-      next = await new Promise((resolve, reject) => {
-        const tx = this.db.transaction("state", "readwrite");
-        this.transaction = tx;
-        const store = tx.objectStore("state");
-        const request = store.get(KEY);
-        let result;
-        request.onsuccess = () => {
-          try {
-            const saved = request.result;
-            if (saved !== undefined && !valid(saved))
-              throw new Error("Der vorhandene Datenbank-Spielstand hat ein unbekanntes Format. Er bleibt unverändert gespeichert.");
-            const basis =
-              valid(saved) && saved.revision >= current.revision
-                ? saved
-                : current;
-            check(basis);
-            result = structuredClone(basis);
-            change(result);
-            result.revision++;
-            store.put(result, KEY);
-          } catch (error) {
-            reject(error);
-            tx.abort();
-          }
-        };
-        tx.oncomplete = () => {
-          this.transaction = null;
-          resolve(result);
-        };
-        tx.onerror = () =>
-          reject(
-            tx.error ||
-              new Error("Der Kartenspeicher konnte nicht gespeichert werden."),
-          );
-        tx.onabort = () => {
-          this.transaction = null;
-          reject(tx.error || new Error("Speichern abgebrochen."));
-        };
-      });
+      let marked = false;
+      try {
+        next = await new Promise((resolve, reject) => {
+          const tx = this.db.transaction("state", "readwrite");
+          this.transaction = tx;
+          const store = tx.objectStore("state");
+          const request = store.get(KEY);
+          let result;
+          request.onsuccess = () => {
+            try {
+              const saved = request.result;
+              const basis = chooseState(saved, local, current);
+              check(basis);
+              result = structuredClone(basis);
+              change(result);
+              result.revision++;
+              // Persist intent BEFORE a database commit can leave the local
+              // mirror behind (quota, process exit, missed completion callback).
+              // A local-only writer must not fork that stale mirror.
+              localStorage.setItem(PENDING_KEY, JSON.stringify({ revision: result.revision }));
+              marked = true;
+              store.put(result, KEY);
+            } catch (error) {
+              reject(error);
+              tx.abort();
+            }
+          };
+          tx.oncomplete = () => {
+            this.transaction = null;
+            resolve(result);
+          };
+          tx.onerror = () =>
+            reject(
+              tx.error ||
+                new Error("Der Kartenspeicher konnte nicht gespeichert werden."),
+            );
+          tx.onabort = () => {
+            this.transaction = null;
+            reject(tx.error || new Error("Speichern abgebrochen."));
+          };
+        });
+      } catch (error) {
+        // An aborted attempt does not leave a new journal, but a previous
+        // unmirrored commit must remain fenced until its snapshot is recovered.
+        if (marked && previousPending === null)
+          try { localStorage.removeItem(PENDING_KEY); } catch { /* Fail closed. */ }
+        throw error;
+      }
       try {
         localStorage.setItem(KEY, JSON.stringify(next));
+        localStorage.removeItem(PENDING_KEY);
       } catch {
-        /* IndexedDB is durable. */
+        /* IndexedDB is durable; retain its journal until the mirror recovers. */
       }
     } else {
       try {
@@ -216,6 +283,9 @@ export class Storage {
         change(next);
         next.revision++;
         localStorage.setItem(KEY, JSON.stringify(next));
+        // A remaining marker at or below our basis was already fully mirrored.
+        if (previousPending !== null)
+          try { localStorage.removeItem(PENDING_KEY); } catch { /* Snapshot is already durable; the marker is no newer. */ }
       } catch (error) {
         if (error instanceof StorageConflictError) throw error;
         throw new Error(

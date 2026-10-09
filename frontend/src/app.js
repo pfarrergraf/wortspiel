@@ -1,5 +1,5 @@
 import { finishTurn } from "./engine.js";
-import { Storage, StorageConflictError } from "./storage.js";
+import { Storage, StorageConflictError, StorageMirrorPendingError } from "./storage.js";
 import { emit } from "./events.js";
 import { icon, action } from "./ui/html.js";
 import { chrome, footer } from "./ui/chrome.js";
@@ -87,11 +87,16 @@ export function change(fn, after, repaint = true) {
       return true;
     } catch (error) {
       if (error instanceof StorageConflictError) ctx.state = store.state;
+      if (error instanceof StorageMirrorPendingError) {
+        // Hide a stale card and stop its timer; never pause/reset durable data.
+        ctx.view = "setup";
+        ctx.pendingGameSettings = null;
+      }
       toast(
         error.message ||
           "Speichern fehlgeschlagen. Bitte versuche es noch einmal.",
       );
-      if (repaint) render();
+      if (repaint || error instanceof StorageMirrorPendingError) render();
       return false;
     } finally {
       ctx.busy = false;
