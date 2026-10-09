@@ -1,6 +1,6 @@
 # Agentenübergabe
 
-Stand: 2026-10-09. ChatGPT/Codex ist Integrator. Claude Code ist in dieser Umgebung **nicht aufrufbar und nicht gestartet**. Diese Prompts sind sofort verwendbare Aufträge; GitHub-Issues werden beim Paketabschluss verlinkt. Nach einem Sitzungsneustart zuerst AGENTS, plan-v2 und integration-status lesen, dann aktuellen main-SHA prüfen. Backup `backup/main-2026-10-09` nicht verändern.
+Stand: 2026-10-09. ChatGPT/Codex ist Integrator. Claude Code ist in dieser Umgebung **nicht aufrufbar und nicht gestartet**. Diese Prompts sind sofort verwendbare Aufträge; GitHub-Aufgaben: [NOISE-01](https://github.com/pfarrergraf/wortspiel/issues/17), [QA-A11Y](https://github.com/pfarrergraf/wortspiel/issues/18), [QA-DEVICES](https://github.com/pfarrergraf/wortspiel/issues/19), [A15-REVIEW](https://github.com/pfarrergraf/wortspiel/issues/20), [QA-STORAGE](https://github.com/pfarrergraf/wortspiel/issues/21). Nach einem Sitzungsneustart zuerst AGENTS, plan-v2 und integration-status lesen, dann aktuellen main-SHA prüfen. Backup `backup/main-2026-10-09` nicht verändern.
 
 ## Gemeinsamer Startvertrag
 

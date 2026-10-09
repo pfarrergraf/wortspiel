@@ -1,6 +1,6 @@
 # Integrationsstatus – Audit 2026-10-09
 
-Basis `main`: `6de6340710de3f389f8de3ba1819123dc4c9a977`. Sicherung `backup/main-2026-10-09`. Branch `integration/2026-10-09-audit`. Baseline-Commit `9a7a938`; Kartenintegration `19be010`; Regel-/UI-/Presenterintegration `18a9f2e`. PR-Link und finaler Merge-SHA werden nach Abschluss ergänzt.
+Basis `main`: `6de6340710de3f389f8de3ba1819123dc4c9a977`. Sicherung `backup/main-2026-10-09`. Branch `integration/2026-10-09-audit`. Baseline-Commit `9a7a938`; Kartenintegration `19be010`; Regel-/UI-/Presenterintegration `18a9f2e`. Integration: [PR #16](https://github.com/pfarrergraf/wortspiel/pull/16). Der Abschlusskommentar dort dokumentiert den tatsächlichen main-Merge-SHA, CI-Lauf und die Schließung der Alt-PRs. GitHub ist die verbindliche Quelle dieses veränderlichen Abschlussstatus.
 
 ## PR-Matrix
 
@@ -24,7 +24,7 @@ Kategorien: **1** vollständig enthalten; **2** durch neuere Implementierung ers
 | #14 | A13, fantasy.json, Claim | 4: fehlt vollständig | mittel | Karten-/retired-/ID-Tests grün | 101 Datensätze, 100 aktiv übernehmen; 19be010 | Alice-Kurzvariante retired; Literatur-ID bleibt gültig; neue Spukhaus-Karte |
 | #15 | mobile-wizard, setup, main, pantomime, CSS | 5/4: Draft-CI rot, bislang nicht integriert | hoch | neues Setup/Replay/free + Matrix grün | geprüfte Ersatzintegration 18a9f2e; Draft danach mit Beleg schließen | Formular-sections überschrieben none; versteckte Pflichtfelder; fehlende Altersauswahl im Schritt Zielgruppe. Neuer Assistent im bestehenden Formular, expliziter Einstieg, native Validierung, Browser-Zurück, freie Moduswahl |
 
-Exakter Dateivergleich mit allen Head-SHAs: [audits/2026-10-09-pr-files.json](audits/2026-10-09-pr-files.json). JSON-Pakete in kompakter Repository-Formatierung übernommen; semantischer Vergleich statt bloßem Textdiff. Roh-Branches bleiben erhalten. Schließung folgt erst nach geprüfter Zielintegration auf main, mit eigenem Kommentar je PR.
+Exakter Dateivergleich mit allen Head-SHAs: [audits/2026-10-09-pr-files.json](audits/2026-10-09-pr-files.json). JSON-Pakete in kompakter Repository-Formatierung übernommen; semantischer Vergleich statt bloßem Textdiff. Roh-Branches bleiben erhalten. Schließung ausschließlich nach geprüfter Zielintegration auf main, mit eigenem Kommentar je PR und ohne Branch-Löschung.
 
 ## Arbeitspakete und tatsächlich ausgeführte Prüfungen
 
@@ -44,3 +44,7 @@ Ein fehlgeschlagener erster Karten-Unit-Lauf deckte die alte Annahme „all enth
 - A12/A14 Remote-Branches besitzen nur Claims, keinen fertigen Inhalt. A15 `578761d` enthält 120 Sportkarten und bleibt für einen separaten Review erhalten.
 - Themenbereiche, freiwillige Proberunde, UI-/Kartensprache-Trennung, Geräuscheraten und Android bleiben konkrete Folgepakete; keine unfertigen Produktionsbedienelemente.
 - **Kein stabiler Release-Tag** vor gesamter Abnahme; siehe release-checklist.md. Phase A/B und vollständige Release-Freigabe getrennt bewerten.
+
+## GitHub-Aufträge
+
+Vorbereitet und nicht gestartet: [NOISE-01 #17](https://github.com/pfarrergraf/wortspiel/issues/17), [QA-A11Y #18](https://github.com/pfarrergraf/wortspiel/issues/18), [QA-DEVICES #19](https://github.com/pfarrergraf/wortspiel/issues/19), [A15-REVIEW #20](https://github.com/pfarrergraf/wortspiel/issues/20). [QA-STORAGE #21](https://github.com/pfarrergraf/wortspiel/issues/21) bleibt exklusiv beim Integrator.
