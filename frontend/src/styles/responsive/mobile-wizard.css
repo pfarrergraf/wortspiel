@@ -1,0 +1,39 @@
+/* Progressive mobile onboarding: existing form and submission stay authoritative. */
+.mobile-quickstart { display:none; }
+@media (max-width: 743px) {
+  #app:has(.mobile-quickstart) .hero { display:none; }
+  .mobile-quickstart { display:flex; position:sticky; top:0; z-index:5; align-items:center; gap:10px; justify-content:space-between; padding:12px; margin-bottom:12px; border:1px solid var(--line); border-radius:14px; background:var(--paper); }
+  #wizard-progress {font-size:13px; font-weight:800;}
+  .wizard-controls {display:flex;gap:6px;align-items:center;}
+  .wizard-controls button {min-height:44px;min-width:66px;padding:9px;font-size:12px;}
+  #setup-form {display:block;}
+  #setup-form .category-panel, #setup-form .settings-panel {display:none;}
+  #setup-form .category-panel > *, #setup-form .settings-panel > * {display:none;}
+  #setup-form[data-wizard-step="0"] .category-panel,
+  #setup-form[data-wizard-step="1"] .category-panel,
+  #setup-form[data-wizard-step="3"] .category-panel,
+  #setup-form[data-wizard-step="2"] .settings-panel,
+  #setup-form[data-wizard-step="4"] .settings-panel {display:block;}
+  #setup-form[data-wizard-step="0"] .game-mode-settings {display:block;}
+  #setup-form[data-wizard-step="1"] .difficulty-settings {display:block;}
+  #setup-form[data-wizard-step="2"] .settings-panel > .field-label,
+  #setup-form[data-wizard-step="2"] .settings-panel > .text-input,
+  #setup-form[data-wizard-step="2"] .settings-panel > .field-heading,
+  #setup-form[data-wizard-step="2"] .team-inputs,
+  #setup-form[data-wizard-step="2"] .add-team {display:flex;}
+  #setup-form[data-wizard-step="2"] .team-inputs {display:grid;}
+  #setup-form[data-wizard-step="3"] .category-tools {display:flex;flex-wrap:wrap;}
+  #setup-form[data-wizard-step="3"] .category-grid {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));}
+  #setup-form[data-wizard-step="3"] .memory-note {display:flex;}
+  #setup-form[data-wizard-step="4"] .settings-panel > .section-heading,
+  #setup-form[data-wizard-step="4"] .settings-panel > .start-area {display:flex;}
+  #setup-form[data-wizard-step="4"] .settings-panel > .section-heading {display:flex;}
+  #setup-form[data-wizard-step="4"] .settings-panel > .settings-row,
+  #setup-form[data-wizard-step="4"] .settings-panel > .rule-settings,
+  #setup-form[data-wizard-step="4"] .settings-panel > .toggle-row,
+  #setup-form[data-wizard-step="4"] .settings-panel > .speech-setting,
+  #setup-form[data-wizard-step="4"] .settings-panel > .field-note {display:block;}
+  .game-mode-options {display:grid;grid-template-columns:1fr;gap:10px;}
+  .game-mode {min-height:72px;}
+  .mobile-quickstart:focus-within {scroll-margin-top:10px;}
+}
