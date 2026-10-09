@@ -3,7 +3,7 @@
 Stand: 2026-10-09, DEPLOY-CF (Claude Code), Basis main `9c1d9d68a673e02f3e91b234a867e05a1de433b1`.
 
 **Kurzstatus:**
-- Es gibt keinen Cloudflare-Zugang in dieser Sitzung. Der Cloudflare-Connector ist vorhanden, aber nicht autorisiert. Es gibt kein Token und kein Wrangler-Login.
+- Der Cloudflare-Connector ist inzwischen verbunden, kann aber keine Pages-Projekte lesen oder deployen. Es gibt kein Token und kein Wrangler-Login.
 - Der Projektbestand im Konto ist deshalb **unbekannt**.
 - Es wurde **kein Projekt angelegt** und **kein Preview oder Produktionsdeployment erstellt**.
 - Es wurden keine Berechtigungen, Kosten oder DNS-Änderungen verursacht.
@@ -13,7 +13,8 @@ Stand: 2026-10-09, DEPLOY-CF (Claude Code), Basis main `9c1d9d68a673e02f3e91b234
 
 | Prüfung | Ergebnis |
 | --- | --- |
-| Cloudflare-Konto / Pages-Projekte | nicht zugänglich → unbekannt |
+| Cloudflare-Konto (Connector, ab 2026-10-09 verbunden) | Workers: 9 vorhanden, **keiner für Wortspiel** (u. a. kanzelclips-uploader, herz-der-kabbala, landwirtschaftssimulator, downloadthat). Keine Änderung vorgenommen |
+| Pages-Projekte | Der Connector bietet **keine Pages-Werkzeuge** (nur Workers/D1/KV/R2/Hyperdrive lesend/schreibend und Doku). Pages-Bestand deshalb weiter **unbekannt**. Preview/Deploy über den Connector nicht möglich |
 | GitHub-Deployments des Repos | nur `github-pages` (zuletzt `9c1d9d6`, 2026-10-09 20:25 UTC) |
 | Check-Runs auf `9c1d9d6` | nur `build` und `deploy` von `github-actions`; **kein Cloudflare-Pages-Check** |
 | GitHub Pages online | `https://pfarrergraf.github.io/wortspiel/` antwortet mit 200. `sw.js` trägt den Cache-Hash `2cb47ad5b8cf2a`, **identisch** mit dem lokalen Build von `9c1d9d6` |
@@ -169,7 +170,12 @@ Simulation: Eine Sicherung aus einem Kontext wurde in einen frischen Kontext imp
 
 ## 8. Was für die Produktionsfreigabe noch fehlt
 
-1. Der Nutzer autorisiert den Cloudflare-Zugang (claude.ai → Connectors → Cloudflare Developer Platform) **oder** gibt Variante A/B frei. Tokens nie im Chat.
+1. Der Connector ist verbunden, deckt aber Pages nicht ab. Für Inventar und Preview braucht es eine der folgenden Optionen:
+   - **a)** Der Nutzer prüft im Dashboard unter *Workers & Pages* den Pages-Bestand.
+   - **b)** Der Nutzer legt ein API-Token mit *Account → Cloudflare Pages: Edit* (für eine reine Inventur genügt *Read*) in den Einstellungen der Cloud-Umgebung als Secret `CLOUDFLARE_API_TOKEN` an, dazu `CLOUDFLARE_ACCOUNT_ID`; neue Sitzung starten.
+   - **c)** Variante B (Cloudflare-GitHub-App) wird freigegeben.
+
+   Tokens nie im Chat. Ein neues Token ist eine neue Berechtigung und braucht die Freigabe des Nutzers.
 2. Projektbestand inventarisieren, ein passendes Projekt wiederverwenden.
 3. Integrator übernimmt CF-1 (und ggf. CF-2) nach main und lässt die CI grün laufen.
 4. Preview genau dieses SHA erstellen und Abschnitt 5 vollständig online abnehmen.
