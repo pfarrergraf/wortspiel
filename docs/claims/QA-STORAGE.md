@@ -11,3 +11,5 @@
 - Claude-Code-Bereiche ausdrücklich ausgeschlossen: QA-DEVICES/QA-A11Y-Dateien, deren Claims/Reviews, NOISE-01, A15-REVIEW und Cloudflare-Deployment-Dateien/Hostingkonfiguration.
 - Keine Lockfile-, Karten-ID-, Schema- oder Speicher-Reset-Änderungen.
 - Akzeptanz: Legacy-Runden/Teams/Wertungen/Historien bleiben erhalten; parallele Reservierungen und verspätete Wertungen abgesichert, IndexedDB sowie localStorage mit/ohne Web Locks; bestehende Backups weiterhin importierbar; vollständige Sicherung mindestens als kompatibler Entwurf dokumentiert; Tests/Build/CI und separater PR.
+
+- Zusätzlicher Integrationsbedarf aus Claude PR #22: exklusiv frontend/tests/browser/pantomime.spec.js (vor Erstzählung auf fertiges Setup warten; keine Assertion ändern).

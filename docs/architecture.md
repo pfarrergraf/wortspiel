@@ -23,7 +23,9 @@ Einstellungen für die nächste Partie und `session.settings` sind separate Snap
 
 Export/Import sichert und vereinigt derzeit **Gruppenhistorien**, keine komplette laufende Partie und keine Team-/Setup-Sicherung. Der gesamte Import wird vor Veränderung einer Gruppe validiert. Historien-IDs `de:*` umfassen auch Pantomime und bleiben unabhängig von aktuellen Kategorien erhalten. Website-Speicher ist originbezogen; Hostingwechsel benötigt expliziten Export und Import.
 
-IndexedDB serialisiert konkurrierende Schreiber. Der localStorage-only-Rückfall besitzt bisher keine atomare tabübergreifende Sperre; das ist eine dokumentierte Release-Prüflücke. Bis zur Behebung im Rückfall nur ein Fenster nutzen. Auch verspätete Wertung aus einer zweiten Ansicht braucht eine gezielte Session-/Kartenprüfung; nicht als gelöste Multi-Tab-Abnahme ausgeben.
+QA-STORAGE ergänzt eine gemeinsame exklusive Schreibkoordination: Web Locks, andernfalls pro-Schreiber-Bakery-Tickets ohne unsichere Lease-Ablaufzeit. Lesen/Prüfen/Ändern/Schreiben und lokale Spiegelung liegen innerhalb dieser Sperre; IndexedDB behält zusätzlich seine readwrite-Transaktion. Gemischte IndexedDB-/localStorage-Tabs nutzen dieselbe Koordination. Jeder UI-Auftrag bindet sich an seine ursprüngliche Revision; ein fremder neuer State wird angezeigt, aber nicht mit der alten Aktion gewertet. Eigene vorbereitende Feldspeicherungen dürfen einen queued Assistentenschritt fortsetzen, wenn die komplette Session unverändert blieb; neue Sessions besitzen eine additive ID, ältere Sessions ohne ID bleiben gültig.
+
+Unbekannte/malformed gespeicherte Formate bleiben unverändert statt durch Defaults ersetzt zu werden. Ein blockierter Zugriff endet nach fünf Sekunden ohne Mutation. Ohne Web Locks kann ein abrupt abgestürzter Schreiber ein Koordinationsticket hinterlassen; sicheres explizites Entsperren nach dem Stoppen aller anderen Tabs bleibt ein Folgepaket. Niemals per TTL fremde Tickets oder Spielstände löschen. Details und Vollbackup-Entwurf: [reviews/QA-STORAGE.md](reviews/QA-STORAGE.md).
 
 ## Kartenquellen und Reproduktion
 

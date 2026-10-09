@@ -14,8 +14,9 @@ Ein Integrationscommit mit grüner CI ist noch kein vollständiger Release. Stab
 - [x] Sound/Wake-Lock-Tests, Tastatur/Presenter, simuliertes WebHID inklusive Lern-Race.
 - [x] Bestehende elf Bildschirmgrößen einschließlich 320×568, 375×667, 393×852, Querformat, iPad, Surface, Notebook, Monitor; freie Erklärung zusätzlich pro Projekt.
 - [ ] Explizites Android-Tablet und WebKit/Safari-Engine.
-- [ ] Gezielte ältere Spielstand-Fixtures mit laufender Runde, Punkten und mehreren Gruppen vollständig abgenommen.
-- [ ] Konkurrierende Tabs und localStorage-Rückfall gegen doppelte Reservierung/stale Wertung geprüft und abgesichert.
+- [x] Historische schema-1-Fixtures mit laufender/pausierter Runde, Punkten, drei Teams/Gruppen, retired IDs und Pantomime geprüft (synthetisch mit damaligen Engines erzeugt; QA-STORAGE).
+- [x] Konkurrierende Tabs und IndexedDB/localStorage mit/ohne Web Locks gegen doppelte Reservierung/stale Wertung geprüft; fehlgeschlagene Mutationen/Quota/Formate erhalten Daten (QA-STORAGE).
+- [ ] Geführte explizite Wiederherstellung nach abruptem Absturz im Browser ohne Web Locks; nie automatische fremde Ticket-Löschung.
 - [ ] Unterstützte lokale Spracherkennung end-to-end mit Browser-Mock und tatsächlich unterstütztem Browser geprüft. Bis dahin experimentell/off by default.
 
 ## Reale Geräte und redaktionelle Abnahme

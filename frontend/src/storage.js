@@ -1,12 +1,34 @@
 const KEY = "wortspiel.state.v1";
 const DB_NAME = "wortspiel";
+const LOCK_PREFIX = `${KEY}.lock:`;
+
+export class StorageConflictError extends Error {
+  constructor() {
+    super("Der Spielstand hat sich inzwischen geändert. Bitte prüfe die angezeigte Karte und wiederhole die Aktion. Es wurde nichts gewertet.");
+    this.name = "StorageConflictError";
+  }
+}
+
+function readLocal() {
+  let serialized;
+  try {
+    serialized = localStorage.getItem(KEY);
+  } catch {
+    return null; // IndexedDB may still be available with localStorage denied.
+  }
+  if (serialized === null) return null;
+  let state;
+  try { state = JSON.parse(serialized); } catch { /* Preserve the original bytes. */ }
+  if (!valid(state)) throw new Error("Der vorhandene Spielstand kann nicht gelesen werden. Er bleibt unverändert gespeichert; bitte bewahre eine Kopie auf, bevor du den Speicher reparierst.");
+  return state;
+}
 
 function valid(state) {
   return (
     state?.schema === 1 &&
     Number.isInteger(state.revision) &&
-    state.groups &&
-    state.settings
+    state.groups && typeof state.groups === "object" && !Array.isArray(state.groups) &&
+    state.settings && typeof state.settings === "object" && !Array.isArray(state.settings)
   );
 }
 
@@ -14,15 +36,19 @@ export class Storage {
   constructor() {
     this.db = null;
     this.mode = "browser";
+    this.owner = crypto.randomUUID?.() ?? Array.from(crypto.getRandomValues(new Uint32Array(4)), (n) => n.toString(16).padStart(8, "0")).join("");
+    this.lockKey = `${LOCK_PREFIX}${this.owner}`;
+    this.lockTimeout = 5000;
+    this.queue = Promise.resolve();
+    globalThis.addEventListener?.("pagehide", () => {
+      // Abort before releasing: an IndexedDB write must not outlive its lock.
+      try { this.transaction?.abort(); } catch { /* Already completed. */ }
+      try { localStorage.removeItem(this.lockKey); } catch { /* No local access. */ }
+    });
   }
 
   async open(fallback) {
-    let local = null;
-    try {
-      local = JSON.parse(localStorage.getItem(KEY));
-    } catch {
-      /* Try IndexedDB. */
-    }
+    const local = readLocal();
     try {
       this.db = await new Promise((resolve, reject) => {
         const request = indexedDB.open(DB_NAME, 1);
@@ -37,7 +63,7 @@ export class Storage {
     } catch {
       this.mode = "local";
     }
-    let saved = null;
+    let saved;
     if (this.db) {
       try {
         saved = await new Promise((resolve, reject) => {
@@ -52,8 +78,11 @@ export class Storage {
         this.db.close();
         this.db = null;
         this.mode = "local";
+        if (!local) throw new Error("Der vorhandene Datenbankspeicher konnte nicht gelesen werden. Er bleibt erhalten; bitte versuche es erneut, bevor du eine neue Partie beginnst.");
       }
     }
+    if (saved !== undefined && !valid(saved))
+      throw new Error("Der vorhandene Datenbank-Spielstand hat ein unbekanntes Format. Er bleibt unverändert gespeichert.");
     let chosen = valid(saved) ? saved : fallback;
     if (valid(local) && (!valid(saved) || local.revision > saved.revision))
       chosen = local;
@@ -61,21 +90,97 @@ export class Storage {
     return this.update(() => {});
   }
 
-  async update(change) {
+  update(change, { expectedRevision } = {}) {
+    const operation = this.queue.then(() => this.withLock(() => this.write(change, expectedRevision)));
+    this.queue = operation.catch(() => {});
+    return operation;
+  }
+
+  async withLock(operation) {
+    if (globalThis.navigator?.locks?.request) {
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(new Error("Der Kartenspeicher wird von einem anderen Tab verwendet. Bitte schließe andere Wortspiel-Tabs und versuche es erneut. Euer Speicher bleibt erhalten.")), this.lockTimeout);
+      try {
+        return await navigator.locks.request(KEY, { mode: "exclusive", signal: controller.signal }, () => {
+          clearTimeout(timeout); // Never expire an already acquired writer lock.
+          return operation();
+        });
+      } finally { clearTimeout(timeout); }
+    }
+    return this.withFallbackLock(operation);
+  }
+
+  async withFallbackLock(operation) {
+    // Lamport's bakery: each writer owns its own register, avoiding an unsafe
+    // read/set lease on one shared key. Tickets never expire while a tab may
+    // still resume writing. A stalled writer causes an error, never a reset.
+    const tickets = () => {
+      const entries = [];
+      // Snapshot names: length/key iteration can skip a writer when another
+      // tab removes a lower-index key during enumeration.
+      for (const key of Object.keys(localStorage)) {
+        if (!key.startsWith(LOCK_PREFIX) || key === this.lockKey) continue;
+        const entry = JSON.parse(localStorage.getItem(key));
+        if (!entry) continue; // A completed writer removed its own register.
+        if (typeof entry.choosing !== "boolean" || !Number.isSafeInteger(entry.number) || entry.number < (entry.choosing ? 0 : 1))
+          throw new Error("Die Speichersperre ist beschädigt. Der Kartenspeicher bleibt erhalten.");
+        entries.push({ ...entry, key });
+      }
+      return entries;
+    };
+    try {
+      localStorage.setItem(this.lockKey, JSON.stringify({ choosing: true, number: 0 }));
+    } catch (error) {
+      // IndexedDB remains usable when the browser disallows localStorage.
+      if (this.db) return operation();
+      throw new Error(`Speichern nicht möglich: ${error.message}. Bitte erlaube Website-Speicher.`);
+    }
+    try {
+      const number = Math.max(0, ...tickets().map((entry) => entry.number)) + 1;
+      if (!Number.isSafeInteger(number)) throw new Error("Die Speichersperre ist nicht verfügbar.");
+      localStorage.setItem(this.lockKey, JSON.stringify({ choosing: false, number }));
+      const started = Date.now();
+      while (true) {
+        if (!localStorage.getItem(this.lockKey)) throw new Error("Der Speicherzugriff wurde unterbrochen. Bitte wiederhole die Aktion.");
+        const waiting = tickets().some((entry) => entry.choosing || entry.number < number || (entry.number === number && entry.key < this.lockKey));
+        if (!waiting) break;
+        if (Date.now() - started >= this.lockTimeout)
+          throw new Error("Der Kartenspeicher wird von einem anderen Tab verwendet. Bitte schließe andere Wortspiel-Tabs und versuche es erneut. Euer Speicher bleibt erhalten.");
+        await new Promise((resolve) => setTimeout(resolve, 20));
+      }
+      return await operation();
+    } finally {
+      try { localStorage.removeItem(this.lockKey); } catch { /* Do not misreport a committed write if access was revoked. */ }
+    }
+  }
+
+  async write(change, expectedRevision) {
     let next;
+    const local = readLocal();
+    const current = local && local.revision > this.state.revision ? local : this.state;
+    const check = (basis) => {
+      if (expectedRevision !== undefined && basis.revision !== expectedRevision) {
+        this.state = basis;
+        throw new StorageConflictError();
+      }
+    };
     if (this.db) {
       next = await new Promise((resolve, reject) => {
         const tx = this.db.transaction("state", "readwrite");
+        this.transaction = tx;
         const store = tx.objectStore("state");
         const request = store.get(KEY);
         let result;
         request.onsuccess = () => {
           try {
             const saved = request.result;
+            if (saved !== undefined && !valid(saved))
+              throw new Error("Der vorhandene Datenbank-Spielstand hat ein unbekanntes Format. Er bleibt unverändert gespeichert.");
             const basis =
-              valid(saved) && saved.revision >= this.state.revision
+              valid(saved) && saved.revision >= current.revision
                 ? saved
-                : this.state;
+                : current;
+            check(basis);
             result = structuredClone(basis);
             change(result);
             result.revision++;
@@ -85,14 +190,19 @@ export class Storage {
             tx.abort();
           }
         };
-        tx.oncomplete = () => resolve(result);
+        tx.oncomplete = () => {
+          this.transaction = null;
+          resolve(result);
+        };
         tx.onerror = () =>
           reject(
             tx.error ||
               new Error("Der Kartenspeicher konnte nicht gespeichert werden."),
           );
-        tx.onabort = () =>
+        tx.onabort = () => {
+          this.transaction = null;
           reject(tx.error || new Error("Speichern abgebrochen."));
+        };
       });
       try {
         localStorage.setItem(KEY, JSON.stringify(next));
@@ -100,15 +210,14 @@ export class Storage {
         /* IndexedDB is durable. */
       }
     } else {
-      let basis = this.state;
       try {
-        const saved = JSON.parse(localStorage.getItem(KEY));
-        if (valid(saved) && saved.revision > basis.revision) basis = saved;
-        next = structuredClone(basis);
+        check(current);
+        next = structuredClone(current);
         change(next);
         next.revision++;
         localStorage.setItem(KEY, JSON.stringify(next));
       } catch (error) {
+        if (error instanceof StorageConflictError) throw error;
         throw new Error(
           `Speichern nicht möglich: ${error.message}. Bitte erlaube Website-Speicher.`,
         );

@@ -186,6 +186,8 @@ export function createSession(state, cards, categories) {
         : "Für diese Themen und diese Stufe sind keine ungespielten Karten übrig (oder die Auswahl ist ausgespielt). Wähle weitere Themen oder eine höhere Stufe. Der Kartenspeicher bleibt erhalten.",
     );
   state.session = {
+    // Additive identity for new games; older schema-1 sessions stay valid.
+    id: Array.from(crypto.getRandomValues(new Uint32Array(4)), (n) => n.toString(16).padStart(8, "0")).join(""),
     settings: structuredClone(state.settings),
     phase: "ready",
     turnIndex: 0,

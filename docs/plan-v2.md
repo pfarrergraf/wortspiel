@@ -4,7 +4,7 @@ Stand: Audit 2026-10-09. Dies ist der abgeglichene Plan; der ursprüngliche voll
 
 ## Zusammenarbeit
 
-ChatGPT/Codex ist alleiniger Integrator und Release-Verantwortlicher. Claude Code bekommt isolierte Teilaufgaben aus [agent-handoffs.md](agent-handoffs.md). Kein direkt aufrufbares Claude Code in dieser Sitzung; Aufgaben sind vorbereitet, nicht gestartet.
+ChatGPT/Codex ist alleiniger main-Integrator. Der Nutzer hat Claude Code extern gestartet und Cloudflare-Deployment nach der erforderlichen Freigabe ausdrücklich delegiert. Isolierte Aufgaben: [agent-handoffs.md](agent-handoffs.md). QA-DEVICES PR #22 und DEPLOY-CF PR #23 liegen zur Integration vor; QA-STORAGE #21 ist bei Codex aktiv. Andere vorbereitete Aufgaben sind ohne Claim/PR nicht als gestartet zu werten.
 
 Eine Aufgabe: ID, Akzeptanzkriterien, Dateigrenze, Claim `docs/claims/<ID>.md`, eigener Branch/Worktree, Tests, PR und Integrationsbedarf. Reservierte IDs nicht erneut übernehmen. Gemeinsame Kernmodule und Lockfiles ausschließlich beim Integrator. Keine Force-Pushes, keine unbewiesenen Löschungen, keine automatische Kartenrücksetzung. Neue Abhängigkeiten nur nach Prüfung beim Integrator. Der ausschließlich für Tests generierte `dist/` wird nie committed. Parallele Browsertests nur auf unterschiedlichen `PW_PORT`s **und getrennten Build-Verzeichnissen/Worktrees**.
 
@@ -34,11 +34,11 @@ Eine Aufgabe: ID, Akzeptanzkriterien, Dateigrenze, Claim `docs/claims/<ID>.md`, 
 
 ## Nächste verbindliche Schritte
 
-1. INT-A-B: Diff-Audit, Sicherung, Karten-/Regel-/UI-Integration und GitHub-PR-Abschluss anhand grüner Prüfungen.
+1. INT-A-B abgeschlossen mit PR #16 / main `9c1d9d6`: alle Alt-PRs #1–#15 bewertet und geschlossen, alle Quellbranches erhalten.
 2. QA-STORAGE (Integrator): atomarer localStorage-Rückfall, konkurrierende Tabs, alte Fixture-Spielstände, stale scoring; voller Import-/Export-Abgleich.
 3. QA-A11Y / QA-DEVICES / NOISE-01: isolierte Aufgaben mit klaren Dateigrenzen; siehe Übergabe.
 4. A15-REVIEW: fertigen Sportbranch bewerten; A12/A14 nur nach tatsächlich vorliegenden Inhalten entwickeln.
 5. MOBILE-02 (Integrator): Themenbereiche und freiwillige Einführung/Proberunde vervollständigen, Ergebnisstatistik klar ausweisen.
 6. I18N-01 (Integrator): Oberflächen- und Kartensprache getrennt implementieren, zunächst de unverändert.
 7. RELEASE-01: gesamte [release-checklist.md](release-checklist.md) erfüllen; erst dann stabiler Release-Tag.
-8. DEPLOY-CF: existierendes Projekt feststellen, Preview bauen und online/offline prüfen; erforderliche Kontoberechtigung und erste öffentliche Cloudflare-Produktion gebündelt freigeben lassen. GitHub Pages bleibt Rückfall.
+8. DEPLOY-CF (Claude): PR #23 / lokale Simulation vorhanden, Zugang fehlt. Codex integriert CF-1/CF-2 mit eigener SW-Abnahme; Claude inventarisiert nach Zugang und prüft das echte Preview; erforderliche Kontoberechtigung und erste öffentliche Cloudflare-Produktion gebündelt freigeben lassen. GitHub Pages bleibt Rückfall.

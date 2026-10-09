@@ -1,6 +1,6 @@
 # Agentenübergabe
 
-Stand: 2026-10-09. ChatGPT/Codex ist Integrator. Claude Code ist in dieser Umgebung **nicht aufrufbar und nicht gestartet**. Diese Prompts sind sofort verwendbare Aufträge; GitHub-Aufgaben: [NOISE-01](https://github.com/pfarrergraf/wortspiel/issues/17), [QA-A11Y](https://github.com/pfarrergraf/wortspiel/issues/18), [QA-DEVICES](https://github.com/pfarrergraf/wortspiel/issues/19), [A15-REVIEW](https://github.com/pfarrergraf/wortspiel/issues/20), [QA-STORAGE](https://github.com/pfarrergraf/wortspiel/issues/21). Nach einem Sitzungsneustart zuerst AGENTS, plan-v2 und integration-status lesen, dann aktuellen main-SHA prüfen. Backup `backup/main-2026-10-09` nicht verändern.
+Stand: 2026-10-09. ChatGPT/Codex ist Integrator. Der Nutzer hat eine externe Claude-Code-Sitzung gestartet und Cloudflare-Vorbereitung/Veröffentlichung nach Freigabe an Claude delegiert; Claude ist in dieser Codex-Umgebung weiterhin nicht direkt aufrufbar. Tatsächliche Claims: QA-DEVICES auf `v2/QA-DEVICES-matrix` (PR #22), DEPLOY-CF auf `v2/DEPLOY-CF-preview` (PR #23); Codex QA-STORAGE auf `v2/QA-STORAGE-safety` (#21). Vorbereitet ist nicht gleich gestartet; GitHub-Aufgaben: [NOISE-01](https://github.com/pfarrergraf/wortspiel/issues/17), [QA-A11Y](https://github.com/pfarrergraf/wortspiel/issues/18), [QA-DEVICES](https://github.com/pfarrergraf/wortspiel/issues/19), [A15-REVIEW](https://github.com/pfarrergraf/wortspiel/issues/20), [QA-STORAGE](https://github.com/pfarrergraf/wortspiel/issues/21). Nach einem Sitzungsneustart zuerst AGENTS, plan-v2 und integration-status lesen, dann aktuellen main-SHA prüfen. Backup `backup/main-2026-10-09` nicht verändern.
 
 ## Gemeinsamer Startvertrag
 
@@ -42,7 +42,7 @@ Prompt:
 
 ## QA-STORAGE – Integrator, offen
 
-Exklusiv beim Integrator, eigener Branch/Claim: storage.js, engine.js, main.js, Storage-Aktionen sowie `QA-STORAGE`-Tests/Fixtures. Konkurrenz mit anderen Agenten ausdrücklich ausgeschlossen.
+Aktiv beim Integrator: `v2/QA-STORAGE-safety`, Claim `docs/claims/QA-STORAGE.md`, Basis `9c1d9d6`, eigener PW_PORT=4211. Exklusiv: storage.js, engine.js, main.js, Storage-Aktionen sowie `QA-STORAGE`-Tests/Fixtures. Konkurrenz mit anderen Agenten ausdrücklich ausgeschlossen.
 
 Auftrag: ältere echte Struktur-Fixtures mit laufender Runde und mehreren Gruppen; Reservierung/Wertung bei konkurrierenden Tabs; localStorage-only mit und ohne Web Locks; verspätete Wertung muss die dargestellte Karten-/Session-ID prüfen. Kein Storage-Reset, keine schema-/ID-Änderung. Import invalid-after-valid muss Zustand komplett unverändert lassen (bereits Unit-geprüft). Export derzeit Gruppenhistorien; vollständige Partie-/Einstellungs-Sicherung additiv entwerfen und bestehende Backups weiter akzeptieren. Release erst nach diesen Nachweisen.
 
@@ -56,3 +56,10 @@ Auftrag: ältere echte Struktur-Fixtures mit laufender Runde und mehreren Gruppe
 ## Prüfprotokoll und Übergabe
 
 Basis-Audit 9a7a938; Karten 19be010; Regeln/UI 18a9f2e. Scroll-/Matrix-Korrektur `8aad640`; PR/Merge-SHA in integration-status.md. Vor Fortsetzung `git fetch origin` und exakten aktuellen Head prüfen; Änderungen anderer Entwickler nicht überschreiben. Jede fertiggestellte Aufgabe ergänzt tatsächliche Tests, Commit, PR und verbleibenden Bedarf. Vorbereitete Aufträge ohne Agentensitzung bleiben „vorbereitet“.
+
+## Aktive Übergabe 2026-10-09
+
+- Claude hat Geräte-/Offline-/SW-Update-Tests als PR #22 und Cloudflare-Simulationsbefunde als PR #23 geliefert. Codex prüft und integriert; deren neue Test-/Review-/Cloudflare-Dateien werden während des Reviews nicht parallel verändert.
+- Codex QA-STORAGE behebt stale Wertungen und tabübergreifendes Speichern, prüft historische Engine-Fixtures sowie unbekannte Speicherformate und Quota/Abbruch. Bekannte Grenzen: optionaler Vollbackup ist bislang Entwurf; ohne Web Locks kann ein abrupt abgestürzter Schreiber ein nicht ablaufendes Koordinationsticket hinterlassen (sicherer Abbruch statt Überschreiben).
+- CF-1 aus PR #23: Redirect `/index.html` und nicht ausgelieferte `_headers` müssen im SW berücksichtigt werden. Codex übernimmt diesen Kern-/Build-Integrationsbedarf als separates Paket; Cloudflare-Konto/Preview verbleibt bei Claude. Kein neues Hosting ohne Freigabe.
+- QA-A11Y/NOISE/A15 laufen nur, wenn ihr neuer Claim/PR dies belegt. Die Prompts oben bleiben für unabhängige Arbeit verfügbar.
