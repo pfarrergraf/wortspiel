@@ -1,3 +1,4 @@
+import { openSetupOptions } from "./setup-options.js";
 import { test, expect } from "@playwright/test";
 import { readFile } from "node:fs/promises";
 
@@ -6,6 +7,7 @@ const animals = new Map(pool.words.tiere.map(([word, emoji, points]) => [word, {
 
 test("pantomime mode: own categories, emoji card, points scale, themes kept", async ({ page }) => {
   await page.goto("/");
+  await openSetupOptions(page);
   await expect(page.locator(".category-grid")).toBeVisible();
   const tabooThemes = await page.locator('.category-grid input[name="category"]:checked').count();
   await page.locator(".game-mode", { hasText: "Pantomime" }).click();

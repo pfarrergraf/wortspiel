@@ -5,6 +5,16 @@ import { readSettings } from "../ui/setup.js";
 
 const names = ["Spielart", "Altersgruppe", "Teams", "Themen", "Spielstart"];
 
+function placeInstallHint() {
+  const form = document.querySelector("#setup-form");
+  const hint = document.querySelector(".ios-install-hint");
+  if (!form || !hint) return;
+  const phone = matchMedia("(max-width: 743px), (max-width: 950px) and (max-height: 500px)").matches;
+  const compact = phone && !Number.isInteger(ctx.setupWizardStep) && !ctx.setupExpanded;
+  const anchor = compact ? form : document.querySelector(".section-tabs");
+  if (anchor && hint.previousElementSibling !== anchor) anchor.after(hint);
+}
+
 function filterCategories() {
   const query = ctx.categoryQuery.trim().toLocaleLowerCase("de");
   document.querySelectorAll(".category").forEach((label) => {
@@ -17,6 +27,8 @@ function update() {
   if (!form) return;
   const step = ctx.setupWizardStep;
   const guided = Number.isInteger(step);
+  form.closest("main").classList.add("setup-page");
+  form.closest("main").classList.toggle("compact-setup", !guided && !ctx.setupExpanded);
   document.querySelector(".mobile-quickstart").hidden = !guided;
   document.querySelector("#wizard-progress").textContent = `Schritt ${(step ?? 0) + 1} von 5 · ${names[step ?? 0]}`;
   form.querySelectorAll("[data-setup-step]").forEach((section) => {
@@ -27,10 +39,16 @@ function update() {
   document.querySelector('[data-action="wizard-back"]').disabled = step === 0;
   document.querySelector('[data-action="wizard-next"]').hidden = step === 4;
   filterCategories();
+  // The hint's render subscriber may run after this one. Keep visual and
+  // keyboard order identical when it adds the optional installation note.
+  queueMicrotask(placeInstallHint);
 }
+
+window.addEventListener("resize", placeInstallHint);
 
 function show(step, push = true) {
   ctx.setupWizardStep = step;
+  ctx.setupExpanded = true;
   if (push) history.pushState({ wortspielWizard: step }, "", location.href);
   update();
   document.querySelector(step == null ? "#setup-form" : ".mobile-quickstart")?.scrollIntoView({ block: "start" });
@@ -39,6 +57,14 @@ function show(step, push = true) {
 on("render", update);
 registerAction("wizard-open", () => show(0));
 registerAction("wizard-all", () => show(null));
+function compact(push = true) {
+  ctx.setupWizardStep = null;
+  ctx.setupExpanded = false;
+  if (push) history.pushState({ wortspielSetupCompact: true }, "", location.href);
+  update();
+  document.querySelector(".quick-start")?.scrollIntoView({ block: "start" });
+}
+registerAction("setup-compact", () => compact());
 registerAction("wizard-back", () => {
   if (ctx.setupWizardStep > 0) show(ctx.setupWizardStep - 1);
 });
@@ -56,13 +82,15 @@ registerAction("wizard-next", async () => {
 document.addEventListener("invalid", (event) => {
   if (!event.target.closest("#setup-form")) return;
   const section = event.target.closest("[data-setup-step]");
-  if (section && ctx.setupWizardStep != null) show(Number(section.dataset.setupStep), false);
+  if (section) show(ctx.setupWizardStep != null ? Number(section.dataset.setupStep) : null, false);
 }, true);
 
 window.addEventListener("popstate", (event) => {
   if (ctx.view !== "setup") return;
   const step = event.state?.wortspielWizard;
-  show(Number.isInteger(step) && step >= 0 && step <= 4 ? step : null, false);
+  if (Number.isInteger(step) && step >= 0 && step <= 4) show(step, false);
+  else if (event.state?.wortspielWizard === null) show(null, false);
+  else compact(false);
 });
 
 document.addEventListener("input", (event) => {

@@ -1,3 +1,4 @@
+import { openSetupOptions } from "./setup-options.js";
 import { test, expect } from "@playwright/test";
 
 const state = (page) => page.evaluate(() => JSON.parse(localStorage.getItem("wortspiel.state.v1")));
@@ -11,6 +12,7 @@ test("guided setup saves fields, back navigation and explicit advanced settings"
   const errors = [];
   page.on("pageerror", (error) => errors.push(error.message));
   await page.goto("/");
+  await openSetupOptions(page);
   await page.getByRole("button", { name: "Neue Partie vorbereiten" }).click();
   await page.locator('label.game-mode:has(input[value="free"])').click();
   await next(page, 2);
@@ -44,6 +46,7 @@ test("guided setup saves fields, back navigation and explicit advanced settings"
 
 test("hidden required fields are revealed before native validation; browser back keeps values", async ({ page }) => {
   await page.goto("/");
+  await openSetupOptions(page);
   await page.getByRole("button", { name: "Neue Partie vorbereiten" }).click();
   await next(page, 2);
   await next(page, 3);
@@ -68,6 +71,7 @@ test("hidden required fields are revealed before native validation; browser back
 
 test("replay confirms replacement, retains session settings and never resets seen cards", async ({ page }) => {
   await page.goto("/");
+  await openSetupOptions(page);
   await page.getByLabel("Name Team 1").fill("Original");
   await page.getByLabel("Rundenzeit", { exact: true }).selectOption("90");
   await page.getByRole("button", { name: "Los geht’s" }).click();
@@ -97,6 +101,7 @@ test("replay confirms replacement, retains session settings and never resets see
 
 test("@matrix guided preparation and free play fit every configured screen", async ({ page }, testInfo) => {
   await page.goto("/");
+  await openSetupOptions(page);
   await page.getByRole("button", { name: "Neue Partie vorbereiten" }).click();
   await page.locator('label.game-mode:has(input[value="free"])').click();
   for (let step = 2; step <= 5; step++) {

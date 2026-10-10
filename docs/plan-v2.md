@@ -1,6 +1,14 @@
 # Wortspiel – verbindlicher Integrationsplan
 
-Stand: Integration 2026-10-10. Dies ist der abgeglichene Plan; der ursprüngliche vollständige Plan ist unverändert in [history/plan-v2-2026-10-08.md](history/plan-v2-2026-10-08.md) erhalten. Frühere Häkchen sind keine Abnahmebelege. Technische Belege und PR-Matrix: [integration-status.md](integration-status.md); Ausgangsstand: [audits/2026-10-09-baseline.md](audits/2026-10-09-baseline.md).
+Stand: ludeverbis / UI-START-01, 2026-10-10. Dies ist der abgeglichene Plan; der ursprüngliche vollständige Plan ist unverändert in [history/plan-v2-2026-10-08.md](history/plan-v2-2026-10-08.md) erhalten. Frühere Häkchen sind keine Abnahmebelege. Technische Belege und PR-Matrix: [integration-status.md](integration-status.md); Ausgangsstand: [audits/2026-10-09-baseline.md](audits/2026-10-09-baseline.md).
+
+## Aktueller Hauptstand und neuer Auftrag
+
+main `efa2966`: Zusammenführung und ludeverbis-Umbenennung abgeschlossen, erste Cloudflare-Produktion nach konkreter Nutzerfreigabe online unter https://ludeverbis.pages.dev/ . GitHub Pages bleibt identischer Rückfall. Exakte main-CI: 113 Unit und 324 Browserfälle grün; 44 zusätzliche echte Produktionsfälle sowie SHA-256-Abgleich aller 26 Dateien bestanden. Abschlussnachweise: PR #27 und Issue #26. Nachfolgende ältere Statusabschnitte dokumentieren historische Integrationsschritte.
+
+Neuer Nutzerauftrag: Schwierigkeit **Leicht / Mittel / Schwer** im Vordergrund, Altersbegrenzung optional. `UI-START-01` / `v2/UI-START-01-compact` ist beim Integrator beansprucht (Claim mit Dateigrenzen). Kompakter Smartphone-Einstieg mit Spielart, Schwierigkeit und unmittelbarem Start; Teams/Themen/seltene Optionen ausdrücklich öffnen, fünfstufige Führung freiwillig erhalten. Desktop, Speicher und Regeln unverändert. Schwer benennt den bestehenden kumulativen Filter `all` neu, keine zusätzliche Profi-Stufe oder neue Kartenklassifikation.
+
+Funktionsbestand: Tabu, freies Erklären und Pantomime sind integriert. Geräuscheraten benötigt noch einen geeigneten eigenen Kartenpool samt Regel-/Engine-/UI-Integration (Issue #17); vorbereiteter Auftrag ist keine Implementierung. Der bestehende B5-Unterbau verwendet Erklären/Pantomime/Zeichnen/Ein Wort und ist keine fertige Auswahl der gewünschten fünf Spielarten. Ein neuer Mischmodus für Tabu/Frei/Pantomime/Geräusche benötigt explizite Moduswahl, passenden Pool, Anzeige und Moduserhalt bei Wertung/Undo. Folgeschritte außerdem: freiwillige Proberunde/Einführung, Ergebnisstatistik, vollständige Partie-/Einstellungssicherung, geführte Absturzreparatur und Geräte-/Barrierefreiheitsabnahme. Kinder-/Film-Pakete A12/A14 besitzen nur Claims; echte redaktionelle Erprobung bleibt separat offen.
 
 ## Zusammenarbeit
 

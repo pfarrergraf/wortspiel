@@ -1,3 +1,4 @@
+import { openSetupOptions } from "./setup-options.js";
 import { test, expect } from "@playwright/test";
 import { readFile } from "node:fs/promises";
 
@@ -55,7 +56,11 @@ for (const mode of ["indexeddb", "local"]) {
       await b.goto("/");
       // Opening B itself advances the revision. Reload A to start with the same baseline.
       await a.reload();
-      if (wizard) await a.locator('[data-action="wizard-open"]').click();
+      await openSetupOptions(a);
+      await openSetupOptions(b);
+      if (wizard) {
+        await a.locator('[data-action="wizard-open"]').click();
+      }
       await b.locator('input[name="team"]').first().fill("Fremdes Team");
       await b.locator('input[name="group"]').click();
       await expect.poll(async () => (await b.evaluate(key => JSON.parse(localStorage.getItem(key)), KEY)).settings.teams[0]).toBe("Fremdes Team");

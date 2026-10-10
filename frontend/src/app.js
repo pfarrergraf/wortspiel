@@ -17,6 +17,7 @@ export const ctx = {
   offlineReady: false,
   installPrompt: null,
   setupWizardStep: null,
+  setupExpanded: false,
   categoryQuery: "",
   pendingGameSettings: null,
 };

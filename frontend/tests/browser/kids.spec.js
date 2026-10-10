@@ -1,3 +1,4 @@
+import { openSetupOptions } from "./setup-options.js";
 import { test, expect } from "@playwright/test";
 import { readFile } from "node:fs/promises";
 
@@ -5,6 +6,7 @@ const dataset = JSON.parse(await readFile(new URL("../../src/data/cards.json", i
 
 test("kids preset: age filter, free explaining without taboo words and a gentle scoring label", async ({ page }) => {
   await page.goto("/");
+  await openSetupOptions(page);
   await page.getByRole("button", { name: "Kinder (6–9)" }).click();
   await expect(page.getByLabel("Altersgruppe")).toHaveValue("8");
   await expect(page.getByLabel("Tabu-Stufe")).toHaveValue("none");
@@ -24,6 +26,7 @@ test("kids preset: age filter, free explaining without taboo words and a gentle 
 
 test("light taboo level shows exactly three taboo words", async ({ page }) => {
   await page.goto("/");
+  await openSetupOptions(page);
   await page.getByLabel("Tabu-Stufe").selectOption("light");
   await page.getByRole("button", { name: "Los geht’s" }).click();
   await page.getByRole("button", { name: "Wir sind bereit" }).click();

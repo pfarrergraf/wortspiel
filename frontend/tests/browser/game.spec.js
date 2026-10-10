@@ -1,3 +1,4 @@
+import { openSetupOptions } from "./setup-options.js";
 import { test, expect, chromium } from "@playwright/test";
 import { readFile } from "node:fs/promises";
 import { PRESETS, matchesSettings } from "../../src/engine.js";
@@ -26,6 +27,7 @@ async function seen(page) {
 test("youth and Konfi presets filter cards and counts, persist offline, and keep history across levels", async ({ page, context }, testInfo) => {
   await page.goto("/");
   await expect(page.getByLabel("Schwierigkeitsgrad")).toHaveValue("easy");
+  await openSetupOptions(page);
   await page.getByRole("button", { name: "Jugendliche", exact: true }).click();
   await expect(page.locator('input[name="category"]:checked')).toHaveCount(presetCount("youth"));
   await expect(page.locator('input[value="faith"]')).not.toBeChecked();
@@ -49,7 +51,7 @@ test("youth and Konfi presets filter cards and counts, persist offline, and keep
   await expect(page.locator("#available-count")).toHaveText((dataset.cards.filter((c) => matchesSettings(c, { difficulty: "all", ageGroup: 14 }) && c.categories.some((id) => selected.includes(id))).length - 1).toLocaleString("de-DE"));
   await page.getByRole("button", { name: "Los geht’s" }).click();
   await page.getByRole("dialog").getByRole("button", { name: "Neue Partie starten" }).click();
-  await expect(page.locator(".game-heading")).toContainText("Alles / knifflig");
+  await expect(page.locator(".game-heading")).toContainText("Schwer");
   await page.getByRole("button", { name: "Wir sind bereit" }).click();
   await expect(page.locator("#current-word")).toBeVisible();
   await expect(page.locator("#current-word")).not.toHaveText(first);
@@ -59,7 +61,7 @@ test("youth and Konfi presets filter cards and counts, persist offline, and keep
   await expect(page.getByLabel("Schwierigkeitsgrad")).toHaveValue("easy");
   // Preparing the next game must not change the current game's pool.
   await page.getByRole("button", { name: "Partie fortsetzen" }).click();
-  await expect(page.locator(".game-heading")).toContainText("Alles / knifflig");
+  await expect(page.locator(".game-heading")).toContainText("Schwer");
   await page.getByRole("button", { name: "Spielübersicht" }).click();
   await page.evaluate(() => navigator.serviceWorker.ready.then(() => new Promise((resolve) => {
     if (navigator.serviceWorker.controller) return resolve();
@@ -88,7 +90,7 @@ test("existing saved games upgrade without losing cards or changing their active
     localStorage.setItem("wortspiel.state.v1", JSON.stringify(old));
   });
   await page.reload();
-  await expect(page.locator(".game-heading")).toContainText("Alles / knifflig");
+  await expect(page.locator(".game-heading")).toContainText("Schwer");
   await page.getByRole("button", { name: "Weiter geht’s" }).click();
   await expect(page.locator("#current-word")).toHaveText(first);
   await page.getByRole("button", { name: "Spielübersicht" }).click();
@@ -102,6 +104,7 @@ test("responsive setup, selectable categories and a complete manual round", asyn
   const errors = [];
   page.on("pageerror", (error) => errors.push(error.message));
   await page.goto("/");
+  await openSetupOptions(page);
   await expect(
     page.getByRole("heading", { name: "Was kommt auf die Karten?" }),
   ).toBeVisible();
@@ -223,6 +226,7 @@ test("team names and timer settings are saved, empty selection is rejected", asy
   page,
 }) => {
   await page.goto("/");
+  await openSetupOptions(page);
   await page.getByLabel("Name Team 1").fill("Die Wortfinder");
   await page.getByLabel("Rundenzeit", { exact: true }).selectOption("90");
   await expect(page.getByLabel("Name Team 1")).toHaveValue("Die Wortfinder");
@@ -279,6 +283,7 @@ test("timer ends the turn and all teams reach the final result", async ({
 }) => {
   await page.clock.install();
   await page.goto("/");
+  await openSetupOptions(page);
   await page.getByLabel("Runden pro Team", { exact: true }).selectOption("1");
   await page.getByRole("button", { name: "Los geht’s" }).click();
   await page.getByRole("button", { name: "Wir sind bereit" }).click();
