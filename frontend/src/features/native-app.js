@@ -7,7 +7,10 @@ import { action } from "../ui/html.js";
 import { registerAction } from "../actions.js";
 
 async function pauseNativeGame() {
-  if (ctx.state?.session?.phase === "playing" && await change((s) => pause(s))) emit("pause");
+  if (ctx.state?.session?.phase !== "playing") return true;
+  if (!await change((s) => pause(s))) return false;
+  emit("pause");
+  return true;
 }
 
 if (isNativeApp()) {
@@ -17,7 +20,7 @@ if (isNativeApp()) {
   App.addListener("backButton", async ({ canGoBack }) => {
     const modal = document.querySelector("#modal");
     if (modal?.open) { modal.close(); return; }
-    await pauseNativeGame();
+    if (!await pauseNativeGame()) return;
     if (canGoBack) { history.back(); return; }
     dialog("App schließen?", "<p>Eure Partie bleibt gespeichert. Beim nächsten Start könnt ihr weiterspielen.</p>",
       `${action("native-exit", "App schließen")}${action("close-dialog", "Hier bleiben", "button primary")}`);
@@ -28,5 +31,5 @@ if (isNativeApp()) {
   });
 }
 registerAction("native-exit", async () => {
-  if (isNativeApp()) { await pauseNativeGame(); await App.exitApp(); }
+  if (isNativeApp() && await pauseNativeGame()) await App.exitApp();
 });

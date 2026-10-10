@@ -42,16 +42,18 @@ public class DocumentsPlugin extends Plugin {
             !DocumentPolicy.validMime(mime) || !DocumentPolicy.validName(name)) {
             call.reject("Ungültige Sicherungsdatei."); return;
         }
+        boolean started = false;
         try {
             byte[] bytes = image ? Base64.decode(text, Base64.DEFAULT) : text.getBytes(StandardCharsets.UTF_8);
             if (!DocumentPolicy.validSize(bytes.length)) { call.reject("Die Datei ist zu groß (maximal 5 MB)."); return; }
             if (!begin(call)) return;
+            started = true;
             Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
             intent.addCategory(Intent.CATEGORY_OPENABLE);
             intent.setType(mime);
             intent.putExtra(Intent.EXTRA_TITLE, name);
             startActivityForResult(call, intent, "saved");
-        } catch (Exception error) { end(); call.reject("Dateiauswahl konnte nicht geöffnet werden."); }
+        } catch (Exception error) { if (started) end(); call.reject("Dateiauswahl konnte nicht geöffnet werden."); }
     }
 
     @ActivityCallback
