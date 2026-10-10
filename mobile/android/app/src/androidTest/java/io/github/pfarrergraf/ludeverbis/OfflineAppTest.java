@@ -44,6 +44,17 @@ public class OfflineAppTest {
             assertTrue(image.compress(Bitmap.CompressFormat.PNG, 100, stream));
         }
         image.recycle();
+        // Gradle uninstalls test APKs after instrumentation, deleting their
+        // app-specific files. Copy via the test runner's shell (not an app
+        // permission) so CI can collect screenshots after that cleanup.
+        String export = "/sdcard/Download/ludeverbis-store/" + name + ".png";
+        try (android.os.ParcelFileDescriptor descriptor = InstrumentationRegistry.getInstrumentation()
+                .getUiAutomation().executeShellCommand("mkdir -p /sdcard/Download/ludeverbis-store && cp " +
+                    new File(directory, name + ".png").getAbsolutePath() + " " + export + " && stat -c %s " + export);
+             java.io.FileInputStream stream = new java.io.FileInputStream(descriptor.getFileDescriptor())) {
+            String size = new String(stream.readAllBytes(), java.nio.charset.StandardCharsets.UTF_8).trim();
+            assertTrue("Screenshot must survive test APK uninstall", Long.parseLong(size) > 0);
+        }
     }
 
     @Test public void freshOfflinePlaySurvivesRecreationAndBack() throws Exception {
