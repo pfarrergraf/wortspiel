@@ -8,7 +8,7 @@ Eine violette Karte mit gelber und rosafarbener Hinterlegung zeigt „Ludeverbis
 
 Auf kleinen Bildschirmen steht das Formular zuerst; Anpassungen und Kartenspeicher folgen. Die DOM-Reihenfolge wird tatsächlich geändert, damit Tastatur und Screenreader dieselbe Reihenfolge haben. In den optionalen Einstellungen und auf größeren Bildschirmen bleibt die komplette Vorbereitung verfügbar. Kein verpflichtender Assistent, keine zusätzliche Anmeldung.
 
-Die Animation lässt sich pausieren; die Präferenz bleibt während der Setup-Neudarstellungen im UI-Kontext erhalten, ohne ein Spiel zu schreiben. Hover/Fokus halten den Ring ebenfalls an. Die Systemeinstellung für reduzierte Bewegung schaltet ihn aus. Kein blinkender Effekt, keine fremden Grafik-/Font-/Iconquellen und keine neue Abhängigkeit.
+Die Animation lässt sich pausieren; die Präferenz bleibt während der Setup-Neudarstellungen im UI-Kontext erhalten, ohne ein Spiel zu schreiben. „Fortsetzen“ startet den Ring auch bei weiterhin fokussierter Taste. Die Systemeinstellung für reduzierte Bewegung schaltet ihn aus. Kein blinkender Effekt, keine fremden Grafik-/Font-/Iconquellen und keine neue Abhängigkeit.
 
 Der sichtbare Name „Verbotene Wörter“ ersetzt „Tabu“, einschließlich Auswahl, gespeicherter Mischkarten-Anzeige, Regeloptionen, Hilfe, Presentertexten und Wertungsknopf. Das interne Format (`taboo`, `tabooMode`, Karten-IDs und Resultate) bleibt kompatibel. Es gibt keine Speichermigration, keine neue Reservierungs-/Wertungsregel und keine Änderung veröffentlichter Kartendaten. Dies ist eine Umbenennung, keine rechtliche Prüfung oder Zusage einer Store-Freigabe.
 

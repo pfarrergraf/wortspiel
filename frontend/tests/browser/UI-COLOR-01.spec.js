@@ -36,6 +36,7 @@ test("pausing the start animation never writes game data and survives setup repa
   const before = await saved(page);
   await page.getByRole("button", { name: "Animation anhalten", exact: true }).click();
   await expect(page.locator(".mode-landing")).toHaveClass(/motion-paused/);
+  await expect(page.locator(".orbit-ring")).toHaveCSS("animation-play-state", "paused");
   await expect(page.getByRole("button", { name: "Animation fortsetzen", exact: true })).toHaveAttribute("aria-pressed", "true");
   expect(await saved(page)).toEqual(before);
   await page.locator('.game-mode:has(input[value="noises"])').click();
@@ -46,6 +47,7 @@ test("pausing the start animation never writes game data and survives setup repa
   expect(changed.session).toEqual(before.session);
   await page.getByRole("button", { name: "Animation fortsetzen", exact: true }).click();
   await expect(page.locator(".mode-landing")).not.toHaveClass(/motion-paused/);
+  await expect(page.locator(".orbit-ring")).toHaveCSS("animation-play-state", "running");
   expect(await saved(page)).toEqual(changed);
 });
 

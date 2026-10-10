@@ -17,7 +17,7 @@
 .mode-landing .mode-wheel { position: relative; display: block; width: min(100%, 420px); height: 300px; margin: 18px auto 10px; }
 .orbit-ring { position: absolute; left: 50%; top: 50%; width: 230px; height: 230px; border-radius: 50%; border: 3px dashed #ffffffb0; background: conic-gradient(#f5ce69, #b7e6d0, #afd9f5, #e7b5e1, #f2a795, #f5ce69); mask: radial-gradient(transparent 60%, #000 61%); animation: word-orbit 36s linear infinite; pointer-events: none; }
 @keyframes word-orbit { from { transform: translate(-50%, -50%) rotate(0); } to { transform: translate(-50%, -50%) rotate(360deg); } }
-.motion-paused .orbit-ring, .mode-landing:hover .orbit-ring, .mode-landing:focus-within .orbit-ring { animation-play-state: paused; }
+.motion-paused .orbit-ring { animation-play-state: paused; }
 .wheel-center { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%) rotate(-10deg); display: grid; place-items: center; width: 72px; height: 72px; border-radius: 23px; background: #ffe18a; color: #6840b7; font-size: 46px; box-shadow: 4px 4px 0 #ffffff50; pointer-events: none; }
 .mode-landing .game-mode { position: absolute; left: 50%; transform: translateX(-50%); display: flex; justify-content: center; align-items: center; gap: 4px; width: 124px; min-height: 74px; padding: 9px 6px; text-align: center; border: 2px solid transparent; border-radius: 20px; box-shadow: 0 4px 0 #25204435; color: #392251; }
 .mode-landing .game-mode strong { font-size: 14px; line-height: 1.2; }
