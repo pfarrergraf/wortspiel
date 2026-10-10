@@ -4,6 +4,7 @@ import { registerAction } from "../actions.js";
 import { tabooCardCount, pantomimeCategories, pantomimeCardCount, noisesCardCount } from "../data.js";
 import { action } from "../ui/html.js";
 import { iosInstallSteps } from "../ui/install-hint.js";
+import { isNativeApp } from "../native.js";
 
 registerAction("project-page:", async (id) => {
   const page = id.split(":")[1];
@@ -40,10 +41,13 @@ registerAction("help", async () => {
   );
 });
 
-registerAction("about", () =>
+registerAction("about", async () => {
+  // Reading the bundled notices can navigate away from the game. Persist
+  // the pause before opening the dialog, just as for the other info pages.
+  if (ctx.state.session?.phase === "playing" && !await change((state) => pause(state))) return;
   dialog(
     "Karten & Datenschutz",
     `<p>ludeverbis ist ein eigenständiges, kostenloses Spiel zum Begriffe-Erklären. Keine Anmeldung, keine Werbung, kein Tracking.</p><p>${tabooCardCount} vollständige Karten und ${pantomimeCardCount} eigene Pantomime-Wörter in ${pantomimeCategories.length} Kategorien sowie ${noisesCardCount} eigene Geräuschbegriffe: deutsche Daten aus <a href="https://github.com/Kovah/Taboo-Data" target="_blank" rel="noopener">Kovah/Taboo-Data</a>, eure vorhandenen Karten und eigene Ergänzungen. Der offene Quellcode und die Kartendaten stehen unter GPL-3.0-or-later. Quellen und Änderungen sind im <a href="https://github.com/pfarrergraf/wortspiel" target="_blank" rel="noopener">Repository</a> dokumentiert.</p><p>Gruppennamen, Punkte und gesehene Karten bleiben im Website-Speicher auf deinem Gerät. Die Sicherung wird erst durch deinen Klick heruntergeladen. Lokale Spracherkennung ist optional, verarbeitet auf dem Gerät und speichert keine Aufnahmen oder Transkripte. Sie wird niemals automatisch durch einen Cloud-Dienst ersetzt.</p><p>Beim ersten Laden und bei App-Updates können beim jeweiligen Website-Hoster technische Zugriffsprotokolle entstehen.</p>`,
-    action("close-dialog", "Schließen"),
-  ),
-);
+    action("close-dialog", "Schließen") + `<p><a href="./licenses/GPL-3.0.txt">GPL-Lizenz</a> · <a href="./licenses/Android-NOTICES.txt">Drittanbieterhinweise</a>${isNativeApp() ? "<br>Android: Karten und Oberfläche sind im Paket enthalten; Website und App verwenden getrennte Speicher. Kein Mikrofonzugriff in dieser App." : ""}</p>`,
+  );
+});

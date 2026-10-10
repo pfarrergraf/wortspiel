@@ -47,6 +47,10 @@ Ein Integrationscommit mit grüner CI ist noch kein vollständiger Release. Stab
 
 Offene Häkchen sind bewusst offene Arbeit, keine stillschweigend erfolgreiche Abnahme.
 
+## Android-Auftrag 2026-10-10 – ANDROID-01
+
+Der neue explizite Nutzerauftrag erlaubt die technische Android-Verpackung bereits jetzt. Damit ist die frühere Reihenfolge „erst stabiler Web-Release, danach Android-Planung“ überholt; die dort offenen Pflichtprüfungen werden nicht als erledigt markiert. Technischer Kandidat, API-36-Emulator und privates Upload-Bundle werden im PR nachgewiesen. Öffentliche Store-Freigabe bleibt abhängig von [Play-Console-Checkliste](play-store/console-checklist.md), realer Geräteprüfung, menschlichen Geräuschtests und finaler Freigabe der öffentlichen Erklärungen. Kein stabiler Release-Tag aus der Verpackung allein.
+
 
 ## Historischer Core-Zwischenstand 2026-10-10 – 4782a1e
 

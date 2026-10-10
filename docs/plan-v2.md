@@ -14,7 +14,7 @@ Der bestehende B5-Unterbau für explain/pantomime/draw/oneword bleibt für Legac
 
 Neuer Nutzerauftrag UI-COLOR-01: **Bunter Einstieg statt einer rein komprimierten Auswahl.** Farbige Hintergrundkarte mit „Ludeverbis – Spiele mit Wörtern“, drehendem Ring und fünf farbigen Spielarten mit Symbolen. Native Auswahlfelder bleiben stabil; Bewegung ist pausierbar und respektiert reduzierte Bewegung. Der sichtbare Name „Verbotene Wörter“ ersetzt „Tabu“, interne Formate und alte Partien bleiben kompatibel. Claim und Prüfbericht: [UI-COLOR-01](reviews/UI-COLOR-01.md).
 
-**Optionales Ziel Play Store:** Bei UI, Offline-Nutzung und lokalen Gerätefunktionen berücksichtigen. Die Web-App bleibt die gemeinsame Grundlage. Eine spätere Android-Verpackung ist ein eigener Auftrag nach Web-/Geräteabnahme; Store-Veröffentlichung ist kein Muss und blockiert die Web-Entwicklung nicht. Keine endgültige Paket-ID, neue Kontorechte oder Store-Veröffentlichung in UI-COLOR-01.
+**Android-Auftrag ANDROID-01:** Der Nutzer beauftragt jetzt ausdrücklich Commit, Sicherung und Play-Store-Vorbereitung. Paketname `io.github.pfarrergraf.ludeverbis` ist bestätigt. Die gemeinsame statische Web-App wird mit lokalen Assets in Capacitor/Android gebündelt; getrennte App-Origin, manueller Datei-Export/Import, Hintergrundpause und API 36. Keine Engine-/Storage-/Kartendatenmigration. [Store-Texte und Konto-/Abnahmecheckliste](play-store/console-checklist.md), [Claim](claims/ANDROID-01.md). Der frühere Aufschub der Verpackung ist durch diesen Auftrag aufgehoben. Echte Geräte, menschliche Geräuschtests und die endgültigen Play-Console-/rechtlichen Erklärungen bleiben Pflichtarbeit vor öffentlicher Store-Freigabe; kein automatischer Store-Upload.
 
 ## Zusammenarbeit
 
@@ -44,7 +44,7 @@ Eine Aufgabe: ID, Akzeptanzkriterien, Dateigrenze, Claim `docs/claims/<ID>.md`, 
 | Geräuscheraten / Gemischt | PLAY-05 implementiert, fünf Spielarten und eigener Pool mit 160 Geräuschbegriffen | technische Integration in PR #31; menschlicher Ratetest bleibt offen |
 | Internationalisierung | Trennung fachlich dokumentiert | technische Text-Extraktion noch offen |
 | Cloudflare | passende Build-Konfiguration anhand aktueller Doku geprüft | Claude: Direct-Upload-Projekt wortspiel-app und öffentliche Previews nach separater Nutzerfreigabe; echter Patch-Preview geprüft, finales main-Preview und Produktion noch offen |
-| Android | Capacitor/WebView als spätere Prüfung | keine Verpackung vor Web-Abnahme |
+| Android | ANDROID-01: offline Capacitor-Paket/API 36, APK/AAB/Signierung/Store-Materialien | technische Prüfung im PR; echte Geräte und Play Console vor öffentlicher Store-Freigabe |
 
 ## Nächste verbindliche Schritte
 

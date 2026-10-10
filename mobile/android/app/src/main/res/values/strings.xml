@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">ludeverbis</string>
+    <string name="title_activity_main">ludeverbis</string>
+    <string name="package_name">io.github.pfarrergraf.ludeverbis</string>
+    <string name="custom_url_scheme">io.github.pfarrergraf.ludeverbis</string>
+</resources>
