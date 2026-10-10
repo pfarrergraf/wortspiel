@@ -265,7 +265,7 @@ export class Storage {
   async withLock(operation) {
     if (globalThis.navigator?.locks?.request) {
       const controller = new AbortController();
-      const timeout = setTimeout(() => controller.abort(new Error("Der Kartenspeicher wird von einem anderen Tab verwendet. Bitte schließe andere Wortspiel-Tabs und versuche es erneut. Euer Speicher bleibt erhalten.")), this.lockTimeout);
+      const timeout = setTimeout(() => controller.abort(new Error("Der Kartenspeicher wird von einem anderen Tab verwendet. Bitte schließe andere ludeverbis-Tabs und versuche es erneut. Euer Speicher bleibt erhalten.")), this.lockTimeout);
       try {
         return await navigator.locks.request(KEY, { mode: "exclusive", signal: controller.signal }, () => {
           clearTimeout(timeout); // Never expire an already acquired writer lock.
@@ -310,7 +310,7 @@ export class Storage {
         const waiting = tickets().some((entry) => entry.choosing || entry.number < number || (entry.number === number && entry.key < this.lockKey));
         if (!waiting) break;
         if (Date.now() - started >= this.lockTimeout)
-          throw new Error("Der Kartenspeicher wird von einem anderen Tab verwendet. Bitte schließe andere Wortspiel-Tabs und versuche es erneut. Euer Speicher bleibt erhalten.");
+          throw new Error("Der Kartenspeicher wird von einem anderen Tab verwendet. Bitte schließe andere ludeverbis-Tabs und versuche es erneut. Euer Speicher bleibt erhalten.");
         await new Promise((resolve) => setTimeout(resolve, 20));
       }
       return await operation();

@@ -21,7 +21,7 @@ test("head carries Apple web app metadata with relative paths", async ({ page, r
   expect(await meta("apple-mobile-web-app-capable")).toBe("yes");
   expect(await meta("mobile-web-app-capable")).toBe("yes");
   expect(await meta("apple-mobile-web-app-status-bar-style")).toBe("default");
-  expect(await meta("apple-mobile-web-app-title")).toBe("Wortspiel");
+  expect(await meta("apple-mobile-web-app-title")).toBe("ludeverbis");
   expect(await meta("format-detection")).toBe("telephone=no");
   expect(await meta("viewport")).toContain("viewport-fit=cover");
   expect(await meta("viewport")).toContain("interactive-widget=resizes-content");

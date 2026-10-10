@@ -47,7 +47,7 @@ test("a presenter plays a whole turn: next starts and scores, back is taboo, thi
     .poll(async () => (await state(page)).session.log.length)
     .toBe(5);
   await page.keyboard.press("?");
-  await expect(page.getByRole("heading", { name: "So spielt ihr Wortspiel." })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "So spielt ihr ludeverbis." })).toBeVisible();
   // Escape closes the dialog and must not count as "skip".
   await page.keyboard.press("Escape");
   await expect(page.locator("dialog[open]")).toHaveCount(0);

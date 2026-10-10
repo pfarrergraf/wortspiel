@@ -1,4 +1,4 @@
-# Wortspiel — Alles sagen. Fast alles.
+# ludeverbis — Alles sagen. Fast alles.
 
 Ein buntes, kostenloses Spiel zum Begriffe-Erklären für eine Gruppe an **einem Smartphone, Tablet oder Laptop**. Eine Person erklärt den Begriff, ohne die verbotenen Wörter zu benutzen; ihr wertet über große Spieltasten.
 

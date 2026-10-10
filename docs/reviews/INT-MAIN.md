@@ -28,10 +28,14 @@ Die älteren Python-Prototypen, `instructions.md`, Bootstrap-Dateien und lokalen
 - Alle 2.744 veröffentlichten Erklärungskarten sind mit unveränderlichen IDs, bisherigen Kategorien und SHA-256 der übrigen Metadaten als Regression verankert. Nach Sportintegration: 2.856 insgesamt, 2.848 aktiv, acht bisherige retired IDs; 1.187 leicht und 2.056 einschließlich mittel. Pantomime-Pool unverändert.
 - Node 22.17.1: 112 Unit-Tests ohne Fehler/Skips, Kartencheck ohne Fehler und Produktionsbuild bestanden. Vollständige lokale Chrome-Suite und exakte CI werden im Abschluss des Integrations-PR mit tatsächlicher Anzahl dokumentiert. Ein laufender Test wird nicht als Erfolg ausgegeben.
 
-## Cloudflare und verbleibende Entscheidungen
+## Cloudflare und verbleibende Entscheidungen (Stand der ursprünglichen Kernintegration)
 
 Die vorhandenen zwei öffentlichen Preview-Aliase antworteten in dieser Sitzung mit HTTP 200; die Produktionsadresse `wortspiel-app.pages.dev` mit 404. Der frühere Patch-Preview ist kein Build des finalen Integrationscommits. Wrangler 4.149.0 ist außerhalb der App-Abhängigkeiten im npm-Ausführungscache verfügbar; `whoami` meldet fehlende Anmeldung. Keine Cloudflare-Credentials in Prozess-/Benutzer-/Maschinenvariablen. Die Plugin-Suche lieferte in dieser Sitzung keine verfügbare Cloudflare-Verbindung. Nutzerwahl für Browseranmeldung oder lokales vorhandenes Token ist angefragt; keine Konto-/Projekt-/DNS-/Produktionsmutation durchgeführt.
 
 Neue App-Bezeichnung und Veröffentlichung der vorbereiteten Betreiberangaben/Informationsseiten sind angefragt. Ohne Antwort bleibt das öffentliche Branding Wortspiel erhalten und INFO-01 ein prüfbarer Entwurf. Produktion wird erst nach Preview des genauen fertigen SHA und konkreter Freigabe aktiviert. Die Sicherung enthält Gruppen/Kartenhistorien, keine laufende Partie oder vollständige Einstellungen; Originwechsel verlangt Export/Import und erhält die alte Adresse.
 
 Reale iOS/Android-Geräte, WebKit, zwei Personen am kleinen Display, Mikrofon/HID und eine echte Banking-App wurden hier nicht getestet. Kein stabiler Release-Tag wird aus der automatischen Kernintegration abgeleitet. Quelle und Rückfallbranches bleiben erhalten; abschließende PR-/main-/CI-SHAs stehen im Integrations-PR.
+
+## Bestätigte Fortsetzung
+
+Kernintegration abgeschlossen auf main bcb47b3 durch PR #28; #24/#25 dadurch integriert. 112 Unit/Kartencheck/Build und vollständige exakte CI grün; Windows lokal 304 Fälle plus zwei unveränderte SW-Neustartfälle mit kurzem Ausgabe-/Profilpfad grün. Quell-/Recoverybranches erhalten, lokaler Hauptcheckout auf main. Nutzer bestätigt anschließend ludeverbis, ausschließlich Pfarrer Benjamin Graf und Gemeindekonto für Jugendarbeit. Siehe [BRAND-01](BRAND-01.md): Wrangler-Browseranmeldung erfolgreich, Pages-Projekt ludeverbis angelegt, INFO-01-Veröffentlichung nun bestätigt. Finale Cloudflare-Produktion bleibt bis zur konkreten Preview-Freigabe ausstehend.

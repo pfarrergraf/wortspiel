@@ -138,7 +138,7 @@ test("E3: help lists every shortcut, pauses play and protects open dialogs", asy
   await begin(page);
   await page.keyboard.press("?");
   const modal = page.getByRole("dialog");
-  await expect(modal.getByRole("heading", { name: "So spielt ihr Wortspiel." })).toBeVisible();
+  await expect(modal.getByRole("heading", { name: "So spielt ihr ludeverbis." })).toBeVisible();
   for (const text of ["Enter oder →", "S oder ↓", "T oder ←", "P oder Leertaste", "Strg+Z oder Cmd+Z", "?", "Wort gesagt"])
     await expect(modal).toContainText(text);
   const paused = await readSession(page);
