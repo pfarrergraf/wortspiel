@@ -55,7 +55,9 @@ for (const prefix of ["/", "/wortspiel/"]) {
       await page.locator('[data-action="correct"]').click();
       await expect(page.locator(".round-points")).toHaveText("+1");
       await page.getByRole("button", { name: "Runde pausieren", exact: true }).click();
+      await expect(page.getByRole("heading", { name: "Kurz durchatmen.", exact: true })).toBeVisible();
       const before = await state();
+      expect(before.session.phase).toBe("paused");
       await context.setOffline(true);
       for (const [name, heading] of pages) {
         for (const suffix of [`${name}.html?offline=1`, `${name}?offline=1`]) {
