@@ -34,8 +34,12 @@ function extendsHistory(candidate, previous) {
   return Object.entries(previous.groups).every(([id, group]) => {
     const next = candidate.groups[id];
     if (!next) return false;
+    const previousReset = Number.isFinite(group.resetAt) ? group.resetAt : 0;
+    const nextReset = Number.isFinite(next.resetAt) ? next.resetAt : 0;
+    // A pre-reset branch must never resurrect cards from the former history.
+    if (nextReset < previousReset) return false;
     // An explicitly confirmed reset is the only legitimate history truncation.
-    if (Number.isFinite(next.resetAt) && next.resetAt > (group.resetAt ?? 0)) return true;
+    if (nextReset > previousReset) return true;
     return Object.keys(group.seen).every((card) => Object.hasOwn(next.seen, card));
   });
 }

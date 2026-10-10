@@ -85,7 +85,7 @@ registerAction("close-dialog", () => {
 });
 
 registerAction("end-turn-confirm", async () => {
-  await change((s) => pause(s));
+  if (!await change((s) => pause(s))) return;
   dialog(
     "Diese Runde beenden?",
     "<p>Eure bisherigen Punkte bleiben erhalten. Die angezeigte Karte bleibt im Kartenspeicher.</p>",

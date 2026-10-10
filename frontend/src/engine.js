@@ -349,7 +349,9 @@ export function restoreSession(state, now = Date.now()) {
 export function resetGroup(state, name) {
   const group = ensureGroup(state, name);
   group.seen = {};
-  group.resetAt = Date.now();
+  // Keep reset lineage ordered even after clock corrections or same-ms resets.
+  const previous = Number.isFinite(group.resetAt) ? group.resetAt : 0;
+  group.resetAt = Math.max(Date.now(), previous + 1);
   if (state.session && groupId(state.session.settings.group) === groupId(name))
     state.session = null;
 }
