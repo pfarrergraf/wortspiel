@@ -11,11 +11,11 @@ export const FREE = "free";
 export const CATEGORY_PREFIX = "pm-";
 
 export const GAME_MODES = [
-  { id: "taboo", name: "Tabu – Begriffe erklären", description: "Die Themenpakete mit Tabuwörtern. Erklären, ohne die verbotenen Wörter zu sagen." },
-  { id: FREE, name: "Frei erklären", description: "Erklärt mit eigenen Worten, ohne zusätzliche Tabuwörter. Der Begriff selbst und seine Wortbestandteile bleiben verboten." },
+  { id: "taboo", name: "Verbotene Wörter – Begriffe erklären", description: "Die Themenpakete mit verbotenen Wörtern. Erklären, ohne die verbotenen Wörter zu sagen." },
+  { id: FREE, name: "Frei erklären", description: "Erklärt mit eigenen Worten, ohne zusätzliche verbotene Wörter. Der Begriff selbst und seine Wortbestandteile bleiben verboten." },
   { id: PANTOMIME, name: "Pantomime – Vorspielen", description: "Wörter zum Vorspielen, ohne Worte, Geräusche oder Gegenstände. Schwere Begriffe bringen bis zu 3 Punkte." },
   { id: NOISES, name: "Geräusche – Nachmachen", description: "Konkrete Geräusche nachmachen. Keine Wörter, Gesten oder Gegenstände. Jeder Treffer gibt 1 Punkt." },
-  { id: "mixed", name: "Gemischt – Alles dabei", description: "Tabu, frei erklären, Pantomime oder Geräusche: Jede Karte zeigt eure Aufgabe. Jeder Treffer gibt 1 Punkt." },
+  { id: "mixed", name: "Gemischt – Alles dabei", description: "Verbotene Wörter, frei erklären, Pantomime oder Geräusche: Jede Karte zeigt eure Aufgabe. Jeder Treffer gibt 1 Punkt." },
 ];
 
 // Points decide the difficulty level, so the existing level filter still works.
@@ -71,7 +71,7 @@ export function validateGameMode(settings) {
   if (mode != null && !GAME_MODES.some((m) => m.id === mode))
     throw new Error("Wähle einen gültigen Spielmodus.");
   if (mode === FREE && settings.tabooMode !== "none")
-    throw new Error("Frei erklären verwendet keine zusätzlichen Tabuwörter.");
+    throw new Error("Frei erklären verwendet keine zusätzlichen verbotenen Wörter.");
   const selected = settings.pantomimeSelected;
   if (
     selected != null &&

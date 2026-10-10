@@ -1,17 +1,17 @@
 export const TABOO_MODES = Object.freeze([
   Object.freeze({
     id: "classic",
-    name: "Klassisch",
-    description: "Alle Tabuwörter auf der Karte sind verboten.",
+    name: "Alle Wörter",
+    description: "Alle angezeigten Wörter auf der Karte sind verboten.",
   }),
   Object.freeze({
     id: "light",
-    name: "Leicht – 3 Tabuwörter",
-    description: "Nur die ersten drei Tabuwörter auf der Karte sind verboten.",
+    name: "Drei Wörter",
+    description: "Nur die ersten drei angezeigten Wörter auf der Karte sind verboten.",
   }),
   Object.freeze({
     id: "none",
-    name: "Frei erklären – ohne Tabuwörter",
+    name: "Keine zusätzlichen Wörter",
     description: "Nur der Begriff selbst und seine Wortbestandteile sind verboten.",
   }),
 ]);
@@ -27,12 +27,12 @@ export function visibleTaboo(card, settings) {
 export function tabooLabel(settings) {
   if (settings?.gameMode === "noises") return "Regelverstoß";
   if (settings?.gameMode === "pantomime") return "Gesprochen";
-  return settings?.gameMode === "free" || settings?.tabooMode === "none" ? "Wort gesagt" : "Tabuwort";
+  return settings?.gameMode === "free" || settings?.tabooMode === "none" ? "Wort gesagt" : "Verbotenes Wort";
 }
 
 export function validateTabooMode(value) {
   if (!TABOO_MODES.some((mode) => mode.id === (value ?? "classic")))
-    throw new Error("Wähle eine gültige Tabu-Stufe.");
+    throw new Error("Wähle eine gültige Regel für verbotene Wörter.");
 }
 
 // Add missing settings without changing a saved game's mode or card history.

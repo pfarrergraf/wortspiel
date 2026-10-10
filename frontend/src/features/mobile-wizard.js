@@ -5,6 +5,33 @@ import { readSettings } from "../ui/setup.js";
 
 const names = ["Spielart", "Schwierigkeit", "Teams", "Themen", "Spielstart"];
 
+function arrangeSetup() {
+  const form = document.querySelector("#setup-form");
+  if (!form) return;
+  const main = form.closest("main");
+  const tabs = main.querySelector(".section-tabs");
+  const quick = main.querySelector(".quick-start");
+  const wizard = main.querySelector(".mobile-quickstart");
+  const resume = main.querySelector(".resume-banner");
+  const phone = matchMedia("(max-width: 743px), (max-width: 950px) and (max-height: 500px)").matches;
+  const compact = phone && !Number.isInteger(ctx.setupWizardStep) && !ctx.setupExpanded;
+  // Reorder the DOM as well as the view: keyboard and screen-reader order
+  // follow the colorful direct start. Every input stays in the same form.
+  if (compact) {
+    main.prepend(form);
+    if (resume) main.prepend(resume);
+    form.after(quick);
+    quick.after(tabs);
+    tabs.after(wizard);
+  } else {
+    main.prepend(tabs);
+    if (resume) tabs.after(resume);
+    (resume ?? tabs).after(quick);
+    quick.after(wizard);
+    wizard.after(form);
+  }
+}
+
 function placeInstallHint() {
   const form = document.querySelector("#setup-form");
   const hint = document.querySelector(".ios-install-hint");
@@ -39,12 +66,16 @@ function update() {
   document.querySelector('[data-action="wizard-back"]').disabled = step === 0;
   document.querySelector('[data-action="wizard-next"]').hidden = step === 4;
   filterCategories();
+  arrangeSetup();
   // The hint's render subscriber may run after this one. Keep visual and
   // keyboard order identical when it adds the optional installation note.
   queueMicrotask(placeInstallHint);
 }
 
-window.addEventListener("resize", placeInstallHint);
+window.addEventListener("resize", () => {
+  arrangeSetup();
+  placeInstallHint();
+});
 
 function show(step, push = true) {
   ctx.setupWizardStep = step;
@@ -62,7 +93,7 @@ function compact(push = true) {
   ctx.setupExpanded = false;
   if (push) history.pushState({ wortspielSetupCompact: true }, "", location.href);
   update();
-  document.querySelector(".quick-start")?.scrollIntoView({ block: "start" });
+  document.querySelector("#setup-form")?.scrollIntoView({ block: "start" });
 }
 registerAction("setup-compact", () => compact());
 registerAction("wizard-back", () => {

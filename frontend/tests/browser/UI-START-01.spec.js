@@ -26,7 +26,11 @@ test("@matrix compact phone start fits the first screen without a required tour"
   const phone = width <= 743 || (width <= 950 && height <= 500);
   const start = page.getByRole("button", { name: "Los geht’s", exact: true });
   await expect(start).toBeVisible();
+  await expect(page.locator(".start-title h1 span")).toHaveText("Spiele mit Wörtern");
+  await expect(page.locator(".mode-wheel .choice-symbol")).toHaveCount(5);
+  await expect(page.locator(".orbit-ring")).toBeVisible();
   if (phone) {
+    expect(await page.locator("#setup-form").evaluate(el => el.parentElement.firstElementChild === el)).toBe(true);
     await expect(page.locator(".category-grid")).toBeHidden();
     await expect(page.getByLabel("Rundenzeit", { exact: true })).toBeHidden();
     await expect(page.getByLabel("Schwierigkeitsgrad")).toBeVisible();
@@ -89,7 +93,7 @@ test("optional settings retain their values when folded, rotated and used to sta
   await page.getByLabel("Name Team 2").fill("Team 2");
   await expect(page.getByLabel("Altersgruppe", { exact: true })).toHaveCount(0);
   await page.getByLabel("Rundenzeit", { exact: true }).selectOption("90");
-  await page.getByLabel("Tabu-Stufe", { exact: true }).selectOption("light");
+  await page.getByLabel("Verbotene Wörter pro Karte", { exact: true }).selectOption("light");
   await page.getByRole("button", { name: "Einstellungen schließen", exact: true }).click();
   await page.locator('label.game-mode:has(input[value="free"])').click();
   await page.getByLabel("Schwierigkeitsgrad").selectOption("medium");

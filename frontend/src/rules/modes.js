@@ -1,8 +1,8 @@
 export const MODES = [
-  { id: "explain", name: "Erklären", description: "Erkläre den Begriff, ohne ihn, seine Wortteile oder die Tabuwörter zu sagen." },
+  { id: "explain", name: "Erklären", description: "Erkläre den Begriff, ohne ihn, seine Wortteile oder die verbotenen Wörter zu sagen." },
   { id: "pantomime", name: "Pantomime", description: "Stelle den Begriff mit Gesten dar. Bleibe stumm und benutze keine Gegenstände." },
   { id: "draw", name: "Zeichnen", description: "Zeichne den Begriff, ohne zu sprechen. Verwende keine Buchstaben oder Zahlen." },
-  { id: "oneword", name: "Ein Wort", description: "Gib genau ein Hinweiswort. Der Begriff, seine Wortteile und die Tabuwörter sind verboten." },
+  { id: "oneword", name: "Ein Wort", description: "Gib genau ein Hinweiswort. Der Begriff, seine Wortteile und die verbotenen Wörter sind verboten." },
 ];
 
 const modeIds = new Set(MODES.map((mode) => mode.id));

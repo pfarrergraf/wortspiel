@@ -10,7 +10,7 @@ test("kids preset: easy cards without age restrictions, free explaining without 
   await page.getByRole("button", { name: "Kinder", exact: true }).click();
   await expect(page.getByLabel("Altersgruppe")).toHaveCount(0);
   await expect(page.getByLabel("Schwierigkeitsgrad")).toHaveValue("easy");
-  await expect(page.getByLabel("Tabu-Stufe")).toHaveValue("none");
+  await expect(page.getByLabel("Verbotene Wörter pro Karte")).toHaveValue("none");
   await expect(page.getByLabel("Rundenzeit")).toHaveValue("90");
   await page.getByRole("button", { name: "Los geht’s" }).click();
   await page.getByRole("button", { name: "Wir sind bereit" }).click();
@@ -28,7 +28,7 @@ test("kids preset: easy cards without age restrictions, free explaining without 
 test("light taboo level shows exactly three taboo words", async ({ page }) => {
   await page.goto("/");
   await openSetupOptions(page);
-  await page.getByLabel("Tabu-Stufe").selectOption("light");
+  await page.getByLabel("Verbotene Wörter pro Karte").selectOption("light");
   await page.getByRole("button", { name: "Los geht’s" }).click();
   await page.getByRole("button", { name: "Wir sind bereit" }).click();
   await expect(page.locator(".forbidden-words li")).toHaveCount(3);

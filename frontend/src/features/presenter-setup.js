@@ -38,11 +38,11 @@ function open(message = "") {
   const config = loadConfig();
   dialog(
     "Presenter einrichten",
-    `<p><strong>Weiter</strong> startet und zählt „Erraten“. <strong>Zurück</strong> zählt „Tabuwort“. Für <strong>Überspringen</strong> gibt es mehrere Wege:</p>
+    `<p><strong>Weiter</strong> startet und zählt „Erraten“. <strong>Zurück</strong> zählt „Verbotenes Wort“. Für <strong>Überspringen</strong> gibt es mehrere Wege:</p>
     <h3>1. Eine dritte Taste anlernen</h3><p>Klicke auf „Dritte Taste anlernen“ und drücke innerhalb von 10 Sekunden die gewünschte Taste am Presenter. Erkannt werden Tasten, zusätzliche Maustasten und das Mausrad.</p>
     <p class="presenter-binding">Überspringen liegt auf: <strong id="presenter-binding">${config.skip ? describeInput(config.skip) : "noch nichts angelernt"}</strong></p>
     <h3>2. Zurück lange drücken</h3><label class="toggle-row"><span>Zurück gedrückt halten = Überspringen</span><input type="checkbox" role="switch" data-presenter-hold ${config.holdBack ? "checked" : ""}></label>
-    <p class="fine-print">Kurz drücken bleibt „Tabuwort“, ab 0,6 Sekunden Halten wird übersprungen. Beim Logitech Spotlight in Logi Options+ bei „Zurück-Taste gedrückt halten“ <strong>Keiner</strong> einstellen, sonst fängt die Logitech-Software das Halten ab.</p>
+    <p class="fine-print">Kurz drücken bleibt „Verbotenes Wort“, ab 0,6 Sekunden Halten wird übersprungen. Beim Logitech Spotlight in Logi Options+ bei „Zurück-Taste gedrückt halten“ <strong>Keiner</strong> einstellen, sonst fängt die Logitech-Software das Halten ab.</p>
     ${hidSection()}
     <div class="presenter-monitor" role="status" aria-live="polite"><span>Zuletzt empfangen</span><strong id="presenter-last">Drück eine Taste am Presenter …</strong></div>
     ${message ? `<p class="presenter-message">${message}</p>` : ""}`,
@@ -135,7 +135,7 @@ document.addEventListener("change", (event) => {
   toast(
     event.target.checked
       ? "Zurück lange drücken überspringt jetzt die Karte."
-      : "Zurück zählt wieder immer als Tabuwort.",
+      : "Zurück zählt wieder immer als Verbotenes Wort.",
   );
 });
 
