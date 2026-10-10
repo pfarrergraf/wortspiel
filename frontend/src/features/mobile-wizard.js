@@ -3,7 +3,7 @@ import { ctx, change } from "../app.js";
 import { registerAction } from "../actions.js";
 import { readSettings } from "../ui/setup.js";
 
-const names = ["Spielart", "Altersgruppe", "Teams", "Themen", "Spielstart"];
+const names = ["Spielart", "Schwierigkeit", "Teams", "Themen", "Spielstart"];
 
 function placeInstallHint() {
   const form = document.querySelector("#setup-form");

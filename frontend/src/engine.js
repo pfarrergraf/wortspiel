@@ -33,17 +33,17 @@ const YOUTH = ["animals", "city-country", "food", "sports", "things", "tv", "web
 // Presets set the card pool and the rules. Category ids that do not exist
 // (yet) are skipped, so packs can land in any order.
 export const PRESETS = [
-  { id: "kids", name: "Kinder (6–9)", difficulty: "easy", ageGroup: 8, tabooMode: "none", seconds: 90, skipPenalty: 0, tabooPenalty: 0, categories: ["kids", "fantasy", "animals", "food", "hobbies", "camp", "school", "planet", "sports", "everyday"] },
-  { id: "tweens", name: "Jüngere Jugendliche (10–13)", difficulty: "easy", ageGroup: 12, tabooMode: "light", seconds: 60, skipPenalty: 0, tabooPenalty: 1, categories: YOUTH.filter((id) => id !== "slang") },
-  { id: "youth", name: "Jugendliche", difficulty: "easy", ageGroup: 14, tabooMode: "classic", categories: YOUTH },
-  { id: "confirmation", name: "Konfis", difficulty: "easy", ageGroup: 14, tabooMode: "classic", categories: [...YOUTH, "faith"] },
-  { id: "mixed", name: "Gemischte Runde", difficulty: "medium", ageGroup: null, tabooMode: "classic", categories: null },
+  { id: "kids", name: "Kinder", difficulty: "easy", tabooMode: "none", seconds: 90, skipPenalty: 0, tabooPenalty: 0, categories: ["kids", "fantasy", "animals", "food", "hobbies", "camp", "school", "planet", "sports", "everyday"] },
+  { id: "tweens", name: "Jüngere Jugendliche", difficulty: "easy", tabooMode: "light", seconds: 60, skipPenalty: 0, tabooPenalty: 1, categories: YOUTH.filter((id) => id !== "slang") },
+  { id: "youth", name: "Jugendliche", difficulty: "easy", tabooMode: "classic", categories: YOUTH },
+  { id: "confirmation", name: "Konfis", difficulty: "easy", tabooMode: "classic", categories: [...YOUTH, "faith"] },
+  { id: "mixed", name: "Gemischte Runde", difficulty: "medium", tabooMode: "classic", categories: null },
 ];
 
 export function applyPreset(settings, presetId, categories) {
   const preset = PRESETS.find((p) => p.id === presetId);
   if (!preset) throw new Error("Unbekannte Gruppenauswahl.");
-  for (const key of ["difficulty", "ageGroup", "tabooMode", "seconds", "skipPenalty", "tabooPenalty"])
+  for (const key of ["difficulty", "tabooMode", "seconds", "skipPenalty", "tabooPenalty"])
     if (Object.hasOwn(preset, key)) settings[key] = preset[key];
   settings.selected = categories
     .filter((c) => !preset.categories || preset.categories.includes(c.id))

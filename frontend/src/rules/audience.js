@@ -1,3 +1,4 @@
+// Legacy schema-1 values remain readable; age metadata no longer filters cards.
 export const AGE_GROUPS = [
   { id: 6, name: "Kinder ab 6" },
   { id: 8, name: "Kinder ab 8" },
@@ -7,9 +8,8 @@ export const AGE_GROUPS = [
   { id: null, name: "Alle" },
 ];
 
-export function matchesAudience(card, settings) {
-  if (card.retired === true) return false;
-  return settings.ageGroup == null || (card.ageMin ?? 14) <= settings.ageGroup;
+export function matchesAudience(card) {
+  return card.retired !== true;
 }
 
 export function validateAgeGroup(value) {

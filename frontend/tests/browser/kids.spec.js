@@ -4,11 +4,12 @@ import { readFile } from "node:fs/promises";
 
 const dataset = JSON.parse(await readFile(new URL("../../src/data/cards.json", import.meta.url), "utf8"));
 
-test("kids preset: age filter, free explaining without taboo words and a gentle scoring label", async ({ page }) => {
+test("kids preset: easy cards without age restrictions, free explaining without taboo words and a gentle scoring label", async ({ page }) => {
   await page.goto("/");
   await openSetupOptions(page);
-  await page.getByRole("button", { name: "Kinder (6–9)" }).click();
-  await expect(page.getByLabel("Altersgruppe")).toHaveValue("8");
+  await page.getByRole("button", { name: "Kinder", exact: true }).click();
+  await expect(page.getByLabel("Altersgruppe")).toHaveCount(0);
+  await expect(page.getByLabel("Schwierigkeitsgrad")).toHaveValue("easy");
   await expect(page.getByLabel("Tabu-Stufe")).toHaveValue("none");
   await expect(page.getByLabel("Rundenzeit")).toHaveValue("90");
   await page.getByRole("button", { name: "Los geht’s" }).click();
@@ -19,7 +20,7 @@ test("kids preset: age filter, free explaining without taboo words and a gentle 
   await expect(page.locator('[data-action="taboo"] strong')).toHaveText("Wort gesagt");
   const word = await page.locator("#current-word").innerText();
   const card = dataset.cards.find((c) => c.word === word);
-  expect(card.ageMin ?? 14).toBeLessThanOrEqual(8);
+  expect(card.difficulty).toBe("easy");
   await page.locator('[data-action="taboo"]').click();
   await expect(page.locator(".round-points")).toHaveText("0");
 });
