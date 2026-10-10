@@ -1,0 +1,35 @@
+{
+  "app": "wortspiel",
+  "schema": 1,
+  "exportedAt": "2026-10-09T21:05:35.068Z",
+  "groups": {
+    "group:konfi runde 2025": {
+      "name": "Konfi-Runde 2025",
+      "seen": {
+        "de:alpaka": 1750000000000,
+        "de:amazonasente": 1750000001000,
+        "de:ameisenbär": 1750000002000,
+        "de:anemonenfisch": 1750000004000,
+        "de:antilope": 1750000005000
+      },
+      "createdAt": 1750000000000,
+      "resetAt": null
+    },
+    "group:familie müller": {
+      "name": "Familie Müller",
+      "seen": {
+        "de:apfel": 1749999990000
+      },
+      "createdAt": 1750000000000,
+      "resetAt": null
+    },
+    "group:jugendclub": {
+      "name": "Jugendclub",
+      "seen": {
+        "de:pantomime:katze": 1749999980000
+      },
+      "createdAt": 1750000000000,
+      "resetAt": null
+    }
+  }
+}

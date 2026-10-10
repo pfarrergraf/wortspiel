@@ -186,6 +186,8 @@ export function createSession(state, cards, categories) {
         : "Für diese Themen und diese Stufe sind keine ungespielten Karten übrig (oder die Auswahl ist ausgespielt). Wähle weitere Themen oder eine höhere Stufe. Der Kartenspeicher bleibt erhalten.",
     );
   state.session = {
+    // Additive identity for new games; older schema-1 sessions stay valid.
+    id: Array.from(crypto.getRandomValues(new Uint32Array(4)), (n) => n.toString(16).padStart(8, "0")).join(""),
     settings: structuredClone(state.settings),
     phase: "ready",
     turnIndex: 0,
@@ -347,7 +349,9 @@ export function restoreSession(state, now = Date.now()) {
 export function resetGroup(state, name) {
   const group = ensureGroup(state, name);
   group.seen = {};
-  group.resetAt = Date.now();
+  // Keep reset lineage ordered even after clock corrections or same-ms resets.
+  const previous = Number.isFinite(group.resetAt) ? group.resetAt : 0;
+  group.resetAt = Math.max(Date.now(), previous + 1);
   if (state.session && groupId(state.session.settings.group) === groupId(name))
     state.session = null;
 }

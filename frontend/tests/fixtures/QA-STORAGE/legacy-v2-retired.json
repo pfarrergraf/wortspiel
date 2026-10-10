@@ -1,0 +1,117 @@
+{
+  "schema": 1,
+  "revision": 41,
+  "groups": {
+    "group:gemeinde 2026": {
+      "name": "Gemeinde 2026",
+      "seen": {
+        "de:weihnachten": 1750000000000,
+        "de:taufe": 1750000001000,
+        "de:gebet": 1750000002000,
+        "de:kirche": 1750000004000,
+        "de:bibel": 1750000005000,
+        "de:samariter": 1750000006000
+      },
+      "createdAt": 1750000000000,
+      "resetAt": null
+    },
+    "group:familie müller": {
+      "name": "Familie Müller",
+      "seen": {
+        "de:apfel": 1749999990000
+      },
+      "createdAt": 1750000000000,
+      "resetAt": null
+    },
+    "group:jugendclub": {
+      "name": "Jugendclub",
+      "seen": {
+        "de:pantomime:katze": 1749999980000
+      },
+      "createdAt": 1750000000000,
+      "resetAt": null
+    }
+  },
+  "session": {
+    "settings": {
+      "group": "Gemeinde 2026",
+      "teams": [
+        "Die Füchse",
+        "Die Eulen",
+        "Die Otter"
+      ],
+      "selected": [
+        "faith"
+      ],
+      "difficulty": "all",
+      "seconds": 90,
+      "cycles": 2,
+      "skipPenalty": 1,
+      "tabooPenalty": 1,
+      "sound": true,
+      "speech": false,
+      "tabooMode": "none"
+    },
+    "phase": "paused",
+    "turnIndex": 1,
+    "scores": [
+      0,
+      1,
+      0
+    ],
+    "turns": [
+      {
+        "team": 0,
+        "cycle": 1,
+        "points": 0,
+        "log": [
+          {
+            "id": "de:weihnachten",
+            "word": "Weihnachten",
+            "result": "correct",
+            "delta": 1
+          },
+          {
+            "id": "de:taufe",
+            "word": "Taufe",
+            "result": "taboo",
+            "delta": -1
+          }
+        ],
+        "endedAt": 1750000003000
+      }
+    ],
+    "log": [
+      {
+        "id": "de:kirche",
+        "word": "Kirche",
+        "result": "correct",
+        "delta": 1
+      }
+    ],
+    "current": "de:samariter",
+    "remaining": 88000,
+    "deadline": null,
+    "exhausted": false,
+    "currentMode": "explain"
+  },
+  "settings": {
+    "group": "Gemeinde 2026",
+    "teams": [
+      "Die Füchse",
+      "Die Eulen",
+      "Die Otter"
+    ],
+    "selected": [
+      "faith"
+    ],
+    "difficulty": "all",
+    "seconds": 90,
+    "cycles": 2,
+    "skipPenalty": 1,
+    "tabooPenalty": 1,
+    "sound": true,
+    "speech": false,
+    "tabooMode": "none"
+  }
+}

@@ -1,6 +1,6 @@
 # Agentenübergabe
 
-Stand: 2026-10-09. ChatGPT/Codex ist Integrator. Claude Code ist in dieser Umgebung **nicht aufrufbar und nicht gestartet**. Diese Prompts sind sofort verwendbare Aufträge; GitHub-Aufgaben: [NOISE-01](https://github.com/pfarrergraf/wortspiel/issues/17), [QA-A11Y](https://github.com/pfarrergraf/wortspiel/issues/18), [QA-DEVICES](https://github.com/pfarrergraf/wortspiel/issues/19), [A15-REVIEW](https://github.com/pfarrergraf/wortspiel/issues/20), [QA-STORAGE](https://github.com/pfarrergraf/wortspiel/issues/21). Nach einem Sitzungsneustart zuerst AGENTS, plan-v2 und integration-status lesen, dann aktuellen main-SHA prüfen. Backup `backup/main-2026-10-09` nicht verändern.
+Stand: 2026-10-09. ChatGPT/Codex ist Integrator. Der Nutzer hat eine externe Claude-Code-Sitzung gestartet und Cloudflare-Vorbereitung/Veröffentlichung nach Freigabe an Claude delegiert; Claude ist in dieser Codex-Umgebung weiterhin nicht direkt aufrufbar. Tatsächliche Claims: QA-DEVICES auf `v2/QA-DEVICES-matrix` (PR #22), DEPLOY-CF auf `v2/DEPLOY-CF-preview` (PR #23); Codex QA-STORAGE auf `v2/QA-STORAGE-safety` (#21). Vorbereitet ist nicht gleich gestartet; GitHub-Aufgaben: [NOISE-01](https://github.com/pfarrergraf/wortspiel/issues/17), [QA-A11Y](https://github.com/pfarrergraf/wortspiel/issues/18), [QA-DEVICES](https://github.com/pfarrergraf/wortspiel/issues/19), [A15-REVIEW](https://github.com/pfarrergraf/wortspiel/issues/20), [QA-STORAGE](https://github.com/pfarrergraf/wortspiel/issues/21). Nach einem Sitzungsneustart zuerst AGENTS, plan-v2 und integration-status lesen, dann aktuellen main-SHA prüfen. Backup `backup/main-2026-10-09` nicht verändern.
 
 ## Gemeinsamer Startvertrag
 
@@ -24,7 +24,7 @@ Prompt:
 
 > Prüfe Schnellstart, Guided- und vollständiges Formular, Spielfläche und Dialoge mit Tastatur und Browser-Accessibility-Informationen. Ergänze gezielte Tests für sichtbaren Fokus, Labels, Reihenfolge, native ungültige Pflichtfelder, Hilfe/Pause, Dialog-Escape, reduced-motion und mindestens 44px Touch-Ziele. Dokumentiere messbare Kontrastbefunde, zwei Personen lesende klassische Karte und nicht automatisch prüfbare Grenzen. Keine bestehenden Tests deaktivieren und keine CSS-/UI-/Kernmodule ändern; notwendige Reparaturen mit Datei/Zeile/Repro und Akzeptanz im PR unter Integrationsbedarf melden. Keine neue Dependency. npm test, build und eigene Browserfälle auf isoliertem Port ausführen, Ergebnis ehrlich festhalten.
 
-## QA-DEVICES – Geräte-/Offline-Abnahme, Claude Code, vorbereitet
+## QA-DEVICES – Geräte-/Offline-Abnahme, Claude Code, automatischer Teil integriert
 
 Branch `v2/QA-DEVICES-matrix`; exklusiv `frontend/tests/browser/QA-DEVICES.spec.js`, `docs/reviews/QA-DEVICES.md`, Claim.
 
@@ -42,7 +42,7 @@ Prompt:
 
 ## QA-STORAGE – Integrator, offen
 
-Exklusiv beim Integrator, eigener Branch/Claim: storage.js, engine.js, main.js, Storage-Aktionen sowie `QA-STORAGE`-Tests/Fixtures. Konkurrenz mit anderen Agenten ausdrücklich ausgeschlossen.
+Aktiv beim Integrator: `v2/QA-STORAGE-safety`, Claim `docs/claims/QA-STORAGE.md`, Basis `9c1d9d6`, eigener PW_PORT=4211. Exklusiv: storage.js, engine.js, main.js, Storage-Aktionen sowie `QA-STORAGE`-Tests/Fixtures. Konkurrenz mit anderen Agenten ausdrücklich ausgeschlossen.
 
 Auftrag: ältere echte Struktur-Fixtures mit laufender Runde und mehreren Gruppen; Reservierung/Wertung bei konkurrierenden Tabs; localStorage-only mit und ohne Web Locks; verspätete Wertung muss die dargestellte Karten-/Session-ID prüfen. Kein Storage-Reset, keine schema-/ID-Änderung. Import invalid-after-valid muss Zustand komplett unverändert lassen (bereits Unit-geprüft). Export derzeit Gruppenhistorien; vollständige Partie-/Einstellungs-Sicherung additiv entwerfen und bestehende Backups weiter akzeptieren. Release erst nach diesen Nachweisen.
 
@@ -50,9 +50,35 @@ Auftrag: ältere echte Struktur-Fixtures mit laufender Runde und mehreren Gruppe
 
 - MOBILE-02: sinnvolle Themenbereiche, freiwillige Regeln-/Rollen-Einführung mit Beispiel und Proberunde; jederzeit Hilfe, erfahrene Nutzer nicht aufhalten.
 - I18N-01: UI-Texte aus Regeln/Views lösen; uiLanguage und cardLanguage getrennt. Zunächst de unverändert, englische Karten nur eigenständig redaktionell geprüfte Quelle. IDs/Historien erhalten.
-- DEPLOY-CF: Projektbestand prüfen, getestetes Preview und Origin-Migrationshinweis; Accountzugriff fehlt. Produktion/Domain/Legal erst nach konkreter Freigabe. Details in cloudflare-deployment.md.
+- DEPLOY-CF: Projektbestand prüfen, getestetes Preview und Origin-Migrationshinweis; Claude hat Workers-Zugriff, aber keine Pages-Tools; Pages-Projektbestand unbekannt. Produktion/Domain/Legal erst nach konkreter Freigabe. Details in cloudflare-deployment.md.
 - Android folgt erst nach Web-Abnahme; keine Kosten, Accounts oder Paket-Upgrades vor Bedarf.
 
 ## Prüfprotokoll und Übergabe
 
 Basis-Audit 9a7a938; Karten 19be010; Regeln/UI 18a9f2e. Scroll-/Matrix-Korrektur `8aad640`; PR/Merge-SHA in integration-status.md. Vor Fortsetzung `git fetch origin` und exakten aktuellen Head prüfen; Änderungen anderer Entwickler nicht überschreiben. Jede fertiggestellte Aufgabe ergänzt tatsächliche Tests, Commit, PR und verbleibenden Bedarf. Vorbereitete Aufträge ohne Agentensitzung bleiben „vorbereitet“.
+
+## Aktive Übergabe 2026-10-09
+
+- Claude hat Geräte-/Offline-/SW-Update-Tests als PR #22 und Cloudflare-Simulationsbefunde als PR #23 geliefert. PR #22 ist nach Review und grüner CI in main `35389e3` integriert; PR #23 wartet auf präzise Darstellung des unbekannten Pages-Bestands. Deren neue Test-/Review-/Cloudflare-Dateien werden während des Reviews nicht parallel verändert.
+- Codex QA-STORAGE behebt stale Wertungen und tabübergreifendes Speichern, prüft historische Engine-Fixtures sowie unbekannte Speicherformate und Quota/Abbruch. Bekannte Grenzen: optionaler Vollbackup ist bislang Entwurf; ohne Web Locks kann ein abrupt abgestürzter Schreiber ein nicht ablaufendes Koordinationsticket hinterlassen (sicherer Abbruch statt Überschreiben).
+- CF-1 aus PR #23: Redirect `/index.html` und nicht ausgelieferte `_headers` müssen im SW berücksichtigt werden. Codex übernimmt diesen Kern-/Build-Integrationsbedarf als separates Paket; Cloudflare-Konto/Preview verbleibt bei Claude. Kein neues Hosting ohne Freigabe.
+- QA-A11Y/NOISE/A15 laufen nur, wenn ihr neuer Claim/PR dies belegt. Die Prompts oben bleiben für unabhängige Arbeit verfügbar.
+
+- QA-STORAGE PR #24: Nach zunächst 107 Unit/170 Browser grün belegten Spiegelungsfehler behoben. Persistente Pending-Markierung verhindert stale localStorage-Forks; fehlende Koordinationsberechtigung bedeutet sicheren Abbruch. Export liest schreibfreien frischen Snapshot. Pending-Markierung niemals manuell löschen. Vollbackup und geführte Absturz-Reparatur bleiben Folgepakete; finale Tests/CI im PR.
+
+- Abschlussbelege: QA-STORAGE PR #24, Head 1e162fb: 107 Unit/190 Browser lokal und CI grün. CF-1 PR #25: 109 Unit/196 Browser lokal grün, zusätzlicher Wrangler-Pages-Simulator bestanden; keine Cloud-API benutzt. Merge-SHAs/exakte finale CI im jeweiligen PR-Abschlusskommentar. Claudes PR #23 wartet weiterhin auf präzise Unbekannt-Markierung des Pages-Projektbestands.
+
+## Aktuelle Übergabe 2026-10-10
+
+- Claude DEPLOY-CF PR #23 ad7b895 nach Review und CI integriert, main 2eedbea; Pages-Projekt wortspiel-app/öffentliche Previews nach separater Nutzerfreigabe, Produktion weiterhin nicht veröffentlicht. Konto-/Hostingdateien bleiben Claude vorbehalten.
+- Codex PR #24/25 enthalten die belegten Ende-Dialog- und Reset-Korrekturen; 69 gezielte Desktopfälle grün. Finale Sollsuiten 107 Unit/220 Browser bzw. 109 Unit/226 Browser, CI/Merge-Nachweis im jeweiligen Abschlusskommentar. Alle roten Review-Zwischenstände blieben außerhalb von main.
+- **Direkter Folgeauftrag für Claude:** Nach Merge #24/#25 main-SHA und grüne CI aus den Abschlusskommentaren verwenden, unverändert bauen, als preview-<sha> zu wortspiel-app hochladen, tatsächlichen commit-hash protokollieren. Online-Abnahme aus cloudflare-deployment.md wiederholen, besonders Offline Root/index/Query, SW-Update vom alten Preview, Legacy-Gruppenimport, drei Modi, CSP/HTTP-Header; keine abgespeckte Testfassung/kein uncommitteter Patch als Releasebeleg. Produktion/DNS/neue Rechte/Rechtliches bleiben freigabepflichtig. Kein eigenes SW-/Storage-/Info-Modul editieren.
+
+- Aktueller Core-Nachtrag 178b2d2: vollständige Spielstand-Konsistenz/Abstammung, unveränderte Difficulty-Migration, keine lokale Pending-Löschung nach Zähler. Finale Sollsuiten #24 107 Unit/252 Browser, #25 109 Unit/258 Browser. Vor Release-Wiederaufnahme ältere App-Tabs beenden; unklare Kopien nicht automatisch überschreiben. Verbindliches Ergebnis und main-SHA im Abschlusskommentar.
+
+
+## Verbindlicher Core-Stand 2026-10-10 – 4782a1e
+
+QA-STORAGE #24 und CF-1 #25 bleiben bis vollständiger Abnahme außerhalb von main. 107 Unit/Karten/Build und 98 gezielte Desktopfälle bestanden. Neue Fälle sichern unbekannte Pending-Versionen/Zusatzfelder, ausschließlich dokumentierte Difficulty-Defaults und den realen storage-Eventpfad: fremde rohe Snapshots werden erst gegen die bekannte Basis validiert. Drei echte UI-Repros vor Fix rot, nach Fix grün. Das neue künstliche Pending-Testfixture wartet nun auf den abgeschlossenen Bedienvorgang; keine Assertions abgeschwächt. Zwischenstand #24 178b2d2 bestand lokal 252 Browser, aber CI nur 250/252 wegen dieses Testablaufs; #25 fff08d2 bestand lokal und in CI 38044459172 alle 258 Browser. Diese Belege sind keine Freigabe der neueren Version.
+
+Aktuelle Sollsuiten: #24 107 Unit/278 Browser, #25 109 Unit/284 Browser. Vollständige lokale Ergebnisse, exakte CI und Merge-SHAs im Abschlusskommentar der jeweiligen PR. main ist weiterhin 2eedbea; Rückfall backup/main-2026-10-10-pre-core. Claude-Dokumente/Tests bleiben unverändert; nach tatsächlicher Core-Integration übernimmt Claude das unveränderte finale main-Build ins Preview und dokumentiert dessen Online-Abnahme. Keine öffentliche Produktion/DNS/neuen Berechtigungen/Release-Tag ohne erforderliche Abnahme und Freigabe.

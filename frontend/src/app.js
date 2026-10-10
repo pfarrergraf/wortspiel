@@ -1,5 +1,5 @@
 import { finishTurn } from "./engine.js";
-import { Storage } from "./storage.js";
+import { Storage, StorageConflictError, StorageMirrorPendingError, StorageLineageError } from "./storage.js";
 import { emit } from "./events.js";
 import { icon, action } from "./ui/html.js";
 import { chrome, footer } from "./ui/chrome.js";
@@ -23,6 +23,7 @@ export const ctx = {
 let toastTimeout,
   timer,
   mutationQueue = Promise.resolve();
+const ownSettingsRevisions = new Map();
 
 export function toast(message) {
   const target = document.querySelector("#toast");
@@ -57,6 +58,10 @@ export function dialog(title, body, buttons = "") {
 
 // Serialises all state changes through the transactional store.
 export function change(fn, after, repaint = true) {
+  // Capture the revision when the user acts, before waiting for a transaction.
+  // A later card/session must never receive an action aimed at this snapshot.
+  const expectedRevision = ctx.state.revision;
+  const preparation = ctx.view === "setup";
   const operation = mutationQueue.then(async () => {
     ctx.busy = true;
     if (repaint)
@@ -64,16 +69,35 @@ export function change(fn, after, repaint = true) {
         button.disabled = true;
       });
     try {
-      ctx.state = await store.update(fn);
+      // Blur may queue a field save before wizard-next/submit. Rebase only
+      // through our own successful setup writes that left the session intact.
+      // A remote revision or any gameplay/session change still rejects.
+      let revision = expectedRevision;
+      if (preparation)
+        while (ownSettingsRevisions.has(revision)) revision = ownSettingsRevisions.get(revision);
+      const previousSession = JSON.stringify(ctx.state.session);
+      const next = await store.update(fn, { expectedRevision: revision });
+      if (preparation && JSON.stringify(next.session) === previousSession) {
+        ownSettingsRevisions.set(revision, next.revision);
+        if (ownSettingsRevisions.size > 100) ownSettingsRevisions.delete(ownSettingsRevisions.keys().next().value);
+      }
+      ctx.state = next;
       if (after) after();
       if (repaint) render();
       return true;
     } catch (error) {
+      if (error instanceof StorageConflictError) ctx.state = store.state;
+      const blocked = error instanceof StorageMirrorPendingError || error instanceof StorageLineageError;
+      if (blocked) {
+        // Hide a stale card and stop its timer; never pause/reset durable data.
+        ctx.view = "setup";
+        ctx.pendingGameSettings = null;
+      }
       toast(
         error.message ||
           "Speichern fehlgeschlagen. Bitte versuche es noch einmal.",
       );
-      if (repaint) render();
+      if (repaint || blocked) render();
       return false;
     } finally {
       ctx.busy = false;

@@ -1,4 +1,4 @@
-import { ctx, change, dialog, toast } from "../app.js";
+import { ctx, store, change, dialog, toast } from "../app.js";
 import { registerAction } from "../actions.js";
 import { exportBackup, importBackup, resetGroup } from "../engine.js";
 import { persistentStorage } from "../storage.js";
@@ -17,8 +17,11 @@ registerAction("reset-group", async () => {
   if (done) toast("Kartenspeicher dieser Gruppe zurückgesetzt.");
 });
 
-registerAction("export", () => {
-  const blob = new Blob([JSON.stringify(exportBackup(ctx.state), null, 2)], {
+registerAction("export", async () => {
+  let snapshot;
+  try { snapshot = await store.snapshot(); }
+  catch (error) { toast(error.message); return; }
+  const blob = new Blob([JSON.stringify(exportBackup(snapshot), null, 2)], {
     type: "application/json",
   });
   const url = URL.createObjectURL(blob),

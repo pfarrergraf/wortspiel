@@ -75,7 +75,7 @@ registerAction("replace-game", () =>
 
 for (const id of ["setup", "home", "storage", "continue"])
   registerAction(id, async () => {
-    if (ctx.state.session?.phase === "playing") await change((s) => pause(s));
+    if (ctx.state.session?.phase === "playing" && !await change((s) => pause(s))) return;
     go(id === "storage" ? "storage" : id === "continue" ? "game" : "setup");
   });
 
@@ -85,7 +85,7 @@ registerAction("close-dialog", () => {
 });
 
 registerAction("end-turn-confirm", async () => {
-  await change((s) => pause(s));
+  if (!await change((s) => pause(s))) return;
   dialog(
     "Diese Runde beenden?",
     "<p>Eure bisherigen Punkte bleiben erhalten. Die angezeigte Karte bleibt im Kartenspeicher.</p>",
