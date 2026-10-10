@@ -37,7 +37,7 @@ jobs:
       - run: npm run sync --prefix mobile
       - run: |
           chmod +x gradlew
-          ./gradlew assembleDebug bundleRelease lintDebug testDebugUnitTest --no-daemon
+          ./gradlew :app:assembleDebug :app:bundleRelease :app:lintDebug :app:testDebugUnitTest --no-daemon
           ./gradlew :app:dependencies --configuration releaseRuntimeClasspath --no-daemon > app/build/release-runtime-dependencies.txt
         working-directory: mobile/android
       - name: Enable KVM for the Android emulator
@@ -54,7 +54,7 @@ jobs:
           script: |
             adb shell svc wifi disable
             adb shell svc data disable
-            cd mobile/android && ./gradlew connectedDebugAndroidTest --no-daemon
+            cd mobile/android && ./gradlew :app:connectedDebugAndroidTest --no-daemon
             adb pull /sdcard/Android/data/io.github.pfarrergraf.ludeverbis/files/screenshots ../../docs/play-store/assets/screenshots
       - uses: actions/upload-artifact@v4
         if: always()

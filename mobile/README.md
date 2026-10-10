@@ -11,7 +11,7 @@ npm ci --prefix frontend
 npm ci --prefix mobile
 npm run sync --prefix mobile
 cd mobile/android
-./gradlew assembleDebug bundleRelease lintDebug testDebugUnitTest
+./gradlew :app:assembleDebug :app:bundleRelease :app:lintDebug :app:testDebugUnitTest
 ```
 
 Unter Windows `npm.cmd` und `gradlew.bat` verwenden. `sync` baut die aktuelle Oberfläche und prüft alle kopierten Dateien. Hostrichtlinien/Service Worker werden aus dem Android-Paket entfernt; die native App markiert die eingebauten Assets unmittelbar als offline verfügbar. Die Website registriert weiterhin ihren Service Worker.
