@@ -14,6 +14,8 @@ import {
   recordResult,
   undoResult,
   ensureGroup,
+  applyPreset,
+  PRESETS,
 } from "../src/engine.js";
 
 const categories = [{ id: "a" }, { id: "b" }];
@@ -27,29 +29,29 @@ const card = (id, ageMin, extra = {}) => ({
   ...extra,
 });
 
-test("audience choices expose every supported group and an unrestricted option", () => {
+test("legacy schema-1 audience values remain supported for reading saved games", () => {
   assert.deepEqual(AGE_GROUPS.map((group) => group.id), [6, 8, 10, 12, 14, null]);
   assert.equal(AGE_GROUPS[0].name, "Kinder ab 6");
   assert.equal(AGE_GROUPS.at(-1).name, "Alle");
   assert.ok(AGE_GROUPS.every((group) => typeof group.name === "string" && group.name.trim()));
 });
 
-test("each audience includes its boundary age and excludes older cards", () => {
+test("legacy age restrictions never exclude cards regardless of age metadata", () => {
   for (const ageGroup of [6, 8, 10, 12, 14]) {
     for (const ageMin of [6, 8, 10, 12, 14, 16]) {
       assert.equal(
         matchesAudience({ ageMin }, { ageGroup }),
-        ageMin <= ageGroup,
+        true,
         `ageMin ${ageMin}, ageGroup ${ageGroup}`,
       );
     }
   }
 });
 
-test("missing or null card ages safely default to 14", () => {
+test("missing or null card ages do not restrict ordinary cards", () => {
   for (const candidate of [{}, { ageMin: undefined }, { ageMin: null }]) {
     for (const ageGroup of [6, 8, 10, 12])
-      assert.equal(matchesAudience(candidate, { ageGroup }), false);
+      assert.equal(matchesAudience(candidate, { ageGroup }), true);
     assert.equal(matchesAudience(candidate, { ageGroup: 14 }), true);
   }
 });
@@ -113,7 +115,7 @@ test("migration keeps explicitly chosen audiences independent for setup and curr
   assert.equal(state.session, null);
 });
 
-test("engine combines audience, difficulty, categories and history without modifying the pool", () => {
+test("engine ignores legacy age but still filters difficulty, categories, retired cards and history", () => {
   const pool = [
     card("kind", 6),
     card("jugend", 14),
@@ -124,8 +126,8 @@ test("engine combines audience, difficulty, categories and history without modif
   ];
   const settings = { ...initialState(categories).settings, ageGroup: 8, selected: ["a"] };
   const before = structuredClone(pool);
-  assert.deepEqual(availableCards(pool, settings).map((item) => item.id), ["de:kind"]);
-  assert.deepEqual(availableCards(pool, settings, { "de:kind": 0 }), []);
+  assert.deepEqual(availableCards(pool, settings).map((item) => item.id), ["de:kind", "de:jugend", "de:alt"]);
+  assert.deepEqual(availableCards(pool, settings, { "de:kind": 0 }).map((item) => item.id), ["de:jugend", "de:alt"]);
   settings.ageGroup = null;
   assert.deepEqual(availableCards(pool, settings).map((item) => item.id), ["de:kind", "de:jugend", "de:alt"]);
   assert.deepEqual(pool, before);
@@ -141,7 +143,7 @@ test("changing audiences, undo and a new game a week later keep exposed cards re
   state.settings.ageGroup = null;
   recordResult(state, pool, "correct", 2000, () => 0);
   assert.equal(state.session.current, "de:zwei");
-  assert.equal(state.session.settings.ageGroup, 8, "running game keeps its audience");
+  assert.equal(state.session.settings.ageGroup, 8, "running game keeps its legacy snapshot");
   undoResult(state);
   assert.equal(state.session.scores[0], 0);
   assert.equal(state.session.current, "de:eins");
@@ -150,6 +152,8 @@ test("changing audiences, undo and a new game a week later keep exposed cards re
   createSession(state, pool, categories);
   startTurn(state, pool, 7 * 24 * 60 * 60 * 1000, () => 0);
   assert.equal(state.session.current, "de:drei");
+  recordResult(state, pool, "correct", 7 * 24 * 60 * 60 * 1000 + 1, () => 0);
+  assert.equal(state.session.current, "de:vier", "legacy age metadata no longer hides this card");
   state.settings.ageGroup = 8;
   const history = structuredClone(state.groups);
   assert.throws(() => createSession(state, pool, categories), /keine ungespielten/);
@@ -159,4 +163,21 @@ test("changing audiences, undo and a new game a week later keep exposed cards re
   createSession(state, pool, categories);
   startTurn(state, pool, 10000, () => 0);
   assert.equal(state.session.current, "de:eins", "history remains scoped to its group");
+});
+
+test("presets have no age boundaries and leave legacy settings and current sessions intact", () => {
+  const state = initialState(categories);
+  state.settings.ageGroup = 8;
+  createSession(state, [card("eins", 16)], categories);
+  startTurn(state, [card("eins", 16)], 1000, () => 0);
+  const session = structuredClone(state.session);
+  const history = structuredClone(state.groups);
+  for (const preset of PRESETS) {
+    assert.equal(Object.hasOwn(preset, "ageGroup"), false);
+    assert.doesNotMatch(preset.name, /\d/);
+    applyPreset(state.settings, preset.id, categories);
+    assert.equal(state.settings.ageGroup, 8);
+    assert.deepEqual(state.session, session);
+    assert.deepEqual(state.groups, history);
+  }
 });

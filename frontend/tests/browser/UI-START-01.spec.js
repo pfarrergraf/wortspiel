@@ -87,7 +87,7 @@ test("optional settings retain their values when folded, rotated and used to sta
   await page.getByRole("button", { name: "Spiel anpassen", exact: true }).click();
   await page.getByLabel("Name Team 1").fill("Die Wörter");
   await page.getByLabel("Name Team 2").fill("Team 2");
-  await page.getByLabel("Altersgruppe", { exact: true }).selectOption("8");
+  await expect(page.getByLabel("Altersgruppe", { exact: true })).toHaveCount(0);
   await page.getByLabel("Rundenzeit", { exact: true }).selectOption("90");
   await page.getByLabel("Tabu-Stufe", { exact: true }).selectOption("light");
   await page.getByRole("button", { name: "Einstellungen schließen", exact: true }).click();
@@ -98,7 +98,7 @@ test("optional settings retain their values when folded, rotated and used to sta
   await expect(page.locator('input[name="gameMode"][value="free"]')).toBeChecked();
   await page.getByRole("button", { name: "Spiel anpassen", exact: true }).click();
   await expect(page.getByLabel("Name Team 1")).toHaveValue("Die Wörter");
-  await expect(page.getByLabel("Altersgruppe", { exact: true })).toHaveValue("8");
+  await expect(page.getByLabel("Altersgruppe", { exact: true })).toHaveCount(0);
   await expect(page.getByLabel("Rundenzeit", { exact: true })).toHaveValue("90");
   await page.getByRole("button", { name: "Einstellungen schließen", exact: true }).click();
   await expect.poll(async () => (await saved(page)).settings.difficulty).toBe("medium");
@@ -116,7 +116,7 @@ test("optional settings retain their values when folded, rotated and used to sta
   expect((await saved(page)).settings).toEqual(before.settings);
   await page.getByRole("button", { name: "Los geht’s", exact: true }).click();
   await expect(page.getByRole("button", { name: "Wir sind bereit", exact: true })).toBeVisible();
-  expect((await saved(page)).session.settings).toMatchObject({ teams: ["Die Wörter", "Team 2"], ageGroup: 8, seconds: 90, gameMode: "free", tabooMode: "none", difficulty: "medium" });
+  expect((await saved(page)).session.settings).toMatchObject({ teams: ["Die Wörter", "Team 2"], ageGroup: null, seconds: 90, gameMode: "free", tabooMode: "none", difficulty: "medium" });
 });
 
 test("native validation reveals a restored invalid required field before focusing it", async ({ page }) => {
