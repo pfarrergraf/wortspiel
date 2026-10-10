@@ -1,14 +1,16 @@
 # Wortspiel – verbindlicher Integrationsplan
 
-Stand: ludeverbis / AGE-01, 2026-10-10. Dies ist der abgeglichene Plan; der ursprüngliche vollständige Plan ist unverändert in [history/plan-v2-2026-10-08.md](history/plan-v2-2026-10-08.md) erhalten. Frühere Häkchen sind keine Abnahmebelege. Technische Belege und PR-Matrix: [integration-status.md](integration-status.md); Ausgangsstand: [audits/2026-10-09-baseline.md](audits/2026-10-09-baseline.md).
+Stand: ludeverbis / PLAY-05, 2026-10-10. Dies ist der abgeglichene Plan; der ursprüngliche vollständige Plan ist unverändert in [history/plan-v2-2026-10-08.md](history/plan-v2-2026-10-08.md) erhalten. Frühere Häkchen sind keine Abnahmebelege. Technische Belege und PR-Matrix: [integration-status.md](integration-status.md); Ausgangsstand: [audits/2026-10-09-baseline.md](audits/2026-10-09-baseline.md).
 
 ## Aktueller Hauptstand und neuer Auftrag
 
-main `350365e`: Zusammenführung, ludeverbis-Umbenennung und kompakter Smartphone-Start abgeschlossen. Cloudflare-Produktion nach konkreter Nutzerfreigabe online unter https://ludeverbis.pages.dev/ . GitHub Pages bleibt identischer Rückfall. Exakte main-CI: 113 Unit und 343 Browserfälle grün; SHA-256-Abgleich aller 26 Dateien und Offline-Update mit unveränderter gespeicherter Partie bestanden. Abschlussnachweise: PR #27, PR #29 und Issue #26. Nachfolgende ältere Statusabschnitte dokumentieren historische Integrationsschritte.
+main `4caee6b`: Zusammenführung, ludeverbis-Umbenennung, kompakter Smartphone-Start und Entfernung der Altersgrenzen abgeschlossen. Cloudflare-Produktion nach konkreter Nutzerfreigabe online unter https://ludeverbis.pages.dev/ . GitHub Pages bleibt identischer Rückfall. Exakte main-CI: 114 Unit und 345 Browserfälle grün; 25 Produktionsfälle, SHA-256-Abgleich aller 26 Dateien und Offline-Update mit unveränderter gespeicherter Partie bestanden. Abschlussnachweise: PR #27, PR #29, PR #30 und Issue #26. Nachfolgende ältere Statusabschnitte dokumentieren historische Integrationsschritte.
 
 Neuer Nutzerauftrag AGE-01: **Keine Altersbegrenzungen** für gewöhnliche Begriffe. Leicht / Mittel / Schwer entscheidet über den Wortschatz. Altersauswahl, numerische Preset-Grenzen und Altersfilter entfallen; gespeicherte Legacy-Felder und Partien bleiben unverändert lesbar. Eine Freigabe ausdrücklich sexueller Inhalte benötigt eigene Inhaltskennzeichnung, die das bisherige `ageMin` nicht bietet. Claim und Prüfbericht: [AGE-01](reviews/AGE-01.md). Der kompakte Smartphone-Einstieg aus PR #29 zeigt Spielart, Schwierigkeit und unmittelbaren Start; Teams/Themen/seltene Optionen werden ausdrücklich geöffnet. Die freiwillige Führung benennt Schritt 2 jetzt Schwierigkeit. Schwer bleibt der kumulative Filter `all`; keine zusätzliche Profi-Stufe oder neue Kartenklassifikation.
 
-Funktionsbestand: Tabu, freies Erklären und Pantomime sind integriert. Geräuscheraten benötigt noch einen geeigneten eigenen Kartenpool samt Regel-/Engine-/UI-Integration (Issue #17); vorbereiteter Auftrag ist keine Implementierung. Der bestehende B5-Unterbau verwendet Erklären/Pantomime/Zeichnen/Ein Wort und ist keine fertige Auswahl der gewünschten fünf Spielarten. Ein neuer Mischmodus für Tabu/Frei/Pantomime/Geräusche benötigt explizite Moduswahl, passenden Pool, Anzeige und Moduserhalt bei Wertung/Undo. Folgeschritte außerdem: freiwillige Proberunde/Einführung, Ergebnisstatistik, vollständige Partie-/Einstellungssicherung, geführte Absturzreparatur und Geräte-/Barrierefreiheitsabnahme. Kinder-/Film-Pakete A12/A14 besitzen nur Claims; echte redaktionelle Erprobung bleibt separat offen.
+Neuer Nutzerauftrag PLAY-05: **Geräusche und Gemischt** ergänzen die Auswahl zu fünf Spielarten. 160 konkrete Geräuschbegriffe mit Leicht/Mittel/Schwer, vier geeignete Darstellungsarten im Mischmodus und redundante Symbol-/Farb-/Textanzeige sind implementiert. Karte und Darstellung werden vor Anzeige gemeinsam gesichert; Undo/Neustart und spätere Korrektur behalten den Modus. Gleichartige Wörter aus den drei Pools werden für Gemischt zusammengefasst. Claim und Prüfbericht: [PLAY-05](reviews/PLAY-05.md). Der vorbereitete Issue-#17-Auftrag wird durch den Integrator einschließlich UI/Engine umgesetzt, ohne eine laufende Claude-Sitzung zu behaupten. Technische Integration/Hostingnachweise im PR; menschlicher Geräusch-Ratetest bleibt offen.
+
+Der bestehende B5-Unterbau für explain/pantomime/draw/oneword bleibt für Legacy-Sitzungen erhalten, die neue Spielart Gemischt verwendet Tabu/Frei/Pantomime/Geräusche. Folgeschritte weiterhin: freiwillige Proberunde/Einführung, Ergebnisstatistik, vollständige Partie-/Einstellungssicherung, geführte Absturzreparatur und Geräte-/Barrierefreiheitsabnahme. Kinder-/Film-Pakete A12/A14 besitzen nur Claims; echte redaktionelle Erprobung bleibt separat offen.
 
 ## Zusammenarbeit
 
@@ -35,7 +37,7 @@ Eine Aufgabe: ID, Akzeptanzkriterien, Dateigrenze, Claim `docs/claims/<ID>.md`, 
 | D1/E2 | Sound und Wake Lock inklusive Tests integriert | echte Mobilgeräte bleiben offen |
 | E3 | neuere Presenter-Version erhalten; fehlende Guards/Tests ergänzt; WebHID-Race korrigiert | echter Spotlight-Test zusätzlich nötig |
 | #15 / Schnellstart | ersetzt durch abgesicherte Integration: Schnellstart, optionaler Assistent, Themen-Suche, Replay | kein ungeprüftes Kopieren des Drafts |
-| Geräuscheraten | isolierter Claude-Auftrag NOISE-01 vorbereitet | keine halbfertige Produktionsauswahl |
+| Geräuscheraten / Gemischt | PLAY-05 implementiert, fünf Spielarten und eigener Pool mit 160 Geräuschbegriffen | technische Integration in PR #31; menschlicher Ratetest bleibt offen |
 | Internationalisierung | Trennung fachlich dokumentiert | technische Text-Extraktion noch offen |
 | Cloudflare | passende Build-Konfiguration anhand aktueller Doku geprüft | Claude: Direct-Upload-Projekt wortspiel-app und öffentliche Previews nach separater Nutzerfreigabe; echter Patch-Preview geprüft, finales main-Preview und Produktion noch offen |
 | Android | Capacitor/WebView als spätere Prüfung | keine Verpackung vor Web-Abnahme |
@@ -44,7 +46,7 @@ Eine Aufgabe: ID, Akzeptanzkriterien, Dateigrenze, Claim `docs/claims/<ID>.md`, 
 
 1. INT-A-B abgeschlossen mit PR #16 / main `9c1d9d6`: alle Alt-PRs #1–#15 bewertet und geschlossen, alle Quellbranches erhalten.
 2. QA-STORAGE (Integrator, PR #24): stale scoring, gemeinsame exklusive Koordination, historische Fixtures, Journal bei fehlgeschlagener Spiegelung und frischer schreibfreier Gruppenexport geprüft. Vollbackup/geführte Absturzreparatur bleiben Folgepakete.
-3. QA-A11Y / QA-DEVICES / NOISE-01: isolierte Aufgaben mit klaren Dateigrenzen; siehe Übergabe.
+3. QA-A11Y / QA-DEVICES: isolierte Aufgaben mit klaren Dateigrenzen; siehe Übergabe. NOISE-01 ist durch den Nutzerauftrag PLAY-05 / PR #31 ersetzt; menschliche Erprobung der Geräuschbegriffe bleibt offen.
 4. A15-REVIEW in INT-MAIN abgeschlossen; A12/A14 besitzen nur erhaltene Claims, Inhalte bleiben eine zukünftige Aufgabe.
 5. MOBILE-02 (Integrator): Themenbereiche und freiwillige Einführung/Proberunde vervollständigen, Ergebnisstatistik klar ausweisen.
 6. I18N-01 (Integrator): Oberflächen- und Kartensprache getrennt implementieren, zunächst de unverändert.

@@ -38,6 +38,8 @@ const MODES = {
   classic: { label: "Klassisch", value: "taboo", forbidden: true },
   free: { label: "Frei erklären", value: "free", forbidden: false },
   pantomime: { label: "Pantomime", value: "pantomime", forbidden: false },
+  noises: { label: "Geräusche", value: "noises", forbidden: false },
+  mixed: { label: "Gemischt", value: "mixed", forbidden: false },
 };
 
 const PLAY = {
@@ -82,8 +84,8 @@ async function offscreen(page, selectors) {
 }
 
 async function playSelectors(page, mode) {
-  const selectors = { ...PLAY };
-  if (mode.forbidden) selectors.Tabuwörter = ".forbidden-words";
+  const selectors = { ...PLAY, Aufgabe: ".mode-indicator" };
+  if (mode.forbidden || await page.locator(".forbidden-words").count()) selectors.Tabuwörter = ".forbidden-words";
   return selectors;
 }
 
@@ -104,7 +106,10 @@ async function assertPlayable(page, mode, label) {
   // (phone-landscape.css) and show this turn's points in the sidebar instead.
   const scores = await offscreen(page, { Teamstand: ".team-score.current", Rundenpunkte: ".round-points" });
   expect(scores.length, `${label}: no score on screen`).toBeLessThan(2);
-  if (mode.forbidden) {
+  const task = await page.locator(".mode-indicator").boundingBox();
+  const word = await page.locator("#current-word").boundingBox();
+  expect(task.y + task.height, `${label}: task overlaps the word`).toBeLessThanOrEqual(word.y + 0.5);
+  if (mode.forbidden || await page.locator(".forbidden-words").count()) {
     // Every forbidden word must be rendered inside the viewport, not clipped.
     const clipped = await page.locator(".forbidden-words li").evaluateAll((items) =>
       items.filter((li) => {

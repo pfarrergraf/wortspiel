@@ -4,15 +4,21 @@ import { escape, icon, action, colors } from "./html.js";
 import { tabooLabel } from "../rules/taboo.js";
 import { cardPoints } from "../rules/pantomime.js";
 import { cards } from "../data.js";
+import { isMixed, presentationSettings, PRESENTATIONS } from "../rules/play-modes.js";
 
-export const resultLabel = (result, settings) =>
-  result === "correct" ? "Erraten" : result === "taboo" ? tabooLabel(settings) : "Übersprungen";
+const modeCaption = (mode, settings) => {
+  const presentation = isMixed(settings) && PRESENTATIONS.find(item => item.id === mode);
+  return presentation ? `<small class="result-mode">${presentation.symbol} ${escape(presentation.name)}</small>` : "";
+};
+
+export const resultLabel = (result, settings, mode) =>
+  result === "correct" ? "Erraten" : result === "taboo" ? tabooLabel(mode ? presentationSettings({ settings, currentMode: mode }, mode) : settings) : "Übersprungen";
 
 // With a turn number every entry gets a button to correct it afterwards.
 export function logList(log, settings, turnNumber = null) {
   if (!log.length)
     return '<p class="empty-log">Diesmal wurde noch keine Karte gewertet.</p>';
-  return `<ul class="results-list">${log.map((entry, position) => `<li><span class="result-icon ${entry.result}">${icon(entry.result === "correct" ? "check" : entry.result === "taboo" ? "close" : "skip")}</span><strong>${escape(entry.word)}</strong><span class="result-label">${resultLabel(entry.result, settings)}${entry.amended ? " · korrigiert" : ""}</span><b>${entry.delta > 0 ? "+" : entry.delta < 0 ? "−" : ""}${Math.abs(entry.delta)}</b>${turnNumber === null ? "" : action(`amend:${turnNumber}:${position}`, icon("edit"), "icon-button amend-button", `aria-label="Wertung für ${escape(entry.word)} ändern"`)}</li>`).join("")}</ul>`;
+  return `<ul class="results-list">${log.map((entry, position) => `<li><span class="result-icon ${entry.result}">${icon(entry.result === "correct" ? "check" : entry.result === "taboo" ? "close" : "skip")}</span><strong>${escape(entry.word)}${modeCaption(entry.mode, settings)}</strong><span class="result-label">${resultLabel(entry.result, settings, entry.mode)}${entry.amended ? " · korrigiert" : ""}</span><b>${entry.delta > 0 ? "+" : entry.delta < 0 ? "−" : ""}${Math.abs(entry.delta)}</b>${turnNumber === null ? "" : action(`amend:${turnNumber}:${position}`, icon("edit"), "icon-button amend-button", `aria-label="Wertung für ${escape(entry.word)} ändern"`)}</li>`).join("")}</ul>`;
 }
 
 // The card that was still showing when the turn ended, e.g. guessed in the
@@ -21,7 +27,7 @@ function openCard(turn, turnNumber, settings) {
   const card = turn.open && cards.find((c) => c.id === turn.open);
   if (!card) return "";
   const points = cardPoints(card, settings);
-  return `<div class="open-card"><span>Zuletzt offen: <strong>${escape(card.word)}</strong></span>${action(`amend:${turnNumber}:open:correct`, `${icon("check")} Doch erraten (+${points})`, "button secondary")}</div>`;
+  return `<div class="open-card"><span>Zuletzt offen: <strong>${escape(card.word)}${modeCaption(turn.openMode, settings)}</strong></span>${action(`amend:${turnNumber}:open:correct`, `${icon("check")} Doch erraten (+${points})`, "button secondary")}</div>`;
 }
 
 const editableLog = (session, turnNumber) => {

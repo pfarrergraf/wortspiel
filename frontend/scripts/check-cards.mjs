@@ -4,6 +4,7 @@
 import { readFile } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 import path from "node:path";
+import { validateNoisePool } from "../src/rules/noises.js";
 import {
   AGES,
   DIFFICULTIES,
@@ -66,5 +67,12 @@ for (const { file, pack } of packs) {
   console.log(`  Alter ab – ${count("ageMin", AGES)}`);
 }
 if (!packs.length) console.log("Keine Pakete in data/packs/.");
+if (!only.length) {
+  const noises = JSON.parse(await readFile(path.join(frontend, "data/noises-de.json"), "utf8"));
+  const problems = validateNoisePool(noises);
+  errors += problems.length;
+  console.log(`\nGeräuschpool: ${noises.cards.length} Karten, ${noises.categories.length} Kategorien.`);
+  for (const problem of problems) console.log(`  FEHLER ${problem}`);
+}
 console.log(errors ? `\n${errors} Fehler.` : "\nKeine Fehler.");
 process.exitCode = errors ? 1 : 0;

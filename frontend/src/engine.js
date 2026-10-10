@@ -4,6 +4,8 @@ import {
   validateAgeGroup,
 } from "./rules/audience.js";
 import { migrateModes, pickMode, validateModes } from "./rules/modes.js";
+import { isNoises, inNoiseSelection } from "./rules/noises.js";
+import { isMixed, pickMixedCard, uniqueMixedCards } from "./rules/play-modes.js";
 import { migrateTabooMode, validateTabooMode } from "./rules/taboo.js";
 import {
   cardPoints,
@@ -114,17 +116,22 @@ export function matchesSettings(card, settings) {
 }
 
 export function availableCards(cards, settings, seen = {}) {
-  // The pantomime mode plays its own categories and ignores the theme packs.
+  // Single nonverbal modes use their own pools; mixed combines selections.
   const pantomime = isPantomime(settings);
+  const noises = isNoises(settings);
+  const mixed = isMixed(settings);
   const selected = new Set(settings.selected);
-  return cards.filter(
+  const eligible = cards.filter(
     (card) =>
-      (pantomime
-        ? inPantomimeSelection(card, settings)
+      (mixed
+        ? inPantomimeSelection(card, settings) || inNoiseSelection(card, settings) || card.categories.some(id => selected.has(id))
+        : pantomime ? inPantomimeSelection(card, settings)
+        : noises ? inNoiseSelection(card, settings)
         : card.categories.some((id) => selected.has(id))) &&
       matchesSettings(card, settings) &&
       !Object.hasOwn(seen, card.id),
   );
+  return mixed ? uniqueMixedCards(eligible, cards, seen) : eligible;
 }
 
 export function validateSettings(settings, categories) {
@@ -153,7 +160,7 @@ export function validateSettings(settings, categories) {
     throw new Error("Bitte verwende unterschiedliche Teamnamen.");
   if (
     !Array.isArray(settings.selected) ||
-    (settings.selected.length === 0 && !isPantomime(settings)) ||
+    (settings.selected.length === 0 && !isPantomime(settings) && !isNoises(settings) && !isMixed(settings)) ||
     settings.selected.some((id) => !categories.some((c) => c.id === id))
   )
     throw new Error("Wähle mindestens ein Themenpaket.");
@@ -217,7 +224,8 @@ export function drawCard(state, cards, random = Math.random, now = Date.now()) {
     session.exhausted = true;
     return false;
   }
-  const chosen =
+  const mixedChoice = isMixed(session.settings) ? pickMixedCard(remaining, random, session.settings) : null;
+  const chosen = mixedChoice?.card ??
     remaining[
       Math.min(
         remaining.length - 1,
@@ -226,9 +234,9 @@ export function drawCard(state, cards, random = Math.random, now = Date.now()) {
     ];
   group.seen[chosen.id] = now;
   session.current = chosen.id;
-  session.currentMode = isPantomime(session.settings)
+  session.currentMode = mixedChoice?.mode ?? (isNoises(session.settings) ? "noises" : isPantomime(session.settings)
     ? PANTOMIME
-    : pickMode(chosen, session.settings, random);
+    : pickMode(chosen, session.settings, random));
   return true;
 }
 
@@ -260,6 +268,7 @@ export function finishTurn(state, now = Date.now()) {
     log: structuredClone(session.log),
     // The card still on screen when the turn ended, so it can be scored later.
     open: session.current,
+    ...(isMixed(session.settings) || isNoises(session.settings) ? { openMode: session.currentMode } : {}),
     endedAt: now,
   });
   session.phase = "summary";
@@ -330,7 +339,7 @@ export function amendTurn(state, cards, turnNumber, position, result) {
   if (!card) throw new Error("Karte nicht gefunden.");
   let entry = turn.log[position];
   if (position === "open") {
-    entry = { id: card.id, word: card.word, result, delta: 0 };
+    entry = { id: card.id, word: card.word, result, delta: 0, ...(turn.openMode ? { mode: turn.openMode } : {}) };
     turn.log.push(entry);
     turn.open = null;
   }

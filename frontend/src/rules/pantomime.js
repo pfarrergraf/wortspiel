@@ -1,4 +1,5 @@
 import { normalize } from "../engine.js";
+import { NOISES, validateNoiseSelection } from "./noises.js";
 
 // Pantomime word pool: easy-to-mime words in their own categories, separate
 // from the taboo cards. Ids use their own "de:pantomime:" namespace so their
@@ -13,6 +14,8 @@ export const GAME_MODES = [
   { id: "taboo", name: "Tabu – Begriffe erklären", description: "Die Themenpakete mit Tabuwörtern. Erklären, ohne die verbotenen Wörter zu sagen." },
   { id: FREE, name: "Frei erklären", description: "Erklärt mit eigenen Worten, ohne zusätzliche Tabuwörter. Der Begriff selbst und seine Wortbestandteile bleiben verboten." },
   { id: PANTOMIME, name: "Pantomime – Vorspielen", description: "Wörter zum Vorspielen, ohne Worte, Geräusche oder Gegenstände. Schwere Begriffe bringen bis zu 3 Punkte." },
+  { id: NOISES, name: "Geräusche – Nachmachen", description: "Konkrete Geräusche nachmachen. Keine Wörter, Gesten oder Gegenstände. Jeder Treffer gibt 1 Punkt." },
+  { id: "mixed", name: "Gemischt – Alles dabei", description: "Tabu, frei erklären, Pantomime oder Geräusche: Jede Karte zeigt eure Aufgabe. Jeder Treffer gibt 1 Punkt." },
 ];
 
 // Points decide the difficulty level, so the existing level filter still works.
@@ -62,6 +65,7 @@ export const cardPoints = (card, settings) =>
   isPantomime(settings) && Number.isInteger(card?.points) ? card.points : 1;
 
 export function validateGameMode(settings) {
+  validateNoiseSelection(settings);
   // Missing settings in older saves mean the taboo game.
   const mode = settings.gameMode;
   if (mode != null && !GAME_MODES.some((m) => m.id === mode))
@@ -84,7 +88,11 @@ export function configureGameMode(settings, previous, changedField) {
   const next = { ...settings };
   const changed = next.gameMode !== (previous.gameMode ?? "taboo");
   if (changed && next.gameMode === PANTOMIME) next.difficulty = "all";
-  if (next.gameMode === PANTOMIME) return next;
+  if (next.gameMode === PANTOMIME || next.gameMode === NOISES) return next;
+  if (next.gameMode === "mixed") {
+    if (next.tabooMode === "none") next.tabooMode = "classic";
+    return next;
+  }
   if (changedField === "tabooMode")
     next.gameMode = next.tabooMode === "none" ? FREE : "taboo";
   else if (changed && next.gameMode === "taboo") next.tabooMode = "classic";

@@ -1,7 +1,7 @@
 import { ctx, change, dialog, toast } from "../app.js";
 import { registerAction } from "../actions.js";
-import { cards, categories, pantomimeCategories } from "../data.js";
-import { isPantomime, configureGameMode } from "../rules/pantomime.js";
+import { cards, categories } from "../data.js";
+import { configureGameMode } from "../rules/pantomime.js";
 import {
   applyPreset,
   availableCards,
@@ -10,7 +10,7 @@ import {
   validateSettings,
 } from "../engine.js";
 import { action } from "../ui/html.js";
-import { categoryCounts, compactSetupSummary, readSettings } from "../ui/setup.js";
+import { categoryCounts, compactSetupSummary, readSettings, setupCategories, selectionField } from "../ui/setup.js";
 
 async function requestGame(settings) {
   try {
@@ -85,13 +85,16 @@ document.addEventListener("change", async (event) => {
 for (const id of ["all-categories", "no-categories"])
   registerAction(id, () => {
     const settings = readSettings();
-    const pantomime = isPantomime(settings);
-    const ids = (pantomime ? pantomimeCategories : categories).map((c) => c.id);
+    const fields = new Map();
+    for (const category of setupCategories(settings)) {
+      const field = selectionField(category.id);
+      if (!fields.has(field)) fields.set(field, []);
+      if (id === "all-categories") fields.get(field).push(category.id);
+    }
     return change((s) => {
       s.settings = {
         ...settings,
-        [pantomime ? "pantomimeSelected" : "selected"]:
-          id === "all-categories" ? ids : [],
+        ...Object.fromEntries(fields),
       };
     });
   });

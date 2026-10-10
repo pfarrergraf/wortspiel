@@ -9,6 +9,7 @@
 @import "./memory.css";
 @import "./dialogs.css";
 @import "./pantomime.css";
+@import "./play-modes.css";
 @import "./responsive/desktop.css";
 @import "./responsive/large.css";
 @import "./responsive/tablet.css";
@@ -16,6 +17,7 @@
 @import "./responsive/mobile-wizard.css";
 @import "./responsive/phone-landscape.css";
 @import "./responsive/compact-start.css";
+@import "./responsive/play-modes.css";
 @import "./platform/input.css";
 @import "./platform/ios.css";
 @import "./themes/dark.css";

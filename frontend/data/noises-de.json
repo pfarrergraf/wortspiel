@@ -1,0 +1,1170 @@
+{
+  "license": "GPL-3.0-or-later",
+  "source": "Originale Geräuschbegriffe für ludeverbis",
+  "categories": [
+    {
+      "id": "animals",
+      "name": "Tiere",
+      "emoji": "🐮",
+      "color": "mint"
+    },
+    {
+      "id": "vehicles",
+      "name": "Fahrzeuge",
+      "emoji": "🚗",
+      "color": "coral"
+    },
+    {
+      "id": "machines",
+      "name": "Maschinen und Instrumente",
+      "emoji": "🥁",
+      "color": "purple"
+    },
+    {
+      "id": "nature",
+      "name": "Natur",
+      "emoji": "🌧️",
+      "color": "blue"
+    },
+    {
+      "id": "household",
+      "name": "Haushalt",
+      "emoji": "🏠",
+      "color": "yellow"
+    },
+    {
+      "id": "people",
+      "name": "Menschen und Alltag",
+      "emoji": "👏",
+      "color": "mint"
+    },
+    {
+      "id": "scenes",
+      "name": "Geräuschsituationen",
+      "emoji": "🎬",
+      "color": "coral"
+    }
+  ],
+  "cards": [
+    {
+      "id": "de:noises:kuh",
+      "word": "Kuh",
+      "category": "animals",
+      "difficulty": "easy",
+      "emoji": "🐮"
+    },
+    {
+      "id": "de:noises:hahn",
+      "word": "Hahn",
+      "category": "animals",
+      "difficulty": "easy",
+      "emoji": "🐮"
+    },
+    {
+      "id": "de:noises:katze",
+      "word": "Katze",
+      "category": "animals",
+      "difficulty": "easy",
+      "emoji": "🐮"
+    },
+    {
+      "id": "de:noises:hund",
+      "word": "Hund",
+      "category": "animals",
+      "difficulty": "easy",
+      "emoji": "🐮"
+    },
+    {
+      "id": "de:noises:schaf",
+      "word": "Schaf",
+      "category": "animals",
+      "difficulty": "easy",
+      "emoji": "🐮"
+    },
+    {
+      "id": "de:noises:schwein",
+      "word": "Schwein",
+      "category": "animals",
+      "difficulty": "easy",
+      "emoji": "🐮"
+    },
+    {
+      "id": "de:noises:pferd",
+      "word": "Pferd",
+      "category": "animals",
+      "difficulty": "easy",
+      "emoji": "🐮"
+    },
+    {
+      "id": "de:noises:ente",
+      "word": "Ente",
+      "category": "animals",
+      "difficulty": "easy",
+      "emoji": "🐮"
+    },
+    {
+      "id": "de:noises:biene",
+      "word": "Biene",
+      "category": "animals",
+      "difficulty": "easy",
+      "emoji": "🐮"
+    },
+    {
+      "id": "de:noises:löwe",
+      "word": "Löwe",
+      "category": "animals",
+      "difficulty": "easy",
+      "emoji": "🐮"
+    },
+    {
+      "id": "de:noises:frosch",
+      "word": "Frosch",
+      "category": "animals",
+      "difficulty": "easy",
+      "emoji": "🐮"
+    },
+    {
+      "id": "de:noises:eule",
+      "word": "Eule",
+      "category": "animals",
+      "difficulty": "easy",
+      "emoji": "🐮"
+    },
+    {
+      "id": "de:noises:kuckuck",
+      "word": "Kuckuck",
+      "category": "animals",
+      "difficulty": "easy",
+      "emoji": "🐮"
+    },
+    {
+      "id": "de:noises:mücke",
+      "word": "Mücke",
+      "category": "animals",
+      "difficulty": "easy",
+      "emoji": "🐮"
+    },
+    {
+      "id": "de:noises:wolf",
+      "word": "Wolf",
+      "category": "animals",
+      "difficulty": "easy",
+      "emoji": "🐮"
+    },
+    {
+      "id": "de:noises:affe",
+      "word": "Affe",
+      "category": "animals",
+      "difficulty": "easy",
+      "emoji": "🐮"
+    },
+    {
+      "id": "de:noises:elefant",
+      "word": "Elefant",
+      "category": "animals",
+      "difficulty": "easy",
+      "emoji": "🐮"
+    },
+    {
+      "id": "de:noises:ziege",
+      "word": "Ziege",
+      "category": "animals",
+      "difficulty": "easy",
+      "emoji": "🐮"
+    },
+    {
+      "id": "de:noises:taube",
+      "word": "Taube",
+      "category": "animals",
+      "difficulty": "medium",
+      "emoji": "🐮"
+    },
+    {
+      "id": "de:noises:specht",
+      "word": "Specht",
+      "category": "animals",
+      "difficulty": "medium",
+      "emoji": "🐮"
+    },
+    {
+      "id": "de:noises:möwe",
+      "word": "Möwe",
+      "category": "animals",
+      "difficulty": "medium",
+      "emoji": "🐮"
+    },
+    {
+      "id": "de:noises:truthahn",
+      "word": "Truthahn",
+      "category": "animals",
+      "difficulty": "medium",
+      "emoji": "🐮"
+    },
+    {
+      "id": "de:noises:grille",
+      "word": "Grille",
+      "category": "animals",
+      "difficulty": "medium",
+      "emoji": "🐮"
+    },
+    {
+      "id": "de:noises:esel",
+      "word": "Esel",
+      "category": "animals",
+      "difficulty": "medium",
+      "emoji": "🐮"
+    },
+    {
+      "id": "de:noises:gans",
+      "word": "Gans",
+      "category": "animals",
+      "difficulty": "medium",
+      "emoji": "🐮"
+    },
+    {
+      "id": "de:noises:schlange",
+      "word": "Schlange",
+      "category": "animals",
+      "difficulty": "medium",
+      "emoji": "🐮"
+    },
+    {
+      "id": "de:noises:wal",
+      "word": "Wal",
+      "category": "animals",
+      "difficulty": "hard",
+      "emoji": "🐮"
+    },
+    {
+      "id": "de:noises:delfin",
+      "word": "Delfin",
+      "category": "animals",
+      "difficulty": "hard",
+      "emoji": "🐮"
+    },
+    {
+      "id": "de:noises:robbe",
+      "word": "Robbe",
+      "category": "animals",
+      "difficulty": "hard",
+      "emoji": "🐮"
+    },
+    {
+      "id": "de:noises:klapperstorch",
+      "word": "Klapperstorch",
+      "category": "animals",
+      "difficulty": "hard",
+      "emoji": "🐮"
+    },
+    {
+      "id": "de:noises:auto",
+      "word": "Auto",
+      "category": "vehicles",
+      "difficulty": "easy",
+      "emoji": "🚗"
+    },
+    {
+      "id": "de:noises:motorrad",
+      "word": "Motorrad",
+      "category": "vehicles",
+      "difficulty": "easy",
+      "emoji": "🚗"
+    },
+    {
+      "id": "de:noises:traktor",
+      "word": "Traktor",
+      "category": "vehicles",
+      "difficulty": "easy",
+      "emoji": "🚗"
+    },
+    {
+      "id": "de:noises:zug",
+      "word": "Zug",
+      "category": "vehicles",
+      "difficulty": "easy",
+      "emoji": "🚗"
+    },
+    {
+      "id": "de:noises:hubschrauber",
+      "word": "Hubschrauber",
+      "category": "vehicles",
+      "difficulty": "easy",
+      "emoji": "🚗"
+    },
+    {
+      "id": "de:noises:flugzeug",
+      "word": "Flugzeug",
+      "category": "vehicles",
+      "difficulty": "easy",
+      "emoji": "🚗"
+    },
+    {
+      "id": "de:noises:fahrradklingel",
+      "word": "Fahrradklingel",
+      "category": "vehicles",
+      "difficulty": "easy",
+      "emoji": "🚗"
+    },
+    {
+      "id": "de:noises:autohupe",
+      "word": "Autohupe",
+      "category": "vehicles",
+      "difficulty": "easy",
+      "emoji": "🚗"
+    },
+    {
+      "id": "de:noises:krankenwagen",
+      "word": "Krankenwagen",
+      "category": "vehicles",
+      "difficulty": "easy",
+      "emoji": "🚗"
+    },
+    {
+      "id": "de:noises:feuerwehrauto",
+      "word": "Feuerwehrauto",
+      "category": "vehicles",
+      "difficulty": "easy",
+      "emoji": "🚗"
+    },
+    {
+      "id": "de:noises:bus",
+      "word": "Bus",
+      "category": "vehicles",
+      "difficulty": "medium",
+      "emoji": "🚗"
+    },
+    {
+      "id": "de:noises:lastwagen",
+      "word": "Lastwagen",
+      "category": "vehicles",
+      "difficulty": "medium",
+      "emoji": "🚗"
+    },
+    {
+      "id": "de:noises:rennwagen",
+      "word": "Rennwagen",
+      "category": "vehicles",
+      "difficulty": "medium",
+      "emoji": "🚗"
+    },
+    {
+      "id": "de:noises:motorboot",
+      "word": "Motorboot",
+      "category": "vehicles",
+      "difficulty": "medium",
+      "emoji": "🚗"
+    },
+    {
+      "id": "de:noises:u bahn",
+      "word": "U-Bahn",
+      "category": "vehicles",
+      "difficulty": "medium",
+      "emoji": "🚗"
+    },
+    {
+      "id": "de:noises:strassenbahn",
+      "word": "Straßenbahn",
+      "category": "vehicles",
+      "difficulty": "medium",
+      "emoji": "🚗"
+    },
+    {
+      "id": "de:noises:dampflok",
+      "word": "Dampflok",
+      "category": "vehicles",
+      "difficulty": "medium",
+      "emoji": "🚗"
+    },
+    {
+      "id": "de:noises:raumschiff",
+      "word": "Raumschiff",
+      "category": "vehicles",
+      "difficulty": "medium",
+      "emoji": "🚗"
+    },
+    {
+      "id": "de:noises:quietschende zugbremsen",
+      "word": "Quietschende Zugbremsen",
+      "category": "vehicles",
+      "difficulty": "hard",
+      "emoji": "🚗"
+    },
+    {
+      "id": "de:noises:rückwärtsfahrender laster",
+      "word": "Rückwärtsfahrender Laster",
+      "category": "vehicles",
+      "difficulty": "hard",
+      "emoji": "🚗"
+    },
+    {
+      "id": "de:noises:startender dieselmotor",
+      "word": "Startender Dieselmotor",
+      "category": "vehicles",
+      "difficulty": "hard",
+      "emoji": "🚗"
+    },
+    {
+      "id": "de:noises:auto mit leerer batterie",
+      "word": "Auto mit leerer Batterie",
+      "category": "vehicles",
+      "difficulty": "hard",
+      "emoji": "🚗"
+    },
+    {
+      "id": "de:noises:landendes flugzeug",
+      "word": "Landendes Flugzeug",
+      "category": "vehicles",
+      "difficulty": "hard",
+      "emoji": "🚗"
+    },
+    {
+      "id": "de:noises:schiffshorn",
+      "word": "Schiffshorn",
+      "category": "vehicles",
+      "difficulty": "hard",
+      "emoji": "🚗"
+    },
+    {
+      "id": "de:noises:staubsauger",
+      "word": "Staubsauger",
+      "category": "machines",
+      "difficulty": "easy",
+      "emoji": "🥁"
+    },
+    {
+      "id": "de:noises:föhn",
+      "word": "Föhn",
+      "category": "machines",
+      "difficulty": "easy",
+      "emoji": "🥁"
+    },
+    {
+      "id": "de:noises:bohrmaschine",
+      "word": "Bohrmaschine",
+      "category": "machines",
+      "difficulty": "easy",
+      "emoji": "🥁"
+    },
+    {
+      "id": "de:noises:säge",
+      "word": "Säge",
+      "category": "machines",
+      "difficulty": "easy",
+      "emoji": "🥁"
+    },
+    {
+      "id": "de:noises:rasenmäher",
+      "word": "Rasenmäher",
+      "category": "machines",
+      "difficulty": "easy",
+      "emoji": "🥁"
+    },
+    {
+      "id": "de:noises:kettensäge",
+      "word": "Kettensäge",
+      "category": "machines",
+      "difficulty": "easy",
+      "emoji": "🥁"
+    },
+    {
+      "id": "de:noises:trommel",
+      "word": "Trommel",
+      "category": "machines",
+      "difficulty": "easy",
+      "emoji": "🥁"
+    },
+    {
+      "id": "de:noises:trompete",
+      "word": "Trompete",
+      "category": "machines",
+      "difficulty": "easy",
+      "emoji": "🥁"
+    },
+    {
+      "id": "de:noises:waschmaschine",
+      "word": "Waschmaschine",
+      "category": "machines",
+      "difficulty": "medium",
+      "emoji": "🥁"
+    },
+    {
+      "id": "de:noises:mixer",
+      "word": "Mixer",
+      "category": "machines",
+      "difficulty": "medium",
+      "emoji": "🥁"
+    },
+    {
+      "id": "de:noises:nähmaschine",
+      "word": "Nähmaschine",
+      "category": "machines",
+      "difficulty": "medium",
+      "emoji": "🥁"
+    },
+    {
+      "id": "de:noises:drucker",
+      "word": "Drucker",
+      "category": "machines",
+      "difficulty": "medium",
+      "emoji": "🥁"
+    },
+    {
+      "id": "de:noises:schreibmaschine",
+      "word": "Schreibmaschine",
+      "category": "machines",
+      "difficulty": "medium",
+      "emoji": "🥁"
+    },
+    {
+      "id": "de:noises:presslufthammer",
+      "word": "Presslufthammer",
+      "category": "machines",
+      "difficulty": "medium",
+      "emoji": "🥁"
+    },
+    {
+      "id": "de:noises:e gitarre",
+      "word": "E-Gitarre",
+      "category": "machines",
+      "difficulty": "medium",
+      "emoji": "🥁"
+    },
+    {
+      "id": "de:noises:geige",
+      "word": "Geige",
+      "category": "machines",
+      "difficulty": "medium",
+      "emoji": "🥁"
+    },
+    {
+      "id": "de:noises:flöte",
+      "word": "Flöte",
+      "category": "machines",
+      "difficulty": "medium",
+      "emoji": "🥁"
+    },
+    {
+      "id": "de:noises:schlagzeug",
+      "word": "Schlagzeug",
+      "category": "machines",
+      "difficulty": "medium",
+      "emoji": "🥁"
+    },
+    {
+      "id": "de:noises:schleudernde waschmaschine",
+      "word": "Schleudernde Waschmaschine",
+      "category": "machines",
+      "difficulty": "hard",
+      "emoji": "🥁"
+    },
+    {
+      "id": "de:noises:elektrische zahnbürste",
+      "word": "Elektrische Zahnbürste",
+      "category": "machines",
+      "difficulty": "hard",
+      "emoji": "🥁"
+    },
+    {
+      "id": "de:noises:kaffeemühle",
+      "word": "Kaffeemühle",
+      "category": "machines",
+      "difficulty": "hard",
+      "emoji": "🥁"
+    },
+    {
+      "id": "de:noises:filmprojektor",
+      "word": "Filmprojektor",
+      "category": "machines",
+      "difficulty": "hard",
+      "emoji": "🥁"
+    },
+    {
+      "id": "de:noises:harmonika",
+      "word": "Harmonika",
+      "category": "machines",
+      "difficulty": "hard",
+      "emoji": "🥁"
+    },
+    {
+      "id": "de:noises:dudelsack",
+      "word": "Dudelsack",
+      "category": "machines",
+      "difficulty": "hard",
+      "emoji": "🥁"
+    },
+    {
+      "id": "de:noises:regen",
+      "word": "Regen",
+      "category": "nature",
+      "difficulty": "easy",
+      "emoji": "🌧️"
+    },
+    {
+      "id": "de:noises:wind",
+      "word": "Wind",
+      "category": "nature",
+      "difficulty": "easy",
+      "emoji": "🌧️"
+    },
+    {
+      "id": "de:noises:donner",
+      "word": "Donner",
+      "category": "nature",
+      "difficulty": "easy",
+      "emoji": "🌧️"
+    },
+    {
+      "id": "de:noises:welle",
+      "word": "Welle",
+      "category": "nature",
+      "difficulty": "easy",
+      "emoji": "🌧️"
+    },
+    {
+      "id": "de:noises:knisterndes feuer",
+      "word": "Knisterndes Feuer",
+      "category": "nature",
+      "difficulty": "easy",
+      "emoji": "🌧️"
+    },
+    {
+      "id": "de:noises:wasserfall",
+      "word": "Wasserfall",
+      "category": "nature",
+      "difficulty": "easy",
+      "emoji": "🌧️"
+    },
+    {
+      "id": "de:noises:blubberndes wasser",
+      "word": "Blubberndes Wasser",
+      "category": "nature",
+      "difficulty": "easy",
+      "emoji": "🌧️"
+    },
+    {
+      "id": "de:noises:hagel",
+      "word": "Hagel",
+      "category": "nature",
+      "difficulty": "easy",
+      "emoji": "🌧️"
+    },
+    {
+      "id": "de:noises:sturm",
+      "word": "Sturm",
+      "category": "nature",
+      "difficulty": "medium",
+      "emoji": "🌧️"
+    },
+    {
+      "id": "de:noises:bach",
+      "word": "Bach",
+      "category": "nature",
+      "difficulty": "medium",
+      "emoji": "🌧️"
+    },
+    {
+      "id": "de:noises:tropfende höhle",
+      "word": "Tropfende Höhle",
+      "category": "nature",
+      "difficulty": "medium",
+      "emoji": "🌧️"
+    },
+    {
+      "id": "de:noises:raschelnde blätter",
+      "word": "Raschelnde Blätter",
+      "category": "nature",
+      "difficulty": "medium",
+      "emoji": "🌧️"
+    },
+    {
+      "id": "de:noises:knackender ast",
+      "word": "Knackender Ast",
+      "category": "nature",
+      "difficulty": "medium",
+      "emoji": "🌧️"
+    },
+    {
+      "id": "de:noises:lawine",
+      "word": "Lawine",
+      "category": "nature",
+      "difficulty": "medium",
+      "emoji": "🌧️"
+    },
+    {
+      "id": "de:noises:vulkanausbruch",
+      "word": "Vulkanausbruch",
+      "category": "nature",
+      "difficulty": "medium",
+      "emoji": "🌧️"
+    },
+    {
+      "id": "de:noises:erdbeben",
+      "word": "Erdbeben",
+      "category": "nature",
+      "difficulty": "medium",
+      "emoji": "🌧️"
+    },
+    {
+      "id": "de:noises:schneesturm",
+      "word": "Schneesturm",
+      "category": "nature",
+      "difficulty": "hard",
+      "emoji": "🌧️"
+    },
+    {
+      "id": "de:noises:wind im kamin",
+      "word": "Wind im Kamin",
+      "category": "nature",
+      "difficulty": "hard",
+      "emoji": "🌧️"
+    },
+    {
+      "id": "de:noises:steinschlag",
+      "word": "Steinschlag",
+      "category": "nature",
+      "difficulty": "hard",
+      "emoji": "🌧️"
+    },
+    {
+      "id": "de:noises:knackendes eis",
+      "word": "Knackendes Eis",
+      "category": "nature",
+      "difficulty": "hard",
+      "emoji": "🌧️"
+    },
+    {
+      "id": "de:noises:türklingel",
+      "word": "Türklingel",
+      "category": "household",
+      "difficulty": "easy",
+      "emoji": "🏠"
+    },
+    {
+      "id": "de:noises:telefon",
+      "word": "Telefon",
+      "category": "household",
+      "difficulty": "easy",
+      "emoji": "🏠"
+    },
+    {
+      "id": "de:noises:wecker",
+      "word": "Wecker",
+      "category": "household",
+      "difficulty": "easy",
+      "emoji": "🏠"
+    },
+    {
+      "id": "de:noises:tickende uhr",
+      "word": "Tickende Uhr",
+      "category": "household",
+      "difficulty": "easy",
+      "emoji": "🏠"
+    },
+    {
+      "id": "de:noises:tropfender wasserhahn",
+      "word": "Tropfender Wasserhahn",
+      "category": "household",
+      "difficulty": "easy",
+      "emoji": "🏠"
+    },
+    {
+      "id": "de:noises:toilettenspülung",
+      "word": "Toilettenspülung",
+      "category": "household",
+      "difficulty": "easy",
+      "emoji": "🏠"
+    },
+    {
+      "id": "de:noises:dusche",
+      "word": "Dusche",
+      "category": "household",
+      "difficulty": "easy",
+      "emoji": "🏠"
+    },
+    {
+      "id": "de:noises:schlüsselbund",
+      "word": "Schlüsselbund",
+      "category": "household",
+      "difficulty": "easy",
+      "emoji": "🏠"
+    },
+    {
+      "id": "de:noises:klopfen an der tür",
+      "word": "Klopfen an der Tür",
+      "category": "household",
+      "difficulty": "easy",
+      "emoji": "🏠"
+    },
+    {
+      "id": "de:noises:zerbrechendes glas",
+      "word": "Zerbrechendes Glas",
+      "category": "household",
+      "difficulty": "easy",
+      "emoji": "🏠"
+    },
+    {
+      "id": "de:noises:quietschende tür",
+      "word": "Quietschende Tür",
+      "category": "household",
+      "difficulty": "medium",
+      "emoji": "🏠"
+    },
+    {
+      "id": "de:noises:reissverschluss",
+      "word": "Reißverschluss",
+      "category": "household",
+      "difficulty": "medium",
+      "emoji": "🏠"
+    },
+    {
+      "id": "de:noises:klettverschluss",
+      "word": "Klettverschluss",
+      "category": "household",
+      "difficulty": "medium",
+      "emoji": "🏠"
+    },
+    {
+      "id": "de:noises:wasserkocher",
+      "word": "Wasserkocher",
+      "category": "household",
+      "difficulty": "medium",
+      "emoji": "🏠"
+    },
+    {
+      "id": "de:noises:bratpfanne",
+      "word": "Bratpfanne",
+      "category": "household",
+      "difficulty": "medium",
+      "emoji": "🏠"
+    },
+    {
+      "id": "de:noises:mikrowelle",
+      "word": "Mikrowelle",
+      "category": "household",
+      "difficulty": "medium",
+      "emoji": "🏠"
+    },
+    {
+      "id": "de:noises:sprühflasche",
+      "word": "Sprühflasche",
+      "category": "household",
+      "difficulty": "medium",
+      "emoji": "🏠"
+    },
+    {
+      "id": "de:noises:dosenöffner",
+      "word": "Dosenöffner",
+      "category": "household",
+      "difficulty": "medium",
+      "emoji": "🏠"
+    },
+    {
+      "id": "de:noises:knarrende treppe",
+      "word": "Knarrende Treppe",
+      "category": "household",
+      "difficulty": "medium",
+      "emoji": "🏠"
+    },
+    {
+      "id": "de:noises:quietschender stuhl",
+      "word": "Quietschender Stuhl",
+      "category": "household",
+      "difficulty": "medium",
+      "emoji": "🏠"
+    },
+    {
+      "id": "de:noises:klappernder heizkörper",
+      "word": "Klappernder Heizkörper",
+      "category": "household",
+      "difficulty": "hard",
+      "emoji": "🏠"
+    },
+    {
+      "id": "de:noises:abfluss",
+      "word": "Abfluss",
+      "category": "household",
+      "difficulty": "hard",
+      "emoji": "🏠"
+    },
+    {
+      "id": "de:noises:rollladen",
+      "word": "Rollladen",
+      "category": "household",
+      "difficulty": "hard",
+      "emoji": "🏠"
+    },
+    {
+      "id": "de:noises:aufziehbares spielzeug",
+      "word": "Aufziehbares Spielzeug",
+      "category": "household",
+      "difficulty": "hard",
+      "emoji": "🏠"
+    },
+    {
+      "id": "de:noises:lachen",
+      "word": "Lachen",
+      "category": "people",
+      "difficulty": "easy",
+      "emoji": "👏"
+    },
+    {
+      "id": "de:noises:weinen",
+      "word": "Weinen",
+      "category": "people",
+      "difficulty": "easy",
+      "emoji": "👏"
+    },
+    {
+      "id": "de:noises:niesen",
+      "word": "Niesen",
+      "category": "people",
+      "difficulty": "easy",
+      "emoji": "👏"
+    },
+    {
+      "id": "de:noises:husten",
+      "word": "Husten",
+      "category": "people",
+      "difficulty": "easy",
+      "emoji": "👏"
+    },
+    {
+      "id": "de:noises:schnarchen",
+      "word": "Schnarchen",
+      "category": "people",
+      "difficulty": "easy",
+      "emoji": "👏"
+    },
+    {
+      "id": "de:noises:schluckauf",
+      "word": "Schluckauf",
+      "category": "people",
+      "difficulty": "easy",
+      "emoji": "👏"
+    },
+    {
+      "id": "de:noises:gähnen",
+      "word": "Gähnen",
+      "category": "people",
+      "difficulty": "easy",
+      "emoji": "👏"
+    },
+    {
+      "id": "de:noises:klatschen",
+      "word": "Klatschen",
+      "category": "people",
+      "difficulty": "easy",
+      "emoji": "👏"
+    },
+    {
+      "id": "de:noises:pfeifen",
+      "word": "Pfeifen",
+      "category": "people",
+      "difficulty": "easy",
+      "emoji": "👏"
+    },
+    {
+      "id": "de:noises:kuss",
+      "word": "Kuss",
+      "category": "people",
+      "difficulty": "easy",
+      "emoji": "👏"
+    },
+    {
+      "id": "de:noises:schritte",
+      "word": "Schritte",
+      "category": "people",
+      "difficulty": "easy",
+      "emoji": "👏"
+    },
+    {
+      "id": "de:noises:kauen",
+      "word": "Kauen",
+      "category": "people",
+      "difficulty": "easy",
+      "emoji": "👏"
+    },
+    {
+      "id": "de:noises:schmatzen",
+      "word": "Schmatzen",
+      "category": "people",
+      "difficulty": "medium",
+      "emoji": "👏"
+    },
+    {
+      "id": "de:noises:zähneputzen",
+      "word": "Zähneputzen",
+      "category": "people",
+      "difficulty": "medium",
+      "emoji": "👏"
+    },
+    {
+      "id": "de:noises:räuspern",
+      "word": "Räuspern",
+      "category": "people",
+      "difficulty": "medium",
+      "emoji": "👏"
+    },
+    {
+      "id": "de:noises:seufzen",
+      "word": "Seufzen",
+      "category": "people",
+      "difficulty": "medium",
+      "emoji": "👏"
+    },
+    {
+      "id": "de:noises:klappernde zähne",
+      "word": "Klappernde Zähne",
+      "category": "people",
+      "difficulty": "medium",
+      "emoji": "👏"
+    },
+    {
+      "id": "de:noises:trinken mit strohhalm",
+      "word": "Trinken mit Strohhalm",
+      "category": "people",
+      "difficulty": "medium",
+      "emoji": "👏"
+    },
+    {
+      "id": "de:noises:schritte im kies",
+      "word": "Schritte im Kies",
+      "category": "people",
+      "difficulty": "hard",
+      "emoji": "👏"
+    },
+    {
+      "id": "de:noises:schritte im schnee",
+      "word": "Schritte im Schnee",
+      "category": "people",
+      "difficulty": "hard",
+      "emoji": "👏"
+    },
+    {
+      "id": "de:noises:feuerwerk",
+      "word": "Feuerwerk",
+      "category": "scenes",
+      "difficulty": "easy",
+      "emoji": "🎬"
+    },
+    {
+      "id": "de:noises:explosion",
+      "word": "Explosion",
+      "category": "scenes",
+      "difficulty": "easy",
+      "emoji": "🎬"
+    },
+    {
+      "id": "de:noises:luftballon platzt",
+      "word": "Luftballon platzt",
+      "category": "scenes",
+      "difficulty": "easy",
+      "emoji": "🎬"
+    },
+    {
+      "id": "de:noises:basketball",
+      "word": "Basketball",
+      "category": "scenes",
+      "difficulty": "easy",
+      "emoji": "🎬"
+    },
+    {
+      "id": "de:noises:tischtennis",
+      "word": "Tischtennis",
+      "category": "scenes",
+      "difficulty": "easy",
+      "emoji": "🎬"
+    },
+    {
+      "id": "de:noises:galoppierendes pferd",
+      "word": "Galoppierendes Pferd",
+      "category": "scenes",
+      "difficulty": "easy",
+      "emoji": "🎬"
+    },
+    {
+      "id": "de:noises:bowling",
+      "word": "Bowling",
+      "category": "scenes",
+      "difficulty": "medium",
+      "emoji": "🎬"
+    },
+    {
+      "id": "de:noises:kegel fallen um",
+      "word": "Kegel fallen um",
+      "category": "scenes",
+      "difficulty": "medium",
+      "emoji": "🎬"
+    },
+    {
+      "id": "de:noises:sprung ins wasser",
+      "word": "Sprung ins Wasser",
+      "category": "scenes",
+      "difficulty": "medium",
+      "emoji": "🎬"
+    },
+    {
+      "id": "de:noises:papier zerreissen",
+      "word": "Papier zerreißen",
+      "category": "scenes",
+      "difficulty": "medium",
+      "emoji": "🎬"
+    },
+    {
+      "id": "de:noises:münze fällt herunter",
+      "word": "Münze fällt herunter",
+      "category": "scenes",
+      "difficulty": "medium",
+      "emoji": "🎬"
+    },
+    {
+      "id": "de:noises:flasche öffnen",
+      "word": "Flasche öffnen",
+      "category": "scenes",
+      "difficulty": "medium",
+      "emoji": "🎬"
+    },
+    {
+      "id": "de:noises:streichholz anzünden",
+      "word": "Streichholz anzünden",
+      "category": "scenes",
+      "difficulty": "medium",
+      "emoji": "🎬"
+    },
+    {
+      "id": "de:noises:schleifendes schwert",
+      "word": "Schleifendes Schwert",
+      "category": "scenes",
+      "difficulty": "medium",
+      "emoji": "🎬"
+    },
+    {
+      "id": "de:noises:radio mit schlechtem empfang",
+      "word": "Radio mit schlechtem Empfang",
+      "category": "scenes",
+      "difficulty": "hard",
+      "emoji": "🎬"
+    },
+    {
+      "id": "de:noises:funkgerät",
+      "word": "Funkgerät",
+      "category": "scenes",
+      "difficulty": "hard",
+      "emoji": "🎬"
+    },
+    {
+      "id": "de:noises:start einer rakete",
+      "word": "Start einer Rakete",
+      "category": "scenes",
+      "difficulty": "hard",
+      "emoji": "🎬"
+    },
+    {
+      "id": "de:noises:defekter motor",
+      "word": "Defekter Motor",
+      "category": "scenes",
+      "difficulty": "hard",
+      "emoji": "🎬"
+    }
+  ]
+}

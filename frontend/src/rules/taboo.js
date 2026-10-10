@@ -25,6 +25,7 @@ export function visibleTaboo(card, settings) {
 
 // Scoring still uses the internal result "taboo" in every mode.
 export function tabooLabel(settings) {
+  if (settings?.gameMode === "noises") return "Regelverstoß";
   if (settings?.gameMode === "pantomime") return "Gesprochen";
   return settings?.gameMode === "free" || settings?.tabooMode === "none" ? "Wort gesagt" : "Tabuwort";
 }
