@@ -28,7 +28,7 @@ export function isStandalone(nav = globalThis.navigator, win = globalThis.window
 
 // Shared text so the "install" dialog can reuse the same iOS steps.
 export const iosInstallSteps =
-  "<p><strong>iPhone / iPad:</strong> Öffne diese Adresse in Safari, tippe auf „Teilen“ und dann auf „Zum Home-Bildschirm“. Danach startest du Wortspiel über das neue Symbol – wie eine App, offline und mit sicherem Kartenspeicher.</p><p>Wichtig: Safari kann Website-Daten nach 7 Tagen ohne Nutzung löschen, wenn Wortspiel nicht auf dem Home-Bildschirm liegt. Als App bleibt euer Kartenspeicher erhalten.</p>";
+  "<p><strong>iPhone / iPad:</strong> Öffne diese Adresse in Safari, tippe auf „Teilen“ und dann auf „Zum Home-Bildschirm“. Danach startest du ludeverbis über das neue Symbol – wie eine App, offline und mit sicherem Kartenspeicher.</p><p>Wichtig: Safari kann Website-Daten nach 7 Tagen ohne Nutzung löschen, wenn ludeverbis nicht auf dem Home-Bildschirm liegt. Als App bleibt euer Kartenspeicher erhalten.</p>";
 
 function dismissed() {
   try {
@@ -43,7 +43,7 @@ export function shouldShowHint() {
 }
 
 function hintHtml() {
-  return `<aside class="ios-install-hint" role="note" aria-label="Tipp: Wortspiel installieren"><p><strong>Tipp fürs iPhone/iPad:</strong> Teilen → „Zum Home-Bildschirm“. Dann läuft Wortspiel wie eine App, offline und mit sicherem Kartenspeicher. <span>Ohne Installation kann Safari Website-Daten nach 7 Tagen ohne Nutzung löschen.</span></p><button type="button" data-action="dismiss-ios-hint" class="icon-button" aria-label="Hinweis ausblenden">${icon("close")}</button></aside>`;
+  return `<aside class="ios-install-hint" role="note" aria-label="Tipp: ludeverbis installieren"><p><strong>Tipp fürs iPhone/iPad:</strong> Teilen → „Zum Home-Bildschirm“. Dann läuft ludeverbis wie eine App, offline und mit sicherem Kartenspeicher. <span>Ohne Installation kann Safari Website-Daten nach 7 Tagen ohne Nutzung löschen.</span></p><button type="button" data-action="dismiss-ios-hint" class="icon-button" aria-label="Hinweis ausblenden">${icon("close")}</button></aside>`;
 }
 
 registerAction("dismiss-ios-hint", (_id, button) => {

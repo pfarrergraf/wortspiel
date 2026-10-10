@@ -405,7 +405,7 @@ export function importBackup(state, backup) {
     !backup.groups ||
     Array.isArray(backup.groups)
   )
-    throw new Error("Das ist keine gültige Wortspiel-Sicherung.");
+    throw new Error("Das ist keine gültige ludeverbis-Sicherung.");
   const entries = Object.entries(backup.groups);
   if (entries.length > 200)
     throw new Error("Die Sicherung enthält zu viele Gruppen.");

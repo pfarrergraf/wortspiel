@@ -11,3 +11,5 @@
 - Akzeptanz: Footerzugänge auf Smartphone/Desktop; Seiten auch ohne JS und bei kaputtem Spielstand erreichbar; QR ist offline lokal und enthält verifizierte offizielle IBAN/BIC/Empfänger, keinen Betrag, Zweck Spende Jugendarbeit; manueller Überweisungsweg für dasselbe Smartphone; keine Zahlung/Anmeldung/Tracking/externen QR-Dienste; vorhandener SW cached die lokalen Dateien.
 - Pflicht: Produktionsbuild, bestehende Unit/Kartenprüfung, Browsernavigation/320px/Offline/Speicherunverändert; QR unabhängig dekodieren und IBAN-Prüfsumme prüfen. Echte Banking-App und finale rechtliche Veröffentlichung bleiben Abnahme des Nutzers.
 - Claude behält Cloudflare-Konto/Pages-Preview; neuer Name/Adresse als eigener konkreter GitHub-Auftrag, keine Änderungen desselben UI-/Kernbereichs durch Claude.
+
+Fortsetzung 2026-10-10: Nutzer bestätigt ludeverbis, ausschließlich Pfarrer Benjamin Graf als Anbieter und Gemeindekonto für Jugendarbeit; fordert Wrangler-Browseranmeldung und Fortsetzung durch Codex an. Umsetzung im exklusiven Integratorpaket BRAND-01; ältere fehlende Bestätigungen oben beschreiben den ursprünglichen Stand.

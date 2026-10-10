@@ -1,8 +1,8 @@
 {
   "id": "./",
-  "name": "Wortspiel — Alles sagen. Fast alles.",
-  "short_name": "Wortspiel",
-  "description": "Das bunte Wortspiel für eure Runde. Begriffe erklären, verbotene Wörter vermeiden, gemeinsam lachen.",
+  "name": "ludeverbis – Spiel mit Wörtern",
+  "short_name": "ludeverbis",
+  "description": "Das bunte ludeverbis für eure Runde. Begriffe erklären, verbotene Wörter vermeiden, gemeinsam lachen.",
   "lang": "de",
   "start_url": "./",
   "scope": "./",
