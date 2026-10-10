@@ -21,7 +21,7 @@ import java.nio.charset.StandardCharsets;
 /** Explicit user-selected documents only. No storage permission or arbitrary paths. */
 @CapacitorPlugin(name = "LudeverbisDocuments")
 public class DocumentsPlugin extends Plugin {
-    private static final int MAX_BYTES = 5 * 1024 * 1024;
+    private static final int MAX_BYTES = DocumentPolicy.MAX_BYTES;
     private boolean documentBusy;
     private boolean keepAwake;
 
@@ -39,13 +39,12 @@ public class DocumentsPlugin extends Plugin {
         String name = call.getString("name", "ludeverbis-speicher.json");
         boolean image = "image/png".equals(mime);
         if (text == null || text.length() > MAX_BYTES * 2 ||
-            (!image && !"application/json".equals(mime)) ||
-            !name.matches("[a-zA-Z0-9._-]{1,120}") || name.contains("..")) {
+            !DocumentPolicy.validMime(mime) || !DocumentPolicy.validName(name)) {
             call.reject("Ungültige Sicherungsdatei."); return;
         }
         try {
             byte[] bytes = image ? Base64.decode(text, Base64.DEFAULT) : text.getBytes(StandardCharsets.UTF_8);
-            if (bytes.length > MAX_BYTES) { call.reject("Die Datei ist zu groß (maximal 5 MB)."); return; }
+            if (!DocumentPolicy.validSize(bytes.length)) { call.reject("Die Datei ist zu groß (maximal 5 MB)."); return; }
             if (!begin(call)) return;
             Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
             intent.addCategory(Intent.CATEGORY_OPENABLE);

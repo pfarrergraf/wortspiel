@@ -5,6 +5,7 @@ async function native(page) {
     window.nativeCalls = [];
     window.nativeEvents = {};
     window.nativeBackup = { cancelled: true };
+    window.androidBridge = { postMessage() {} };
     window.Capacitor = {
       getPlatform: () => "android",
       isNativePlatform: () => true,
@@ -41,6 +42,7 @@ test("native start uses bundled offline assets, hides install and respects syste
 
 test("native export uses authoritative history and explicit document; invalid import preserves state", async ({ page }) => {
   await native(page);
+  await page.locator('[data-action="storage"]').click();
   await page.locator('[data-action="export"]').click();
   await expect.poll(() => page.evaluate(() => window.nativeCalls.filter(c => c.method === "save").length)).toBe(1);
   const exported = await page.evaluate(() => window.nativeCalls.find(c => c.method === "save").options);
