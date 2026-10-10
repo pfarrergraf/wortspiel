@@ -1,10 +1,10 @@
 # Wortspiel – verbindlicher Integrationsplan
 
-Stand: Audit 2026-10-09. Dies ist der abgeglichene Plan; der ursprüngliche vollständige Plan ist unverändert in [history/plan-v2-2026-10-08.md](history/plan-v2-2026-10-08.md) erhalten. Frühere Häkchen sind keine Abnahmebelege. Technische Belege und PR-Matrix: [integration-status.md](integration-status.md); Ausgangsstand: [audits/2026-10-09-baseline.md](audits/2026-10-09-baseline.md).
+Stand: Integration 2026-10-10. Dies ist der abgeglichene Plan; der ursprüngliche vollständige Plan ist unverändert in [history/plan-v2-2026-10-08.md](history/plan-v2-2026-10-08.md) erhalten. Frühere Häkchen sind keine Abnahmebelege. Technische Belege und PR-Matrix: [integration-status.md](integration-status.md); Ausgangsstand: [audits/2026-10-09-baseline.md](audits/2026-10-09-baseline.md).
 
 ## Zusammenarbeit
 
-ChatGPT/Codex ist alleiniger main-Integrator. Der Nutzer hat Claude Code extern gestartet und Cloudflare-Deployment nach der erforderlichen Freigabe ausdrücklich delegiert. Isolierte Aufgaben: [agent-handoffs.md](agent-handoffs.md). QA-DEVICES PR #22 ist nach Review/CI in main `35389e3` integriert; DEPLOY-CF PR #23 liegt zur redaktionellen Präzisierung vor. Codex QA-STORAGE PR #24: 107 Unit/190 Browser und CI auf Zwischenstand grün, danach weitere Review-Korrektur d7a4858 (53 neue Speicherschutzfälle); finale 208-Abnahme vor Merge erforderlich. CF-1 PR #25 zieht diesen Stand nach; finale 214-Abnahme erforderlich. Endgültige Merge-SHAs/CI im jeweiligen Abschlusskommentar. Andere vorbereitete Aufgaben sind ohne Claim/PR nicht als gestartet zu werten.
+ChatGPT/Codex ist alleiniger main-Integrator. Der Nutzer hat Claude Code extern gestartet und Cloudflare-Deployment nach der erforderlichen Freigabe ausdrücklich delegiert. Isolierte Aufgaben: [agent-handoffs.md](agent-handoffs.md). QA-DEVICES PR #22 und DEPLOY-CF PR #23 sind nach Review/CI integriert (main 2eedbea). Codex QA-STORAGE PR #24 und CF-1 PR #25 enthalten sämtliche belegten Review-Korrekturen; 69 gezielte Desktopfälle grün, finale Gesamtsuiten 220 bzw. 226 Browser vor Merge erforderlich. Ergebnisse/Merge-SHAs/CI im jeweiligen Abschlusskommentar. Andere vorbereitete Aufgaben sind ohne Claim/PR nicht als gestartet zu werten.
 
 Eine Aufgabe: ID, Akzeptanzkriterien, Dateigrenze, Claim `docs/claims/<ID>.md`, eigener Branch/Worktree, Tests, PR und Integrationsbedarf. Reservierte IDs nicht erneut übernehmen. Gemeinsame Kernmodule und Lockfiles ausschließlich beim Integrator. Keine Force-Pushes, keine unbewiesenen Löschungen, keine automatische Kartenrücksetzung. Neue Abhängigkeiten nur nach Prüfung beim Integrator. Der ausschließlich für Tests generierte `dist/` wird nie committed. Parallele Browsertests nur auf unterschiedlichen `PW_PORT`s **und getrennten Build-Verzeichnissen/Worktrees**.
 
@@ -29,7 +29,7 @@ Eine Aufgabe: ID, Akzeptanzkriterien, Dateigrenze, Claim `docs/claims/<ID>.md`, 
 | #15 / Schnellstart | ersetzt durch abgesicherte Integration: Schnellstart, optionaler Assistent, Themen-Suche, Replay | kein ungeprüftes Kopieren des Drafts |
 | Geräuscheraten | isolierter Claude-Auftrag NOISE-01 vorbereitet | keine halbfertige Produktionsauswahl |
 | Internationalisierung | Trennung fachlich dokumentiert | technische Text-Extraktion noch offen |
-| Cloudflare | passende Build-Konfiguration anhand aktueller Doku geprüft | Workers-Connector bei Claude verbunden, Pages-Tools fehlen; Pages-Projektbestand/Preview unbekannt, nicht deployed |
+| Cloudflare | passende Build-Konfiguration anhand aktueller Doku geprüft | Claude: Direct-Upload-Projekt wortspiel-app und öffentliche Previews nach separater Nutzerfreigabe; echter Patch-Preview geprüft, finales main-Preview und Produktion noch offen |
 | Android | Capacitor/WebView als spätere Prüfung | keine Verpackung vor Web-Abnahme |
 
 ## Nächste verbindliche Schritte
@@ -41,4 +41,4 @@ Eine Aufgabe: ID, Akzeptanzkriterien, Dateigrenze, Claim `docs/claims/<ID>.md`, 
 5. MOBILE-02 (Integrator): Themenbereiche und freiwillige Einführung/Proberunde vervollständigen, Ergebnisstatistik klar ausweisen.
 6. I18N-01 (Integrator): Oberflächen- und Kartensprache getrennt implementieren, zunächst de unverändert.
 7. RELEASE-01: gesamte [release-checklist.md](release-checklist.md) erfüllen; erst dann stabiler Release-Tag.
-8. DEPLOY-CF (Claude): PR #23 / lokale Simulation vorhanden; verbundener Workers-Connector bietet keine Pages-Tools. Codex PR #25 behebt CF-1/CF-2 mit SW-/CSP-Abnahme und erfolgreichem lokalen Wrangler-Test; Claude inventarisiert nach Zugang und prüft das echte Preview; erforderliche Kontoberechtigung und erste öffentliche Cloudflare-Produktion gebündelt freigeben lassen. GitHub Pages bleibt Rückfall.
+8. DEPLOY-CF (Claude): PR #23 nach Review/CI integriert; tatsächliche Pages-Inventur/Previews in cloudflare-deployment.md. Codex PR #25 behebt CF-1/CF-2 und den Hostinghinweis mit SW-/CSP-Abnahme; Claude inventarisiert nach Zugang und prüft das echte Preview; erforderliche Kontoberechtigung und erste öffentliche Cloudflare-Produktion gebündelt freigeben lassen. GitHub Pages bleibt Rückfall.

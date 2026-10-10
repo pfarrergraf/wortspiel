@@ -63,3 +63,10 @@ Vorbereitet und nicht gestartet: [NOISE-01 #17](https://github.com/pfarrergraf/w
 - Verbindliche Merge-SHAs und abschließende exakte CI jeweils im PR-Abschlusskommentar. Backup-/Quellbranches bleiben erhalten. Stabile Release-Abnahme weiterhin offen, kein Release-Tag.
 
 - Erneuter QA-STORAGE-Review vor Merge fand ältere lokale Zusatzhistorien und ungültige Zähler: neun Repros rot, Fix d7a4858; 56 gezielte Desktopfälle grün. Beide PRs ziehen den Fix nach. Finale Sollsuite QA-STORAGE 107 Unit/208 Browser, CF-1 109 Unit/214 Browser. Verbindliche tatsächliche Ergebnisse/CI/Merge wie oben im jeweiligen Abschlusskommentar; fehlerhafte Zwischenstände wurden nicht integriert.
+
+## Aktueller Integrationsstand – 2026-10-10
+
+- Claude DEPLOY-CF PR #23 ad7b895 integriert als **2eedbea10b83dc75d47831c40be2286e10a068b3**; exakte CI 37998527823 grün. Öffentliches Patch-Preview von Codex per HTTPS/200/Headern geprüft, Produktion 404. Konto-Inventur und Online-Suite sind Claudes dokumentierte Belege. Neuer Rückfall backup/main-2026-10-10-pre-core auf diesem SHA.
+- QA-STORAGE 0ff6c6c: stale Ende-Dialog bricht nach Konflikt ab; Resetmarker monoton trotz Uhrkorrektur; ältere Resetlinie darf keine alten Karten wiederbeleben. Sechs Repros vorher rot, danach 69 gezielte Desktopfälle grün. Finale 107 Unit/220 Browser, CI/Merge erst im Abschlusskommentar von PR #24 belegt.
+- CF-1 PR #25 zieht diese Core-Korrekturen nach und korrigiert den tatsächlichen Hostinghinweis; finale 109 Unit/226 Browser, CI/Merge im Abschlusskommentar. Claude-Tests und Hostingdokumente unverändert übernommen.
+- Keine fehlerhaften Review-Zwischenstände gemergt, keine Daten/IDs/Branches gelöscht. Folgeschritt Claude: Preview exakt des finalen main-SHA und erneute Online-Abnahme. Reale Geräte/Lesbarkeit/WebKit/Mikrofon/Vollbackup/geführte Reparatur/Produktionsfreigabe bleiben offen.

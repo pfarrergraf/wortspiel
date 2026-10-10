@@ -24,3 +24,9 @@ Lokaler Simulator ist kein echtes Cloudflare-Preview, kein HTTPS-/Kontozugriffsb
 HTML und Header müssen im Hash bleiben; index.html-Alias bleibt für installierte Startadressen verwendbar. GitHub-Pages-Rückfall und Sourcebranches werden erhalten. Im Fehlerfall normalen Revert des Integrationscommits bauen und veröffentlichen; keinerlei Browser-Speicher zurücksetzen.
 
 Der erneute QA-STORAGE-Review führte vor main-Merge zu weiteren Schutzprüfungen in d7a4858: beide Revisionsrichtungen, gültige Nullrevision und Zählergrenzen. Das Paket wurde anschließend nachgezogen; die 109/196-Abnahme ist damit ein Zwischenstand. Finale 109/214-Abnahme und exakte CI werden im PR-Abschlusskommentar dokumentiert. Keine Integration der erkannten fehlerhaften Zwischenstände.
+
+## Fortsetzung 2026-10-10
+
+Claude hat mit separater Nutzerfreigabe das Direct-Upload-Pages-Projekt wortspiel-app und öffentliche Previews erstellt; PR #23 ad7b895 ist nach Review/grüner CI als main 2eedbea integriert. Codex prüfte den öffentlichen Patch-Preview unabhängig per HTTPS/200 und Sicherheitsheadern; Produktion lieferte 404. Kein eigener Konto-/Tokenzugriff. Für die vollständige Konto-/Onlineprüfung gelten Claudes dokumentierte Belege; dessen uncommitteter Patch-Preview ist kein finaler Release.
+
+Die letzten Storage-Review-Repros (stale Ende-Dialog und Reset-Abstammung) waren sechsfach rot und nach Fix 69 gezielte Desktopfälle grün. CF-1 zieht QA-STORAGE 0ff6c6c nach; finale Sollsuite jetzt 109 Unit/226 Browser. Lokale unterbrochene Langläufe werden nicht als bestanden ausgegeben. Der Hostinghinweis nennt nun den jeweiligen Website-Hoster, ohne Rechtstexte zu erfinden. Finaler CI-/Merge-Nachweis im PR-Abschlusskommentar. Nach Integration übernimmt Claude das Preview des exakten main-SHA und wiederholt die Online-Abnahme; keine Produktion ohne Freigabe.
