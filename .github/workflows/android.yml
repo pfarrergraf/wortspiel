@@ -55,7 +55,7 @@ jobs:
             adb shell svc wifi disable
             adb shell svc data disable
             cd mobile/android && ./gradlew :app:connectedDebugAndroidTest --no-daemon
-            adb pull /sdcard/Android/data/io.github.pfarrergraf.ludeverbis/files/screenshots ../../docs/play-store/assets/screenshots
+            adb pull /sdcard/Android/data/io.github.pfarrergraf.ludeverbis/files/screenshots "${{ github.workspace }}/docs/play-store/assets/screenshots"
       - uses: actions/upload-artifact@v4
         if: always()
         with:
