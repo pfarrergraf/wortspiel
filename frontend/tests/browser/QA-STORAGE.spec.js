@@ -555,3 +555,103 @@ test("a blocked local replica hides its stale card, stops navigation and preserv
   expect(after.session.scores).toEqual(before.session.scores);
   expect(after.groups).toEqual(before.groups);
 });
+
+for (const mode of ["indexeddb", "local", "local-no-locks"]) {
+  test(`stale end-turn request never opens a dialog or finishes the fresh turn (${mode})`, async ({ page: a, context }) => {
+    if (mode.startsWith("local")) await context.addInitScript(() => {
+      Object.defineProperty(window, "indexedDB", { get: () => { throw new Error("IndexedDB unavailable in regression test"); } });
+    });
+    if (mode.endsWith("no-locks")) await context.addInitScript(() => Object.defineProperty(navigator, "locks", { value: undefined }));
+    await a.addInitScript(() => window.addEventListener("storage", event => {
+      if (window.__QA_FreezeStorage) event.stopImmediatePropagation();
+    }));
+    await a.goto("/");
+    const b = await context.newPage(); await b.goto("/");
+    await a.getByRole("button", { name: "Los geht’s", exact: true }).click();
+    await a.getByRole("button", { name: "Wir sind bereit", exact: true }).click();
+    await b.getByRole("button", { name: "Partie fortsetzen", exact: true }).click();
+    await b.getByRole("button", { name: "Weiter geht’s", exact: true }).click();
+    await expect(a.locator("#current-word")).toBeVisible();
+    await a.evaluate(() => { window.__QA_FreezeStorage = true; });
+    await b.getByRole("button", { name: "Runde beenden", exact: true }).click();
+    await b.locator("#modal").getByRole("button", { name: "Runde beenden", exact: true }).click();
+    await b.locator('[data-action="next-turn"]').click();
+    await b.getByRole("button", { name: "Wir sind bereit", exact: true }).click();
+    await expect(b.locator("#current-word")).toBeVisible();
+    const before = await b.evaluate(key => JSON.parse(localStorage.getItem(key)), KEY);
+    await a.getByRole("button", { name: "Runde beenden", exact: true }).click();
+    await expect(a.locator("#toast")).toContainText("Es wurde nichts gewertet");
+    await expect(a.locator("#modal")).not.toBeVisible();
+    await expect(a.locator("#current-word")).toHaveText(await b.locator("#current-word").innerText());
+    expect(await b.evaluate(key => JSON.parse(localStorage.getItem(key)), KEY)).toEqual(before);
+    await b.close();
+  });
+}
+
+for (const noLocks of [false, true]) {
+  test(`confirmed reset recovers an unmirrored commit after clock moves backward (${noLocks ? "bakery" : "Web Locks"})`, async ({ context }) => {
+    const [a, b] = await harness(context, noLocks ? "indexeddb-no-locks" : "indexeddb");
+    await a.evaluate(async () => {
+      const { store, engine, cards, categories } = window.__qa;
+      await store.update(s => {
+        engine.resetGroup(s, s.settings.group);
+        s.groups[Object.keys(s.groups)[0]].resetAt = Date.now() + 60000;
+        engine.createSession(s, cards, categories);
+        engine.startTurn(s, cards, Date.now(), () => 0);
+      });
+    });
+    const before = await a.evaluate(key => JSON.parse(localStorage.getItem(key)), KEY);
+    await a.evaluate(async () => {
+      const original = Storage.prototype.setItem;
+      Storage.prototype.setItem = function(key, value) {
+        if (key === "wortspiel.state.v1") throw new DOMException("Test mirror quota", "QuotaExceededError");
+        return original.call(this, key, value);
+      };
+      try { await window.__qa.store.update(s => window.__qa.engine.resetGroup(s, s.settings.group)); }
+      finally { Storage.prototype.setItem = original; }
+    });
+    const result = await b.evaluate(async () => {
+      let error;
+      try { await window.__qa.store.update(() => {}); } catch (failure) { error = failure.name; }
+      return { error, state: window.__qa.store.state };
+    });
+    expect(result.error).toBeUndefined();
+    expect(result.state.session).toBeNull();
+    const group = result.state.groups[Object.keys(result.state.groups)[0]];
+    expect(group.seen).toEqual({});
+    expect(group.resetAt).toBeGreaterThan(before.groups[Object.keys(before.groups)[0]].resetAt);
+    expect(await a.evaluate(() => localStorage.getItem("wortspiel.state.v1.pending"))).toBeNull();
+    await Promise.all([a.close(), b.close()]);
+  });
+}
+
+test("a pre-reset local replica cannot resurrect historical cards after a newer database reset", async ({ context }) => {
+  const [a, b] = await harness(context);
+  await a.evaluate(async () => {
+    const { store, engine, cards } = window.__qa;
+    await store.update(s => engine.recordResult(s, cards, "correct", Date.now(), () => 0));
+  });
+  const old = await a.evaluate(key => JSON.parse(localStorage.getItem(key)), KEY);
+  await a.evaluate(async () => {
+    const { store, engine, cards, categories } = window.__qa;
+    await store.update(s => {
+      engine.resetGroup(s, s.settings.group);
+      engine.createSession(s, cards, categories);
+      engine.startTurn(s, cards, Date.now(), () => 0);
+    });
+  });
+  const current = await a.evaluate(key => JSON.parse(localStorage.getItem(key)), KEY);
+  old.revision = current.revision + 1;
+  await b.evaluate(({key, old}) => localStorage.setItem(key, JSON.stringify(old)), { key: KEY, old });
+  const result = await a.evaluate(async key => {
+    let error;
+    try { await window.__qa.store.update(() => {}); } catch (failure) { error = failure.name; }
+    const request = window.__qa.store.db.transaction("state").objectStore("state").get(key);
+    const saved = await new Promise((resolve, reject) => {request.onsuccess=()=>resolve(request.result);request.onerror=reject;});
+    return { error, saved };
+  }, KEY);
+  expect(result.error).toBe("StorageLineageError");
+  expect(result.saved).toEqual(current);
+  expect(await b.evaluate(key => JSON.parse(localStorage.getItem(key)), KEY)).toEqual(old);
+  await Promise.all([a.close(), b.close()]);
+});
