@@ -1,0 +1,162 @@
+{
+  "schema": 1,
+  "revision": 41,
+  "groups": {
+    "group:pantomime abend": {
+      "name": "Pantomime-Abend",
+      "seen": {
+        "de:pantomime:schlafen": 1750000000000,
+        "de:pantomime:aufwachen": 1750000001000,
+        "de:pantomime:putzen": 1750000002000,
+        "de:pantomime:duschen": 1750000004000,
+        "de:pantomime:baden": 1750000005000
+      },
+      "createdAt": 1750000000000,
+      "resetAt": null
+    },
+    "group:familie müller": {
+      "name": "Familie Müller",
+      "seen": {
+        "de:apfel": 1749999990000
+      },
+      "createdAt": 1750000000000,
+      "resetAt": null
+    },
+    "group:jugendclub": {
+      "name": "Jugendclub",
+      "seen": {
+        "de:pantomime:katze": 1749999980000
+      },
+      "createdAt": 1750000000000,
+      "resetAt": null
+    }
+  },
+  "session": {
+    "settings": {
+      "group": "Pantomime-Abend",
+      "teams": [
+        "Die Füchse",
+        "Die Eulen",
+        "Die Otter"
+      ],
+      "selected": [
+        "animals",
+        "cars",
+        "city-country",
+        "food",
+        "literature",
+        "people",
+        "sports",
+        "things",
+        "tv",
+        "web",
+        "everyday",
+        "faith",
+        "camp",
+        "friends",
+        "future",
+        "gaming",
+        "hobbies",
+        "music",
+        "planet",
+        "school",
+        "slang",
+        "social",
+        "style"
+      ],
+      "difficulty": "all",
+      "seconds": 90,
+      "cycles": 2,
+      "skipPenalty": 1,
+      "tabooPenalty": 1,
+      "sound": true,
+      "speech": false,
+      "gameMode": "pantomime",
+      "pantomimeSelected": null
+    },
+    "phase": "paused",
+    "turnIndex": 1,
+    "scores": [
+      0,
+      1,
+      0
+    ],
+    "turns": [
+      {
+        "team": 0,
+        "cycle": 1,
+        "points": 0,
+        "log": [
+          {
+            "id": "de:pantomime:schlafen",
+            "word": "schlafen",
+            "result": "correct",
+            "delta": 1
+          },
+          {
+            "id": "de:pantomime:aufwachen",
+            "word": "aufwachen",
+            "result": "taboo",
+            "delta": -1
+          }
+        ],
+        "endedAt": 1750000003000
+      }
+    ],
+    "log": [
+      {
+        "id": "de:pantomime:duschen",
+        "word": "duschen",
+        "result": "correct",
+        "delta": 1
+      }
+    ],
+    "current": "de:pantomime:baden",
+    "remaining": 88000,
+    "deadline": null,
+    "exhausted": false,
+    "currentMode": "pantomime"
+  },
+  "settings": {
+    "group": "Pantomime-Abend",
+    "teams": [
+      "Die Füchse",
+      "Die Eulen",
+      "Die Otter"
+    ],
+    "selected": [
+      "animals",
+      "cars",
+      "city-country",
+      "food",
+      "literature",
+      "people",
+      "sports",
+      "things",
+      "tv",
+      "web",
+      "everyday",
+      "faith",
+      "camp",
+      "friends",
+      "future",
+      "gaming",
+      "hobbies",
+      "music",
+      "planet",
+      "school",
+      "slang",
+      "social",
+      "style"
+    ],
+    "difficulty": "all",
+    "seconds": 90,
+    "cycles": 2,
+    "skipPenalty": 1,
+    "tabooPenalty": 1,
+    "sound": true,
+    "speech": false,
+    "gameMode": "pantomime",
+    "pantomimeSelected": null
+  }
+}

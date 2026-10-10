@@ -6,11 +6,11 @@ Ein buntes, kostenloses Spiel zum Begriffe-Erklären für eine Gruppe an **einem
 
 ## Was die aktuelle Webversion kann
 
-- 2.744 deutsche Erklärungskarten in 24 Themenpaketen, davon 2.736 aktiv und acht begründet ausgemusterte Begriffsvarianten mit erhaltenen IDs. Zusätzlich 1.435 Pantomime-Wörter in 16 eigenen Kategorien.
-- Drei Schwierigkeitsstufen: **Leicht** (1.133 aktive Karten), **Mittel** (1.962 einschließlich der leichten) und **Alles / knifflig** (2.736 aktive Karten). Die Zähler berücksichtigen zusätzlich Altersgruppe, Themen und Kartenspeicher.
+- 2.856 deutsche Erklärungskarten in 24 Themenpaketen, davon 2.848 aktiv und acht begründet ausgemusterte Begriffsvarianten mit erhaltenen IDs. Zusätzlich 1.435 Pantomime-Wörter in 16 eigenen Kategorien.
+- Drei Schwierigkeitsstufen: **Leicht** (1.187 aktive Karten), **Mittel** (2.056 einschließlich der leichten) und **Alles / knifflig** (2.848 aktive Karten). Die Zähler berücksichtigen zusätzlich Altersgruppe, Themen und Kartenspeicher.
 - Schnellauswahlen **Jugendliche**, **Konfis** und **Gemischte Runde**. Konfis kombiniert die leichte Auswahl mit Grundlagen aus Glaube & Kirche; Jugendliche verwendet Alltagsthemen ohne das Kirchenpaket. Themen und Stufe bleiben frei anpassbar.
 - Zwei bis sechs frei benennbare Teams, Rundenzeit von 30 bis 180 Sekunden, einstellbare Runden pro Team und Punkteabzüge.
-- Erraten, Überspringen und Tabuwort; Pause, verdeckte Karte, Rücknahme der letzten Wertung, Rundenprotokoll und Ergebnisübersicht.
+- Erraten, Überspringen und Tabuwort; Pause, verdeckte Karte, Rücknahme der letzten Wertung, Rundenprotokoll und Ergebnisübersicht. Nach Rundenende könnt ihr eine Wertung korrigieren oder die zuletzt offene Karte nachtragen; ihre IDs bleiben im Kartenspeicher.
 - Gruppenbezogener Kartenspeicher ohne Ablaufdatum. Bereits **angezeigte** Karten werden gespeichert, auch bei Überspringen oder vorzeitigem Rundenende. Neue Partien und App-Updates löschen ihn nicht. Ist ein Paket ausgespielt, gibt es keine automatische Wiederholung.
 - Manueller Reset je Gruppe, JSON-Sicherung aller Gruppen und zusammenführender Import auf demselben oder einem anderen Gerät.
 - Offline nach dem ersten vollständigen Laden; installierbare PWA, einschließlich lokal bereitgestellter Schriftarten. Auf „Offline bereit“ warten, bevor die Internetverbindung getrennt wird.
@@ -42,7 +42,7 @@ Eine laufende Partie behält ihre gewählte Stufe. Für eine neue Auswahl unter 
 4. Ladet vor und während einer Freizeit Sicherungen herunter. Browserdaten können durch manuelles Löschen, einen privaten Browsermodus oder Speicherdruck verloren gehen. Der Import ergänzt vorhandene Verläufe; er ersetzt oder löscht sie nicht.
 5. Nur „Kartenspeicher zurücksetzen“ gibt die gesehenen Karten wieder frei. Die Rücknahme einer Wertung korrigiert Punkte; beide bereits gezeigten Karten bleiben im Verlauf.
 
-IndexedDB speichert den Zustand transaktional **vor** dem Anzeigen einer Karte. localStorage hält zusätzlich eine Kopie bereit und dient als Rückfall, falls IndexedDB nicht verfügbar ist. Ohne funktionierenden dauerhaften Website-Speicher beginnt das Spiel nicht. Gleichzeitig geöffnete Tabs lesen Änderungen; für eine laufende Runde empfehlen wir ein einzelnes Fenster.
+IndexedDB speichert den Zustand transaktional **vor** dem Anzeigen einer Karte. localStorage hält zusätzlich eine Kopie bereit und dient als Rückfall, falls IndexedDB nicht verfügbar ist. Ohne funktionierenden dauerhaften Website-Speicher beginnt das Spiel nicht. Gleichzeitig geöffnete Tabs lesen Änderungen. Eine Aktion auf einer veralteten Karte wird ohne Wertung abgewiesen. Widersprüchliche gespeicherte Kopien bleiben erhalten; die App überschreibt sie nicht nach dem bloßen Revisionszähler. Vor einem App-Update ältere Wortspiel-Tabs schließen.
 
 ## Lokal starten
 

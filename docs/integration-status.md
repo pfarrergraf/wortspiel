@@ -1,5 +1,8 @@
 # Integrationsstatus – Audit 2026-10-09
 
+Aktueller Zusammenführungsauftrag 2026-10-10: [INT-MAIN-Prüfbericht](reviews/INT-MAIN.md). Die unten dokumentierten PR-Zwischenstände bleiben als Verlauf erhalten; aktuelle main-/PR-/CI-Nachweise stehen im INT-MAIN-Abschluss. Alle Quellbranches bleiben erhalten.
+
+
 Basis `main`: `6de6340710de3f389f8de3ba1819123dc4c9a977`. Sicherung `backup/main-2026-10-09`. Branch `integration/2026-10-09-audit`. Baseline-Commit `9a7a938`; Kartenintegration `19be010`; Regel-/UI-/Presenterintegration `18a9f2e`. Integration: [PR #16](https://github.com/pfarrergraf/wortspiel/pull/16). Der Abschlusskommentar dort dokumentiert den tatsächlichen main-Merge-SHA, CI-Lauf und die Schließung der Alt-PRs. GitHub ist die verbindliche Quelle dieses veränderlichen Abschlussstatus.
 
 ## PR-Matrix
@@ -48,3 +51,34 @@ Ein fehlgeschlagener erster Karten-Unit-Lauf deckte die alte Annahme „all enth
 ## GitHub-Aufträge
 
 Vorbereitet und nicht gestartet: [NOISE-01 #17](https://github.com/pfarrergraf/wortspiel/issues/17), [QA-A11Y #18](https://github.com/pfarrergraf/wortspiel/issues/18), [QA-DEVICES #19](https://github.com/pfarrergraf/wortspiel/issues/19), [A15-REVIEW #20](https://github.com/pfarrergraf/wortspiel/issues/20). [QA-STORAGE #21](https://github.com/pfarrergraf/wortspiel/issues/21) bleibt exklusiv beim Integrator.
+
+## Parallele Folgepakete 2026-10-09
+
+- **QA-STORAGE #21 / Codex:** eigener Worktree und Claim, Rückfall `backup/main-2026-10-09-pre-storage` auf `9c1d9d6`. Revisionsfencing, exklusive Speicherschreiber, sichere Abbruch-/Quota-/Formatfälle, historische vollständige Fixtures und kompatibler Vollbackup-Entwurf. Basis-Repro: drei stale Fälle rot; gezielte Prüfung nach Korrektur grün. Lokaler vollständiger Stand vor zusätzlichen Mixed-Backend-Fällen: 107 Unit und 144 Browser ohne skips; PR #24: Zwischenstand 107 Unit/170 Browser grün, danach ein belegter P1-Spiegelungsfehler; PR bis zum Journal-Fix wieder Draft. Persistente Schreibmarkierung, schreibfreier frischer Export und Quarantäne widersprüchlicher Historien ergänzt; 54 gezielte Desktopfälle grün. Exaktes finales Ergebnis/Merge/CI im Abschlusskommentar des PR. Alte bestehende Schnellstart-Tests deckten eine eigene Zwischenregression auf; Blur-/Wizard-Queue korrigiert, Tests unverändert erhalten.
+- **Claude QA-DEVICES [PR #22](https://github.com/pfarrergraf/wortspiel/pull/22):** 14 neue Fälle, Android-Tablet/Rotation/drei Modi, Unterpfad/PWA, Offline-Browser-Neustart und SW-Update. Lokale Simulation sauber von realer Prüfung getrennt. Nach Review und grüner CI integriert: main `35389e3c96a2442a9a3e38fc929e6136cde1c3c2`. Keine parallele Änderung der Claude-Dateien. Die gemeldete alte Pantomime-Test-Race repariert Codex in PR #24, ohne Assertions zu ändern.
+- **Claude DEPLOY-CF [PR #23](https://github.com/pfarrergraf/wortspiel/pull/23):** Claude meldet verbundenen Cloudflare-Connector für Workers/D1/KV/R2, aber keine Pages-Tools. Pages-Projektbestand bleibt unbekannt; kein echtes Pages-Deployment. Lokale Pages-Simulation meldet CF-1 (Redirect `/index.html` im Offlinecache), CF-2 (Header plus nicht ausgelieferte `_headers`) und Inline-Startfehler-Handler unter CSP. Codex übernimmt den SW-/Core-Bedarf mit neuem Claim; Hosting bleibt bei Claude nach Freigabe.
+- **Grenzen:** Vollbackup nur Entwurf; seltene Fallback-Absturz-Entsperrung braucht einen expliziten Ablauf. Reale Geräte/Lesbarkeit, WebKit/Mikrofon und echtes Cloudflare-Preview bleiben Release-Gates. Kein Release-Tag.
+
+## Geprüfte Folgepakete – 2026-10-09
+
+- **QA-STORAGE [PR #24](https://github.com/pfarrergraf/wortspiel/pull/24), Head `1e162fb`:** 107 Unit/190 Browser ohne skips lokal **und** in [exakter Node-22-CI](https://github.com/pfarrergraf/wortspiel/actions/runs/37996643946). Review-P1 bei DB-Commit ohne lokale Spiegelung nach rotem Repro behoben; persistentes Journal, spätere lokale Rückfälle gesperrt, divergierende Historien erhalten, Export schreibfrei/frisch. Geführte Reparatur und Vollbackup bleiben offen.
+- **CF-1 [PR #25](https://github.com/pfarrergraf/wortspiel/pull/25):** 109 Unit/196 Browser ohne skips lokal, Karten/Build grün; drei neue Repros vor Fix rot. Echter lokaler Wrangler-4.149.0-Pages-Simulator: Header, 308, Offline Root/index/Query und CSP-Retry erhalten Daten. Claude-Hostingdateien nicht verändert. Kein echtes Cloud-Deployment.
+- Verbindliche Merge-SHAs und abschließende exakte CI jeweils im PR-Abschlusskommentar. Backup-/Quellbranches bleiben erhalten. Stabile Release-Abnahme weiterhin offen, kein Release-Tag.
+
+- Erneuter QA-STORAGE-Review vor Merge fand ältere lokale Zusatzhistorien und ungültige Zähler: neun Repros rot, Fix d7a4858; 56 gezielte Desktopfälle grün. Beide PRs ziehen den Fix nach. Finale Sollsuite QA-STORAGE 107 Unit/208 Browser, CF-1 109 Unit/214 Browser. Verbindliche tatsächliche Ergebnisse/CI/Merge wie oben im jeweiligen Abschlusskommentar; fehlerhafte Zwischenstände wurden nicht integriert.
+
+## Aktueller Integrationsstand – 2026-10-10
+
+- Claude DEPLOY-CF PR #23 ad7b895 integriert als **2eedbea10b83dc75d47831c40be2286e10a068b3**; exakte CI 37998527823 grün. Öffentliches Patch-Preview von Codex per HTTPS/200/Headern geprüft, Produktion 404. Konto-Inventur und Online-Suite sind Claudes dokumentierte Belege. Neuer Rückfall backup/main-2026-10-10-pre-core auf diesem SHA.
+- QA-STORAGE 0ff6c6c: stale Ende-Dialog bricht nach Konflikt ab; Resetmarker monoton trotz Uhrkorrektur; ältere Resetlinie darf keine alten Karten wiederbeleben. Sechs Repros vorher rot, danach 69 gezielte Desktopfälle grün. Finale 107 Unit/220 Browser, CI/Merge erst im Abschlusskommentar von PR #24 belegt.
+- CF-1 PR #25 zieht diese Core-Korrekturen nach und korrigiert den tatsächlichen Hostinghinweis; finale 109 Unit/226 Browser, CI/Merge im Abschlusskommentar. Claude-Tests und Hostingdokumente unverändert übernommen.
+- Keine fehlerhaften Review-Zwischenstände gemergt, keine Daten/IDs/Branches gelöscht. Folgeschritt Claude: Preview exakt des finalen main-SHA und erneute Online-Abnahme. Reale Geräte/Lesbarkeit/WebKit/Mikrofon/Vollbackup/geführte Reparatur/Produktionsfreigabe bleiben offen.
+
+- Letzter Review-Nachtrag: 178b2d2 ergänzt vollständigen Spielstand-Fingerprint/DB-/Spiegel-Anker in schema 1, bewahrt gleich/höher revisionierte Legacy-Session-/Undo-Forks und bindet lokale RAM-Kopie ein. Pending wird nur durch DB-Spiegelung aufgelöst, nicht durch Zählergleichheit. Zehn neue Repros rot vor Fix, 83 gezielte Desktopfälle grün danach, DB-only und unbekannte künftige Metaversion zusätzlich geprüft. Finale Sollsuiten #24: 107/252, #25: 109/258; keine fehlerhaften Zwischenstände in main.
+
+
+## Historischer Core-Zwischenstand 2026-10-10 – 4782a1e
+
+QA-STORAGE #24 und CF-1 #25 bleiben bis vollständiger Abnahme außerhalb von main. 107 Unit/Karten/Build und 98 gezielte Desktopfälle bestanden. Neue Fälle sichern unbekannte Pending-Versionen/Zusatzfelder, ausschließlich dokumentierte Difficulty-Defaults und den realen storage-Eventpfad: fremde rohe Snapshots werden erst gegen die bekannte Basis validiert. Drei echte UI-Repros vor Fix rot, nach Fix grün. Das neue künstliche Pending-Testfixture wartet nun auf den abgeschlossenen Bedienvorgang; keine Assertions abgeschwächt. Zwischenstand #24 178b2d2 bestand lokal 252 Browser, aber CI nur 250/252 wegen dieses Testablaufs; #25 fff08d2 bestand lokal und in CI 38044459172 alle 258 Browser. Diese Belege sind keine Freigabe der neueren Version.
+
+Aktuelle Sollsuiten: #24 107 Unit/278 Browser, #25 109 Unit/284 Browser. Vollständige lokale Ergebnisse, exakte CI und Merge-SHAs im Abschlusskommentar der jeweiligen PR. main ist weiterhin 2eedbea; Rückfall backup/main-2026-10-10-pre-core. Claude-Dokumente/Tests bleiben unverändert; nach tatsächlicher Core-Integration übernimmt Claude das unveränderte finale main-Build ins Preview und dokumentiert dessen Online-Abnahme. Keine öffentliche Produktion/DNS/neuen Berechtigungen/Release-Tag ohne erforderliche Abnahme und Freigabe.
