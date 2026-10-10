@@ -16,6 +16,10 @@ Die neue Zusammenfassungsregression war zunächst in beiden Projekten rot: Textf
 
 Abschließender lokaler Build `92d452f7b4e487`: alle 21 ausgewählten Chrome-Fälle grün, einschließlich sämtlicher 11 Bildschirmprojekte, Startknopf nach Wechsel auf jede der drei Spielarten im kurzen Handy-Viewport, iPhone-Hinweis, Offline-Neuladen mit vollständigen Einstellungen, nativer Pflichtfeld-Fokus, korrigierter Gruppenzusammenfassung und alter manueller Themen-/Wertungsrunde. Vollständige Sollsuite in CI: 113 Unit und 343 Browserfälle. Die source-final-Prüfung ist keine behauptete echte Safari-/Hardware-Abnahme.
 
+Echtes Preview d058c73: 59/59 Browserfälle grün, alle 26 servierbaren Dateien SHA-256-identisch. Persistenter isolierter Browser aktualisiert das alte Build dcffff671d6d1d auf 92d452f7b4e487; gesamte pausierte Session, Einstellungen und drei reservierte Karten identisch, alter Cache entfernt, elf Offlinepfade und nicht redirectierte HTML-Responses geprüft. Beim anschließenden vollständigen Abgleich verlangt der ältere C8-Test noch die bisherige Position direkt hinter den Tabs. Er prüft nun ausdrücklich die neue Position hinter dem Formular auf kompakten Telefonen und behält die alte Position auf Desktop bei; Hinweis, Dismiss-Persistenz und sämtlicher weiterer Inhalt weiterhin geprüft. Nur Test-/Reviewänderung, App-Build identisch. Exakte vollständige CI bleibt Merge-Bedingung.
+
+CI 38060503155 am d058c73: 113 Unit grün, 337/343 Browserfälle bestanden. Sechs mobile Testabläufe erwarten die frühere Position des iPhone-Tipps oder direkt sichtbare Themen-/Presenter-Einstellungen. C8 prüft beide tatsächlichen Positionen; E3 und vier Presenter-Konfigurationsabläufe öffnen ausdrücklich Spiel anpassen. Keine Wertungs-, Fokus-, HID-, Reset-, Hilfe- oder Hint-Assertions entfernt. App-Build unverändert; korrigierter Test-Head benötigt erneut vollständige grüne CI vor Merge.
+
 | Wunsch | Stand nach diesem Paket | Fehlende Implementierung |
 | --- | --- | --- |
 | Tabu | spielbar | keine neue Grundfunktion nötig |

@@ -1,3 +1,4 @@
+import { openSetupOptions } from "./setup-options.js";
 import { test, expect } from "@playwright/test";
 
 const state = (page) =>
@@ -63,6 +64,7 @@ async function startTurn(page) {
 
 test("a learned third button and holding back both skip; a short back press stays taboo", async ({ page }) => {
   await page.goto("/");
+  await openSetupOptions(page);
   await page.getByRole("button", { name: "Presenter einrichten" }).click();
   await expect(page.getByRole("heading", { name: "Presenter einrichten" })).toBeVisible();
   // Live monitor shows what arrives, incl. hold duration.
@@ -100,6 +102,7 @@ test("a learned third button and holding back both skip; a short back press stay
   // The setting is per device and survives a reload.
   await page.reload();
   await page.getByRole("button", { name: "Spielübersicht" }).click();
+  await openSetupOptions(page);
   await page.getByRole("button", { name: "Presenter einrichten" }).click();
   await expect(page.locator("#presenter-binding")).toHaveText("Taste „F9“");
   await expect(page.locator("[data-presenter-hold]")).toBeChecked();
@@ -107,6 +110,7 @@ test("a learned third button and holding back both skip; a short back press stay
 
 test("an extra mouse button can be learned for skipping", async ({ page }) => {
   await page.goto("/");
+  await openSetupOptions(page);
   await page.getByRole("button", { name: "Presenter einrichten" }).click();
   await page.getByRole("button", { name: "Dritte Taste anlernen" }).click();
   await page.mouse.down({ button: "middle" });
@@ -174,6 +178,7 @@ function fakeHid() {
 test("a Spotlight pointer button that sends nothing can be connected directly and learned", async ({ page }) => {
   await page.addInitScript(fakeHid);
   await page.goto("/");
+  await openSetupOptions(page);
   await page.getByRole("button", { name: "Presenter einrichten" }).click();
   await page.getByRole("button", { name: "Spotlight verbinden" }).click();
   await expect(page.locator("#presenter-hid")).toContainText("verbunden mit Spotlight (Test)");
@@ -209,6 +214,7 @@ test("the presenter dialog offers a diagnosis text and a full reset of diverted 
   await context.grantPermissions(["clipboard-read", "clipboard-write"]).catch(() => {});
   await page.addInitScript(fakeHid);
   await page.goto("/");
+  await openSetupOptions(page);
   await page.getByRole("button", { name: "Presenter einrichten" }).click();
   await page.getByRole("button", { name: "Spotlight verbinden" }).click();
   await page.getByRole("button", { name: "Dritte Taste anlernen" }).click();
