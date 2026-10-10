@@ -34,7 +34,8 @@ test("opening information pauses the round and returning preserves scores and ca
   await expect(page.locator("#current-word")).not.toHaveText(first);
   const before=await stored(page);
   await page.locator(".site-footer").getByRole("link",{name:"Unterstützen",exact:true}).click();
-  await expect(page).toHaveURL(/\/unterstuetzen\.html$/);
+  // Pages uses a canonical extensionless URL; GitHub/local hosts retain .html.
+  await expect(page).toHaveURL(/\/unterstuetzen(?:\.html)?$/);
   const paused=await stored(page);
   expect(paused.session.phase).toBe("paused");
   expect(paused.session.deadline).toBeNull();

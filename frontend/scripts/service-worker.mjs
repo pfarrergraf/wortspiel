@@ -18,6 +18,9 @@ const files = (await list(root)).filter((file) => file !== "sw.js");
 // Host config is not served by Pages; index.html redirects to the scope root.
 const requests = files.filter((file) => !["index.html", "_headers", "_redirects"].includes(file));
 const hash = createHash("sha256");
+// Worker fixes must invalidate the cache even when assets stay unchanged.
+// Normalize the generator's line endings for identical Windows/Linux builds.
+hash.update((await readFile(new URL(import.meta.url), "utf8")).replace(/\r\n/g, "\n"));
 for (const file of files.sort())
   hash.update(await readFile(new URL(file, root)));
 const version = hash.digest("hex").slice(0, 14);
@@ -25,16 +28,25 @@ const worker = `// Generated from the complete production build. No external res
 const CACHE = 'wortspiel-${version}';
 const PREFIX = 'wortspiel-';
 const FILES = ${JSON.stringify(["./", ...requests.map((file) => `./${file}`)])};
+const HTML = ${JSON.stringify(files.filter(file => file.endsWith(".html")))};
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(CACHE).then(async cache => {
     await cache.addAll(FILES);
-    const home = await cache.match(self.registration.scope);
-    if (!home) throw new Error('Offline start page missing');
-    // Keep the explicit HTML entry usable without caching a redirected fetch.
-    // New Response also removes the redirected flag for offline navigation.
-    await cache.put(new URL('./index.html', self.registration.scope), new Response(await home.arrayBuffer(), {
-      status: home.status, statusText: home.statusText, headers: home.headers,
-    }));
+    // Pages redirects every *.html file to its canonical path. A redirected
+    // cached Response cannot serve offline navigation in Chrome. Keep both
+    // paths with fresh Responses; the same aliases also work on GitHub Pages.
+    for (const file of HTML) {
+      const explicit = new URL('./' + file, self.registration.scope);
+      const source = await cache.match(file === 'index.html' ? self.registration.scope : explicit);
+      if (!source) throw new Error('Offline HTML missing: ' + file);
+      const body = await source.arrayBuffer();
+      const options = { status: source.status, statusText: source.statusText, headers: source.headers };
+      await cache.put(explicit, new Response(body, options));
+      if (file !== 'index.html') {
+        const canonical = file.endsWith('/index.html') ? file.slice(0, -10) : file.slice(0, -5);
+        await cache.put(new URL('./' + canonical, self.registration.scope), new Response(body, options));
+      }
+    }
     await self.skipWaiting();
   }));
 });

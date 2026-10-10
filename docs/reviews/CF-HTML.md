@@ -1,0 +1,9 @@
+# CF-HTML – tatsächliche Pages-Abnahme
+
+Das erste ludeverbis-Preview f6dfe2d bestand 36 von 42 echten Browserfällen. Zwei Arten von Fehlern: Pages verwendet kanonische extensionlose Informations-URLs, und redirectierte HTML-Responses aus dem Offline-Cache verursachen ERR_FAILED. Alle 26 servierbaren Build-Dateien wurden online byteidentisch nach SHA-256 geprüft; Sicherheitsheader/CSP liegen an. Python-urllib wurde vom Host nach User-Agent mit 1010 abgewiesen; normale Browser-/curl-Anfragen und HTTP-Abgleich mit Browser-User-Agent funktionieren.
+
+Neue Regression simuliert echte 308-Weiterleitungen für jede Informationsseite, unter Root und /wortspiel/. Beide Desktop-Repros waren vor Fix rot. Der Worker legt nun jede HTML-Datei als nicht redirectierte Response unter ihrem expliziten und kanonischen Pfad ab. Root/index/Query, Infoseiten, Spielkarte, Punkte und vollständiger pausierter Speicher bleiben offline geprüft. Keine Veränderung an Gruppen, Session, Karten-IDs oder Speicherprotokoll.
+
+Der Cache-Hash berücksichtigt zusätzlich den Worker-Generator: Workeränderungen invalidieren auch bei identischen Assets. Generatorzeilen werden normalisiert, sodass Windows/Linux denselben Codehash liefern. Neuer Unit-Vertrag prüft Implementierungsänderung und CRLF/LF-Gleichheit. INFO-01 erlaubt die beiden legitimen veröffentlichten URL-Formen mit identischer Inhalts-/Pausenprüfung; keine fachliche Assertion entfernt.
+
+Node 22: 113 Unit-Tests und Build bestanden. Browser, exakte CI, finale main-/Preview-/Produktionsnachweise folgen im aktualisierten PR #27. Veröffentlichung der Informationsangaben und Branding sind vom Nutzer bestätigt; erste Cloudflare-Produktion erst nach konkretem Preview und einmaliger Nutzerfreigabe. Kein DNS-/Domainwechsel, kein stabiler Release-Tag; echte Hardware/Banking-App bleiben offen.
