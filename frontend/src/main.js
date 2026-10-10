@@ -9,11 +9,13 @@ import {
   restoreSession,
 } from "./engine.js";
 import { escape } from "./ui/html.js";
+import { isNativeApp } from "./native.js";
 // Features register their actions and event listeners on import.
 import "./features/game-actions.js";
 import "./features/setup-actions.js";
 import "./features/mobile-wizard.js";
 import "./features/start-motion.js";
+import "./features/native-app.js";
 import "./features/storage-actions.js";
 import "./features/speech-actions.js";
 import "./features/info.js";
@@ -62,6 +64,7 @@ async function boot() {
       ensureGroup(s);
     });
     if (ctx.state.session) ctx.view = "game";
+    ctx.offlineReady = isNativeApp();
     render();
   } catch (error) {
     document.querySelector("#app").innerHTML =
@@ -69,7 +72,7 @@ async function boot() {
     document.querySelector(".startup-error button").addEventListener("click", () => location.reload());
     return;
   }
-  if ("serviceWorker" in navigator && import.meta.env.PROD) {
+  if (!isNativeApp() && "serviceWorker" in navigator && import.meta.env.PROD) {
     try {
       await navigator.serviceWorker.register(
         new URL("./sw.js", document.baseURI),

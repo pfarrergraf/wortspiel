@@ -9,3 +9,10 @@ playwright-report/
 .env
 .env.*
 !.env.example
+*.jks
+*.keystore
+*.p12
+*.aab
+*.apk
+keystore.properties
+signing.properties

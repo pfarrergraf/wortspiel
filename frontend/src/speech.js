@@ -1,4 +1,5 @@
 import { normalize } from "./engine.js";
+import { isNativeApp } from "./native.js";
 
 export function findSpeechMatches(text, card) {
   const heard = ` ${normalize(text)} `;
@@ -20,6 +21,9 @@ export class LocalSpeech {
   }
 
   static async availability() {
+    // The Android package requests no microphone permission and has no
+    // native/cloud recognition plugin. Keep every manual game control.
+    if (isNativeApp()) return "unsupported";
     const Constructor = LocalSpeech.constructorForBrowser();
     if (
       !Constructor ||

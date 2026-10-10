@@ -1,0 +1,23 @@
+{
+  "name": "ludeverbis-android",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "license": "GPL-3.0-or-later",
+  "scripts": {
+    "sync": "npm --prefix ../frontend run build && cap sync android && node scripts/check-package.mjs",
+    "check": "node scripts/check-package.mjs",
+    "open": "cap open android"
+  },
+  "dependencies": {
+    "@capacitor/android": "8.5.3",
+    "@capacitor/app": "8.1.2",
+    "@capacitor/core": "8.5.3"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "8.5.3"
+  },
+  "overrides": {
+    "xcode": { "uuid": "11.1.1" }
+  }
+}

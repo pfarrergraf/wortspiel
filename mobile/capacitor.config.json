@@ -1,0 +1,19 @@
+{
+  "appId": "io.github.pfarrergraf.ludeverbis",
+  "appName": "ludeverbis",
+  "webDir": "../frontend/dist",
+  "server": {
+    "hostname": "localhost",
+    "androidScheme": "https"
+  },
+  "android": {
+    "allowMixedContent": false,
+    "webContentsDebuggingEnabled": false
+  },
+  "plugins": {
+    "SystemBars": {
+      "insetsHandling": "css",
+      "style": "LIGHT"
+    }
+  }
+}
