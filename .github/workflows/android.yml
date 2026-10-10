@@ -35,7 +35,10 @@ jobs:
       - run: npm ci --prefix frontend
       - run: npm ci --prefix mobile
       - run: npm run sync --prefix mobile
-      - run: chmod +x gradlew && ./gradlew assembleDebug bundleRelease lintDebug testDebugUnitTest --no-daemon
+      - run: |
+          chmod +x gradlew
+          ./gradlew assembleDebug bundleRelease lintDebug testDebugUnitTest --no-daemon
+          ./gradlew :app:dependencies --configuration releaseRuntimeClasspath --no-daemon > app/build/release-runtime-dependencies.txt
         working-directory: mobile/android
       - name: Enable KVM for the Android emulator
         run: |
@@ -61,6 +64,7 @@ jobs:
             mobile/android/app/build/outputs/apk/debug/app-debug.apk
             mobile/android/app/build/outputs/bundle/release/app-release.aab
             mobile/android/app/build/reports/lint-results-debug.html
+            mobile/android/app/build/release-runtime-dependencies.txt
             mobile/android/app/build/reports/androidTests/connected/
             docs/play-store/assets/screenshots/
           if-no-files-found: error

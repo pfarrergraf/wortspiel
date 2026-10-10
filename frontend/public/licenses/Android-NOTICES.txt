@@ -1,0 +1,30 @@
+ludeverbis Android – Drittanbieterhinweise
+
+ludeverbis und veröffentlichte Kartendaten: GPL-3.0-or-later.
+Vollständige Lizenz: GPL-3.0.txt
+Quellen: https://github.com/pfarrergraf/wortspiel
+Ursprüngliche deutsche Karten: https://github.com/Kovah/Taboo-Data
+Eigene Karten-/Geräusch-/Pantomime-Ergänzungen und Änderungen sind im Repository dokumentiert.
+
+Capacitor core und Android 8.5.3: MIT, Copyright (c) 2017-present Drifty Co.
+Vollständige Lizenz: Capacitor-MIT.txt
+Quellen: https://github.com/ionic-team/capacitor
+
+Capacitor App 8.1.2: MIT, Copyright 2020-present Ionic.
+Vollständige Lizenz: Capacitor-App-MIT.txt
+Quellen: https://github.com/ionic-team/capacitor-plugins
+
+AndroidX-Laufzeitbibliotheken (unter anderem Activity, AppCompat, Core,
+Fragment, CoordinatorLayout, WebKit und SplashScreen) und zugehörige
+AndroidX/Kotlin-Laufzeitabhängigkeiten: Apache License 2.0.
+Vollständige Lizenz: Apache-2.0.txt
+Quellen: https://android.googlesource.com/platform/frameworks/support/
+         https://github.com/JetBrains/kotlin
+Die genaue aufgelöste Laufzeit-Abhängigkeitsliste wird im Android-CI-Artefakt
+mitgeliefert. Entwicklungswerkzeuge sind nicht Bestandteil des App-Pakets.
+
+Manrope-Schrift: SIL Open Font License 1.1.
+Vollständige Lizenz und Urheberhinweise: Manrope-OFL.txt
+
+Android und Android System WebView werden vom Gerät bereitgestellt.
+Keine Werbe-, Analyse-, Cloud-Sprach- oder Firebase-SDKs eingebunden.
