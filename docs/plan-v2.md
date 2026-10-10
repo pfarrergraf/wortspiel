@@ -4,7 +4,7 @@ Stand: Integration 2026-10-10. Dies ist der abgeglichene Plan; der ursprünglich
 
 ## Zusammenarbeit
 
-ChatGPT/Codex ist alleiniger main-Integrator. Der Nutzer hat Claude Code extern gestartet und Cloudflare-Deployment nach der erforderlichen Freigabe ausdrücklich delegiert. Isolierte Aufgaben: [agent-handoffs.md](agent-handoffs.md). QA-DEVICES PR #22 und DEPLOY-CF PR #23 sind nach Review/CI integriert (main 2eedbea). Codex QA-STORAGE PR #24 und CF-1 PR #25 enthalten sämtliche belegten Review-Korrekturen; 83 gezielte Desktopfälle plus DB-only-/Zukunftsmarker-Fälle grün; vollständige Abstammung korrigiert, finale Gesamtsuiten 252 bzw. 258 Browser vor Merge erforderlich. Ergebnisse/Merge-SHAs/CI im jeweiligen Abschlusskommentar. Andere vorbereitete Aufgaben sind ohne Claim/PR nicht als gestartet zu werten.
+ChatGPT/Codex ist alleiniger main-Integrator. Der Nutzer beauftragt am 2026-10-10 die Zusammenführung der Online-PRs, aller vorhandenen Branches und lokaler Wertungskorrekturen. Aktives Paket INT-MAIN auf `v2/INT-MAIN-unify`: [Prüfbericht](reviews/INT-MAIN.md). QA-STORAGE #24 und CF-1 #25 sind im Kandidaten zusammengeführt; die letzten zwei Speicherbefunde sind mit Repros korrigiert. Lokal 112 Unit/Kartencheck/Build grün; vollständige Browserabnahme/CI vor main-Merge. INFO-01 #27 bleibt bis zur konkreten Betreiber-/Veröffentlichungsbestätigung getrennt. Quellbranches und Rückfallstände bleiben erhalten. Die folgenden älteren Core-Belege sind historische Zwischenstände, keine neue Merge-Sperre nach abgeschlossener INT-MAIN-Abnahme.
 
 Eine Aufgabe: ID, Akzeptanzkriterien, Dateigrenze, Claim `docs/claims/<ID>.md`, eigener Branch/Worktree, Tests, PR und Integrationsbedarf. Reservierte IDs nicht erneut übernehmen. Gemeinsame Kernmodule und Lockfiles ausschließlich beim Integrator. Keine Force-Pushes, keine unbewiesenen Löschungen, keine automatische Kartenrücksetzung. Neue Abhängigkeiten nur nach Prüfung beim Integrator. Der ausschließlich für Tests generierte `dist/` wird nie committed. Parallele Browsertests nur auf unterschiedlichen `PW_PORT`s **und getrennten Build-Verzeichnissen/Worktrees**.
 
@@ -18,7 +18,7 @@ Eine Aufgabe: ID, Akzeptanzkriterien, Dateigrenze, Claim `docs/claims/<ID>.md`, 
 | A10/A11 | semantisch identisch mit main | kein redundanter Merge |
 | A13/A16 | fehlende geprüfte Quellen + Import übernommen | ID-/Metadatenregression geprüft |
 | A12/A14 | Remote-Branches enthalten nur Claim | keine fertigen Karten behauptet |
-| A15 | 120 Sportkarten nur auf `v2/A15-sport` | nächstes separates Inhaltsreview, Quelle bleibt erhalten |
+| A15 | 120 Sportkarten in INT-MAIN geprüft und als letzte Quelle integriert | 112 neue IDs; alle alten Metadaten/IDs durch Regression geschützt |
 | B1/B2/B4/B5 | Regeln und Tests vorhanden, Validierungen/Migrationen eingebunden | B4-Zeitstempel/Ergebnis-Auszeichnungen und B5-Mischmodus-UI weiter offen |
 | B3/E4 | Presets, Alters-/Tabu-Auswahl und freie Erklärung eingebunden | Jugendliche können Hauptmodus unabhängig wählen |
 | C1–C4/C7/C8 | vorhandene Geräte-/Eingabe-CSS und Rotationstests | echte Geräte/Lesbarkeit noch nicht abgenommen |
@@ -37,14 +37,14 @@ Eine Aufgabe: ID, Akzeptanzkriterien, Dateigrenze, Claim `docs/claims/<ID>.md`, 
 1. INT-A-B abgeschlossen mit PR #16 / main `9c1d9d6`: alle Alt-PRs #1–#15 bewertet und geschlossen, alle Quellbranches erhalten.
 2. QA-STORAGE (Integrator, PR #24): stale scoring, gemeinsame exklusive Koordination, historische Fixtures, Journal bei fehlgeschlagener Spiegelung und frischer schreibfreier Gruppenexport geprüft. Vollbackup/geführte Absturzreparatur bleiben Folgepakete.
 3. QA-A11Y / QA-DEVICES / NOISE-01: isolierte Aufgaben mit klaren Dateigrenzen; siehe Übergabe.
-4. A15-REVIEW: fertigen Sportbranch bewerten; A12/A14 nur nach tatsächlich vorliegenden Inhalten entwickeln.
+4. A15-REVIEW in INT-MAIN abgeschlossen; A12/A14 besitzen nur erhaltene Claims, Inhalte bleiben eine zukünftige Aufgabe.
 5. MOBILE-02 (Integrator): Themenbereiche und freiwillige Einführung/Proberunde vervollständigen, Ergebnisstatistik klar ausweisen.
 6. I18N-01 (Integrator): Oberflächen- und Kartensprache getrennt implementieren, zunächst de unverändert.
 7. RELEASE-01: gesamte [release-checklist.md](release-checklist.md) erfüllen; erst dann stabiler Release-Tag.
 8. DEPLOY-CF (Claude): PR #23 nach Review/CI integriert; tatsächliche Pages-Inventur/Previews in cloudflare-deployment.md. Codex PR #25 behebt CF-1/CF-2 und den Hostinghinweis mit SW-/CSP-Abnahme; Claude inventarisiert nach Zugang und prüft das echte Preview; erforderliche Kontoberechtigung und erste öffentliche Cloudflare-Produktion gebündelt freigeben lassen. GitHub Pages bleibt Rückfall.
 
 
-## Verbindlicher Core-Stand 2026-10-10 – 4782a1e
+## Historischer Core-Zwischenstand 2026-10-10 – 4782a1e
 
 QA-STORAGE #24 und CF-1 #25 bleiben bis vollständiger Abnahme außerhalb von main. 107 Unit/Karten/Build und 98 gezielte Desktopfälle bestanden. Neue Fälle sichern unbekannte Pending-Versionen/Zusatzfelder, ausschließlich dokumentierte Difficulty-Defaults und den realen storage-Eventpfad: fremde rohe Snapshots werden erst gegen die bekannte Basis validiert. Drei echte UI-Repros vor Fix rot, nach Fix grün. Das neue künstliche Pending-Testfixture wartet nun auf den abgeschlossenen Bedienvorgang; keine Assertions abgeschwächt. Zwischenstand #24 178b2d2 bestand lokal 252 Browser, aber CI nur 250/252 wegen dieses Testablaufs; #25 fff08d2 bestand lokal und in CI 38044459172 alle 258 Browser. Diese Belege sind keine Freigabe der neueren Version.
 

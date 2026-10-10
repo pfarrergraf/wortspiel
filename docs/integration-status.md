@@ -1,5 +1,8 @@
 # Integrationsstatus – Audit 2026-10-09
 
+Aktueller Zusammenführungsauftrag 2026-10-10: [INT-MAIN-Prüfbericht](reviews/INT-MAIN.md). Die unten dokumentierten PR-Zwischenstände bleiben als Verlauf erhalten; aktuelle main-/PR-/CI-Nachweise stehen im INT-MAIN-Abschluss. Alle Quellbranches bleiben erhalten.
+
+
 Basis `main`: `6de6340710de3f389f8de3ba1819123dc4c9a977`. Sicherung `backup/main-2026-10-09`. Branch `integration/2026-10-09-audit`. Baseline-Commit `9a7a938`; Kartenintegration `19be010`; Regel-/UI-/Presenterintegration `18a9f2e`. Integration: [PR #16](https://github.com/pfarrergraf/wortspiel/pull/16). Der Abschlusskommentar dort dokumentiert den tatsächlichen main-Merge-SHA, CI-Lauf und die Schließung der Alt-PRs. GitHub ist die verbindliche Quelle dieses veränderlichen Abschlussstatus.
 
 ## PR-Matrix
@@ -74,7 +77,7 @@ Vorbereitet und nicht gestartet: [NOISE-01 #17](https://github.com/pfarrergraf/w
 - Letzter Review-Nachtrag: 178b2d2 ergänzt vollständigen Spielstand-Fingerprint/DB-/Spiegel-Anker in schema 1, bewahrt gleich/höher revisionierte Legacy-Session-/Undo-Forks und bindet lokale RAM-Kopie ein. Pending wird nur durch DB-Spiegelung aufgelöst, nicht durch Zählergleichheit. Zehn neue Repros rot vor Fix, 83 gezielte Desktopfälle grün danach, DB-only und unbekannte künftige Metaversion zusätzlich geprüft. Finale Sollsuiten #24: 107/252, #25: 109/258; keine fehlerhaften Zwischenstände in main.
 
 
-## Verbindlicher Core-Stand 2026-10-10 – 4782a1e
+## Historischer Core-Zwischenstand 2026-10-10 – 4782a1e
 
 QA-STORAGE #24 und CF-1 #25 bleiben bis vollständiger Abnahme außerhalb von main. 107 Unit/Karten/Build und 98 gezielte Desktopfälle bestanden. Neue Fälle sichern unbekannte Pending-Versionen/Zusatzfelder, ausschließlich dokumentierte Difficulty-Defaults und den realen storage-Eventpfad: fremde rohe Snapshots werden erst gegen die bekannte Basis validiert. Drei echte UI-Repros vor Fix rot, nach Fix grün. Das neue künstliche Pending-Testfixture wartet nun auf den abgeschlossenen Bedienvorgang; keine Assertions abgeschwächt. Zwischenstand #24 178b2d2 bestand lokal 252 Browser, aber CI nur 250/252 wegen dieses Testablaufs; #25 fff08d2 bestand lokal und in CI 38044459172 alle 258 Browser. Diese Belege sind keine Freigabe der neueren Version.
 

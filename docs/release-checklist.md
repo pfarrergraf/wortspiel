@@ -1,5 +1,8 @@
 # Release-Abnahme
 
+Aktueller Zusammenführungsauftrag 2026-10-10: [INT-MAIN-Prüfbericht](reviews/INT-MAIN.md). Die unten dokumentierten PR-Zwischenstände bleiben als Verlauf erhalten; aktuelle main-/PR-/CI-Nachweise stehen im INT-MAIN-Abschluss. Alle Quellbranches bleiben erhalten.
+
+
 Ein Integrationscommit mit grüner CI ist noch kein vollständiger Release. Stabile Versionsnummer/Release-Tag erst nach allen Pflichtprüfungen. Testergebnisse und URLs werden in integration-status.md festgehalten.
 
 ## Automatisch geprüft in diesem Paket
@@ -44,7 +47,7 @@ Ein Integrationscommit mit grüner CI ist noch kein vollständiger Release. Stab
 Offene Häkchen sind bewusst offene Arbeit, keine stillschweigend erfolgreiche Abnahme.
 
 
-## Verbindlicher Core-Stand 2026-10-10 – 4782a1e
+## Historischer Core-Zwischenstand 2026-10-10 – 4782a1e
 
 QA-STORAGE #24 und CF-1 #25 bleiben bis vollständiger Abnahme außerhalb von main. 107 Unit/Karten/Build und 98 gezielte Desktopfälle bestanden. Neue Fälle sichern unbekannte Pending-Versionen/Zusatzfelder, ausschließlich dokumentierte Difficulty-Defaults und den realen storage-Eventpfad: fremde rohe Snapshots werden erst gegen die bekannte Basis validiert. Drei echte UI-Repros vor Fix rot, nach Fix grün. Das neue künstliche Pending-Testfixture wartet nun auf den abgeschlossenen Bedienvorgang; keine Assertions abgeschwächt. Zwischenstand #24 178b2d2 bestand lokal 252 Browser, aber CI nur 250/252 wegen dieses Testablaufs; #25 fff08d2 bestand lokal und in CI 38044459172 alle 258 Browser. Diese Belege sind keine Freigabe der neueren Version.
 

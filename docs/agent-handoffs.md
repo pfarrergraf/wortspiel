@@ -1,5 +1,8 @@
 # Agentenübergabe
 
+Aktueller Zusammenführungsauftrag 2026-10-10: [INT-MAIN-Prüfbericht](reviews/INT-MAIN.md). Die unten dokumentierten PR-Zwischenstände bleiben als Verlauf erhalten; aktuelle main-/PR-/CI-Nachweise stehen im INT-MAIN-Abschluss. Alle Quellbranches bleiben erhalten.
+
+
 Stand: 2026-10-09. ChatGPT/Codex ist Integrator. Der Nutzer hat eine externe Claude-Code-Sitzung gestartet und Cloudflare-Vorbereitung/Veröffentlichung nach Freigabe an Claude delegiert; Claude ist in dieser Codex-Umgebung weiterhin nicht direkt aufrufbar. Tatsächliche Claims: QA-DEVICES auf `v2/QA-DEVICES-matrix` (PR #22), DEPLOY-CF auf `v2/DEPLOY-CF-preview` (PR #23); Codex QA-STORAGE auf `v2/QA-STORAGE-safety` (#21). Vorbereitet ist nicht gleich gestartet; GitHub-Aufgaben: [NOISE-01](https://github.com/pfarrergraf/wortspiel/issues/17), [QA-A11Y](https://github.com/pfarrergraf/wortspiel/issues/18), [QA-DEVICES](https://github.com/pfarrergraf/wortspiel/issues/19), [A15-REVIEW](https://github.com/pfarrergraf/wortspiel/issues/20), [QA-STORAGE](https://github.com/pfarrergraf/wortspiel/issues/21). Nach einem Sitzungsneustart zuerst AGENTS, plan-v2 und integration-status lesen, dann aktuellen main-SHA prüfen. Backup `backup/main-2026-10-09` nicht verändern.
 
 ## Gemeinsamer Startvertrag
@@ -77,7 +80,7 @@ Basis-Audit 9a7a938; Karten 19be010; Regeln/UI 18a9f2e. Scroll-/Matrix-Korrektur
 - Aktueller Core-Nachtrag 178b2d2: vollständige Spielstand-Konsistenz/Abstammung, unveränderte Difficulty-Migration, keine lokale Pending-Löschung nach Zähler. Finale Sollsuiten #24 107 Unit/252 Browser, #25 109 Unit/258 Browser. Vor Release-Wiederaufnahme ältere App-Tabs beenden; unklare Kopien nicht automatisch überschreiben. Verbindliches Ergebnis und main-SHA im Abschlusskommentar.
 
 
-## Verbindlicher Core-Stand 2026-10-10 – 4782a1e
+## Historischer Core-Zwischenstand 2026-10-10 – 4782a1e
 
 QA-STORAGE #24 und CF-1 #25 bleiben bis vollständiger Abnahme außerhalb von main. 107 Unit/Karten/Build und 98 gezielte Desktopfälle bestanden. Neue Fälle sichern unbekannte Pending-Versionen/Zusatzfelder, ausschließlich dokumentierte Difficulty-Defaults und den realen storage-Eventpfad: fremde rohe Snapshots werden erst gegen die bekannte Basis validiert. Drei echte UI-Repros vor Fix rot, nach Fix grün. Das neue künstliche Pending-Testfixture wartet nun auf den abgeschlossenen Bedienvorgang; keine Assertions abgeschwächt. Zwischenstand #24 178b2d2 bestand lokal 252 Browser, aber CI nur 250/252 wegen dieses Testablaufs; #25 fff08d2 bestand lokal und in CI 38044459172 alle 258 Browser. Diese Belege sind keine Freigabe der neueren Version.
 
