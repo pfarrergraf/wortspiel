@@ -303,3 +303,27 @@ test("timer ends the turn and all teams reach the final result", async ({
   await expect(page.getByRole("button", { name: "Los geht’s" })).toBeVisible();
   await expect.poll(() => seen(page)).toBe(3);
 });
+
+test("the moderator can correct a finished turn and count the card guessed at the buzzer", async ({ page }) => {
+  await begin(page);
+  const first = await page.locator("#current-word").textContent();
+  await page.getByRole("button", { name: "Erraten", exact: false }).click();
+  await expect(page.locator("#current-word")).not.toHaveText(first);
+  const open = await page.locator("#current-word").textContent();
+  await page.getByRole("button", { name: "Runde beenden", exact: true }).click();
+  await page.getByRole("dialog").getByRole("button", { name: "Runde beenden", exact: true }).click();
+  await expect(page.locator(".summary-points")).toHaveText("+1");
+
+  await expect(page.locator(".open-card")).toContainText(open);
+  await page.getByRole("button", { name: "Doch erraten" }).click();
+  await expect(page.locator(".summary-points")).toHaveText("+2");
+  await expect(page.locator(".open-card")).toHaveCount(0);
+  await expect(page.locator(".results-list li").nth(1)).toContainText("korrigiert");
+
+  await page.getByRole("button", { name: `Wertung für ${first} ändern` }).click();
+  await page.getByRole("dialog").getByRole("button", { name: "Übersprungen" }).click();
+  await expect(page.locator(".summary-points")).toHaveText("+1");
+  await expect(page.locator(".team-score").first().locator("strong")).toHaveText("1");
+  await page.reload();
+  await expect(page.locator(".summary-points")).toHaveText("+1");
+});

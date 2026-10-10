@@ -258,6 +258,8 @@ export function finishTurn(state, now = Date.now()) {
     cycle: cycle(session),
     points: roundPoints(session),
     log: structuredClone(session.log),
+    // The card still on screen when the turn ended, so it can be scored later.
+    open: session.current,
     endedAt: now,
   });
   session.phase = "summary";
@@ -265,6 +267,15 @@ export function finishTurn(state, now = Date.now()) {
   session.deadline = null;
   session.remaining = 0;
 }
+
+export const RESULTS = ["correct", "taboo", "skip"];
+
+const resultDelta = (card, settings, result) =>
+  result === "correct"
+    ? cardPoints(card, settings)
+    : result === "taboo"
+      ? -settings.tabooPenalty
+      : -settings.skipPenalty;
 
 export function recordResult(
   state,
@@ -279,16 +290,11 @@ export function recordResult(
     finishTurn(state, now);
     return;
   }
-  if (!["correct", "taboo", "skip"].includes(result))
+  if (!RESULTS.includes(result))
     throw new Error("Ungültige Kartenwertung.");
   const card = cards.find((c) => c.id === session.current);
   if (!card) throw new Error("Karte nicht gefunden.");
-  const delta =
-    result === "correct"
-      ? cardPoints(card, session.settings)
-      : result === "taboo"
-        ? -session.settings.tabooPenalty
-        : -session.settings.skipPenalty;
+  const delta = resultDelta(card, session.settings, result);
   session.log.push({ id: card.id, word: card.word, result, delta, mode: session.currentMode ?? "explain" });
   session.scores[teamIndex(session)] += delta;
   session.remaining = Math.max(0, session.deadline - now);
@@ -308,6 +314,31 @@ export function undoResult(state) {
   session.scores[teamIndex(session)] -= entry.delta;
   session.current = entry.id;
   session.currentMode = entry.mode ?? (isPantomime(session.settings) ? PANTOMIME : "explain");
+}
+
+// Corrects a finished turn afterwards: changes a logged result, or scores the
+// card that was still open when time ran out (position "open"). Like undo it
+// repairs scoring only; the card history is not touched.
+export function amendTurn(state, cards, turnNumber, position, result) {
+  const session = state.session;
+  if (!session || !["summary", "finished"].includes(session.phase)) return;
+  const turn = session.turns[turnNumber];
+  if (!turn) throw new Error("Diese Runde gibt es nicht.");
+  if (!RESULTS.includes(result)) throw new Error("Ungültige Kartenwertung.");
+  const id = position === "open" ? turn.open : turn.log[position]?.id;
+  const card = id && cards.find((c) => c.id === id);
+  if (!card) throw new Error("Karte nicht gefunden.");
+  let entry = turn.log[position];
+  if (position === "open") {
+    entry = { id: card.id, word: card.word, result, delta: 0 };
+    turn.log.push(entry);
+    turn.open = null;
+  }
+  const delta = resultDelta(card, session.settings, result);
+  const diff = delta - entry.delta;
+  Object.assign(entry, { result, delta, amended: true });
+  turn.points += diff;
+  session.scores[turn.team] += diff;
 }
 
 export function pause(state, now = Date.now()) {
