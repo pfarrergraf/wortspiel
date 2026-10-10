@@ -94,3 +94,22 @@ test("bundled donation page uses the injected native document API for QR downloa
   expect(qr.name).toBe("spende-jugendarbeit.png");
   expect(qr.text.startsWith("iVBORw0KGgo")).toBe(true);
 });
+
+test("opening license information durably pauses the active native game", async ({ page }) => {
+  await native(page);
+  await page.getByRole("button", { name: "Los geht’s", exact: true }).click();
+  await page.getByRole("button", { name: "Wir sind bereit", exact: true }).click();
+  await expect(page.locator(".mode-indicator")).toBeVisible();
+  const before = await saved(page);
+  await page.locator('[data-action="about"]').click();
+  await expect(page.getByRole("dialog")).toContainText("Karten & Datenschutz");
+  const paused = await saved(page);
+  expect(paused.session.phase).toBe("paused");
+  expect(paused.session.current).toBe(before.session.current);
+  expect(paused.groups).toEqual(before.groups);
+  await page.getByRole("dialog").getByRole("link", { name: "GPL-Lizenz", exact: true }).click();
+  await expect(page.locator("body")).toContainText("GNU GENERAL PUBLIC LICENSE");
+  const after = await saved(page);
+  expect(after.session).toEqual(paused.session);
+  expect(after.groups).toEqual(before.groups);
+});
