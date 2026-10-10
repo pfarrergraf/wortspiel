@@ -48,12 +48,18 @@ public class OfflineAppTest {
         // app-specific files. Copy via the test runner's shell (not an app
         // permission) so CI can collect screenshots after that cleanup.
         String export = "/sdcard/Download/ludeverbis-store/" + name + ".png";
-        try (android.os.ParcelFileDescriptor descriptor = InstrumentationRegistry.getInstrumentation()
-                .getUiAutomation().executeShellCommand("mkdir -p /sdcard/Download/ludeverbis-store && cp " +
-                    new File(directory, name + ".png").getAbsolutePath() + " " + export + " && stat -c %s " + export);
-             java.io.FileInputStream stream = new java.io.FileInputStream(descriptor.getFileDescriptor())) {
-            String size = new String(stream.readAllBytes(), java.nio.charset.StandardCharsets.UTF_8).trim();
-            assertTrue("Screenshot must survive test APK uninstall", Long.parseLong(size) > 0);
+        shell("mkdir -p /sdcard/Download/ludeverbis-store");
+        File original = new File(directory, name + ".png");
+        shell("cp " + original.getAbsolutePath() + " " + export);
+        assertEquals("Screenshot must survive test APK uninstall", original.length(), Long.parseLong(shell("stat -c %s " + export)));
+    }
+    private String shell(String command) throws Exception {
+        // UiAutomation uses Runtime.exec, not a shell; each command is
+        // explicit and uses only these fixed, space-free test paths.
+        android.os.ParcelFileDescriptor descriptor = InstrumentationRegistry.getInstrumentation()
+            .getUiAutomation().executeShellCommand(command);
+        try (java.io.InputStream stream = new android.os.ParcelFileDescriptor.AutoCloseInputStream(descriptor)) {
+            return new String(stream.readAllBytes(), java.nio.charset.StandardCharsets.UTF_8).trim();
         }
     }
 
