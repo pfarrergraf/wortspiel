@@ -52,5 +52,5 @@ export function game() {
         : session.phase === "summary"
           ? turnSummary(session, team)
           : finalResult(session, remaining);
-  return `<div class="game-heading"><button data-action="setup" class="text-button">← Spielübersicht</button><span>${escape(session.settings.group)} · ${isPantomime(session.settings) ? "🎭 Pantomime · " : ""}${DIFFICULTIES.find((d) => d.id === session.settings.difficulty)?.name || "Alles / knifflig"}</span></div>${scoreStrip(session)}${content}`;
+  return `<div class="game-heading"><button data-action="setup" class="text-button">← Spielübersicht</button><span>${escape(session.settings.group)} · ${isPantomime(session.settings) ? "🎭 Pantomime · " : ""}${DIFFICULTIES.find((d) => d.id === session.settings.difficulty)?.name || "Schwer"}</span></div>${scoreStrip(session)}${content}`;
 }

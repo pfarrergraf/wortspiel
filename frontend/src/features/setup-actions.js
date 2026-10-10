@@ -10,7 +10,7 @@ import {
   validateSettings,
 } from "../engine.js";
 import { action } from "../ui/html.js";
-import { categoryCounts, readSettings } from "../ui/setup.js";
+import { categoryCounts, compactSetupSummary, readSettings } from "../ui/setup.js";
 
 async function requestGame(settings) {
   try {
@@ -61,11 +61,14 @@ document.addEventListener("change", async (event) => {
     () => {
       if (!textInput || !document.querySelector("#available-count")) return;
       const group = ctx.state.groups[groupId(settings.group)];
-      document.querySelector("#available-count").textContent = availableCards(
+      const remaining = availableCards(
         cards,
         settings,
         group?.seen,
-      ).length.toLocaleString("de-DE");
+      ).length;
+      document.querySelector("#available-count").textContent = remaining.toLocaleString("de-DE");
+      document.querySelector(".current-settings").textContent = `${settings.group} · ${settings.teams.join(" & ")}`;
+      document.querySelector(".compact-start p").textContent = compactSetupSummary(settings, remaining);
       document.querySelectorAll(".category").forEach((label) => {
         const { total, fresh } = categoryCounts(
           label.querySelector("input").value,

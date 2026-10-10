@@ -15,6 +15,7 @@
 @import "./responsive/phone.css";
 @import "./responsive/mobile-wizard.css";
 @import "./responsive/phone-landscape.css";
+@import "./responsive/compact-start.css";
 @import "./platform/input.css";
 @import "./platform/ios.css";
 @import "./themes/dark.css";

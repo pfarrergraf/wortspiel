@@ -1,3 +1,4 @@
+import { openSetupOptions } from "./setup-options.js";
 import { test, expect } from "@playwright/test";
 
 test.beforeEach(async ({ page }, testInfo) => {
@@ -166,6 +167,7 @@ test("E3: help lists every shortcut, pauses play and protects open dialogs", asy
 
 test("E3: scoring keys do nothing in setup and handover; help is available in setup", async ({ page }) => {
   await page.goto("/");
+  await openSetupOptions(page);
   await page.getByRole("heading", { name: "Was kommt auf die Karten?" }).waitFor();
   const initial = await readState(page);
   for (const key of ["s", "t", "p", "Space", "ArrowRight", "Control+z"])

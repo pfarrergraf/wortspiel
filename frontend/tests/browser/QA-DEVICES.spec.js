@@ -1,3 +1,4 @@
+import { openSetupOptions } from "./setup-options.js";
 // QA-DEVICES (issue #19): device, rotation, offline and PWA acceptance.
 // Every device here is an emulated Chromium viewport (SIMULATION), not a real
 // device. Real-device checks and the two-person reading test stay manual tasks
@@ -208,6 +209,7 @@ test("QA-DEVICES full game on a small phone, then replay without repeating cards
   try {
     await page.clock.install();
     await page.goto("/");
+    await openSetupOptions(page);
     await page.getByLabel("Runden pro Team", { exact: true }).selectOption("1");
     await page.getByRole("button", { name: "Los geht’s" }).click();
     for (let turn = 0; turn < 2; turn++) {

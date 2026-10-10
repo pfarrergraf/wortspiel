@@ -43,7 +43,12 @@ test("iPhone Safari shows the install hint once until dismissed", async ({ page 
   await expect(hint(page)).toBeVisible();
   await expect(hint(page)).toContainText("Zum Home-Bildschirm");
   await expect(hint(page)).toContainText("7 Tagen");
-  expect(await page.evaluate(() => document.querySelector(".section-tabs").nextElementSibling.className)).toContain("ios-install-hint");
+  const { width, height } = page.viewportSize();
+  const compactPhone = width <= 743 || (width <= 950 && height <= 500);
+  if (compactPhone)
+    expect(await hint(page).evaluate(el => el.previousElementSibling.id)).toBe("setup-form");
+  else
+    expect(await page.evaluate(() => document.querySelector(".section-tabs").nextElementSibling.className)).toContain("ios-install-hint");
   await page.getByRole("button", { name: "Hinweis ausblenden" }).click();
   await expect(hint(page)).toHaveCount(0);
   expect(await page.evaluate(() => localStorage.getItem("wortspiel.iosHint.v1"))).toBe("dismissed");

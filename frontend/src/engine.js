@@ -27,7 +27,7 @@ export const groupId = (name) => `group:${normalize(name)}`;
 export const DIFFICULTIES = [
   { id: "easy", name: "Leicht", description: "Vertraute Begriffe aus Alltag, Schule und Freizeit. Keine seltenen Promis oder Spezialbegriffe." },
   { id: "medium", name: "Mittel", description: "Leichte Karten plus mehr Allgemeinwissen, bekannte Personen und Begriffe aus dem Konfi-Unterricht." },
-  { id: "all", name: "Alles / knifflig", description: "Der gesamte Bestand, einschließlich seltener Promis und Spezialwissen." },
+  { id: "all", name: "Schwer", description: "Leichte und mittlere Karten plus knifflige Begriffe, seltene Promis und Spezialwissen." },
 ];
 const YOUTH = ["animals", "city-country", "food", "sports", "things", "tv", "web", "everyday", "gaming", "social", "school", "slang", "music", "hobbies", "friends", "style", "future", "planet", "camp", "fantasy"];
 // Presets set the card pool and the rules. Category ids that do not exist
