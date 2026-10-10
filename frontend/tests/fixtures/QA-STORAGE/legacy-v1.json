@@ -1,0 +1,133 @@
+{
+  "schema": 1,
+  "revision": 41,
+  "groups": {
+    "group:konfi runde 2025": {
+      "name": "Konfi-Runde 2025",
+      "seen": {
+        "de:alpaka": 1750000000000,
+        "de:amazonasente": 1750000001000,
+        "de:ameisenbär": 1750000002000,
+        "de:anemonenfisch": 1750000004000,
+        "de:antilope": 1750000005000
+      },
+      "createdAt": 1750000000000,
+      "resetAt": null
+    },
+    "group:familie müller": {
+      "name": "Familie Müller",
+      "seen": {
+        "de:apfel": 1749999990000
+      },
+      "createdAt": 1750000000000,
+      "resetAt": null
+    },
+    "group:jugendclub": {
+      "name": "Jugendclub",
+      "seen": {
+        "de:pantomime:katze": 1749999980000
+      },
+      "createdAt": 1750000000000,
+      "resetAt": null
+    }
+  },
+  "session": {
+    "settings": {
+      "group": "Konfi-Runde 2025",
+      "teams": [
+        "Die Füchse",
+        "Die Eulen",
+        "Die Otter"
+      ],
+      "selected": [
+        "animals",
+        "cars",
+        "city-country",
+        "food",
+        "literature",
+        "people",
+        "sports",
+        "things",
+        "tv",
+        "web",
+        "everyday",
+        "faith"
+      ],
+      "seconds": 90,
+      "cycles": 2,
+      "skipPenalty": 1,
+      "tabooPenalty": 1,
+      "sound": true,
+      "speech": false
+    },
+    "phase": "paused",
+    "turnIndex": 1,
+    "scores": [
+      0,
+      1,
+      0
+    ],
+    "turns": [
+      {
+        "team": 0,
+        "cycle": 1,
+        "points": 0,
+        "log": [
+          {
+            "id": "de:alpaka",
+            "word": "Alpaka",
+            "result": "correct",
+            "delta": 1
+          },
+          {
+            "id": "de:amazonasente",
+            "word": "Amazonasente",
+            "result": "taboo",
+            "delta": -1
+          }
+        ],
+        "endedAt": 1750000003000
+      }
+    ],
+    "log": [
+      {
+        "id": "de:anemonenfisch",
+        "word": "Anemonenfisch",
+        "result": "correct",
+        "delta": 1
+      }
+    ],
+    "current": "de:antilope",
+    "remaining": 88000,
+    "deadline": null,
+    "exhausted": false
+  },
+  "settings": {
+    "group": "Konfi-Runde 2025",
+    "teams": [
+      "Die Füchse",
+      "Die Eulen",
+      "Die Otter"
+    ],
+    "selected": [
+      "animals",
+      "cars",
+      "city-country",
+      "food",
+      "literature",
+      "people",
+      "sports",
+      "things",
+      "tv",
+      "web",
+      "everyday",
+      "faith"
+    ],
+    "seconds": 90,
+    "cycles": 2,
+    "skipPenalty": 1,
+    "tabooPenalty": 1,
+    "sound": true,
+    "speech": false
+  }
+}
