@@ -43,7 +43,7 @@ test("B2: none shows no taboo words and uses the target-word violation label", (
   assert.deepEqual(visibleTaboo(cards[0], { tabooMode: "none" }), []);
   assert.equal(tabooLabel({ tabooMode: "none" }), "Wort gesagt");
   for (const settings of [undefined, null, {}, { tabooMode: null }, { tabooMode: "classic" }, { tabooMode: "light" }])
-    assert.equal(tabooLabel(settings), "Tabuwort");
+    assert.equal(tabooLabel(settings), "Verbotenes Wort");
 });
 
 test("B2: visible arrays are independent of frozen source cards and settings", () => {
@@ -64,9 +64,9 @@ test("B2: visible arrays are independent of frozen source cards and settings", (
 
 test("B2: metadata defines every supported mode with German names and descriptions", () => {
   assert.deepEqual(TABOO_MODES.map(({ id, name }) => ({ id, name })), [
-    { id: "classic", name: "Klassisch" },
-    { id: "light", name: "Leicht – 3 Tabuwörter" },
-    { id: "none", name: "Frei erklären – ohne Tabuwörter" },
+    { id: "classic", name: "Alle Wörter" },
+    { id: "light", name: "Drei Wörter" },
+    { id: "none", name: "Keine zusätzlichen Wörter" },
   ]);
   for (const mode of TABOO_MODES) {
     assert.equal(typeof mode.description, "string");
@@ -78,7 +78,7 @@ test("B2: validation accepts modes and legacy missing values without coercing ot
   for (const value of ["classic", "light", "none", undefined, null])
     assert.doesNotThrow(() => validateTabooMode(value));
   for (const value of ["", "CLASSIC", "easy", " classic ", 0, 1, false, true, [], ["light"], {}, NaN])
-    assert.throws(() => validateTabooMode(value), /Wähle eine gültige Tabu-Stufe\./);
+    assert.throws(() => validateTabooMode(value), /Wähle eine gültige Regel für verbotene Wörter\./);
 });
 
 test("B2: migration adds classic to a new state with no session and is idempotent", () => {

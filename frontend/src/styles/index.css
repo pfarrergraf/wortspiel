@@ -18,6 +18,7 @@
 @import "./responsive/phone-landscape.css";
 @import "./responsive/compact-start.css";
 @import "./responsive/play-modes.css";
+@import "./responsive/color-start.css";
 @import "./platform/input.css";
 @import "./platform/ios.css";
 @import "./themes/dark.css";

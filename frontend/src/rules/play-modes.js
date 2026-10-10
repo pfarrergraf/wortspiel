@@ -3,7 +3,7 @@ import { isNoiseCard } from "./noises.js";
 export const MIXED = "mixed";
 export const isMixed = settings => settings?.gameMode === MIXED;
 export const PRESENTATIONS = [
-  { id: "taboo", name: "Tabu", symbol: "💬", instruction: "Mit Worten erklären. Begriff, Wortteile und Tabuwörter sind verboten." },
+  { id: "taboo", name: "Verbotene Wörter", symbol: "💬", instruction: "Mit Worten erklären. Begriff, Wortteile und die angezeigten Wörter sind verboten." },
   { id: "free", name: "Frei erklären", symbol: "🗣️", instruction: "Mit Worten erklären. Nur der Begriff und seine Wortteile sind verboten." },
   { id: "pantomime", name: "Pantomime", symbol: "🎭", instruction: "Mit Gesten vorspielen. Ohne Worte, Geräusche oder Gegenstände." },
   { id: "noises", name: "Geräusche", symbol: "🔊", instruction: "Nur Geräusche mit Stimme, Mund oder Händen. Keine Wörter, Gesten oder Gegenstände." },

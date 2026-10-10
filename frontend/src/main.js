@@ -13,6 +13,7 @@ import { escape } from "./ui/html.js";
 import "./features/game-actions.js";
 import "./features/setup-actions.js";
 import "./features/mobile-wizard.js";
+import "./features/start-motion.js";
 import "./features/storage-actions.js";
 import "./features/speech-actions.js";
 import "./features/info.js";
