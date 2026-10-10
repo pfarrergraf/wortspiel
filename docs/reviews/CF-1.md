@@ -34,3 +34,8 @@ Die letzten Storage-Review-Repros (stale Ende-Dialog und Reset-Abstammung) waren
 ## Vollständige Abstammungsprüfung – 2026-10-10
 
 QA-STORAGE 178b2d2 nachgezogen: vollständige Spielstand-Konsistenz statt reiner Seen-Mengen/Revisionsauswahl; additive kompakte Storage-Provenienz, keine Nutzdaten-Duplizierung. Alte Zähler-/Session-/Undo-Forks bleiben erhalten; lokaler Rückfall hebt Pending niemals allein nach Zähler auf. Zehn neue Repros waren vor Fix rot; 83 gezielte Desktopfälle danach grün, plus DB-only-Legacy- und Zukunftsmarker-Prüfung. Bestehende Difficulty-Migration bleibt unverändert geprüft. Finale Sollsuiten 107 Unit/252 Browser bzw. CF-1 109 Unit/258 Browser; tatsächliche Ergebnisse/CI/Review/Merge im PR-Abschlusskommentar. Ein unveränderter alter App-Tab besitzt nicht die neue Schreibkoordination: vor Release-Wiederaufnahme alte App-Tabs beenden, keine unklaren Kopien automatisch überschreiben. Der letzte stabile main bleibt bis Abnahme unverändert geschützt.
+
+
+## Nachgezogener Core-Review 4782a1e
+
+Der storage-Listener übernimmt fremde Snapshots erst nach schreibfreier Validierung gegen den alten RAM-Stand; neuere eigene/busy Aktionen verwerfen überholte asynchrone Ergebnisse. Fehlgeschlagene Prüfung stoppt die Anzeige, verändert aber keine Kopie. Der CSP-Retry-Handler bleibt erhalten. Pending-Fremdformate bleiben bytegetreu; bekannte Difficulty-Migration hat eine exakt geprüfte Herkunft. Drei reale Notification-Repros waren vor Fix rot, nach Fix grün. 98 gezielte Desktopfälle und 107 QA-Unit/Karten/Build bestanden; finale CF-Gesamtabnahme umfasst 109 Unit/284 Browser. Exaktes Ergebnis/CI und lokaler Wrangler-Smoke werden vor Merge im PR dokumentiert. Keine Claude-Datei geändert.

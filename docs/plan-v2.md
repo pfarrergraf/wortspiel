@@ -42,3 +42,10 @@ Eine Aufgabe: ID, Akzeptanzkriterien, Dateigrenze, Claim `docs/claims/<ID>.md`, 
 6. I18N-01 (Integrator): Oberflächen- und Kartensprache getrennt implementieren, zunächst de unverändert.
 7. RELEASE-01: gesamte [release-checklist.md](release-checklist.md) erfüllen; erst dann stabiler Release-Tag.
 8. DEPLOY-CF (Claude): PR #23 nach Review/CI integriert; tatsächliche Pages-Inventur/Previews in cloudflare-deployment.md. Codex PR #25 behebt CF-1/CF-2 und den Hostinghinweis mit SW-/CSP-Abnahme; Claude inventarisiert nach Zugang und prüft das echte Preview; erforderliche Kontoberechtigung und erste öffentliche Cloudflare-Produktion gebündelt freigeben lassen. GitHub Pages bleibt Rückfall.
+
+
+## Verbindlicher Core-Stand 2026-10-10 – 4782a1e
+
+QA-STORAGE #24 und CF-1 #25 bleiben bis vollständiger Abnahme außerhalb von main. 107 Unit/Karten/Build und 98 gezielte Desktopfälle bestanden. Neue Fälle sichern unbekannte Pending-Versionen/Zusatzfelder, ausschließlich dokumentierte Difficulty-Defaults und den realen storage-Eventpfad: fremde rohe Snapshots werden erst gegen die bekannte Basis validiert. Drei echte UI-Repros vor Fix rot, nach Fix grün. Das neue künstliche Pending-Testfixture wartet nun auf den abgeschlossenen Bedienvorgang; keine Assertions abgeschwächt. Zwischenstand #24 178b2d2 bestand lokal 252 Browser, aber CI nur 250/252 wegen dieses Testablaufs; #25 fff08d2 bestand lokal und in CI 38044459172 alle 258 Browser. Diese Belege sind keine Freigabe der neueren Version.
+
+Aktuelle Sollsuiten: #24 107 Unit/278 Browser, #25 109 Unit/284 Browser. Vollständige lokale Ergebnisse, exakte CI und Merge-SHAs im Abschlusskommentar der jeweiligen PR. main ist weiterhin 2eedbea; Rückfall backup/main-2026-10-10-pre-core. Claude-Dokumente/Tests bleiben unverändert; nach tatsächlicher Core-Integration übernimmt Claude das unveränderte finale main-Build ins Preview und dokumentiert dessen Online-Abnahme. Keine öffentliche Produktion/DNS/neuen Berechtigungen/Release-Tag ohne erforderliche Abnahme und Freigabe.
