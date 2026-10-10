@@ -10,7 +10,7 @@ test("pantomime mode: own categories, emoji card, points scale, themes kept", as
   await openSetupOptions(page);
   await expect(page.locator(".category-grid")).toBeVisible();
   const tabooThemes = await page.locator('.category-grid input[name="category"]:checked').count();
-  await page.locator(".game-mode", { hasText: "Pantomime" }).click();
+  await page.locator('label.game-mode:has(input[value="pantomime"])').click();
   await expect(page.locator('input[name="pantomimeCategory"]')).toHaveCount(pool.categories.length);
   await expect(page.locator("#difficulty")).toHaveValue("all");
   await page.getByRole("button", { name: "Alle abwählen" }).click();

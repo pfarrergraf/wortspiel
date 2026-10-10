@@ -9,7 +9,7 @@
   .compact-setup .section-tabs { margin-bottom: 12px; }
   .compact-setup .quick-start { flex-wrap: nowrap; justify-content: space-between; gap: 10px; margin-bottom: 12px; padding: 12px; }
   .compact-setup .quick-start > div:first-child { min-width: 0; }
-  .compact-setup .quick-start h2 { font-size: 16px; margin-bottom: 4px; }
+  .compact-setup .quick-start h2 { display: none; }
   .compact-setup .quick-start p { font-size: 12px; margin: 0; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; }
   .compact-setup .quick-start .replay-settings { display: none; }
   .compact-setup .quick-available { display: none; }
@@ -18,13 +18,14 @@
   .compact-setup .quick-start-actions [data-action="wizard-open"],
   .compact-setup .quick-start-actions [data-action="replay"] { display: none; }
   .compact-setup .setup-grid { display: block; }
-  .compact-setup .category-panel { padding: 14px; }
+  .compact-setup .category-panel { padding: 12px; }
   .compact-setup .settings-panel,
   .compact-setup .category-panel > [data-setup-step="3"] { display: none; }
   .compact-setup .game-mode-settings { margin: 0 0 12px; }
-  .compact-setup .game-mode-options { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; }
-  .compact-setup .game-mode { min-height: 48px; padding: 10px 4px; text-align: center; }
-  .compact-setup .game-mode strong { font-size: 13px; }
+  .compact-setup .game-mode-options { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 6px; }
+  .compact-setup .game-mode { grid-column: span 2; min-height: 44px; padding: 8px 4px; text-align: center; }
+  .compact-setup .game-mode:nth-last-child(-n+2) { grid-column: span 3; }
+  .compact-setup .game-mode strong { font-size: 12px; }
   .compact-setup .game-mode > span, .compact-setup .mode-long { display: none; }
   .compact-setup .mode-short { display: inline; }
   .compact-setup .compact-mode-note { display: block; margin-top: 8px; font-size: 12px; line-height: 1.4; color: var(--muted); }

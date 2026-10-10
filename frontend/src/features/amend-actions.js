@@ -18,11 +18,11 @@ registerAction("amend:", (id) => {
   if (!entry) return;
   dialog(
     `Wertung für „${escape(entry.word)}“ ändern`,
-    `<p>Aktuell: <strong>${resultLabel(entry.result, session.settings)}</strong>. Die Punkte des Teams werden sofort angepasst. Die Karte bleibt im Kartenspeicher.</p>`,
+    `<p>Aktuell: <strong>${resultLabel(entry.result, session.settings, entry.mode)}</strong>. Die Punkte des Teams werden sofort angepasst. Die Karte bleibt im Kartenspeicher.</p>`,
     RESULTS.map((option) =>
       action(
         `amend:${turn}:${position}:${option}`,
-        `${icon(option === "correct" ? "check" : option === "taboo" ? "close" : "skip")} ${resultLabel(option, session.settings)}`,
+        `${icon(option === "correct" ? "check" : option === "taboo" ? "close" : "skip")} ${resultLabel(option, session.settings, entry.mode)}`,
         option === entry.result ? "button primary" : "button secondary",
         option === entry.result ? 'aria-current="true"' : "",
       ),

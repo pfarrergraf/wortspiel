@@ -35,7 +35,7 @@ test("@matrix compact phone start fits the first screen without a required tour"
     expect(box.y).toBeGreaterThanOrEqual(0);
     expect(box.y + box.height).toBeLessThanOrEqual(height);
     await expect(page.locator("#difficulty option")).toHaveText(["Leicht", "Mittel", "Schwer"]);
-    for (const mode of ["free", "pantomime", "taboo"]) {
+    for (const mode of ["free", "pantomime", "noises", "mixed", "taboo"]) {
       const label = page.locator(`label.game-mode:has(input[value="${mode}"])`);
       await label.click();
       await expect(label).toHaveClass(/selected/);

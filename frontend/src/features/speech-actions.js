@@ -4,7 +4,7 @@ import { on } from "../events.js";
 import { cards } from "../data.js";
 import { pause } from "../engine.js";
 import { visibleTaboo } from "../rules/taboo.js";
-import { isPantomime } from "../rules/pantomime.js";
+import { presentationMode, presentationSettings } from "../rules/play-modes.js";
 import { LocalSpeech, findSpeechMatches } from "../speech.js";
 import { action } from "../ui/html.js";
 import { speechView } from "../ui/game.js";
@@ -16,10 +16,10 @@ const feedback = (text) => {
 
 const speech = new LocalSpeech(
   (text) => {
-    if (ctx.state.session?.phase !== "playing") return;
+    if (ctx.state.session?.phase !== "playing" || !["taboo", "free"].includes(presentationMode(ctx.state.session))) return;
     const card = cards.find((c) => c.id === ctx.state.session.current);
     if (!card) return;
-    const matches = findSpeechMatches(text, { ...card, taboo: visibleTaboo(card, ctx.state.session.settings) });
+    const matches = findSpeechMatches(text, { ...card, taboo: visibleTaboo(card, presentationSettings(ctx.state.session)) });
     feedback(
       matches.taboo.length
         ? `Gehört: „${matches.taboo.join(", ")}“. Prüft selbst, wer das gesagt hat; wertet mit den Spieltasten.`
@@ -37,7 +37,7 @@ const speech = new LocalSpeech(
 const wanted = () =>
   ctx.view === "game" &&
   ctx.state.session?.phase === "playing" &&
-  !isPantomime(ctx.state.session.settings) &&
+  ["taboo", "free"].includes(presentationMode(ctx.state.session)) &&
   ctx.state.session.settings.speech;
 
 let speechStarting = false;
