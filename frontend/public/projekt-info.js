@@ -12,8 +12,11 @@ document.querySelectorAll("[data-copy-value]").forEach((button) => {
 });
 
 // The native bridge is injected on bundled informational pages as well.
-if (globalThis.Capacitor?.isNativePlatform?.()) {
-  const documents = globalThis.Capacitor.registerPlugin("LudeverbisDocuments");
+// Static pages have the injected native bridge, without the main app's
+// @capacitor/core module. JSExport exposes native methods under Plugins.
+const nativeDocuments = globalThis.androidBridge && globalThis.Capacitor?.Plugins?.LudeverbisDocuments;
+if (nativeDocuments) {
+  const documents = nativeDocuments;
   document.querySelectorAll('a[download]').forEach(link => {
     link.addEventListener("click", async event => {
       event.preventDefault();

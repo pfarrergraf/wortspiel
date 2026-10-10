@@ -78,3 +78,19 @@ test("native app switching and back pause without releasing an exposed card", as
   expect((await saved(page)).groups).toEqual(before.groups);
   expect(await page.evaluate(() => window.nativeCalls.some(c => c.method === "exitApp"))).toBe(false);
 });
+
+test("bundled donation page uses the injected native document API for QR download", async ({ page }) => {
+  await page.addInitScript(() => {
+    window.androidBridge = {};
+    window.Capacitor = { Plugins: { LudeverbisDocuments: { save: async options => {
+      window.savedQr = options; return { cancelled: false };
+    } } } };
+  });
+  await page.goto("/unterstuetzen.html");
+  await page.getByRole("link", { name: "QR-Bild speichern", exact: true }).click();
+  await expect(page.locator("#copy-status")).toHaveText("QR-Bild gespeichert.");
+  const qr = await page.evaluate(() => window.savedQr);
+  expect(qr.mime).toBe("image/png");
+  expect(qr.name).toBe("spende-jugendarbeit.png");
+  expect(qr.text.startsWith("iVBORw0KGgo")).toBe(true);
+});
