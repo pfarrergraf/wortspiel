@@ -605,7 +605,7 @@
     font-size: 11px;
     gap: 8px;
   }
-  .results-list li > span:nth-last-child(2) {
+  .results-list .result-label {
     font-size: 9px;
   }
   .summary-actions {

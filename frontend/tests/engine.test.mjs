@@ -11,6 +11,7 @@ import {
   finishTurn,
   nextTurn,
   undoResult,
+  amendTurn,
   availableCards,
   groupId,
   resetGroup,
@@ -283,4 +284,47 @@ test("upgrades default future games to easy while preserving legacy sessions and
   s.settings.difficulty = "medium";
   migrateDifficulty(s);
   assert.equal(s.settings.difficulty, "medium");
+});
+
+test("a finished turn can be corrected afterwards, including the card open at the buzzer", () => {
+  const s = state();
+  begin(s);
+  recordResult(s, cards, "correct", 2000, () => 0);
+  recordResult(s, cards, "skip", 3000, () => 0);
+  const open = s.session.current;
+  // Tapped "Erraten" a moment after time ran out: the turn ends without points.
+  recordResult(s, cards, "correct", 1000 + 60_001, () => 0);
+  assert.equal(s.session.phase, "summary");
+  const turn = s.session.turns[0];
+  assert.equal(turn.open, open);
+  assert.equal(turn.points, 1);
+  const seenBefore = structuredClone(ensureGroup(s).seen);
+
+  amendTurn(s, cards, 0, "open", "correct");
+  assert.equal(turn.open, null);
+  assert.deepEqual(turn.log.at(-1), { id: open, word: cards.find((c) => c.id === open).word, result: "correct", delta: 1, amended: true });
+  assert.equal(turn.points, 2);
+  assert.equal(s.session.scores[0], 2);
+  assert.throws(() => amendTurn(s, cards, 0, "open", "correct"), /nicht gefunden/);
+
+  // A mistyped result: taboo instead of correct.
+  amendTurn(s, cards, 0, 0, "taboo");
+  assert.equal(turn.log[0].delta, -1);
+  assert.equal(turn.points, 0);
+  amendTurn(s, cards, 0, 1, "correct");
+  assert.deepEqual(s.session.scores, [1, 0]);
+  assert.deepEqual(ensureGroup(s).seen, seenBefore);
+  assert.throws(() => amendTurn(s, cards, 0, 0, "bonus"), /Ungültige/);
+
+  // Corrections still work on the final result screen, never during a turn.
+  nextTurn(s);
+  startTurn(s, cards, 100_000, () => 0);
+  const scores = [...s.session.scores];
+  amendTurn(s, cards, 0, 0, "correct");
+  assert.deepEqual(s.session.scores, scores);
+  finishTurn(s, 101_000);
+  nextTurn(s);
+  s.session.phase = "finished";
+  amendTurn(s, cards, 0, 0, "correct");
+  assert.deepEqual(s.session.scores, [3, 0]);
 });

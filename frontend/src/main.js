@@ -15,6 +15,7 @@ import "./features/setup-actions.js";
 import "./features/storage-actions.js";
 import "./features/speech-actions.js";
 import "./features/info.js";
+import "./features/amend-actions.js";
 import "./ui/install-hint.js";
 import "./sound.js";
 import "./haptics.js";

@@ -46,7 +46,7 @@
   min-width: 0;
   overflow-wrap: anywhere;
 }
-.results-list li > span:nth-last-child(2) {
+.results-list .result-label {
   font-size: 10px;
   color: var(--muted);
 }
@@ -167,4 +167,24 @@
 }
 .history-turn .results-list {
   margin-top: 10px;
+}
+.results-list .amend-button {
+  width: 34px;
+  height: 34px;
+  flex-shrink: 0;
+}
+.results-list .amend-button .icon {
+  width: 16px;
+  height: 16px;
+}
+.open-card {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 13px 0;
+  border-bottom: 1px solid var(--line);
+  font-size: 11px;
+  text-align: left;
 }
