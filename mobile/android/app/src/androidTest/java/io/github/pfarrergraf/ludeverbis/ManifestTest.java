@@ -13,7 +13,13 @@ public class ManifestTest {
         Context app = InstrumentationRegistry.getInstrumentation().getTargetContext();
         assertEquals("io.github.pfarrergraf.ludeverbis", app.getPackageName());
         PackageInfo info = app.getPackageManager().getPackageInfo(app.getPackageName(), PackageManager.GET_PERMISSIONS);
-        assertArrayEquals(new String[]{"android.permission.INTERNET"}, info.requestedPermissions);
+        assertTrue(java.util.Arrays.asList(info.requestedPermissions).contains("android.permission.INTERNET"));
+        for (String permission : info.requestedPermissions) {
+            // AndroidX adds its own signature-only broadcast permission; it
+            // grants no user data access and is not a runtime permission.
+            assertTrue(permission, permission.equals("android.permission.INTERNET") ||
+                permission.equals(app.getPackageName() + ".DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"));
+        }
         assertEquals(0, info.applicationInfo.flags & ApplicationInfo.FLAG_ALLOW_BACKUP);
         assertEquals(36, info.applicationInfo.targetSdkVersion);
     }

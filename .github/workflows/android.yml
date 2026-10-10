@@ -31,6 +31,7 @@ jobs:
         with:
           distribution: temurin
           java-version: '21'
+      - uses: gradle/actions/setup-gradle@v5
       - run: npm ci --prefix frontend
       - run: npm ci --prefix mobile
       - run: npm run sync --prefix mobile
@@ -53,6 +54,7 @@ jobs:
             cd mobile/android && ./gradlew connectedDebugAndroidTest --no-daemon
             adb pull /sdcard/Android/data/io.github.pfarrergraf.ludeverbis/files/screenshots ../../docs/play-store/assets/screenshots
       - uses: actions/upload-artifact@v4
+        if: always()
         with:
           name: ludeverbis-android-${{ github.sha }}
           path: |
