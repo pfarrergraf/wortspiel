@@ -132,7 +132,7 @@ test("mixed sound card keeps its task through undo, offline restart and retrospe
   await page.getByRole("button", { name: "Runde beenden", exact: true }).click();
   await page.getByRole("dialog").getByRole("button", { name: "Runde beenden", exact: true }).click();
   await page.getByRole("button", { name: "Doch erraten (+1)", exact: true }).click();
-  await expect(page.locator(".result-mode")).toContainText("Geräusche");
+  await expect(page.locator(".results-list .result-mode")).toContainText("Geräusche");
   expect((await saved(page)).session.turns[0].log[0].mode).toBe("noises");
   await page.locator('[data-action="amend:0:0"]').click();
   await page.getByRole("dialog").getByRole("button", { name: "Regelverstoß", exact: true }).click();
