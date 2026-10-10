@@ -5,6 +5,13 @@ import { cards, tabooCardCount, pantomimeCategories } from "../data.js";
 import { action } from "../ui/html.js";
 import { iosInstallSteps } from "../ui/install-hint.js";
 
+registerAction("project-page:", async (id) => {
+  const page = id.split(":")[1];
+  if (!["projekt.html", "unterstuetzen.html", "impressum.html", "datenschutz.html"].includes(page)) return;
+  if (ctx.state.session?.phase === "playing" && !await change((state) => pause(state))) return;
+  location.assign(new URL(`./${page}`, document.baseURI));
+});
+
 window.addEventListener("beforeinstallprompt", (event) => {
   event.preventDefault();
   ctx.installPrompt = event;

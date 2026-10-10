@@ -1,0 +1,35 @@
+:root { color-scheme: light; font-family: system-ui, sans-serif; color: #263e3b; background: #faf7ef; }
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+body { margin: 0; }
+header, main, footer { max-width: 48rem; margin: auto; padding: 1.25rem; }
+header { padding-bottom: .5rem; }
+main { padding-top: .5rem; }
+header a { display: inline-flex; align-items: center; min-height: 44px; }
+h1 { font-size: clamp(1.8rem, 7vw, 2.8rem); line-height: 1.15; margin: .65rem 0 1.5rem; }
+h2 { font-size: 1.3rem; margin: 1.5rem 0 .5rem; }
+p, li, dd, address { line-height: 1.65; }
+a { color: #17645d; text-underline-offset: .2em; overflow-wrap: anywhere; }
+a:focus-visible, button:focus-visible { outline: 3px solid #17645d; outline-offset: 4px; }
+address { font-style: normal; }
+.eyebrow { margin: 0; color: #17645d; font-weight: 700; }
+.panel { padding: clamp(1rem, 4vw, 1.75rem); border: 1px solid #d5ddd5; border-radius: 1.25rem; background: #fffdf7; margin-bottom: 1.25rem; }
+.panel > :first-child { margin-top: 0; }
+.panel > :last-child { margin-bottom: 0; }
+.button, button { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: .7rem 1rem; border: 1px solid #17645d; border-radius: .75rem; color: #17645d; background: transparent; font: inherit; cursor: pointer; text-decoration: none; }
+.button.primary { background: #17645d; color: white; }
+.actions { display: flex; flex-wrap: wrap; gap: .75rem; margin-top: 1rem; }
+dl { margin: 0; }
+dt { font-weight: 700; margin-top: 1rem; }
+dt:first-child { margin-top: 0; }
+dd { margin: .25rem 0 0; overflow-wrap: anywhere; }
+.iban { font-family: ui-monospace, monospace; }
+figure { margin: 1.25rem 0 0; }
+.banking-qr { display: block; width: min(100%, 20rem); height: auto; border-radius: .5rem; background: white; }
+figcaption { margin-top: .5rem; line-height: 1.5; }
+.copy-status { min-height: 1.65em; }
+footer { border-top: 1px solid #d5ddd5; }
+footer nav { display: flex; flex-wrap: wrap; gap: .5rem 1rem; }
+footer a { display: inline-flex; align-items: center; min-height: 44px; }
+.muted { color: #536b65; font-size: .95rem; }
+@media (prefers-reduced-motion: no-preference) { a, button { transition: background-color .15s; } }
