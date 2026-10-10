@@ -11,3 +11,5 @@
 - Ports: eigener Preview PW_PORT=4212, lokaler Wrangler-Simulator 4213. Kein Konto-/Projekt-/Preview-/Produktions-/DNS-Zugriff und keine neue Berechtigung in diesem Paket.
 
 - Koordinationsdokumente nach abgeschlossenem QA-STORAGE-Schreibpaket ebenfalls exklusiv bei Codex: docs/plan-v2.md, docs/integration-status.md, docs/agent-handoffs.md, docs/release-checklist.md, docs/architecture.md. Keine Übernahme von Claude-Dateien.
+
+- Ergänzender Integrationsbedarf aus Claude DEPLOY-CF ad7b895: frontend/src/features/info.js exklusiv bei Codex, ausschließlich tatsächlichen Hostinghinweis hostneutral fassen. Kein Rechtstext/Impressum/Datenschutzinventar erfinden und keine Publikationsentscheidung.
