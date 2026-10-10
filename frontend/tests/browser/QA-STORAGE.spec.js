@@ -3,6 +3,79 @@ import { readFile } from "node:fs/promises";
 
 const KEY = "wortspiel.state.v1";
 
+for (const difficulty of ["easy", "medium", "all"]) {
+  for (const bothFields of [false, true]) {
+    test(`checkpointed difficulty omission distinguishes full legacy migration (${difficulty}, both ${bothFields})`, async ({ context }) => {
+      const [a, b] = await harness(context);
+      await a.evaluate(async difficulty => {
+        await window.__qa.store.update(s => { s.session.settings.difficulty = difficulty; });
+      }, difficulty);
+      const before = await a.evaluate(key => JSON.parse(localStorage.getItem(key)), KEY);
+      const candidate = structuredClone(before);
+      candidate.revision++;
+      delete candidate.session.settings.difficulty;
+      if (bothFields) delete candidate.settings.difficulty;
+      const raw = JSON.stringify(candidate);
+      await b.evaluate(({ key, raw }) => localStorage.setItem(key, raw), { key: KEY, raw });
+      const result = await a.evaluate(async key => {
+        let error;
+        try { await window.__qa.store.update(() => {}); } catch (failure) { error = failure.name; }
+        const request = window.__qa.store.db.transaction("state").objectStore("state").get(key);
+        const saved = await new Promise((resolve, reject) => { request.onsuccess = () => resolve(request.result); request.onerror = reject; });
+        return { error, saved };
+      }, KEY);
+      if (bothFields || difficulty === "all") {
+        expect(result.error).toBeUndefined();
+        expect(result.saved.groups).toEqual(before.groups);
+        expect(result.saved.session.current).toBe(before.session.current);
+        expect(result.saved.session.scores).toEqual(before.session.scores);
+        expect(result.saved.session.settings.selected).toEqual(before.session.settings.selected);
+      } else {
+        expect(result.error).toBe("StorageLineageError");
+        expect(result.saved).toEqual(before);
+        expect(await b.evaluate(key => localStorage.getItem(key), KEY)).toBe(raw);
+      }
+      await Promise.all([a.close(), b.close()]);
+    });
+  }
+}
+
+for (const mode of ["indexeddb", "local"]) {
+  for (const wizard of [false, true]) {
+    test(`setup conflict repaints before a later edit can overwrite remote values (${mode}, wizard ${wizard})`, async ({ page: a, context }) => {
+      if (mode === "local") await context.addInitScript(() => {
+        Object.defineProperty(window, "indexedDB", { get: () => { throw new Error("Test local fallback"); } });
+      });
+      // Simulate a missed notification; the real durable revision still fences saves.
+      await a.addInitScript(() => window.addEventListener("storage", event => {
+        if (event.key === "wortspiel.state.v1") event.stopImmediatePropagation();
+      }));
+      await a.goto("/");
+      const b = await context.newPage();
+      await b.goto("/");
+      // Opening B itself advances the revision. Reload A to start with the same baseline.
+      await a.reload();
+      if (wizard) await a.locator('[data-action="wizard-open"]').click();
+      await b.locator('input[name="team"]').first().fill("Fremdes Team");
+      await b.locator('input[name="group"]').click();
+      await expect.poll(async () => (await b.evaluate(key => JSON.parse(localStorage.getItem(key)), KEY)).settings.teams[0]).toBe("Fremdes Team");
+      if (wizard) await a.locator('[data-action="wizard-next"]').click();
+      else {
+        await a.locator('input[name="team"]').nth(1).fill("Veralteter Versuch");
+        await a.locator('input[name="group"]').click();
+      }
+      await expect(a.locator("#toast")).toContainText("inzwischen geändert");
+      if (wizard) await a.getByRole("button", { name: "Alle Einstellungen", exact: true }).click();
+      await expect(a.locator('input[name="team"]').first()).toHaveValue("Fremdes Team");
+      await a.locator('input[name="group"]').fill("Nach Konflikt");
+      await a.locator('input[name="team"]').first().click();
+      await expect.poll(async () => (await a.evaluate(key => JSON.parse(localStorage.getItem(key)), KEY)).settings.group).toBe("Nach Konflikt");
+      expect((await a.evaluate(key => JSON.parse(localStorage.getItem(key)), KEY)).settings.teams[0]).toBe("Fremdes Team");
+      await b.close();
+    });
+  }
+}
+
 for (const relative of [-1, 0]) {
   test(`older local history is preserved against a ${relative ? "newer" : "same-revision"} database fork`, async ({ context }) => {
     const [a, b] = await harness(context);

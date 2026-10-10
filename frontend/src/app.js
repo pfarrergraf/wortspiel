@@ -86,7 +86,11 @@ export function change(fn, after, repaint = true) {
       if (repaint) render();
       return true;
     } catch (error) {
-      if (error instanceof StorageConflictError) ctx.state = store.state;
+      const conflict = error instanceof StorageConflictError;
+      if (conflict) {
+        ctx.state = store.state;
+        ownSettingsRevisions.clear();
+      }
       const blocked = error instanceof StorageMirrorPendingError || error instanceof StorageLineageError;
       if (blocked) {
         // Hide a stale card and stop its timer; never pause/reset durable data.
@@ -97,7 +101,7 @@ export function change(fn, after, repaint = true) {
         error.message ||
           "Speichern fehlgeschlagen. Bitte versuche es noch einmal.",
       );
-      if (repaint || blocked) render();
+      if (repaint || blocked || conflict) render();
       return false;
     } finally {
       ctx.busy = false;

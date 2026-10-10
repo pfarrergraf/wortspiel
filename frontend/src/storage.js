@@ -75,6 +75,11 @@ function legacyDifficultyChange(candidate, previous) {
   }
   if (candidate.session && previous.session && candidate.session.settings.difficulty === undefined &&
       previous.session.settings.difficulty !== undefined) {
+    // A single omitted session field means the historical `all` pool only.
+    // Preserve the existing full pre-difficulty migration (both fields absent)
+    // only when the carried checkpoint proves this exact otherwise unchanged source.
+    const fullLegacyMigration = omitted && candidate.settings.difficulty === undefined;
+    if (previous.session.settings.difficulty !== "all" && !fullLegacyMigration) return false;
     delete projected.session.settings.difficulty; omitted = true;
   }
   projected.revision = candidate.revision;
