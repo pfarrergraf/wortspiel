@@ -1,0 +1,13 @@
+/* Keep the task in the existing card heading instead of adding a full row. */
+.card-category { gap: 8px; }
+.card-category > span:first-child { min-width: 0; overflow-wrap: anywhere; }
+.card-category .mode-indicator { margin: 0; flex-shrink: 0; padding: 5px 9px; font-size: 14px; gap: 6px; }
+.card-category .mode-indicator > span { font-size: 22px; }
+@media (max-width: 520px) and (max-height: 700px) {
+  .card-category .mode-indicator { padding: 4px 8px; font-size: 12px; }
+  .card-category .mode-indicator > span { font-size: 20px; }
+  .game-card.pantomime-card .pantomime-emoji { font-size: 40px; }
+}
+@media (min-width: 1369px) and (max-height: 950px) {
+  .game-card h1 { margin-block: 16px; }
+}

@@ -16,6 +16,8 @@ Karte und Modus werden in derselben Storage-Transaktion vor Anzeige gesichert. E
 
 Im optionalen Themenformular sind die drei Pooltypen beschriftet. Alle-Auswahl, Abwahl und Suchfilter gelten für die gerade angebotenen Kategorien und bewahren verborgene andere Auswahlen. Der kompakte Smartphone-Start zeigt die fünf Spielarten in zwei Zeilen; weniger Überschriftabstand und kürzere Hinweise halten den direkten Start auf dem ersten Bildschirm. Kein Pflichtassistent. Die Spielhilfe und getrennten Poolanzahlen sind angepasst; Anbieter, Spendenkonto, Hosting und rechtliche Inhalte sind unverändert.
 
+Die Schwierigkeit gilt auch für die Darstellung: Ein leicht erklärbarer Begriff darf im leichten Mischmodus nicht als schwieriges Geräusch oder schwere Pantomime auftauchen. Die jeweiligen Poolgrade werden daher pro Aufgabe übernommen. Alte taboo/none-Sitzungen zeigen korrekt die Frei-Aufgabe, ohne ihr gespeichertes `gameMode` umzuschreiben.
+
 ## Redaktionelle Beispiele und Erprobung
 
 Die Begriffe wurden auf konkrete Klangerzeugung und nicht auf bloß visuelle Erkennbarkeit gewählt. Beispiele für einen Spieltest (keine Behauptung eines durchgeführten menschlichen Ratetests):
@@ -35,6 +37,6 @@ Menschliche Erprobung bleibt offen: zwei Gruppen spielen je 20 zufällig gezogen
 
 ## Prüfungen und Integrationsbedarf
 
-122 Unit-Tests, Kartenprüfung und Build grün. 54 relevante lokale Chrome-Browserfälle bestanden; anschließend zwei Geräuschformulierungen präzisiert und Regeln/ID-Fixture erneut geprüft. Der finale Build besteht erneut 37 einschlägige Fälle einschließlich der elf Bildschirmgrößen. Vollständige exakte Chromium-CI und Hosting-Prüfungen werden im PR dokumentiert. Neue Regressionen prüfen Poolformat/IDs/Schwierigkeit, keine abstrakten Geräuschkarten, Modusverteilung unabhängig von Poolgröße, identischen Hahn in vier Aufgaben, Namespace-Deduplizierung, dauerhafte Historie und alle vier farbigen Aufgabenanzeigen. Außerdem sind Scoring/Undo/Offline-Neustart/Amend sowie ausbleibende lokale Spracherkennung bei einer nonverbalen Karte geprüft.
+123 Unit-Tests, Kartenprüfung und Build grün. 54 relevante lokale Chrome-Browserfälle bestanden; anschließend zwei Geräuschformulierungen präzisiert und Regeln/ID-Fixture erneut geprüft. Der finale Build besteht erneut 37 einschlägige Fälle einschließlich der elf Bildschirmgrößen. Vollständige exakte Chromium-CI und Hosting-Prüfungen werden im PR dokumentiert. Neue Regressionen prüfen Poolformat/IDs/Schwierigkeit, keine abstrakten Geräuschkarten, Modusverteilung unabhängig von Poolgröße, identischen Hahn in vier Aufgaben, Namespace-Deduplizierung, dauerhafte Historie und alle vier farbigen Aufgabenanzeigen. Außerdem sind Scoring/Undo/Offline-Neustart/Amend sowie ausbleibende lokale Spracherkennung bei einer nonverbalen Karte geprüft.
 
 Engine, Datenbindung, Kartenchecker und Planänderung gehören dem Integrator. Storage-Code, Schema 1, bestehende Sitzungen, gemeinsame generierte Karten, veröffentlichte IDs, Lockfiles, Spenden- und Hostingdateien werden nicht geändert. Der alte B5-Unterbau für explain/draw/oneword bleibt für Legacy-Sitzungen unterstützt; die neue Spielart Gemischt ist eine eigene, explizite Auswahl.

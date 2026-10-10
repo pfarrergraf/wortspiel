@@ -11,7 +11,8 @@ Ein Integrationscommit mit grüner CI ist noch kein vollständiger Release. Stab
 - [x] Bestehende Migrationen, v1/v2-ID-Fixtures, alte Erklärung und Pantomime kompatibel.
 - [x] Vollständige Importvalidierung vor Mutation, merge statt Reset, Gruppenexport.
 - [x] Neues Spiel und Replay mit Session-Snapshot; Ersatz einer laufenden Partie nur nach Bestätigung.
-- [x] Moduswechsel, free/none-Konsistenz, Altersfilter, Presets, Pantomime-Punkte.
+- [x] Moduswechsel, free/none-Konsistenz, Schwierigkeitsfilter, Entfernung der Altersgrenzen, Presets, Pantomime-Punkte.
+- [x] PLAY-05: fünf Spielarten, eigener Geräuschpool, geeignete Darstellung pro Begriff und Stufe, Symbol/Farbe/Text, Moduserhalt bei Undo/Offline-Neustart/Korrektur; Geräte-Simulation für alle fünf Spielarten.
 - [x] Formularpflichtfelder, Assistent vor/zurück, Browser-Zurück, Suchfilter und fortbestehende Kategorien.
 - [x] Vorhandene Offline-/Service-Worker-/PWA-/Browser-Neustart-Tests.
 - [x] Sound/Wake-Lock-Tests, Tastatur/Presenter, simuliertes WebHID inklusive Lern-Race.
@@ -31,7 +32,7 @@ Ein Integrationscommit mit grüner CI ist noch kein vollständiger Release. Stab
 - [ ] iPhone Safari/Home-Bildschirm, Android-Handy, iPad hoch/quer, Android-Tablet, Surface mit/ohne Tastatur, Notebook, Monitor.
 - [ ] Drehung im Zug, Touch-Ziele, große Schrift, Safe Areas, Bildschirmtastatur, Zoom, Fokus und Screenreader.
 - [ ] Echter Logitech-Presenter/Spotlight; Pause/Undo/Hilfe und Umleitung beim Trennen.
-- [ ] Karteninhalt, Altersangaben und Geräuscheraten praktisch geprüft; unfertige Varianten außerhalb des Releases.
+- [ ] Karteninhalte und Schwierigkeitsgrade praktisch geprüft; Geräusch-Ratetest mit zwei menschlichen Gruppen gemäß [PLAY-05-Prüfplan](reviews/PLAY-05.md). Keine stabile Release-Markierung ohne diese Abnahme.
 
 ## Veröffentlichung
 

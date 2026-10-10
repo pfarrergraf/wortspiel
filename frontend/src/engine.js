@@ -224,7 +224,7 @@ export function drawCard(state, cards, random = Math.random, now = Date.now()) {
     session.exhausted = true;
     return false;
   }
-  const mixedChoice = isMixed(session.settings) ? pickMixedCard(remaining, random) : null;
+  const mixedChoice = isMixed(session.settings) ? pickMixedCard(remaining, random, session.settings) : null;
   const chosen = mixedChoice?.card ??
     remaining[
       Math.min(

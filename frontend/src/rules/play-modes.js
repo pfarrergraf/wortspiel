@@ -16,15 +16,24 @@ const mimeCard = card => card.categories?.some(id => id.startsWith("pm-"));
 export function withMixedModes(cards) {
   const mimeWords = new Set(cards.filter(card => card.retired !== true && mimeCard(card)).map(card => wordKey(card.word)));
   const noiseWords = new Set(cards.filter(card => card.retired !== true && isNoiseCard(card)).map(card => wordKey(card.word)));
+  const mimeLevels = new Map(cards.filter(card => card.retired !== true && mimeCard(card)).map(card => [wordKey(card.word), card.difficulty]));
+  const noiseLevels = new Map(cards.filter(card => card.retired !== true && isNoiseCard(card)).map(card => [wordKey(card.word), card.difficulty]));
   return cards.map(card => {
     const modes = card.taboo?.length >= 3 ? ["taboo", "free"] : ["free"];
     const word = wordKey(card.word);
     if (mimeWords.has(word) || noiseWords.has(word)) modes.push("pantomime");
     if (noiseWords.has(word)) modes.push("noises");
-    return { ...card, mixedModes: modes };
+    return { ...card, mixedModes: modes, mixedLevels: { taboo: card.difficulty, free: card.difficulty, pantomime: mimeLevels.get(word) ?? noiseLevels.get(word), noises: noiseLevels.get(word) } };
   });
 }
-export const cardModes = card => card.mixedModes ?? (isNoiseCard(card) ? ["free", "pantomime", "noises"] : mimeCard(card) ? ["free", "pantomime"] : card.taboo?.length >= 3 ? ["taboo", "free"] : ["free"]);
+export function cardModes(card, settings) {
+  const modes = card.mixedModes ?? (isNoiseCard(card) ? ["free", "pantomime", "noises"] : mimeCard(card) ? ["free", "pantomime"] : card.taboo?.length >= 3 ? ["taboo", "free"] : ["free"]);
+  const difficulty = settings?.difficulty ?? "all";
+  return modes.filter(mode => {
+    const level = card.mixedLevels?.[mode] ?? card.difficulty;
+    return difficulty === "all" || level === "easy" || difficulty === "medium" && level === "medium";
+  });
+}
 // A mixed deck combines namespaces. Show each word once, and honor an exposed
 // representation from any pool, without rewriting another pool's history.
 export function uniqueMixedCards(eligible, allCards, seen = {}) {
@@ -40,14 +49,16 @@ const randomItem = (items, random) => {
   const value = random();
   return items[Number.isFinite(value) ? Math.min(items.length - 1, Math.floor(Math.max(0, value) * items.length)) : 0];
 };
-export function pickMixedCard(cards, random = Math.random) {
+export function pickMixedCard(cards, random = Math.random, settings) {
   if (!cards.length) return null;
-  const modes = PRESENTATIONS.map(mode => ({ mode: mode.id, cards: cards.filter(card => cardModes(card).includes(mode.id)) })).filter(option => option.cards.length);
+  const modes = PRESENTATIONS.map(mode => ({ mode: mode.id, cards: cards.filter(card => cardModes(card, settings).includes(mode.id)) })).filter(option => option.cards.length);
+  if (!modes.length) return null;
   const selected = randomItem(modes, random);
   return { mode: selected.mode, card: randomItem(selected.cards, random) };
 }
 export function presentationMode(session) {
   if (isMixed(session.settings)) return session.currentMode ?? "taboo";
+  if ((session.settings.gameMode ?? "taboo") === "taboo" && session.settings.tabooMode === "none") return "free";
   return session.settings.gameMode ?? "taboo";
 }
 export function presentationSettings(session, mode = presentationMode(session)) {

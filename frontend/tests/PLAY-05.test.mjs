@@ -110,6 +110,16 @@ test("mixed mode chooses presentation before the card so a small sound pool stil
   assert.equal(pickMixedCard([]), null);
 });
 
+test("mixed difficulty respects the chosen presentation, not just an easy explanation word", () => {
+  const harder = withMixedModes([fixture[1], { ...fixture[2], difficulty: "hard" }, { ...fixture[3], difficulty: "medium" }]);
+  const word = harder[0];
+  assert.deepEqual(cardModes(word, { difficulty: "easy" }), ["taboo", "free"]);
+  assert.deepEqual(cardModes(word, { difficulty: "medium" }), ["taboo", "free", "noises"]);
+  assert.deepEqual(cardModes(word, { difficulty: "all" }), ["taboo", "free", "pantomime", "noises"]);
+  assert.equal(pickMixedCard([word], randomSequence(.99, 0), { difficulty: "easy" }).mode, "free");
+  assert.equal(pickMixedCard([word], randomSequence(.99, 0), { difficulty: "medium" }).mode, "noises");
+});
+
 test("mixed scoring, undo, pause and after-round correction preserve mode and every exposed ID", () => {
   const current = state();
   createSession(current, fixture, categories);
@@ -154,4 +164,8 @@ test("new setup modes preserve legacy snapshots and mode-specific taboo rules", 
   assert.equal(presentationSettings({ settings: mixed, currentMode: "free" }).tabooMode, "none");
   assert.equal(presentationSettings({ settings: mixed, currentMode: "noises" }).tabooMode, "none");
   assert.equal(presentationSettings({ settings: mixed, currentMode: "taboo" }).tabooMode, "classic");
+  const oldFreeSession = { settings: { gameMode: "taboo", tabooMode: "none" }, currentMode: "explain" };
+  const oldFreeBefore = structuredClone(oldFreeSession);
+  assert.equal(presentationMode(oldFreeSession), "free");
+  assert.deepEqual(oldFreeSession, oldFreeBefore);
 });

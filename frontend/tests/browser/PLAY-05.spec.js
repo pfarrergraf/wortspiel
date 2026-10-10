@@ -28,6 +28,7 @@ async function seed(page, fixture) {
   await page.goto("/");
   await expect(page.getByRole("heading", { name: "Kurz durchatmen." })).toBeVisible();
   await page.getByRole("button", { name: "Weiter geht’s", exact: true }).click();
+  await expect(page.locator("#current-word")).toBeVisible();
 }
 
 for (const [index, mode] of PRESENTATIONS.entries())
@@ -80,7 +81,7 @@ test("sound-only game has its own level counts and manual scoring with durable u
   expect(Object.keys(after.groups["group:unsere runde"].seen)).toHaveLength(2);
 });
 
-test("mixed category controls preserve three pools and permit an exclusively nonverbal selection", async ({ page }) => {
+test("mixed category controls preserve three pools and permit playing without explanation themes", async ({ page }) => {
   await page.goto("/");
   await page.locator('label.game-mode:has(input[value="mixed"])').click();
   await openSetupOptions(page);
@@ -94,6 +95,7 @@ test("mixed category controls preserve three pools and permit an exclusively non
   await page.locator('.category:has(input[name="pantomimeCategory"])').first().click();
   await page.getByRole("button", { name: "Los geht’s", exact: true }).click();
   await page.getByRole("button", { name: "Wir sind bereit", exact: true }).click();
+  await expect(page.locator("#current-word")).toBeVisible();
   const state = await saved(page);
   expect(state.session.settings.selected).toEqual([]);
   expect(state.session.settings.noisesSelected).toEqual(["ns-animals"]);
@@ -110,6 +112,7 @@ test("mixed sound card keeps its task through undo, offline restart and retrospe
   expect(scored.session.log[0].mode).toBe("noises");
   await page.getByRole("button", { name: "Letzte Wertung zurück" }).click();
   await expect(page.locator(".mode-indicator strong")).toHaveText("Geräusche");
+  await expect.poll(async () => (await saved(page)).session.scores).toEqual([0, 0]);
   const undone = await saved(page);
   expect(undone.session.current).toBe(fixture.session.current);
   expect(undone.session.currentMode).toBe("noises");
@@ -129,10 +132,11 @@ test("mixed sound card keeps its task through undo, offline restart and retrospe
   await page.getByRole("button", { name: "Runde beenden", exact: true }).click();
   await page.getByRole("dialog").getByRole("button", { name: "Runde beenden", exact: true }).click();
   await page.getByRole("button", { name: "Doch erraten (+1)", exact: true }).click();
-  expect((await saved(page)).session.turns[0].log[0].mode).toBe("noises");
   await expect(page.locator(".result-mode")).toContainText("Geräusche");
+  expect((await saved(page)).session.turns[0].log[0].mode).toBe("noises");
   await page.locator('[data-action="amend:0:0"]').click();
   await page.getByRole("dialog").getByRole("button", { name: "Regelverstoß", exact: true }).click();
+  await expect(page.locator(".results-list .result-label")).toContainText("Regelverstoß");
   const corrected = await saved(page);
   expect(corrected.session.scores[0]).toBe(-1);
   expect(corrected.session.turns[0].log[0].mode).toBe("noises");
