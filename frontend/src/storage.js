@@ -17,6 +17,77 @@ export class StorageMirrorPendingError extends Error {
   }
 }
 
+export class StorageLineageError extends Error {
+  constructor() {
+    super("Die gespeicherten Kopien enthalten unterschiedliche Spielverläufe. Beide bleiben unverändert erhalten; bitte sichere sie vor einer Reparatur.");
+    this.name = "StorageLineageError";
+  }
+}
+
+// Compact consistency fingerprints, not authentication or a security boundary.
+// The metadata is additive to schema 1 and contains no duplicate game payload.
+function fingerprint(state, gameOnly = false) {
+  const { _storage, ...payload } = state;
+  if (gameOnly) delete payload.revision;
+  const text = JSON.stringify(payload);
+  let a = 2166136261, b = 2654435769;
+  for (let i = 0; i < text.length; i++) {
+    a = Math.imul(a ^ text.charCodeAt(i), 16777619);
+    b = Math.imul(b ^ text.charCodeAt(i), 2246822507);
+  }
+  return `${text.length}:${(a >>> 0).toString(16)}:${(b >>> 0).toString(16)}`;
+}
+
+function proof(state) {
+  const metadata = state._storage;
+  return metadata?.version === 1 && typeof metadata.database === "string" &&
+    metadata.digest === fingerprint(state) ? metadata : null;
+}
+
+function sameGame(a, b) {
+  // Legacy clients had no difficulty field. Its omission has an explicit
+  // existing migration; it is not proof of a different score/round/history.
+  const comparable = (state, other) => {
+    const copy = { ...state, settings: { ...state.settings } };
+    if (state.settings.difficulty === undefined || other.settings.difficulty === undefined)
+      delete copy.settings.difficulty;
+    if (state.session && other.session) {
+      copy.session = { ...state.session, settings: { ...state.session.settings } };
+      if (state.session.settings.difficulty === undefined || other.session.settings.difficulty === undefined)
+        delete copy.session.settings.difficulty;
+    }
+    return copy;
+  };
+  return fingerprint(comparable(a, b), true) === fingerprint(comparable(b, a), true);
+}
+
+function follows(candidate, previous) {
+  if (!extendsHistory(candidate, previous)) return false;
+  if (sameGame(candidate, previous)) return true;
+  const metadata = proof(candidate), prior = fingerprint(previous);
+  return Boolean(metadata && (metadata.database === prior || metadata.mirror === prior));
+}
+
+function localBasis(local, cached) {
+  if (!local) return cached;
+  if (sameGame(local, cached)) return local.revision >= cached.revision ? local : cached;
+  if (local.revision <= cached.revision || !extendsHistory(local, cached))
+    throw new StorageLineageError();
+  const metadata = proof(local), previous = proof(cached);
+  // A verified newer checkpoint or coordinated local descendant is authoritative.
+  // Legacy clients changing a carried marker cannot pass its payload fingerprint.
+  if (metadata && (metadata.database === metadata.digest ||
+      previous?.database === metadata.database || follows(local, cached))) return local;
+  throw new StorageLineageError();
+}
+
+function mark(next, basis, database, local) {
+  const digest = fingerprint(next);
+  next._storage = database
+    ? { version: 1, digest, database: digest, mirror: fingerprint(local ?? basis) }
+    : { version: 1, digest, database: proof(basis)?.database ?? fingerprint(basis) };
+}
+
 function pendingRevision() {
   let serialized;
   try { serialized = localStorage.getItem(PENDING_KEY); } catch {
@@ -44,19 +115,19 @@ function extendsHistory(candidate, previous) {
   });
 }
 
-function chooseState(saved, local, fallback) {
+function chooseState(saved, local, fallback, initial = false) {
   if (saved !== undefined && !valid(saved))
     throw new Error("Der vorhandene Datenbank-Spielstand hat ein unbekanntes Format. Er bleibt unverändert gespeichert.");
-  const conflicting = valid(saved) && local && (local.revision > saved.revision
-    ? !extendsHistory(local, saved)
-    : !extendsHistory(saved, local));
-  if (conflicting) {
-    const error = new Error("Die Datenbank und die lokale Kopie enthalten unterschiedliche Kartenhistorien. Beide Spielstände bleiben unverändert erhalten; bitte sichere beide Kopien vor einer Reparatur.");
-    error.name = "StorageLineageError";
-    throw error;
-  }
-  const current = local && local.revision >= fallback.revision ? local : fallback;
-  return valid(saved) && saved.revision >= current.revision ? saved : current;
+  // A freshly constructed default is not a competing persisted replica.
+  if (initial && !local && valid(saved)) return saved;
+  // Compare persisted replicas directly; a newer RAM cache must not hide a
+  // conflicting older local replica with additional history.
+  const current = local ?? fallback;
+  if (!valid(saved)) return current;
+  const winner = saved.revision >= current.revision ? saved : current;
+  const older = winner === saved ? current : saved;
+  if (!follows(winner, older)) throw new StorageLineageError();
+  return winner;
 }
 
 function readLocal() {
@@ -77,6 +148,7 @@ function valid(state) {
   return (
     state?.schema === 1 &&
     Number.isSafeInteger(state.revision) && state.revision >= 0 &&
+    (state._storage === undefined || state._storage?.version === 1) &&
     state.groups && typeof state.groups === "object" && !Array.isArray(state.groups) &&
     state.settings && typeof state.settings === "object" && !Array.isArray(state.settings)
   );
@@ -131,7 +203,7 @@ export class Storage {
         if (!local) throw new Error("Der vorhandene Datenbankspeicher konnte nicht gelesen werden. Er bleibt erhalten; bitte versuche es erneut, bevor du eine neue Partie beginnst.");
       }
     }
-    this.state = chooseState(saved, local, fallback);
+    this.state = chooseState(saved, local, fallback, true);
     return this.update(() => {});
   }
 
@@ -144,11 +216,12 @@ export class Storage {
       request.onsuccess = () => resolve(request.result);
       request.onerror = () => reject(request.error);
     });
-    const current = chooseState(saved, readLocal(), this.state);
+    const local = readLocal();
     if (!this.db) {
       const pending = pendingRevision();
-      if (pending !== null && current.revision < pending) throw new StorageMirrorPendingError();
+      if (pending !== null) throw new StorageMirrorPendingError();
     }
+    const current = this.db ? chooseState(saved, local, this.state) : localBasis(local, this.state);
     return structuredClone(current);
   }
 
@@ -218,10 +291,10 @@ export class Storage {
   async write(change, expectedRevision) {
     let next;
     const local = readLocal();
-    const current = local && local.revision > this.state.revision ? local : this.state;
     const previousPending = pendingRevision();
-    if (!this.db && previousPending !== null && current.revision < previousPending)
+    if (!this.db && previousPending !== null)
       throw new StorageMirrorPendingError();
+    const current = this.db ? this.state : localBasis(local, this.state);
     const check = (basis) => {
       if (basis.revision === Number.MAX_SAFE_INTEGER)
         throw new Error("Der Revisionszähler des Spielstands ist ausgeschöpft. Der gespeicherte Stand bleibt unverändert erhalten; bitte sichere ihn vor einer Reparatur.");
@@ -247,6 +320,7 @@ export class Storage {
               result = structuredClone(basis);
               change(result);
               result.revision++;
+              mark(result, basis, true, local);
               // Persist intent BEFORE a database commit can leave the local
               // mirror behind (quota, process exit, missed completion callback).
               // A local-only writer must not fork that stale mirror.
@@ -291,10 +365,8 @@ export class Storage {
         next = structuredClone(current);
         change(next);
         next.revision++;
+        mark(next, current, false);
         localStorage.setItem(KEY, JSON.stringify(next));
-        // A remaining marker at or below our basis was already fully mirrored.
-        if (previousPending !== null)
-          try { localStorage.removeItem(PENDING_KEY); } catch { /* Snapshot is already durable; the marker is no newer. */ }
       } catch (error) {
         if (error instanceof StorageConflictError) throw error;
         throw new Error(
