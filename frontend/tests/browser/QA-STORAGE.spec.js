@@ -66,12 +66,15 @@ test("zero revision local snapshot is kept instead of an empty initial state", a
   const [a, b] = await harness(context, "local");
   const before = await a.evaluate(key => JSON.parse(localStorage.getItem(key)), KEY);
   before.revision = 0;
+  delete before._storage; // Historical schema-1 fixture, before lineage metadata.
   const after = await a.evaluate(async ({ key, before }) => {
     localStorage.setItem(key, JSON.stringify(before));
     const { Storage } = await import("./storage.js");
     return new Storage().open(window.__qa.engine.initialState(window.__qa.categories));
   }, { key: KEY, before });
-  expect(after).toEqual({ ...before, revision: 1 });
+  const { _storage, ...restored } = after;
+  expect(restored).toEqual({ ...before, revision: 1 });
+  expect(_storage.version).toBe(1);
   await Promise.all([a.close(), b.close()]);
 });
 
@@ -360,8 +363,8 @@ for (const mode of ["indexeddb", "local-no-locks"]) {
   });
 }
 
-for (const raw of ['{"schema":', '{"schema":2,"revision":999,"groups":{},"settings":{}}']) {
-  test(`startup refuses to overwrite malformed or newer local data (${raw.startsWith('{"schema":2') ? "future schema" : "invalid JSON"})`, async ({ page }) => {
+for (const raw of ['{"schema":', '{"schema":2,"revision":999,"groups":{},"settings":{}}', '{"schema":1,"revision":999,"groups":{},"settings":{},"_storage":{"version":2}}']) {
+  test(`startup refuses to overwrite malformed or newer local data (${raw.includes('"_storage"') ? "future storage metadata" : raw.startsWith('{"schema":2') ? "future schema" : "invalid JSON"})`, async ({ page }) => {
     await page.addInitScript(raw => localStorage.setItem("wortspiel.state.v1", raw), raw);
     await page.goto("/");
     await expect(page.locator(".startup-error")).toContainText("bleibt unverändert gespeichert");
@@ -654,4 +657,161 @@ test("a pre-reset local replica cannot resurrect historical cards after a newer 
   expect(result.saved).toEqual(current);
   expect(await b.evaluate(key => JSON.parse(localStorage.getItem(key)), KEY)).toEqual(old);
   await Promise.all([a.close(), b.close()]);
+});
+
+for (const mode of ["local", "local-no-locks"]) {
+  for (const relative of [0, -1]) {
+    test(`legacy local fork cannot overwrite cached history (${mode}, revision ${relative})`, async ({ context }) => {
+      const [a, b] = await harness(context, mode);
+      const current = await a.evaluate(key => JSON.parse(localStorage.getItem(key)), KEY);
+      const fork = structuredClone(current); fork.revision += relative;
+      fork.groups[Object.keys(fork.groups)[0]].seen["de:birne"] = 42;
+      const raw = JSON.stringify(fork);
+      await b.evaluate(({ key, raw }) => localStorage.setItem(key, raw), { key: KEY, raw });
+      const error = await a.evaluate(async () => {
+        try { await window.__qa.store.update(s => { s.session.scores[0] = 99; }); }
+        catch (error) { return error.name; }
+      });
+      expect(error).toBe("StorageLineageError");
+      expect(await b.evaluate(key => localStorage.getItem(key), KEY)).toBe(raw);
+      expect(await a.evaluate(() => window.__qa.store.state)).toEqual(current);
+      await Promise.all([a.close(), b.close()]);
+    });
+  }
+}
+
+for (const noLocks of [false, true]) {
+  for (const ahead of [0, 1]) {
+    test(`legacy fork cannot clear a pending database fence (${noLocks ? "bakery" : "Web Locks"}, ahead ${ahead})`, async ({ context }) => {
+      const [a, b] = await harness(context, noLocks ? ["indexeddb-no-locks", "local-no-locks"] : ["indexeddb", "local"]);
+      const old = await b.evaluate(key => JSON.parse(localStorage.getItem(key)), KEY);
+      await a.evaluate(async () => {
+        const original = Storage.prototype.setItem;
+        Storage.prototype.setItem = function(key, value) {
+          if (key === "wortspiel.state.v1") throw new DOMException("Test mirror quota", "QuotaExceededError");
+          return original.call(this, key, value);
+        };
+        try { const { store, engine, cards } = window.__qa; await store.update(s => engine.recordResult(s, cards, "correct", Date.now(), () => 0)); }
+        finally { Storage.prototype.setItem = original; }
+      });
+      const marker = await b.evaluate(() => localStorage.getItem("wortspiel.state.v1.pending"));
+      old.revision = JSON.parse(marker).revision + ahead;
+      const raw = JSON.stringify(old);
+      await b.evaluate(({ key, raw }) => localStorage.setItem(key, raw), { key: KEY, raw });
+      const errors = await b.evaluate(async () => {
+        const { Storage } = await import("./storage.js"); const { store, engine, categories } = window.__qa;
+        const errors = [];
+        for (const action of [() => store.update(() => {}), () => store.snapshot(), () => new Storage().open(engine.initialState(categories))]) {
+          try { await action(); errors.push(null); } catch (error) { errors.push(error.name); }
+        }
+        return errors;
+      });
+      expect(errors).toEqual(["StorageMirrorPendingError", "StorageMirrorPendingError", "StorageMirrorPendingError"]);
+      expect(await b.evaluate(key => localStorage.getItem(key), KEY)).toBe(raw);
+      expect(await b.evaluate(() => localStorage.getItem("wortspiel.state.v1.pending"))).toBe(marker);
+      const committed = await a.evaluate(async key => {
+        const request=window.__qa.store.db.transaction("state").objectStore("state").get(key);
+        return new Promise((resolve,reject)=>{request.onsuccess=()=>resolve(request.result);request.onerror=reject;});
+      }, KEY);
+      expect(committed.session.scores).toEqual([1, 0]);
+      expect(Object.values(committed.groups).flatMap(g => Object.keys(g.seen))).toEqual(["de:apfel", "de:brot"]);
+      await Promise.all([a.close(), b.close()]);
+    });
+  }
+}
+
+for (const carryMetadata of [false, true]) {
+  test(`legacy session fork cannot undo a committed correction with identical history (${carryMetadata ? "carried" : "no"} metadata)`, async ({ context }) => {
+    const [a, b] = await harness(context, ["indexeddb", "local"]);
+    await a.evaluate(async () => {
+      const { store, engine, cards } = window.__qa;
+      await store.update(s => engine.recordResult(s, cards, "correct", Date.now(), () => 0));
+    });
+    const old = await a.evaluate(key => JSON.parse(localStorage.getItem(key)), KEY);
+    await a.evaluate(async () => { await window.__qa.store.update(s => window.__qa.engine.undoResult(s)); });
+    const corrected = await a.evaluate(key => JSON.parse(localStorage.getItem(key)), KEY);
+    expect(old.groups).toEqual(corrected.groups);
+    expect(old.session.scores).not.toEqual(corrected.session.scores);
+    old.revision = corrected.revision + 1;
+    if (!carryMetadata) delete old._storage;
+    const raw = JSON.stringify(old);
+    await b.evaluate(({ key, raw }) => localStorage.setItem(key, raw), { key: KEY, raw });
+    const result = await a.evaluate(async key => {
+      const { Storage } = await import("./storage.js"); const { store, engine, categories } = window.__qa;
+      const errors = [];
+      for (const action of [() => store.update(() => {}), () => store.snapshot(), () => new Storage().open(engine.initialState(categories))]) {
+        try { await action(); errors.push(null); } catch (error) { errors.push(error.name); }
+      }
+      const request=store.db.transaction("state").objectStore("state").get(key);
+      const saved=await new Promise((resolve,reject)=>{request.onsuccess=()=>resolve(request.result);request.onerror=reject;});
+      return { errors, saved };
+    }, KEY);
+    expect(result.errors).toEqual(["StorageLineageError", "StorageLineageError", "StorageLineageError"]);
+    expect(result.saved).toEqual(corrected);
+    expect(await b.evaluate(key => localStorage.getItem(key), KEY)).toBe(raw);
+    await Promise.all([a.close(), b.close()]);
+  });
+}
+
+for (const noLocks of [false, true]) {
+  test(`multiple genuine local fallback actions reconcile all points and history (${noLocks ? "bakery" : "Web Locks"})`, async ({ context }) => {
+    const [a, b] = await harness(context, noLocks ? ["indexeddb-no-locks", "local-no-locks"] : ["indexeddb", "local"]);
+    await b.evaluate(async () => {
+      const { store, engine, cards } = window.__qa;
+      for(let i=0;i<3;i++) await store.update(s => engine.recordResult(s, cards, "correct", Date.now(), () => 0));
+    });
+    const local = await b.evaluate(key => JSON.parse(localStorage.getItem(key)), KEY);
+    await a.evaluate(async () => { await window.__qa.store.update(() => {}); });
+    const saved = await a.evaluate(key => JSON.parse(localStorage.getItem(key)), KEY);
+    expect(saved.groups).toEqual(local.groups);
+    expect(saved.session).toEqual(local.session);
+    expect(saved.session.scores).toEqual([3, 0]);
+    expect(saved.session.log).toHaveLength(3);
+    expect(Object.values(saved.groups).flatMap(g => Object.keys(g.seen))).toEqual(["de:apfel", "de:brot", "de:milch", "de:birne"]);
+    await Promise.all([a.close(), b.close()]);
+  });
+}
+
+for (const field of ["identity", "turn progression"]) {
+  test(`legacy session ${field} fork with identical cards never replaces the live game`, async ({ context }) => {
+    const [a, b] = await harness(context);
+    const committed = await a.evaluate(key => JSON.parse(localStorage.getItem(key)), KEY);
+    const fork = structuredClone(committed); delete fork._storage;
+    fork.revision++;
+    if(field === "identity") fork.session.id = "legacy-other-session";
+    else fork.session.turnIndex++;
+    const raw = JSON.stringify(fork);
+    await b.evaluate(({key,raw})=>localStorage.setItem(key,raw), {key:KEY,raw});
+    const result = await a.evaluate(async key => {
+      const {Storage}=await import("./storage.js"); const {store,engine,categories}=window.__qa;
+      const errors=[];
+      for(const operation of [()=>new Storage().open(engine.initialState(categories)), ()=>store.update(()=>{}), ()=>store.snapshot()]) {
+        try {await operation();errors.push(null);}catch(error){errors.push(error.name);}
+      }
+      const request=store.db.transaction("state").objectStore("state").get(key);
+      const saved=await new Promise((resolve,reject)=>{request.onsuccess=()=>resolve(request.result);request.onerror=reject;});
+      return {errors,saved};
+    },KEY);
+    expect(result.errors).toEqual(["StorageLineageError","StorageLineageError","StorageLineageError"]);
+    expect(result.saved).toEqual(committed);
+    expect(await b.evaluate(key=>localStorage.getItem(key),KEY)).toBe(raw);
+    await Promise.all([a.close(),b.close()]);
+  });
+}
+
+test("legacy database-only game resumes without choosing a freshly constructed default", async ({ context }) => {
+  const [a,b]=await harness(context);
+  const legacy=await a.evaluate(key=>JSON.parse(localStorage.getItem(key)),KEY);delete legacy._storage;
+  const resumed=await a.evaluate(async ({key,legacy})=>{
+    const {store,engine,categories}=window.__qa;
+    await new Promise((resolve,reject)=>{const tx=store.db.transaction("state","readwrite");tx.objectStore("state").put(legacy,key);tx.oncomplete=resolve;tx.onerror=reject;});
+    localStorage.removeItem(key); // Isolated historical fixture with no mirror.
+    const {Storage}=await import("./storage.js");return new Storage().open(engine.initialState(categories));
+  },{key:KEY,legacy});
+  expect(resumed.groups).toEqual(legacy.groups);
+  expect(resumed.settings).toEqual(legacy.settings);
+  expect(resumed.session).toEqual(legacy.session);
+  expect(resumed._storage.version).toBe(1);
+  expect(await b.evaluate(key=>JSON.parse(localStorage.getItem(key)),KEY)).toEqual(resumed);
+  await Promise.all([a.close(),b.close()]);
 });
