@@ -49,11 +49,13 @@ function sameGame(a, b) {
   // existing migration; it is not proof of a different score/round/history.
   const comparable = (state, other) => {
     const copy = { ...state, settings: { ...state.settings } };
-    if (state.settings.difficulty === undefined || other.settings.difficulty === undefined)
+    if ((state.settings.difficulty === undefined || other.settings.difficulty === undefined) &&
+        [state.settings.difficulty, other.settings.difficulty].every(value => value === undefined || value === "easy"))
       delete copy.settings.difficulty;
     if (state.session && other.session) {
       copy.session = { ...state.session, settings: { ...state.session.settings } };
-      if (state.session.settings.difficulty === undefined || other.session.settings.difficulty === undefined)
+      if ((state.session.settings.difficulty === undefined || other.session.settings.difficulty === undefined) &&
+          [state.session.settings.difficulty, other.session.settings.difficulty].every(value => value === undefined || value === "all"))
         delete copy.session.settings.difficulty;
     }
     return copy;
@@ -61,9 +63,28 @@ function sameGame(a, b) {
   return fingerprint(comparable(a, b), true) === fingerprint(comparable(b, a), true);
 }
 
+function legacyDifficultyChange(candidate, previous) {
+  // A carried checkpoint identifies the exact source of the documented old
+  // migration. No category, point, turn, history or other setting may differ.
+  if (candidate._storage?.version !== 1 || candidate._storage.digest !== fingerprint(previous)) return false;
+  const projected = structuredClone(previous);
+  let omitted = false;
+  if (candidate.settings.difficulty === undefined && previous.settings.difficulty !== undefined) {
+    if (previous.settings.difficulty !== "easy") return false;
+    delete projected.settings.difficulty; omitted = true;
+  }
+  if (candidate.session && previous.session && candidate.session.settings.difficulty === undefined &&
+      previous.session.settings.difficulty !== undefined) {
+    delete projected.session.settings.difficulty; omitted = true;
+  }
+  projected.revision = candidate.revision;
+  return omitted && fingerprint(projected) === fingerprint(candidate);
+}
+
 function follows(candidate, previous) {
   if (!extendsHistory(candidate, previous)) return false;
   if (sameGame(candidate, previous)) return true;
+  if (legacyDifficultyChange(candidate, previous)) return true;
   const metadata = proof(candidate), prior = fingerprint(previous);
   return Boolean(metadata && (metadata.database === prior || metadata.mirror === prior));
 }
@@ -73,11 +94,12 @@ function localBasis(local, cached) {
   if (sameGame(local, cached)) return local.revision >= cached.revision ? local : cached;
   if (local.revision <= cached.revision || !extendsHistory(local, cached))
     throw new StorageLineageError();
+  if (follows(local, cached)) return local;
   const metadata = proof(local), previous = proof(cached);
   // A verified newer checkpoint or coordinated local descendant is authoritative.
   // Legacy clients changing a carried marker cannot pass its payload fingerprint.
   if (metadata && (metadata.database === metadata.digest ||
-      previous?.database === metadata.database || follows(local, cached))) return local;
+      previous?.database === metadata.database)) return local;
   throw new StorageLineageError();
 }
 
@@ -94,11 +116,15 @@ function pendingRevision() {
     throw new Error("Die Schreibkoordination braucht Website-Speicher. Bitte erlaube ihn und lade die Seite erneut. Die gespeicherten Spielstände bleiben erhalten.");
   }
   if (serialized === null) return null;
-  let revision;
-  try { revision = JSON.parse(serialized).revision; } catch { /* Do not discard an unknown journal. */ }
-  if (!Number.isSafeInteger(revision) || revision < 0)
+  let marker;
+  try { marker = JSON.parse(serialized); } catch { /* Do not discard an unknown journal. */ }
+  const keys = marker && typeof marker === "object" && !Array.isArray(marker) ? Object.keys(marker) : [];
+  const known = marker?.version === 1
+    ? keys.length === 2 && keys.includes("version") && keys.includes("revision")
+    : marker?.version === undefined && keys.length === 1 && keys.includes("revision");
+  if (!known || !Number.isSafeInteger(marker.revision) || marker.revision < 0)
     throw new Error("Die Schreibmarkierung ist nicht lesbar. Die gespeicherten Spielstände bleiben unverändert erhalten.");
-  return revision;
+  return marker.revision;
 }
 
 function extendsHistory(candidate, previous) {
@@ -324,7 +350,7 @@ export class Storage {
               // Persist intent BEFORE a database commit can leave the local
               // mirror behind (quota, process exit, missed completion callback).
               // A local-only writer must not fork that stale mirror.
-              localStorage.setItem(PENDING_KEY, JSON.stringify({ revision: result.revision }));
+              localStorage.setItem(PENDING_KEY, JSON.stringify({ version: 1, revision: result.revision }));
               marked = true;
               store.put(result, KEY);
             } catch (error) {

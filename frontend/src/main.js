@@ -27,17 +27,26 @@ import "./wakelock.js";
 
 installActions();
 
-window.addEventListener("storage", (event) => {
-  if (event.key === "wortspiel.state.v1" && !ctx.busy) {
+window.addEventListener("storage", async (event) => {
+  if (event.key === "wortspiel.state.v1" && ctx.state && !ctx.busy) {
+    const revision = ctx.state.revision;
     try {
-      const fresh = JSON.parse(event.newValue);
-      if (fresh?.schema === 1 && fresh.revision > ctx.state.revision) {
+      // Keep the known baseline until Storage validates durable ancestry.
+      // A raw event from an older client must never become its own proof.
+      const fresh = await store.snapshot();
+      if (ctx.busy || ctx.state.revision !== revision) return;
+      if (fresh.revision > revision) {
         ctx.state = fresh;
         store.state = fresh;
         render();
       }
-    } catch {
-      /* Ignore unrelated or malformed writes. */
+    } catch (error) {
+      if (ctx.busy || ctx.state.revision !== revision) return;
+      // Stop displaying/scoring an uncertain card without changing either copy.
+      ctx.view = "setup";
+      ctx.pendingGameSettings = null;
+      render();
+      toast(error.message || "Die gespeicherten Kopien konnten nicht geprüft werden. Sie bleiben erhalten.");
     }
   }
 });

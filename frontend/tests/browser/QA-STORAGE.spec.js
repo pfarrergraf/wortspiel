@@ -546,7 +546,10 @@ test("a blocked local replica hides its stale card, stops navigation and preserv
   await expect(page.locator("#current-word")).toHaveCount(0);
   await expect(page.getByRole("button", { name: "Partie fortsetzen", exact: true })).toBeVisible();
   expect(await page.evaluate(key => JSON.parse(localStorage.getItem(key)), KEY)).toEqual(before);
+  await page.getByRole("button", { name: "Partie fortsetzen", exact: true }).evaluate(node => { window.__qaPendingContinue = node; });
   await page.getByRole("button", { name: "Partie fortsetzen", exact: true }).click();
+  // Wait for THIS rejected pause to render before releasing its simulated fence.
+  await page.waitForFunction(() => !window.__qaPendingContinue.isConnected);
   await expect(page.locator("#current-word")).toHaveCount(0);
   expect(await page.evaluate(key => JSON.parse(localStorage.getItem(key)), KEY)).toEqual(before);
   // Explicit harness recovery after its simulated remote writer is stopped.
@@ -815,3 +818,109 @@ test("legacy database-only game resumes without choosing a freshly constructed d
   expect(await b.evaluate(key=>JSON.parse(localStorage.getItem(key)),KEY)).toEqual(resumed);
   await Promise.all([a.close(),b.close()]);
 });
+
+for (const mode of ["indexeddb", "local"]) {
+  for (const extra of [{version:2}, {version:1,lease:60}, {transaction:"future"}]) {
+    test(`unknown pending marker stays byte-for-byte intact (${mode}, ${JSON.stringify(extra)})`, async ({ context }) => {
+      const [a,b]=await harness(context,mode);
+      const before=await a.evaluate(key=>JSON.parse(localStorage.getItem(key)),KEY);
+      const marker=JSON.stringify({revision:before.revision+1,...extra});
+      await a.evaluate(marker=>localStorage.setItem("wortspiel.state.v1.pending",marker),marker);
+      const result=await a.evaluate(async key=>{
+        let message;
+        try{await window.__qa.store.update(s=>{window.__qa.wasMutated=true;s.session.scores[0]=99;});}
+        catch(error){message=error.message;}
+        let saved;
+        if(window.__qa.store.db){const request=window.__qa.store.db.transaction("state").objectStore("state").get(key);saved=await new Promise((resolve,reject)=>{request.onsuccess=()=>resolve(request.result);request.onerror=reject;});}
+        return {message,mutated:Boolean(window.__qa.wasMutated),saved};
+      },KEY);
+      expect(result.message).toContain("Schreibmarkierung");
+      expect(result.mutated).toBe(false);
+      if(mode==="indexeddb")expect(result.saved).toEqual(before);
+      expect(await b.evaluate(key=>JSON.parse(localStorage.getItem(key)),KEY)).toEqual(before);
+      expect(await b.evaluate(()=>localStorage.getItem("wortspiel.state.v1.pending"))).toBe(marker);
+      await Promise.all([a.close(),b.close()]);
+    });
+  }
+}
+
+for(const difficulty of ["easy","medium","all","changed pool"]){
+  test(`legacy missing difficulty preserves its documented meaning (${difficulty})`,async({context})=>{
+    const [a,b]=await harness(context);
+    await a.evaluate(async difficulty=>{
+      await window.__qa.store.update(s=>{s.session.settings.difficulty=difficulty==="changed pool"?"easy":difficulty;});
+    },difficulty);
+    const before=await a.evaluate(key=>JSON.parse(localStorage.getItem(key)),KEY);
+    const legacy=structuredClone(before);legacy.revision++;
+    delete legacy.session.settings.difficulty;
+    if(difficulty!=="changed pool")delete legacy._storage;
+    else legacy.session.settings.selected=[];
+    const raw=JSON.stringify(legacy);
+    await b.evaluate(({key,raw})=>localStorage.setItem(key,raw),{key:KEY,raw});
+    const result=await a.evaluate(async key=>{
+      let error;
+      try{await window.__qa.store.update(()=>{});}catch(failure){error=failure.name;}
+      const request=window.__qa.store.db.transaction("state").objectStore("state").get(key);
+      const saved=await new Promise((resolve,reject)=>{request.onsuccess=()=>resolve(request.result);request.onerror=reject;});
+      return {error,saved};
+    },KEY);
+    if(difficulty==="all"){
+      expect(result.error).toBeUndefined();
+      expect(result.saved.groups).toEqual(before.groups);
+      expect(result.saved.session.scores).toEqual(before.session.scores);
+      expect(result.saved.session.current).toBe(before.session.current);
+      expect(result.saved.session.settings.selected).toEqual(before.session.settings.selected);
+    }else{
+      expect(result.error).toBe("StorageLineageError");
+      expect(result.saved).toEqual(before);
+      expect(await b.evaluate(key=>localStorage.getItem(key),KEY)).toBe(raw);
+    }
+    await Promise.all([a.close(),b.close()]);
+  });
+}
+
+for (const mode of ["indexeddb", "local", "local-no-locks"]) {
+  test(`real storage notifications accept verified updates but preserve divergent replicas (${mode})`, async ({page: a, context}) => {
+    if (mode.startsWith("local")) await context.addInitScript(() => {
+      Object.defineProperty(window, "indexedDB", {get: () => {throw new Error("IndexedDB unavailable in regression test");}});
+    });
+    if (mode.endsWith("no-locks")) await context.addInitScript(() => Object.defineProperty(navigator, "locks", {value: undefined}));
+    await a.goto("/");
+    const b = await context.newPage();
+    await b.goto("/");
+    await a.getByRole("button", {name: "Los geht’s", exact: true}).click();
+    await a.getByRole("button", {name: "Wir sind bereit", exact: true}).click();
+    await b.getByRole("button", {name: "Partie fortsetzen", exact: true}).click();
+    await b.getByRole("button", {name: "Weiter geht’s", exact: true}).click();
+    const original = await b.locator("#current-word").innerText();
+    await b.locator('[data-action="correct"]').click();
+    await expect(b.locator("#current-word")).not.toHaveText(original);
+    const current = await b.locator("#current-word").innerText();
+    await expect(a.locator("#current-word")).toHaveText(current);
+    await expect(a.locator(".round-points")).toHaveText("+1");
+    const before = await b.evaluate(key => JSON.parse(localStorage.getItem(key)), KEY);
+    const fork = structuredClone(before);
+    fork.session.scores[0] = 99;
+    fork.revision++;
+    const raw = JSON.stringify(fork);
+    await b.evaluate(({key, raw}) => localStorage.setItem(key, raw), {key: KEY, raw});
+    await expect(a.locator("#toast")).toContainText("unterschiedliche Spielverläufe");
+    await expect(a.locator("#current-word")).toHaveCount(0);
+    await expect(a.getByRole("button", {name: "Partie fortsetzen", exact: true})).toBeVisible();
+    await a.getByRole("button", {name: "Partie fortsetzen", exact: true}).click();
+    await expect(a.locator("#toast")).toContainText("unterschiedliche Spielverläufe");
+    expect(await b.evaluate(key => localStorage.getItem(key), KEY)).toBe(raw);
+    if (mode === "indexeddb") {
+      const saved = await b.evaluate(async key => {
+        const request = indexedDB.open("wortspiel", 1);
+        const db = await new Promise((resolve, reject) => {request.onsuccess = () => resolve(request.result); request.onerror = reject;});
+        try {
+          const get = db.transaction("state").objectStore("state").get(key);
+          return await new Promise((resolve, reject) => {get.onsuccess = () => resolve(get.result); get.onerror = reject;});
+        } finally {db.close();}
+      }, KEY);
+      expect(saved).toEqual(before);
+    }
+    await b.close();
+  });
+}
