@@ -54,11 +54,12 @@ test("pausing the start animation never writes game data and survives setup repa
 test("reduced motion stops decoration while all five modes still select normally", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/");
-  expect(await page.locator(".orbit-ring").evaluate(el => getComputedStyle(el).animationName)).toBe("none");
+  await expect(page.locator(".orbit-ring")).toHaveCSS("animation-name", "none");
   await expect(page.locator(".orbit-motion")).toBeHidden();
   for (const mode of ["free", "pantomime", "noises", "mixed", "taboo"]) {
     await page.locator(`.game-mode:has(input[value="${mode}"])`).click();
     await expect(page.locator(`input[name="gameMode"][value="${mode}"]`)).toBeChecked();
-    expect(await page.locator(".orbit-ring").evaluate(el => getComputedStyle(el).animationName)).toBe("none");
+    await expect(page.locator(`.choice-${mode}`)).toHaveClass(/selected/);
+    await expect(page.locator(".orbit-ring")).toHaveCSS("animation-name", "none");
   }
 });
